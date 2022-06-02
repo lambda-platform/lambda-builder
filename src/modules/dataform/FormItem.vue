@@ -9,7 +9,7 @@
             <Input v-model="item.label" :placeholder="item.model" :disabled="disabled"/>
         </Col>
         <Col span="4">
-            <Select v-model="item.formType" placeholder="Төрөл" clearable filterable :disabled="disabled"
+            <Select v-model="item.formType" :placeholder="lang._type" clearable filterable :disabled="disabled"
                     @on-change="changeItemType">
                 <Option v-for="item in elementList" :value="item.element" :key="item.index">{{ item.element }}
                 </Option>
@@ -32,7 +32,7 @@
             </a>
         </Col>
         <Col span="24" :class="`item-more-options ${ expanded ? 'active' : '' }`">
-            <expand-option :item="item" :edit="edit" :sub="sub" :schema="schema"></expand-option>
+            <expand-option :item="item" :edit="edit" :sub="sub" :schema="schema" :otherGrids="otherGrids" :projectID="projectID"></expand-option>
         </Col>
     </Row>
 </template>
@@ -43,9 +43,19 @@ import {elementList} from "./elements";
 import {rules} from "./rule";
 
 export default {
-    props: ["item", "edit", "sub", "disabled", "schema"],
+    props: ["item", "edit", "sub", "disabled", "schema" , "otherGrids", "projectID"],
     components: {
         "expand-option": expandOption
+    },
+    computed: {
+        lang() {
+            const labels = ['_type'];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
+
     },
     data() {
         let elements = window.init.data_form_custom_elements ? [...elementList, ...window.init.data_form_custom_elements.map(element => {

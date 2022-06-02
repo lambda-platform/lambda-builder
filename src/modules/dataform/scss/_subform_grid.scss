@@ -68,10 +68,6 @@
                     font-size: 13px;
                     text-align: center;
                     vertical-align: middle;
-                    label{
-                        display: none !important;
-                    }
-
                     //overflow-y: hidden;
                     /*.v-select {
                         height: 20px;
@@ -197,7 +193,7 @@
                             &:hover,
                             &:active,
                             &:focus {
-                                background: #ffffff !important;
+                                //background: #ffffff !important;
                                 box-shadow: none;
                                 outline: none;
                             }
@@ -280,6 +276,12 @@
                             }
                         }
                     }
+                    .file-upload-handler, .ivu-upload{
+                        //display: none;
+                    }
+                    .file-uploader{
+                        border:none;
+                    }
                 }
             }
         }
@@ -333,6 +335,28 @@
     th.row-number, td.row-number {
         width: 60px;
     }
+    .source-grid{
+        .add-from-pre-source{
+            padding: 0px 10px 10px 10px;
+
+            text-align: right;
+        }
+        .dg-footer{
+            border-bottom: solid 1px #dedede;
+            height: 28px !important;
+        }
+        .source-grid-description{
+            padding: 15px;
+            h3{
+                //font-weight: 400;
+            }
+            p{
+                color: #636E72;
+            }
+
+        }
+    }
+
 }
 
 .subform-image {

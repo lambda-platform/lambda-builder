@@ -1,11 +1,6 @@
 <template>
     <FormItem :label=label :prop=rule>
-        <DatePicker :value="model.form[this.model.component] ? model.form[this.model.component] : undefined"
-                    type="date" @on-change="getDateValue"
-                    placement="bottom-end"
-                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"
-                    :disabled="meta && meta.disabled ? meta.disabled : false">
-        </DatePicker>
+        <DatePicker :value="model.form[this.model.component] ? model.form[this.model.component] : undefined" type="date" @on-change="getDateValue" placement="bottom-end" :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label" :disabled="meta && meta.disabled ? meta.disabled : false"></DatePicker>
     </FormItem>
 </template>
 
@@ -15,9 +10,8 @@ export default {
     props: ["model", "rule", "label", "meta"],
     methods: {
         getDateValue(value) {
-
             if(value=='') {
-                this.model.form[this.model.component] = null;
+                this.clearValue(value);
             }
             else {
                 if (!(typeof value === "string" || value instanceof String)) {
@@ -28,7 +22,15 @@ export default {
                     this.model.form[this.model.component] = value
                 }
             }
+        },
+        clearValue(value){
+            if(value=='') {
+                this.model.form[this.model.component] = null;
+            }
         }
+    },
+    mounted() {
+        this.clearValue(this.model.form[this.model.component]);
     }
 };
 </script>

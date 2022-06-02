@@ -6,9 +6,9 @@
                 <span>{{item.label}}</span>
             </Radio>
             <Radio :label="other">
-                <span>Бусад:
+                <span>{{lang.other}}:
                     <Input type="text" v-model="other"
-                           placeholder="бичнэ үү"/>
+                           :placeholder="lang.pleaseWriting"/>
                 </span>
             </Radio>
         </RadioGroup>
@@ -16,8 +16,11 @@
 </template>
 
 <script>
+
     export default {
         props: ["model", "label", "rule", "meta"],
+        methods: {
+        },
         data() {
             return {
                 other: ''
@@ -25,6 +28,14 @@
         },
 
         computed: {
+            lang() {
+                const labels = ['pleaseWriting', 'other'
+                ];
+                return labels.reduce((obj, key, i) => {
+                    obj[key] = this.$t('dataGrid.' + labels[i]);
+                    return obj;
+                }, {});
+            },
             options() {
                 this.other=this.model.form[this.model.component];
 

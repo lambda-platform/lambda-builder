@@ -4,7 +4,7 @@
         <Input v-model="title" :placeholder="lang.enter_name" style="width: 300px" @on-change="changeTitle"></Input>
         <Button type="success" @click="save">{{ lang._save }}</Button>
 
-        <component :is="element(elementType)" v-bind="currentProperties"></component>
+        <component :is="element(elementType)" v-bind="currentProperties" :projectDomain="projectDomain"></component>
     </div>
 </template>
 
@@ -12,18 +12,11 @@
 
 import { mapGetters } from "vuex";
 import {element} from "./index";
-import {loadLanguageAsync} from "../../../locale";
+
 export default {
+    props:["projectDomain"],
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
+
         element:element,
         save() {
             this.$emit("saveSchema", this.title, this.currentProperties);

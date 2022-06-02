@@ -1,69 +1,82 @@
 <template>
     <div class="expand">
         <Tabs :animated="false" size="small" class="expand-tab">
-            <TabPane label="Үндсэн тохиргоо">
+            <TabPane :label="lang.basicSettings">
                 <Row type="flex">
                     <Col :xs="12">
                         <div class="title">
-                            <h3>Нэмэлт утгууд</h3>
+                            <h3>{{ lang.AdditionalValues }}</h3>
                         </div>
                         <ul>
                             <li v-if="item.formType == 'Image'">
-                                <label>Олон зураг сонгох эсэх</label>
+                                <label>{{ lang.selectMultipleImg }}</label>
                                 <i-switch v-model="item.file.isMultiple" size="small"></i-switch>
                             </li>
 
                             <li v-if="item.formType == 'CK'">
-                                <label>Editor-н төрөл</label>
-                                <Select v-model="item.editorType" placeholder="Editor-н төрөл">
+                                <label>{{ lang.TypeOfTheEditor }}</label>
+                                <Select v-model="item.editorType" :placeholder="lang.TypeOfTheEditor">
                                     <Option v-for="editor in editorTypes" :key="editor.index" :value="editor.type">
                                         {{ editor.label }}
                                     </Option>
                                 </Select>
                             </li>
+
                             <li>
-                                <label>Placeholder</label>
+                                <label>{{ lang.Placeholder }}</label>
                                 <Input v-model="item.placeHolder"
                                        :placeholder="item.placeHolder == '' ? item.label : item.placeHolder"/>
                             </li>
+
                             <li>
-                                <label>Анхдагч утга</label>
-                                <Input v-model="item.default" placeholder="Анхдагч утга"/>
+                                <label>{{ lang.default_Value }}</label>
+                                <Input v-model="item.default" :placeholder="lang.default_Value"/>
                             </li>
+
                             <li>
-                                <label>Параметрээс утга авах</label>
-                                <Input v-model="item.param" placeholder="Параметрийн нэр"/>
+                                <label>{{ lang.Get_value_parameter }}</label>
+                                <Input v-model="item.param" :placeholder="lang.Parameter_name"/>
                             </li>
+
                             <li>
-                                <label>Хэрэглэгчийн ID авах эсэх</label>
+                                <label>{{ lang.Get_user_ID }}</label>
                                 <i-switch v-model="item.hasUserId" size="small"></i-switch>
+                            </li>
+                            <li>
+                                <label>Хэрэглэгчээс утга авах</label>
+                                <Select v-model="item.fillByUserField" filterable clearable placeholder="Хэрэглэгчээс утга авах">
+                                    <Option v-for="item in user_fields" :value="item" :key="item">{{ item }}</Option>
+                                </Select>
                             </li>
                         </ul>
 
                         <div class="title">
-                            <h3>Нэгтгэл томьёо</h3>
+                            <h3>{{ lang.Consolidation_formula }}</h3>
                         </div>
+
                         <ul>
                             <li>
-                                <label>Нэгтгэж харуулах эсэх</label>
+                                <label>{{ lang.Whether_to_summarize }}</label>
                                 <i-switch v-model="item.hasEquation" size="small"></i-switch>
                             </li>
 
                             <li v-if="item.hasEquation">
-                                <label>Томьёо сонгох</label>
-                                <Select v-model="item.equations" placeholder="Томьёо төрөл">
+                                <label>{{ lang.Choose_a_formula }}</label>
+                                <Select v-model="item.equations" :placeholder="lang.Formula_type">
                                     <Option v-for="equation in equations" :key="equation.index" :value="equation">
                                         {{ equation }}
                                     </Option>
                                 </Select>
                             </li>
                             <li v-if="item.hasEquation">
-                                <label>Нэгтгэлийн өмнө үг авах бол /Жнь Нийт:, Тоо: гм/</label>
-                                <Input v-model="item.preStaticWord" placeholder="Тэмдэг"/>
+                                <label>{{ lang.Take_the_word_before_merger }} /{{ lang.example }} {{ lang.total }}:,
+                                    {{ lang.number }}: {{ lang.ets }}/</label>
+                                <Input v-model="item.preStaticWord" :placeholder="lang.Symbol"/>
                             </li>
                             <li v-if="item.hasEquation">
-                                <label>Нэгтгэлийн дараа тэмдэг авах бол /Жнь %, $, ₮ гм/</label>
-                                <Input v-model="item.prefix" placeholder="Тэмдэг"/>
+                                <label>{{ lang.get_sign_after_merger }} /{{ lang.example }} %, $, ₮
+                                    {{ lang.ets }}/</label>
+                                <Input v-model="item.prefix" :placeholder="lang.Symbol"/>
                             </li>
                         </ul>
                     </Col>
@@ -71,11 +84,12 @@
                     <!-- Rule set -->
                     <Col :xs="12" :sm="12" :md="8" :lg="8">
                         <div class="title">
-                            <h3>Шалгах нөхцөлүүд</h3>
+                            <h3>{{ lang.Verification_conditions }}</h3>
                         </div>
 
                         <div class="rule-control">
-                            <Select v-model="item.rules" placeholder="Өгөгдөл шалгах хэлбэр" filterable multiple>
+                            <Select v-model="item.rules" :placeholder="lang.Form_of_data_verification" filterable
+                                    multiple>
                                 <Option v-for="r in validationRules" :value="r" :key="r.index">{{ r.type }}</Option>
                             </Select>
                         </div>
@@ -88,30 +102,39 @@
                         </ul>
 
                         <div class="title" v-if="item.formType == 'Password'">
-                            <h3>Нүүц үгийн тохиргоо</h3>
+                            <h3>{{ lang.Password_settings }}</h3>
                         </div>
                         <ul v-if="item.formType == 'Password'">
                             <li>
-                                <label>Нууц үг баталгаажуулах</label>
+                                <label>{{ lang.Password_verification }}</label>
                                 <i-switch v-model="item.passwordOption.confirm" size="small"></i-switch>
                             </li>
 
                             <li>
-                                <label>Нууц үг үүсгэх</label>
+                                <label>{{ lang.Create_a_password }}</label>
                                 <i-switch v-model="item.passwordOption.generate" size="small"></i-switch>
                             </li>
                             <li>
-                                <label>Засварлах үед нууц үг шалгах</label>
+                                <label>{{ lang.Check_password_during_editing }}</label>
                                 <i-switch v-model="item.passwordOption.edit_with_old_password" size="small"></i-switch>
                             </li>
                         </ul>
 
                         <div class="title" v-if="item.formType == 'Number'">
-                            <h3>Орны нарийвчлал</h3>
+                            <h3>{{ lang.number_precision }}</h3>
                         </div>
                         <ul class="rule-msg-list" v-if="item.formType == 'Number'">
                             <li>
-                                <Input v-model="item.precision" placeholder="Орны нарийвчлал"/>
+                                <Input v-model="item.precision" :placeholder="lang.number_precision"/>
+                            </li>
+                        </ul>
+
+                        <div class="title" v-if="item.formType == 'Number'">
+                            <h3>Тоон формат болиулах</h3>
+                        </div>
+                        <ul class="rule-msg-list" v-if="item.formType == 'Number'">
+                            <li>
+                                <i-switch v-model="item.no_format" size="small"></i-switch>
                             </li>
                         </ul>
 
@@ -119,80 +142,103 @@
                 </Row>
             </TabPane>
 
-            <TabPane label="Өгөгдөл тохируулах"
-                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio' || item.formType == 'AdminMenu'">
+            <TabPane :label="lang.configureTheData"
+                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio' || item.formType == 'AdminMenu' || item.formType == 'FooterButton'">
                 <Row type="flex">
                     <Col span="24">
                         <div class="title">
                             <h3>
-                                Баазаас утга авах эсэх:
+                                {{ lang.Whether_get_values_database }}:
                                 <i-switch v-model="item.isFkey" size="small"></i-switch>
                             </h3>
                             <h3>
-                                Олон утга сонгох /multiple/:
+                                {{ lang.Choose_multiple_values }} /multiple/:
                                 <i-switch v-model="item.relation.multiple" size="small"></i-switch>
-
                             </h3>
                         </div>
 
                         <div v-if="!item.isFkey" class="localSelectOptions">
                             <Form ref="option" :model="optionForm" :rules="optionRule" inline>
                                 <FormItem prop="value">
-                                    <Input type="text" v-model="optionForm.value" placeholder="Утга"
+                                    <Input type="text" v-model="optionForm.value" :placeholder="lang.value"
                                     />
                                 </FormItem>
                                 <FormItem prop="model">
                                     <FormItem prop="label">
-                                        <Input type="text" v-model="optionForm.label" placeholder="Харагдах үг"
+                                        <Input type="text" v-model="optionForm.label" :placeholder="lang.visible_word"
                                         />
                                     </FormItem>
                                 </FormItem>
                                 <FormItem>
                                     <Button type="primary" @click="addOption">
-                                        {{ `${$static_words ? $static_words.add : 'Нэмэх'}` }}
+                                        {{lang.add}}
                                     </Button>
                                 </FormItem>
                             </Form>
 
                             <Table border size="small" :columns="optionsColumns"
                                    :data="item.options ? item.options : []"
-                                   height="250"></Table>
+                                   height="250">
+                            </Table>
                         </div>
 
                         <ul v-if="item.isFkey">
-                            <li>
-                                <label>Хүснэгт</label>
-                                <Select v-model="item.relation.table" placeholder="Хүснэгт сонгох" clearable
+                            <li v-if="microservices.length >= 1">
+                                <label >Microservice</label>
+
+                                <Select v-model="item.relation.microservice_id" placeholder="Microservice" clearable
+                                        filterable
+                                        >
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                        {{ microservice.microservice }}
+                                    </Option>
+                                </Select>
+                                <label>{{ lang.table }}</label>
+                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
+                                        filterable
+                                        :disabled="!item.isFkey" @on-change="relationSchema">
+                                    <OptionGroup :label="`${microservice.microservice}: Table list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
+                                            {{ item }}
+                                        </Option>
+                                    </OptionGroup>
+                                    <OptionGroup :label="`${microservice.microservice}: View list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
+                                            {{ item }}
+                                        </Option>
+                                    </OptionGroup>
+                                </Select>
+                            </li>
+                            <li v-else>
+                                <label>{{ lang.table }}</label>
+                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
                                         filterable
                                         :disabled="!item.isFkey" @on-change="relationSchema">
                                     <OptionGroup label="Table list">
-                                        <Option v-for="item in tableList" :value="item" :key="item.index">{{
-                                                item
-                                            }}
+                                        <Option v-for="item in tableList" :value="item" :key="item.index">
+                                            {{ item }}
                                         </Option>
                                     </OptionGroup>
                                     <OptionGroup label="View list">
-                                        <Option v-for="item in viewList" :value="item" :key="item.index">{{
-                                                item
-                                            }}
+                                        <Option v-for="item in viewList" :value="item" :key="item.index">
+                                            {{ item }}
                                         </Option>
                                     </OptionGroup>
                                 </Select>
                             </li>
                             <li>
-                                <label>Холбогдох талбар</label>
-                                <Select v-model="item.relation.key" placeholder="Холбогдох талбар" clearable
+                                <label>{{ lang.Related_fields }}</label>
+                                <Select v-model="item.relation.key" :placeholder="lang.Related_fields" clearable
                                         filterable
                                         :disabled="!item.isFkey">
-                                    <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
-                                            item.model
-                                        }}
+                                    <Option v-for="item in relSchema" :value="item.model" :key="item.index">
+                                        {{ item.model }}
                                     </Option>
                                 </Select>
                             </li>
                             <li>
-                                <label>Харагдах талбарууд </label>
-                                <Select v-model="item.relation.fields" placeholder="Талбарууд сонгох" clearable
+                                <label>{{ lang.Visible_fields }} </label>
+                                <Select v-model="item.relation.fields" :placeholder="lang.Select_fields" clearable
                                         filterable
                                         multiple :disabled="!item.isFkey">
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
@@ -203,8 +249,8 @@
                             </li>
 
                             <li>
-                                <label>Эрэмбэлэх талбар</label>
-                                <Select v-model="item.relation.sortField" placeholder="Талбарууд сонгох" clearable
+                                <label>{{ lang.Sort_field }}</label>
+                                <Select v-model="item.relation.sortField" :placeholder="lang.Select_fields" clearable
                                         filterable
                                         :disabled="!item.isFkey">
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
@@ -227,8 +273,8 @@
                                 </RadioGroup>
                             </li>
                             <li>
-                                <label>Эцэг багана (Формд байгаа)</label>
-                                <Select v-model="item.relation.parentFieldOfForm" placeholder="Эцэг багана"
+                                <label>{{ lang.Father_column }} ({{ lang.form }})</label>
+                                <Select v-model="item.relation.parentFieldOfForm" :placeholder="lang.Father_column"
                                         clearable filterable
                                         :disabled="!item.isFkey">
                                     <Option v-for="item in schema" :value="item.model" :key="item.index">{{
@@ -238,8 +284,8 @@
                                 </Select>
                             </li>
                             <li>
-                                <label>Эцэг багана (Энэ Хүснэгтийн)</label>
-                                <Select v-model="item.relation.parentFieldOfTable" placeholder="Эцэг багана"
+                                <label>{{ lang.Father_column }} ({{ lang.this_table }})</label>
+                                <Select v-model="item.relation.parentFieldOfTable" :placeholder="lang.Father_column"
                                         clearable
                                         filterable :disabled="!item.isFkey">
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
@@ -251,49 +297,77 @@
                         </ul>
 
                         <div class="title" v-if="item.isFkey">
-                            <h3>Өгөгдөл нэмэх товч харуулах
+                            <h3>{{ lang.Display_Add_Data_button }}
                                 <i-switch v-model="item.relation.addAble" size="small"
                                           @on-change="callForms"></i-switch>
                             </h3>
                         </div>
                         <ul v-if="item.relation.addAble">
-                            <li>
-                                <label>Өгөгдөл нэмэх Форм</label>
-                                <Select v-model="item.relation.addFrom" placeholder="Өгөгдөл нэмэх Форм" clearable
+
+                            <li v-if="microservices.length >= 1">
+                                <label >Microservice</label>
+
+                                <Select v-model="item.relation.addFromMicroservice" placeholder="Microservice" clearable
+                                        filterable
+                                >
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                        {{ microservice.microservice }}
+                                    </Option>
+                                </Select>
+                            </li>
+                            <li v-if="microservices.length >= 1">
+                                <label>{{ lang.Add_data_Form }}</label>
+                                <Select v-model="item.relation.addFrom" :placeholder="lang.Add_data_Form" clearable
+                                        filterable
+                                        :disabled="!item.isFkey" @on-change="relationSchema" v-if="item.relation.addFromMicroservice">
+                                    <Option v-for="of in otherForms" :value="of.id" :key="of.id" v-if="of.projects_id == item.relation.addFromMicroservice">{{
+                                            of.name
+                                        }}
+                                    </Option>
+                                </Select>
+                            </li>
+                            <li v-else>
+                                <label>{{ lang.Add_data_Form }}</label>
+
+                                <Select v-model="item.relation.addFrom" :placeholder="lang.Add_data_Form" clearable
                                         filterable
                                         :disabled="!item.isFkey" @on-change="relationSchema">
-                                    <OptionGroup label="Table list">
+                                    <OptionGroup :label="lang.List_of_tables">
                                         <Option v-for="item in otherForms" :value="item.id" :key="item.id">{{
                                                 item.name
                                             }}
                                         </Option>
                                     </OptionGroup>
+
+
                                 </Select>
                             </li>
                         </ul>
 
                         <div class="title" v-if="item.isFkey">
-                            <h3>Холбоосийн нөхцөл </h3>
+                            <h3>{{ lang.Link_terms }}</h3>
                         </div>
                         <query-builder v-if="item.isFkey && relSchema.length >= 1" @change="changeItemFilter"
                                        :query="item.relation.filter"
-                                       :fields="relSchema"/>
+                                       :fields="relSchema">
+                        </query-builder>
 
                         <div class="title" v-if="item.isFkey  && relSchema.length >= 1">
-                            <h3>Холбоосийн нөхцөл (Хэрэглэгчээс авах)</h3>
+                            <h3>{{ lang.Link_terms }} ({{ lang.Get_customer }})</h3>
                         </div>
                         <div>
                             <Row>
                                 <Col span="10">
                                     <Select v-model="optionSelectFilterWithUser.userField" filterable
-                                            placeholder="Хэрэглэгчийн багана">
-                                        <Option v-for="item in user_fields" :value="item" :key="item">{{ item }}
+                                            :placeholder="lang.Custom_column">
+                                        <Option v-for="item in user_fields" :value="item" :key="item">
+                                            {{ item }}
                                         </Option>
                                     </Select>
                                 </Col>
                                 <Col span="10">
                                     <Select v-model="optionSelectFilterWithUser.tableField" filterable
-                                            placeholder="Шүүлт хийх багана">
+                                            :placeholder="lang.judgment_column">
                                         <Option v-for="item in relSchema" :value="item.model" :key="item.model">
                                             {{ item.model }}
                                         </Option>
@@ -323,28 +397,28 @@
                 </Row>
             </TabPane>
 
-            <TabPane label="Триггер">
+            <TabPane :label="lang.trigger">
                 <Row type="flex">
                     <Col span="10">
                         <ul>
                             <div class="title">
-                                <h3>Триггер |
-                                    <small>Серверээс дуудах</small>
+                                <h3>{{ lang.trigger }} |
+                                    <small>{{ lang.Call_from_server }}}</small>
                                 </h3>
                             </div>
                             <span>
-                                <label>Триггер (өгөгдөл дуудах URL)</label>
-                                <Input v-model="item.trigger" placeholder="Гох"/>
+                                <label>{{ lang.trigger }} ({{ lang.data_loading_URL }})</label>
+                                <Input v-model="item.trigger" :placeholder="lang.trigger"/>
                             </span>
                             <span>
-                                <label>Триггер дуудах хугацаа </label>
+                                <label>{{ lang.Trigger_load_time }} </label>
                                 <Input v-model="item.triggerTimeout" placeholder="trigger Timeout"/>
                             </span>
                         </ul>
                     </Col>
 
                     <Col span="14">
-                        <h4>Серверээс буцаах өгөдлийн жишээ</h4>
+                        <h4>{{ lang.Example_data_returned_server }}</h4>
                         <pre class="trigger-example">
                             {
                               "schema": [
@@ -358,7 +432,7 @@
                               ],
                               "message": {
                                 "type": "success",
-                                "message": "Амжилтай"
+                                "message": "lang.Successful"
                               },
                               "info":[
                                 {
@@ -366,43 +440,43 @@
                                     "html":"info_by_html"
                                 }
                               ]
-                            }</pre>
+                            }
+                        </pre>
                     </Col>
                 </Row>
             </TabPane>
 
-            <TabPane label="Мэдээллийн холбоос">
+            <TabPane :label="lang.informationLink">
                 <Row type="flex">
                     <Col span="10">
                         <ul>
                             <div class="title">
-                                <h3>Мэдээллийн холбоос</h3>
+                                <h3>{{ lang.informationLink }}</h3>
                             </div>
                             <span>
-                                <label>Мэдээллийн холбоос дуудах URL (https://host/data/)</label>
-                                <Input v-model="item.info_url" placeholder="Мэдээллийн холбоос дуудах URL"/>
+                                <label>{{ lang.URL_call_information_link }} (https://host/data/)</label>
+                                <Input v-model="item.info_url" :placeholder="lang.URL_call_information_link"/>
                             </span>
-
                         </ul>
                     </Col>
                 </Row>
             </TabPane>
 
-            <TabPane label="Хүснэгтээс утга авах /searchable input/" v-if="item.formType == 'Search'">
+            <TabPane :label="lang.GetValuesFromTheTable + /searchable input/" v-if="item.formType == 'Search'">
                 <Row type="flex">
                     <Col span="24">
                         <div class="title">
-                            <h3>Хүснэгтээс утга авах</h3>
+                            <h3>{{ lang.GetValuesFromTheTable }}</h3>
                             <i-switch v-model="item.isGridSearch" size="small"></i-switch>
                         </div>
                         <ul>
                             <li>
                                 <Checkbox v-model="item.gridSearch.multiple" :disabled="!item.isGridSearch">
-                                    <span>Олон утга сонгох</span>
+                                    <span>{{ lang.Choose_multiple_values }}</span>
                                 </Checkbox>
                             </li>
                             <li>
-                                <Select v-model="item.gridSearch.grid" placeholder="Утга авах хүснэгт" clearable
+                                <Select v-model="item.gridSearch.grid" :placeholder="lang.Value_table" clearable
                                         filterable
                                         :disabled="!item.isGridSearch" @on-change="searchGridSchema">
                                     <Option v-for="item in this.gridList" :value="item.id" :key="item.index">{{
@@ -412,8 +486,8 @@
                                 </Select>
                             </li>
                             <li>
-                                <label>Утга буцаах талбар</label>
-                                <Select v-model="item.gridSearch.key" placeholder="Утга буцаах талбар" clearable
+                                <label>{{ lang.Value_return_field }}</label>
+                                <Select v-model="item.gridSearch.key" :placeholder="lang.Value_return_field" clearable
                                         filterable
                                         :disabled="!item.isGridSearch">
                                     <Option v-for="item in searchSchema" :value="item.model" :key="item.index">{{
@@ -423,8 +497,8 @@
                                 </Select>
                             </li>
                             <li>
-                                <label>Харагдах талбарууд</label>
-                                <Select v-model="item.gridSearch.labels" placeholder="Талбарууд сонгох" clearable
+                                <label>{{ lang.Visible_fields }}</label>
+                                <Select v-model="item.gridSearch.labels" :placeholder="lang.Visible_fields" clearable
                                         filterable
                                         multiple :disabled="!item.isGridSearch">
                                     <Option v-for="item in searchSchema" :value="item.model" :key="item.index">{{
@@ -438,38 +512,34 @@
                 </Row>
             </TabPane>
 
-            <TabPane label="GeoGraphic" v-if="item.formType == 'Geographic'">
+            <TabPane :label="lang.Geographic" v-if="item.formType == 'Geographic'">
                 <div style="padding: 20px">
                     <h3>
-                        Geographic тохиргоо
+                        {{ lang.Geographic_settings }}
                     </h3>
                     <hr>
                     <Row :gutter="16">
                         <Col span="8">
                             <div>
-                                <h4>Атрибут (шинж чанарууд)</h4>
+                                <h4>{{ lang.attribute }} ({{ lang.properties }})</h4>
                                 <Input v-model="item.GeographicOption.attributes" type="textarea" :autosize="true"
-                                       placeholder="Атрибут (шинж чанарууд)"></Input>
 
+                                       :placeholder="lang.attribute + (lang.properties)">
+                                </Input>
                             </div>
                         </Col>
-
-
                         <Col span="8">
                             <div>
-                                <h4>Геометрийн төрөл</h4>
+                                <h4>{{ lang.Geometric_type }}</h4>
                                 <RadioGroup v-model="item.GeographicOption.geometryType" class="">
                                     <Radio label="point">
-
-                                        <span>Point</span>
+                                        <span>{{ lang.point }}</span>
                                     </Radio>
                                     <Radio label="line">
-
-                                        <span>Line</span>
+                                        <span>{{ lang.line }}</span>
                                     </Radio>
                                     <Radio label="polygon">
-
-                                        <span>Polygon</span>
+                                        <span>{{ lang.polygon }}</span>
                                     </Radio>
                                 </RadioGroup>
                             </div>
@@ -479,36 +549,33 @@
                     <Row :gutter="16">
                         <Col span="8">
                             <div>
-                                <h4>Төвийн уртраг</h4>
+                                <h4>{{ lang.length_center }}</h4>
                                 <Input v-model="item.GeographicOption.center.lng"></Input>
-                                <h4>Төвийн өргөрөг</h4>
+                                <h4>{{ lang.latitude_center }}</h4>
                                 <Input v-model="item.GeographicOption.center.lat"></Input>
                             </div>
                         </Col>
-
                         <Col span="8">
                             <div>
-                                <h4>Газрын зургийн томруулалт 1-20</h4>
+                                <h4>{{ lang.Map_magnification }}1-20</h4>
                                 <Slider v-model="item.GeographicOption.zoom" :min="1" :max="20"
                                         :tip-format="formatZoom"
-                                        style="width: 100%"></Slider>
+                                        style="width: 100%">
+                                </Slider>
                             </div>
                         </Col>
                         <Col span="8">
                             <div>
-                                <h4>Суур зураг</h4>
+                                <h4>{{ lang.Background_map }}</h4>
                                 <RadioGroup v-model="item.GeographicOption.baseMap" class="">
                                     <Radio :label="0">
-
-                                        <span>Google Гудамж</span>
+                                        <span>{{ lang.Google_Street }}</span>
                                     </Radio>
                                     <Radio :label="1">
-
-                                        <span>Google Сансрын</span>
+                                        <span>{{ lang.Google_Space }}</span>
                                     </Radio>
                                     <Radio :label="2">
-
-                                        <span>Open Street Map</span>
+                                        <span>{{ lang.Open_Street_Map }}</span>
                                     </Radio>
                                 </RadioGroup>
                             </div>
@@ -518,114 +585,136 @@
                     <Row :gutter="16">
                         <Col span="4">
                             <div>
-
-                                <h4>Талбайн давхцал шалгах</h4>
-                                <Checkbox v-model="item.GeographicOption.checkByArea">Талбайн давхцал шалгах
+                                <h4>{{ lang.Check_overlap_area }}</h4>
+                                <Checkbox v-model="item.GeographicOption.checkByArea">
+                                    {{ lang.Check_overlap_area }}
                                 </Checkbox>
                             </div>
                         </Col>
 
                         <Col span="4">
                             <div v-if="item.GeographicOption.checkByArea">
-                                <h4>Feature layer url</h4>
+                                <h4>{{ lang.Feature_Class_link }}</h4>
                                 <Input v-model="item.GeographicOption.featureLayerUrl"
-                                       placeholder="Feature layer url"></Input>
+                                       :placeholder="lang.Feature_Class_link">
+                                </Input>
                             </div>
                         </Col>
                         <Col span="16">
                             <div v-if="item.GeographicOption.checkByArea">
-                                <h4>Хайлт хийх талбар (GIS)</h4>
+                                <h4>{{ lang.Search_field }} (GIS)</h4>
                                 <Input v-model="item.GeographicOption.searchField"
-                                       placeholder="Хайлт хийх талбар"></Input>
+                                       :placeholder="lang.Search_field">
+                                </Input>
                             </div>
                             <div v-if="item.GeographicOption.checkByArea">
-                                <h4>Хайлтын утга авах талбар (FORM)</h4>
+                                <h4>{{ lang.Search_value_field }} (FORM)</h4>
                                 <Input v-model="item.GeographicOption.formValueField"
-                                       placeholder="Хайлт хийх талбар"></Input>
+                                       :placeholder="lang.Search_value_field">
+                                </Input>
                             </div>
                             <div v-if="item.GeographicOption.checkByArea">
-                                <h4>Success message</h4>
+                                <h4>{{ lang.Success_message }}</h4>
                                 <Input v-model="item.GeographicOption.successMsg"
-                                       placeholder="Success message"></Input>
+                                       :placeholder="lang.Success_message">
+                                </Input>
                             </div>
-
                             <br>
                             <div v-if="item.GeographicOption.checkByArea">
-                                <h4>Error message</h4>
+                                <h4>{{ lang.Error_message }}</h4>
                                 <Input v-model="item.GeographicOption.errorMsg"
-                                       placeholder="Error message"></Input>
+                                       :placeholder="lang.Error_message">
+                                </Input>
                             </div>
                         </Col>
                     </Row>
                 </div>
             </TabPane>
 
-            <TabPane label="QGis" v-if="item.formType == 'QGis'">
-                <div style="padding: 20px">
-                    <Row v-if="item.qgisOptions">
-                        <Col span="8">
-                            <Input v-model="item.qgisOptions.service" placeholder="Geo Service"/>
-                        </Col>
-                        <Col span="8">
-                            <Input v-model="item.qgisOptions.link" placeholder="Давхаргын холбоос"/>
-                        </Col>
+            <TabPane label="Grid Selector тохируулга" v-if="item.formType == 'GridSelector'">
+                <div>
+                    <Row   >
+                        <Col span="12"><Input type="text" v-model="item.GSOption.sourceGridModalTitle" placeholder="Modal дээр харуулах нэр" /></Col>
+                        <Col span="12">
 
-                        <Col span="24">
-                            <div class="title">
-                                <h3>Зургийн баазын мэдээлэл</h3>
-                            </div>
-                        </Col>
 
-                        <Col span="8">
-                            <Input v-model="item.qgisOptions.cTable" placeholder="Зургийн хүснэгт"/>
-                        </Col>
-                        <Col span="8">
-                            <Input v-model="item.qgisOptions.cShapeField" placeholder="Зургийн мэдээлэлтэй талбар"/>
-                        </Col>
-                        <Col span="8">
-                            <Input v-model="item.qgisOptions.cAttr" placeholder="Давхаргын холбогдох attr"/>
-                        </Col>
+                            <Select v-model="item.GSOption.sourceMicroserviceID" placeholder="Microservice" clearable
+                                    filterable
+                            >
+                                <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                    {{ microservice.microservice }}
+                                </Option>
+                            </Select>
 
-                        <Col span="24">
-                            <div class="title">
-                                <h3>Давхаргын attribute & баазын холбоос</h3>
-                            </div>
-                        </Col>
-                        <Col span="24">
-                            <div class="qgis-attrs">
-                                <div class="localSelectOptions">
-                                    <Form ref="qgis-option" :model="optionForm" :rules="optionRule" inline>
-                                        <FormItem prop="value">
-                                            <Input type="text" v-model="optionForm.value"
-                                                   placeholder="Layer attribute-н нэр"/>
-                                        </FormItem>
-                                        <FormItem prop="label">
-                                            <Select v-model="optionForm.label" filterable
-                                                    clearable
-                                                    placeholder="Утга оноох талбар">
-                                                <Option v-for="item in schema" :value="item.model"
-                                                        :key="item.model">
-                                                    {{ item.label ? item.label : item.model }}
-                                                </Option>
-                                            </Select>
-                                        </FormItem>
-                                        <FormItem prop="label">
-                                            {{ optionForm.label }}
-                                        </FormItem>
-                                        <FormItem>
-                                            <Button type="primary" @click="addQgisOption">
-                                                {{ `${$static_words ? $static_words.add : 'Нэмэх'}` }}
-                                            </Button>
-                                        </FormItem>
-                                    </Form>
 
-                                    <Table border size="small" :columns="qgisColumns"
-                                           :data="item.qgisOptions.attrList"
-                                           height="250"></Table>
-                                </div>
-                            </div>
+
+                            <Select v-model="item.GSOption.sourceGridID" placeholder="Өгөгдөл дуудаж хүснэгт" clearable
+
+                                    @on-change="setGridSource"
+                                    filterable
+
+                            >
+                                <Option v-for="item in otherGrids" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                            </Select>
                         </Col>
                     </Row>
+                    <Row   >
+                        <Col span="24">
+                            <Input type="text" v-model="item.GSOption.sourceGridTitle" placeholder="Хайлтын дээр харуулах гарчиг" />
+                            <br>
+                            <Input type="text" v-model="item.GSOption.sourceGridUserCondition" placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл" />
+                        </Col>
+
+                    </Row>
+                    <Row>
+                        <Col>
+                            <label >Хайлтын дээр харуулах тайлбар</label>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+
+
+
+                            <vue-ckeditor ref="ckeditor" v-model="item.GSOption.sourceGridDescription" :config="configMini"  />
+                        </Col>
+                    </Row>
+                    <br>
+
+                    <div >
+                        <Row>
+                            <Col>
+                                <Select v-model="item.GSOption.sourceGridValueField" placeholder="Grid талбар" clearable
+                                        filterable
+
+                                >
+                                    <Option v-for="(item, iIndex) in sourceGridColumns" :key="iIndex" :value="item.model">{{ item.model }}</Option>
+                                </Select>
+                            </Col>
+                        </Row>
+                        <Container
+                            group-name="sub-form-columns"
+                            :drop-placeholder="dropPlaceholderOptions"
+                            @drop="onDropSub($event)">
+                            <!--form element-->
+                            <Draggable v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns" :key="iIndex">
+                                <Row>
+                                    <Col span="10">
+                                        {{item.model}}
+                                    </Col>
+                                    <Col span="10">
+                                        {{item.label}}
+                                    </Col>
+                                    <Col span="4">
+                                        <Button type="primary" shape="circle" icon="ios-trash"
+                                                @click="deleteSourceGridTargetColumn(iIndex)"></Button>
+                                    </Col>
+                                </Row>
+                            </Draggable>
+                        </Container>
+
+
+                    </div>
                 </div>
             </TabPane>
         </Tabs>
@@ -635,16 +724,49 @@
 <script>
 import {elementList} from "./elements";
 import {rules} from "./rule";
-import {getTableMeta} from "./utils/helpers";
-
+import {applyDrag, getTableMeta} from "./utils/helpers";
+import VueCkeditor from 'vue-ckeditor2';
+import {Container, Draggable} from 'vue-smooth-dnd'
 export default {
-    props: ["item", "edit", "sub", "schema"],
-    components: {},
+    props: ["item", "edit", "sub", "schema", "otherGrids", "projectID"],
+    components: {
+        Container, Draggable,
+        VueCkeditor
+    },
     data() {
         return {
+            dropPlaceholderOptions: {
+                className: 'drop-preview',
+                animationDuration: '150',
+
+            },
+            configMini:[
+                [
+                    "Undo",
+                    "Redo",
+                    "-",
+                    "Find",
+                    "Replace",
+                    "-",
+                    "SelectAll",
+                    "RemoveFormat"
+                ],
+                [
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "-",
+                    "Subscript",
+                    "Superscript"
+                ],
+                ["NumberedList", "BulletedList", "-", "Outdent", "Indent"],
+                ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"]
+            ],
             expendPart: '1',
             loadConfig: true,
             tableList: window.init.dbSchema.tableList,
+            microservices: window.init.microservices ? window.init.microservices : [],
             viewList: window.init.dbSchema.viewList,
             elementList: elementList,
             gridList: window.init.gridList,
@@ -694,84 +816,48 @@ export default {
                     }
                 ]
             },
-            optionsColumns: [
-                {
-                    title: "Утга",
-                    key: "value",
-
-                },
-                {
-                    title: "Харагдах үг",
-                    key: "label",
-
-                },
-                {
-                    title: "Устгах",
-                    key: "action",
-                    width: 100,
-                    align: "center",
-                    render: (h, params) => {
-                        return h("div", [
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.removeOption(params.index);
-                                        }
-                                    }
-                                },
-                                "Устгах"
-                            )
-                        ]);
-                    }
-                }
-            ],
+            // optionsColumns: [
+            //     {
+            //         title: "Утга",
+            //         key: "value",
+            //
+            //     },
+            //     {
+            //         title: "Харагдах үг",
+            //         key: "label",
+            //
+            //     },
+            //     {
+            //         title: "Устгах",
+            //         key: "action",
+            //         width: 100,
+            //         align: "center",
+            //         render: (h, params) => {
+            //             return h("div", [
+            //                 h(
+            //                     "Button",
+            //                     {
+            //                         props: {
+            //                             type: "error",
+            //                             size: "small"
+            //                         },
+            //                         on: {
+            //                             click: () => {
+            //                                 this.removeOption(params.index);
+            //                             }
+            //                         }
+            //                     },
+            //                     "Устгах"
+            //                 )
+            //             ]);
+            //         }
+            //     }
+            // ],
             optionSelectFilterWithUser: {
                 userField: null,
                 tableField: null,
             },
-
-            qgisColumns: [
-                {
-                    title: "QGis attribute",
-                    key: "value",
-
-                },
-                {
-                    title: "Баазын талбарын нэр",
-                    key: "label",
-                },
-                {
-                    title: "Устгах",
-                    key: "action",
-                    width: 100,
-                    align: "center",
-                    render: (h, params) => {
-                        return h("div", [
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.removeQgisOption(params.index);
-                                        }
-                                    }
-                                },
-                                "Устгах"
-                            )
-                        ]);
-                    }
-                }
-            ],
+            sourceGridColumns:[]
 
         };
     },
@@ -779,6 +865,7 @@ export default {
     async created() {
         if (this.$props.edit) {
             this.updateSyncItem(this.$props.item);
+
             this.validationRules = this.validationRules.map(v => {
                 let r = this.item.rules.find(r => r.type == v.type);
                 return r == undefined ? v : r;
@@ -789,20 +876,20 @@ export default {
             }
         }
 
+
         if (this.$props.item.isFkey && this.$props.item.relation.table !== null) {
             this.relationSchema(this.$props.item.relation.table);
         }
 
-        if (
-            this.$props.item.isGridSearch &&
-            this.$props.item.gridSearch.grid !== null
-        ) {
+        if (this.$props.item.isGridSearch && this.$props.item.gridSearch.grid !== null) {
             this.searchGridSchema(this.$props.item.gridSearch.grid);
         }
 
         if (!this.item.options) {
             this.item.options = [];
+
         }
+
 
         /*FOR OLD VB SCHEMA*/
         if (this.item.formType == 'Geographic') {
@@ -823,19 +910,23 @@ export default {
                     formValueField: '',
                     successMsg: '',
                     errorMsg: ''
+
                 }
             }
         }
+        /*FOR GRID SELECTOR*/
+        if (this.item.formType == 'GridSelector') {
 
-        if (this.item.formType == 'QGis') {
-            if (this.item.qgisOptions == undefined) {
-                this.item.qgisOptions = {
-                    service: "",
-                    cTable: "",
-                    cShapeField: "",
-                    cAttr: "",
-                    link: "",
-                    attrList: []
+            if (!this.item.GSOption) {
+                this.item.GSOption = {
+                    sourceMicroserviceID: null,
+                    sourceGridID: null,
+                    sourceGridModalTitle: "",
+                    sourceGridTargetColumns:[],
+                    sourceGridTitle:"",
+                    sourceGridDescription:"",
+                    sourceGridUserCondition:"",
+                    sourceGridValueField:null
                 }
             }
         }
@@ -850,6 +941,9 @@ export default {
             if (this.item.precision == undefined) {
                 this.item.precision = 0;
             }
+            if (this.item.no_format == undefined) {
+                this.item.no_format = false;
+            }
         }
 
         if (this.item.formType == 'Password') {
@@ -861,16 +955,85 @@ export default {
                 }
             }
         }
+        if (this.item.relation) {
+
+            if (this.item.relation.addFromMicroservice === undefined) {
+                this.item.relation.addFromMicroservice = null;
+            }
+        }
         /*FOR OLD VB SCHEMA*/
     },
 
+    computed: {
+        lang() {
+            const labels = ['basicSettings', 'configureTheData', 'trigger', 'informationLink', 'GetValuesFromTheTable', 'Geographic',
+                'AdditionalValues', 'selectMultipleImg', 'TypeOfTheEditor', 'Placeholder', 'default_Value', 'Get_value_parameter',
+                'Parameter_name', 'Get_user_ID', 'Consolidation_formula', 'Whether_to_summarize', 'Choose_a_formula', 'Formula_type'
+                , 'Take_the_word_before_merger', 'example', 'total', 'number', 'ets', 'Symbol', 'get_sign_after_merger',
+                'Verification_conditions', 'Form_of_data_verification', 'Password_settings', 'Password_verification', 'Check_password_during_editing',
+                'number_precision', 'Whether_get_values_database', 'Choose_multiple_values', 'value', 'visible_word', 'add', 'table', 'selectTable',
+                'Related_fields', 'Visible_fields', 'Select_fields', 'Sort_field', 'Father_column', 'form', 'this_table', 'Display_Add_Data_button',
+                'Add_data_Form', 'List_of_tables', 'Link_terms', 'Get_customer', 'Custom_column', 'judgment_column', 'Call_from_server', 'data_loading_URL',
+                'Trigger_load_time', 'Example_data_returned_server', 'Successful', 'URL_call_information_link', 'Value_table', 'Value_return_field',
+                'Geographic_settings', 'attribute', 'properties', 'Geometric_type', 'point', 'line', 'polygon', 'length_center', 'latitude_center', 'Map_magnification',
+                'Background_map', 'Google_Street', 'Google_Space', 'Open_Street_Map', 'Check_overlap_area', 'Feature_Class_link', 'Search_field', 'Search_value_field',
+                'Success_message','Error_message', 'please_enter_value', 'values', '_delete', ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        optionsColumns(){
+            return [
+                {
+                    title: this.lang.values,
+                    key: "value",
+
+                },
+                {
+                    title: this.lang.visible_word,
+                    key: "label",
+
+                },
+                {
+                    title: this.lang._delete,
+                    key: "action",
+                    width: 100,
+                    align: "center",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.removeOption(params.index);
+                                        }
+                                    }
+                                },
+                                this.lang._delete
+                            )
+                        ]);
+                    }
+                }
+            ]
+        }
+    },
+
     methods: {
+
         addOption() {
+
             this.$refs["option"].validate(valid => {
                 if (valid) {
-                    this.optionForm.label = trim(this.optionForm.label);
 
                     this.item.options.push({...this.optionForm});
+
+
                     this.optionForm = {
                         value: null,
                         label: null
@@ -881,24 +1044,6 @@ export default {
 
         removeOption(index) {
             this.item.options.splice(index, 1);
-        },
-
-        addQgisOption() {
-            console.log(this.optionForm);
-            this.$refs["qgis-option"].validate(valid => {
-                if (valid) {
-                    this.item.qgisOptions.attrList.push({...this.optionForm});
-                    this.optionForm = {
-                        value: null,
-                        label: null
-                    };
-                    console.log(this.item.qgisOptions.attrList);
-                }
-            });
-        },
-
-        removeQgisOption(index) {
-            this.item.qgisOptions.attrList.splice(index, 1);
         },
 
         formatZoom(val) {
@@ -927,11 +1072,11 @@ export default {
             ) {
                 item.editorType = this.editorTypes[0].type;
             }
-
             //Query builder
             if (item.formType == "Select" || item.formType == "!Select") {
                 this.relationSchema(item.relation.table);
             }
+
         },
 
         //Preparing table meta for relation fields
@@ -954,8 +1099,8 @@ export default {
                 this.$props.item.relation.filter = undefined;
             }
         },
-
         callForms() {
+
             if (window.otherForms) {
                 this.otherForms = window.otherForms;
             } else {
@@ -964,8 +1109,8 @@ export default {
                     this.otherForms = data.data;
                 });
             }
-        },
 
+        },
         addSelectUserFilter() {
             if (!this.$props.item.relation.filterWithUser) {
                 this.$props.item.relation.filterWithUser = [];
@@ -983,6 +1128,45 @@ export default {
         deleteSelectUserFilter(index) {
             this.$props.item.relation.filterWithUser.splice(index, 1);
         },
+        async setGridSource(val){
+            if(val){
+                let defualtURL =`/lambda/puzzle/schema/grid/${val}`;
+                if(this.projectID){
+                    defualtURL = `/lambda/puzzle/projects/grid/${val}`
+                }
+                let res = await axios.get(defualtURL)
+
+                if (res.data.data) {
+                    let gridSchema = JSON.parse(res.data.data.schema);
+                    this.sourceGridColumns = getTableMeta(gridSchema.model);
+
+                    this.item.GSOption.sourceGridTargetColumns = [];
+                    gridSchema.schema.forEach(field=>{
+
+                        if(!field.hide){
+                            this.item.GSOption.sourceGridTargetColumns.push({
+                                model:field.model,
+                                label:field.label,
+                                gridType:field.gridType,
+                            })
+                        }
+
+                    })
+
+
+                }
+            }
+
+        },
+        deleteSourceGridTargetColumn(index){
+            this.item.GSOption.sourceGridTargetColumns.splice(index, 1);
+        },
+        onDropSub(dropResult) {
+
+            this.item.GSOption.sourceGridTargetColumns = applyDrag(this.item.GSOption.sourceGridTargetColumns, dropResult);
+        },
+
     },
+
 };
 </script>

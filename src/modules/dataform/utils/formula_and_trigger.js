@@ -71,7 +71,8 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
                             }
 
                         }
-                        schema_[schema_index][target.prop] = calculated;
+                        // schema_[schema_index][target.prop] = calculated;
+                        Vue.set(schema_[schema_index], target.prop, calculated)
                     }
                 }
             })

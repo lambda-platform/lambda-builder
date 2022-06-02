@@ -44,8 +44,14 @@
             padding-right: 5px;
             padding-left: 5px;
         }
+        .ivu-tabs {
+            padding-bottom: 40px!important;
+        }
     }
     &-footer {
         padding: 10px 20px 20px;
+    }
+    .extra-buttons{
+        float: right;
     }
 }

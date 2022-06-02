@@ -4,11 +4,12 @@
     height: 100%;
     width: 100%;
     padding: 10px 15px 10px 10px;
-
+    overflow: auto;
     .fb-item-option {
         .ivu-modal {
             width: 80%;
             height: 80%;
+            border: solid 1px red;
 
             .ivu-modal-content {
                 width: 100%;
@@ -18,7 +19,6 @@
 
     .fb-sidebar {
         width: 250px;
-        min-width: 250px;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -66,9 +66,8 @@
     }
 
     .fb-workspace {
-        flex: 1;
-        max-width: 1600px;
-        min-width: 1000px;
+        //max-width: calc(100% - 250px);
+        max-width: calc(100vw - 470px);
 
         table {
             thead {
@@ -222,6 +221,9 @@
             overflow: visible !important;
             display: block;
         }
+    }
+    .sub-form-source-grid{
+        padding: 20px;
     }
 }
 

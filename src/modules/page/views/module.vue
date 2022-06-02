@@ -3,7 +3,6 @@
         <agent v-if="$route.params.module == 'agent'">
             <user-control slot="user-control"></user-control>
         </agent>
-
         <agent-form v-if="$route.params.module == 'profile'" type="profile" :withoutHeader="withoutHeader">
             <user-control slot="user-control"></user-control>
         </agent-form>

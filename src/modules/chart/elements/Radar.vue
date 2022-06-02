@@ -16,7 +16,6 @@ export default {
 
         },
         callData() {
-
             if (this.values.length >= 1) {
                 axios.post('/ve/get-data-pie', {values: this.values}).then(response => {
                     this.elementData = response.data;

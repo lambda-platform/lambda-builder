@@ -166,7 +166,7 @@ export function getFields(model) {
     model.nodes.map(table=>{
         table.ports.map(field=>{
 
-            if(field.field.output && field.type == 'in'){
+            if(field.type == 'in'){
                 fields.push(field.field);
             }
 

@@ -1,6 +1,6 @@
 <template>
     <div :class="chartType == 'AreaChart' || chartType == 'LineChart' || chartType == 'ColumnChart' ? 'chart-element-wide' : chartType == 'countBox' ? 'count-box' :'chart-element'" v-if="!loading" :style="minH ? `min-height: ${minH}`: ''">
-        <Spin size="large" fix v-if="loading"></Spin> <component v-else :is="chartType" :isRest="true" :chartTitle="title" :chartData="chartData" :xData="xData" v-bind="currentProperties" :minH="minH" :hideTitle="hideTitle" :filters="filters" :hideZoom="hideZoom" :chartColor="chartColor" :chart_filter="chart_filter" :id="id"></component>
+        <Spin size="large" fix v-if="loading"></Spin> <component v-else :is="chartType" :isRest="true" :type="chartType" :chartTitle="title" :chart_title="title" :chartData="chartData" :xData="xData" v-bind="currentProperties" :minH="minH" :hideTitle="hideTitle" :filters="filters" :hideZoom="hideZoom" :chartColor="chartColor" :chart_filter="chart_filter" :id="id"></component>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ import Radar from "./elements/Radar";
 import CountBox from "./elements/CountBox";
 
 export default {
-    props: ["src", "id", "title", "chart_filter", "hideTitle", "filters", "hideZoom", "APIurl", "chartType", "minH", "chartColor"],
+    props: ["src", "id", "title", "chart_filter", "hideTitle", "filters", "hideZoom", "APIurl", "chartType", "minH", "chartColor", ],
     data() {
         return {
             currentProperties: null,

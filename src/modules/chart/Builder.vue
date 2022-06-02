@@ -3,7 +3,7 @@
         <TableList :loading="loading" v-if="!loading" />
         <div class="table-list ve-column" v-if="loading"></div>
         <ElementControl v-if="!loading" />
-        <ElementPreview @saveSchema="saveSchema" v-if="!loading" />
+        <ElementPreview @saveSchema="saveSchema" v-if="!loading" :projectDomain="projectDomain" />
     </div>
 </template>
 
@@ -19,7 +19,7 @@ import store from "./store/store";
 import { mapGetters } from "vuex";
 
 export default {
-    props: ["onCreate", "onUpdate", "src", "editMode", "projectID"],
+    props: ["onCreate", "onUpdate", "src", "editMode", "projectID", "projectDomain"],
     methods: {
 
         saveSchema(name, schema) {
@@ -43,10 +43,10 @@ export default {
 
             axios.post(submitUrl, data).then(o => {
                 if (o.data.status) {
-                    this.$Message.info("Амжилттай хадгаллаа");
+                    this.$Message.success(`${this.lang.savedSuccessfull}`);
                     this.$props.onCreate();
                 } else {
-                    this.$Message.info("Хадгалах үед алдаа гарлаа!");
+                    this.$Message.error(`${this.lang.errorSaving}`);
                 }
             });
         },
@@ -94,7 +94,14 @@ export default {
         ...mapGetters({
             fields: "fields",
             other: "other"
-        })
+        }),
+        lang() {
+            const labels = ['savedSuccessfull','errorSaving'];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
     },
     store
 };

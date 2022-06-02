@@ -4,7 +4,7 @@
                 ref="upload"
                 :with-credentials="true"
                 v-model="model.form[model.component]"
-                action="/lambda/krud/upload"
+                :action="`${url ? url : ''}/lambda/krud/upload`"
                 class="subform-image"
                 :on-success="success">
                 <Button type="dashed">
@@ -21,7 +21,7 @@
 
 <script>
     export default {
-        props: ["model", "label", "rule", "meta", "do_render"],
+        props: ["model", "label", "rule", "meta", "do_render", "url"],
 
         mounted() {
             this.uploadList = typeof this.$refs.upload.fileList != 'undefined' ? this.$refs.upload.fileList : [];
@@ -38,7 +38,7 @@
         watch: {
             'model.form'(val) {
                 let itemModel = val[this.model.component];
-                if (typeof this.meta.file !== 'undefined' && typeof this.meta.file.isMultiple !== 'undefined' && this.meta.file.isMultiple) {
+                if (typeof this.meta.file.isMultiple !== 'undefined' && this.meta.file.isMultiple) {
                     if (typeof itemModel == 'string' && typeof itemModel != 'undefined' && itemModel != null) {
 
                         let list = JSON.parse(this.model.form[this.model.component]);

@@ -54,7 +54,9 @@
             <iframe v-if="pageType == 'iframe'" :src="iframeUrl"></iframe>
 
             <portal to="header-left" v-if="pageType == 'iframe' && property.withoutHeader">
+
                 <h3>{{iframeTitle}}</h3>
+
             </portal>
         </div>
     </section>
@@ -89,6 +91,7 @@ export default {
                 template: "canvas",
                 mode: window.init.crud_mode ? window.init.crud_mode : undefined,
                 title: "",
+                projects_id: null,
                 grid: null,
                 form: null,
                 form_width: 800,
@@ -100,6 +103,8 @@ export default {
                     r: false,
                     u: false,
                     d: false,
+                    gridDeleteConditionJS:"",
+                    gridEditConditionJS:"",
                 },
             },
             iframeUrl: '',
@@ -197,19 +202,24 @@ export default {
                         let crudIndex = this.cruds.findIndex(crud => crud.id == page.url);
                         if (crudIndex >= 0) {
 
+
                             // this.property. = 'canvas'
                             this.property.page_id = page.id;
                             this.property.title = this.cruds[crudIndex].title;
                             // this.property.withoutHeader = this.withoutHeader;
+                            this.property.projects_id = this.cruds[crudIndex].projects_id;
                             this.property.grid = this.cruds[crudIndex].grid;
                             this.property.form = this.cruds[crudIndex].form;
-
+                            this.property.template = this.cruds[crudIndex].template;
+                            this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
                             this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
                             this.property.view_url = this.cruds[crudIndex].view_url;
                             this.property.permissions.c = this.permissions[page.id].c;
                             this.property.permissions.r = this.permissions[page.id].r;
                             this.property.permissions.u = this.permissions[page.id].u;
                             this.property.permissions.d = this.permissions[page.id].d;
+                            this.property.permissions.gridDeleteConditionJS = this.permissions[page.id].gridDeleteConditionJS;
+                            this.property.permissions.gridEditConditionJS = this.permissions[page.id].gridEditConditionJS;
                             let user_condition = {};
 
                             if (this.permissions[page.id].formCondition) {
@@ -222,6 +232,7 @@ export default {
                             if (user_condition) {
                                 this.property.user_condition = user_condition;
                             }
+
                         }
                         break;
                     case 'link':

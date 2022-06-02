@@ -7,7 +7,7 @@ export default {
         "dbClickAction", "onRowSelect", "rowCurrentChange",
         "permissions", "user_condition", "custom_condition",
         "view_url", "mode", "onPropertySuccess",
-        "onPropertyError", "page_id", "withoutHeader", "withCrudLog"],
+        "onPropertyError", "page_id", "withoutHeader", "withCrudLog", "projects_id"],
     components: {
         krudtools
     },
@@ -164,7 +164,7 @@ export default {
             }
         },
 
-        onError(val) {
+        onError() {
             //From template
             if (this.templateOnError) {
                 this.templateOnError();

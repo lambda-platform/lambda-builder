@@ -122,9 +122,6 @@ export default {
 
         };
     },
-    mounted() {
-        console.log(this.$static_words);
-    },
     methods: {
         logout() {
             axios.post("/auth/logout", {}).then(o => {

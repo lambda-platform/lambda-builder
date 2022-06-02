@@ -24,6 +24,7 @@
                        :model="item.model"
                        :editMode="editMode"
                        :relations="relations"
+                       :schema="form.schema"
                        :formula="formula">
                 <template slot="action" v-if="!form.disableDelete">
                     <a href="javascript:void(0);" @click="remove(index)">
@@ -37,7 +38,7 @@
             </tbody>
             <tfoot v-if="hasEq">
             <tr>
-                <td v-for="(item, index) in equationData" :key="index">
+                <td v-for="(item, index) in equationData" :key="index" >
                     <span v-if="item.preStaticWord!=null && item.preStaticWord!=''"> {{item.preStaticWord}} </span>
                     <span v-if="item.hasEquation">{{ item.data.toLocaleString() }}</span>
                     <span v-if="item.prefix!=null && item.prefix!=''"> {{item.prefix}}</span>
@@ -49,24 +50,92 @@
         </table>
         <a class="sub-grid-add" href="javascript:void(0)" @click="add" v-if="form.min_height && !form.disableCreate">
             <Icon type="plus"></Icon>
-            {{`${$static_words ? $static_words.add : 'Мөр нэмэх'}`}}
+            {{lang.add}}
         </a>
+
+        <paper-modal
+            :name="`grid-modal-${form.sourceGridID}`"
+            class="form-modal"
+            :min-width="200"
+            :min-height="100"
+            :pivot-y="0.5"
+            :adaptive="true"
+            :reset="true"
+            :draggable="true"
+            :resizable="true"
+            draggable=".form-tool"
+            width="800"
+            height="70%"
+        >
+            <section class="form-modal source-grid">
+                <div class="form-tool ">
+
+                    <h4>{{ form.sourceGridModalTitle }}</h4>
+                    <div class="form-tool-actions">
+                        <a href="javascript:void(0)" @click="closeSourceModal">
+                            <i class="ti-close"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-body" v-if="modal_grid_show">
+
+                  <div v-if="form.sourceGridTitle && form.sourceGridDescription" class="source-grid-description">
+                        <h3>
+                            {{form.sourceGridTitle}}
+                        </h3>
+                      <p v-html="form.sourceGridDescription">
+
+                      </p>
+                  </div>
+                  <datagrid
+                      :schemaID="form.sourceGridID"
+                      :url="sourceGridUrl()"
+                      :onRowSelect="onRowSelect"
+                      :paginate="50"
+                      :hasSelection="true"
+                      :user_condition="user_condition"
+                      :permissions="{
+                          c:false,
+                          r:true,
+                          u:false,
+                          d:false,
+                      }"
+                  />
+                    <div class="add-from-pre-source">
+                        <Button shape="circle" type="success" size="small" @click="addFromPreSource" :disabled="preSource.length == 0" icon="md-add"
+                                class="sub-form-add-btn">Сонгох</Button>
+                    </div>
+                </div>
+            </section>
+        </paper-modal>
     </div>
 </template>
 
 <script>
     import {element} from "../index";
     import GridForm from "./GridForm";
+    import subFormMix from "./subFormMix";
 
     export default {
         props: ["form", "model", "editMode", "relations", "formula"],
+        mixins: [subFormMix],
         components: {
             "grid-form": GridForm
         },
         mounted() {
+
             this.equationRenderer();
         },
         computed: {
+                lang() {
+                    const labels = ['pleaseCompleteFirstLine',
+                    ];
+                    return labels.reduce((obj, key, i) => {
+                        obj[key] = this.$t('dataForm.' + labels[i]);
+                        return obj;
+                    }, {});
+                },
             subStyle() {
                 if (this.form.min_height) {
                     return {
@@ -76,7 +145,14 @@
                 } else {
                     return undefined;
                 }
-            }
+            },
+            Lang() {
+                const labels = [ 'add',];
+                return labels.reduce((obj, key, i) => {
+                    obj[key] = this.$t('dataForm.' + labels[i]);
+                    return obj;
+                }, {});
+            },
         },
         watch: {
             listData: {
@@ -141,10 +217,13 @@
                 equationData: [],
                 currentSortDir: 'asc',
                 hasEq: false,
-                rowLength: 0
+
+                rowLength: 0,
+
             };
         },
         methods: {
+
             element: element,
             checkAddable() {
                 return new Promise((resolve, reject) => {
@@ -166,7 +245,7 @@
                         if(hasValue){
                             resolve(true)
                         } else {
-                            alert("Эхний мөрийг гүйцэд бөглөнө үү");
+                            alert(this.lang.pleaseCompleteFirstLine);
                             reject(false);
                         }
                     } else {
@@ -206,20 +285,27 @@
                     this.model.form[this.model.component] = [];
                 }
                 this.model.form[this.model.component].push(clonedFormModel);
+
                 this.listData.push(listItem);
                 this.rowLength = this.model.form[this.model.component].length;
             },
 
             add() {
-                this.checkAddable()
-                    .then(o => {
-                        setTimeout(() => {
-                            this.addSubForm();
-                        }, 200);
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+
+                if(this.form.addFromGrid && this.form.sourceGridID){
+                    this.showAddSourceModal();
+                } else {
+                    this.checkAddable()
+                        .then(o => {
+                            setTimeout(() => {
+                                this.addSubForm();
+                            }, 200);
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+                }
+
             },
 
             fillData() {

@@ -4,9 +4,9 @@
             <slot name="rowNumber"></slot>
         </td>
         <td v-for="item in f.schema"
-            v-if="typeof item.formType !== 'undefined' && item.formType !== null && item.model && !item.hidden && item.model!=f.identity && item.model!=f.parent && item.model!='updated_at'&& item.model!='created_at'"
+            v-if="typeof item.formType !== 'undefined' && item.formType !== null && item.model && isShowAble(item.model) && item.model!=f.identity && item.model!=f.parent && item.model!='updated_at'&& item.model!='created_at'"
             :key="item.index">
-            <!--{{item.hidden}}-->
+<!--            {{item.hidden}}-->
             <!--{{item.model}}-->
             <component :is="element(item.formType)"
                        :model="{form: model, component: item.model}"
@@ -14,7 +14,8 @@
                        size="small"
                        :label="item.label ? item.label : `[${item.model}]`"
                        :meta="setMeta(item)"
-                       :relation_data="item.relation.filter == '' || typeof item.relation.filter === 'undefined' ? relations[item.relation.table] ? relations[item.relation.table]['data'] : [] :relations[item.model] ? relations[item.model]['data'] : []">
+                       :getSchemaRelationByModel="getSchemaRelationByModel"
+                       :relation_data="getRelation(item)">
             </component>
         </td>
         <td class="action" >
@@ -27,9 +28,10 @@
     import {element} from "../index";
     import {getRule} from "../../rule";
     import {doFormula, doTrigger} from "../../utils/formula_and_trigger.js";
+    import {getRelationData} from "../../utils/helpers";
 
     export default {
-        props: ["f", "model", "editMode", "relations", "formula"],
+        props: ["f", "model", "editMode", "relations", "formula", "schema"],
         created() {
 
             this.f.data = {};
@@ -60,6 +62,18 @@
         },
 
         methods: {
+            isShowAble(model) {
+                if(this.schema){
+                    let index = this.schema.findIndex(item => item.model == model);
+                    if(index >= 0){
+                        return !this.schema[index].hidden;
+                    }
+                    return false
+                }
+                return true;
+
+
+            },
             element: element,
             setModel(name, value, type) {
                 switch (type) {
@@ -72,13 +86,14 @@
                         this.f.data[name] = val_;
                         break;
                     case "Checkbox":
-                        let val_ = false;
+                        let val_ = 0;
                         if (value == "true" || value == 1) {
-                            val_ = true;
+                            val_ = 1;
                         }
                         this.model[name] = val_;
                         this.f.data[name] = val_;
                         break;
+
                     default:
                         this.f.data[name] = value;
                 }
@@ -109,6 +124,17 @@
             afterChange(model, val, oldValue) {
                 doTrigger(model, val, this.model, this.f.schema, this.$refs, this.$Notice);
                 doFormula(this.formula, model, this.model, this.f.schema, this.f.rule, this.f.model);
+            },
+
+            getSchemaRelationByModel(model) {
+                let index = this.f.schema.findIndex(item => item.model == model);
+                if (index >= 0)
+                    return getRelationData(this.f.schema[index], this.relations)
+                else
+                    return null
+            },
+            getRelation(item) {
+                return getRelationData(item, this.relations)
             }
         }
     };
