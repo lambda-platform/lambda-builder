@@ -55,6 +55,7 @@
         img {
             flex: 1;
             height: 60px;
+            max-width: 90%;
         }
 
     }
@@ -76,8 +77,7 @@
     }
 
     .preview-img{
-        //max-width: 90%;
+        max-width: 90%;
         max-height: 60px;
-        max-width: 80px;
     }
 }

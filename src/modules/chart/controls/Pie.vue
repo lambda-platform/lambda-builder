@@ -6,12 +6,9 @@
             :label="lang.field"
             icon="ios-list"
         >
-
             <div>
-
                 <h5 class="ve-title">{{ lang._name }}</h5>
                 <div>
-
                     <draggable
                         class="dragArea"
                         v-model="pieColumnFields.title"
@@ -111,7 +108,7 @@ import draggable from 'vuedraggable';
 import {
     mapGetters
 } from 'vuex';
-import {loadLanguageAsync} from "../../../locale";
+
 
 export default {
     methods: {
@@ -128,15 +125,7 @@ export default {
 
             this.pieColumnFields.title.splice(index, 1);
         },
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
+
     },
     mounted() {
 

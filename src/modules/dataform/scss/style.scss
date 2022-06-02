@@ -19,7 +19,6 @@
 @import "template/material";
 @import "infoModal";
 @import "viewMode";
-@import "form_moqup";
 @import "./elements/file";
 @import "./elements/map";
 @import "./elements/image_sub_form";
@@ -29,8 +28,8 @@
 @import "./elements/download";
 @import "./elements/imageDrag";
 @import "./elements/adminMenu";
-@import "./elements/birthdayPicker";
-@import "./elements/qgis";
+@import "./elements/_html";
+
 
 .form-wrapper {
     position: relative;

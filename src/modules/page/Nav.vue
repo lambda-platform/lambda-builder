@@ -29,6 +29,7 @@ export default {
             cruds: window.init.cruds,
             permissions: window.init.permissions.permissions,
             extra: window.init.permissions.extra,
+
         };
     },
     methods: {

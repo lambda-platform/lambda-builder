@@ -10,19 +10,19 @@
                     </div>
                     <div class="view-port-switcher">
                         <a href="javascript:void(0)" :class="`${mode.type} ${mode.type == 'xs' ? 'active' :''}`"
-                           @click="setMode('xs', 'Утас')">
+                           @click="setMode('xs', langMoqup.phone)">
                             <Icon type="md-phone-portrait"/>
                         </a>
                         <a href="javascript:void(0)" :class="`${mode.type} ${mode.type == 'sm' ? 'active' :''}`"
-                           @click="setMode('sm', 'Таблет')">
+                           @click="setMode('sm', langMoqup.tablet)">
                             <Icon type="md-tablet-portrait"/>
                         </a>
                         <a href="javascript:void(0)" :class="`${mode.type} ${mode.type == 'md' ? 'active' :''}`"
-                           @click="setMode('md', 'Компьютер')">
+                           @click="setMode('md', langMoqup.computer)">
                             <Icon type="md-laptop"/>
                         </a>
                         <a href="javascript:void(0)" :class="`${mode.type} ${mode.type == 'lg' ? 'active' :''}`"
-                           @click="setMode('lg', 'Том компьютер')">
+                           @click="setMode('lg', langMoqup.bigComputer)">
                             <Icon type="md-browsers"/>
                         </a>
                     </div>
@@ -42,24 +42,28 @@
                                 <Draggable v-for="(row, row_index) in ui.schema" :key="row_index">
                                     <Row :class="`${mode.type}`">
                                         <div class="pz-row-control">
+                                            <Checkbox v-model="row.sectionRenderByTab">
+                                                <span>{{ lang.render_by_tab }}</span>
+                                            </Checkbox>
+
                                             <span class="tool" @click="addSection(row.id, 1)">
-                                                <Tooltip content="Section нэмэх">
+                                                <Tooltip :content="lang.section_add">
                                                     <Icon type="md-menu"/>
                                                 </Tooltip>
                                             </span>
                                             <span class="tool" @click="addCol(row.id)">
-                                                <Tooltip content="Багана нэмэх">
+                                                <Tooltip :content="lang.add_column">
                                                     <Icon type="md-add"/>
                                                 </Tooltip>
                                             </span>
 
                                             <span class="tool" @click="deleteFromSchema(row.id)">
-                                                <Tooltip content="Устгах">
+                                                <Tooltip :content="lang._delete">
                                                     <Icon type="md-close"/>
                                                 </Tooltip>
                                             </span>
                                             <span class="row-drag-handler tool">
-                                                <Tooltip content="Зөөх">
+                                                <Tooltip :content="lang._move">
                                                     <Icon type="md-move"/>
                                                 </Tooltip>
                                             </span>
@@ -79,33 +83,9 @@
                                                     <div class="pz-col easing">
                                                         <div class="pz-col-control">
                                                             <Input type="text" v-model="col.name" size="small"
-                                                                   placeholder="Нэр авах бол"
+                                                                   :placeholder="lang.Get_name"
                                                                    class="pz-col-input"/>
                                                             <div class="pz-col-control-items">
-                                                                <Poptip placement="bottom-end" size="small">
-                                                                    <!-- <a href="javascript:void(0)" @click="addSectionCol(srow.id)"> -->
-                                                                    <span class="tool">
-                                                                          <Badge class-name="badge-visible"></Badge>
-                                                                        <Icon type="md-unlock"/></span>
-                                                                    <div class="auto-col" slot="content">
-                                                                                <Select filterable clearable style="width: 500px;text-align: left"
-                                                                                        v-model="col.visibleModelValue" clearable>
-                                                                                    <Option :value="item.query"
-                                                                                            v-for="item in custom_section_visible_query"
-                                                                                            :key="item.query">
-                                                                                        {{ item.query }}
-                                                                                    </Option>
-                                                                                </Select>
-<!--                                                                            </Col>-->
-<!--                                                                            <Col span="4">-->
-<!--                                                                                <span class="tool"-->
-<!--                                                                                      @click="clearVisibleValue(col.id)">-->
-<!--                                                                    <Icon type="md-close-circle"/>-->
-<!--                                                                </span>-->
-<!--                                                                            </Col>-->
-<!--                                                                        </Row>-->
-                                                                    </div>
-                                                                </Poptip>
                                                                 <Poptip placement="bottom-end" size="small">
                                                                     <!-- <a href="javascript:void(0)" @click="addSectionCol(srow.id)"> -->
                                                                     <span class="tool">
@@ -185,7 +165,7 @@
                                                                                        class="pz-col-input"/>
                                                                                 <Input type="text" v-model="scol.name"
                                                                                        size="small"
-                                                                                       placeholder="Нэр авах бол"
+                                                                                       :placeholder="lang.Get_name"
                                                                                        class="pz-col-input"/>
                                                                                 <div class="pz-col-control-items">
                                                                                     <a href="javascript:void(0)"
@@ -236,7 +216,7 @@
                                                             <Input type="text" v-model="col.id" size="small"
                                                                    class="pz-col-input"/>
                                                             <Input type="text" v-model="col.name" size="small"
-                                                                   class="pz-col-input" placeholder="Нэр авах бол"/>
+                                                                   class="pz-col-input" :placeholder="lang.Get_name"/>
 
                                                             <div class="pz-col-control-items">
                                                         <span class="tool" @click="deleteFromSchema(col.id)">
@@ -305,11 +285,12 @@
                                @drop="onDropMain($event)">
                         <!--form element-->
                         <Draggable v-for="(item, index) in schema" :key="index">
-                            <component v-if="item.formType != null && item.formType != 'SubForm' && !item.hidden"
-                                       :do_render="true"
-                                       :is="element(item.formType)" :model="{form: model, component: item.model}"
-                                       :label="`${item.label} | ${item.model}`" :meta="setMeta(item)"
-                                       :isBuilder="true"></component>
+                            <component
+                                v-if="item.formType != null && item.formType != 'SubForm' && !item.hidden && item.model != identity"
+                                :do_render="true"
+                                :is="element(item.formType)" :model="{form: model, component: item.model}"
+                                :label="`${item.label} | ${item.model}`" :meta="setMeta(item)"
+                                :isBuilder="true"></component>
                             <!-- sub form -->
                             <component v-if="item.formType == 'SubForm' && item.subtype"
                                        :is="element(`subform/${item.subtype}`)"
@@ -329,7 +310,7 @@ import {Container, Draggable} from 'vue-smooth-dnd'
 import {applyDrag} from './utils/helpers'
 
 export default {
-    props: ["schema", "ui", "isDisabled", "meta", "schemaID"],
+    props: ["schema", "ui", "isDisabled", "meta", "schemaID", "identity"],
     components: {
         Container,
         Draggable,
@@ -337,11 +318,11 @@ export default {
     },
     data() {
         return {
-            custom_section_visible_query:window.init.custom_section_visible_query?window.init.custom_section_visible_query:[],
             user_roles: window.init.user_roles ? window.init.user_roles : [],
             dropPlaceholderOptions: {
                 className: 'drop-preview',
                 animationDuration: '150',
+
             },
             currentDom: null,
             findElId: null,
@@ -368,16 +349,45 @@ export default {
                 [8, 16],
                 [20, 4],
                 [4, 20],
-                [6, 12, 6]
+                [6, 12, 6],
+                [6, 18],
+                [6, 10, 8],
+                [6, 8, 10]
             ]
         };
     },
     mounted() {
         // console.log('Форм угсрах');
         //  console.log(this.$props.schema);
-
     },
-
+    computed: {
+        lang() {
+            const labels = [
+                'section_add',
+                'add_column',
+                '_delete',
+                '_move',
+                'Get_name',
+                'render_by_tab',
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        langMoqup() {
+            const labels = [
+                'phone',
+                'tablet',
+                'computer',
+                'bigComputer',
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('moqup.' + labels[i]);
+                return obj;
+            }, {});
+        },
+    },
     methods: {
         shouldAcceptDrop(sourceContainerOptions, payload) {
             // console.log(sourceContainerOptions, payload)
@@ -392,6 +402,7 @@ export default {
             if (rowIndex !== null && colIndex !== null && i_index !== null) {
                 return this.ui.schema[rowIndex].children[colIndex].children[i_index]
             }
+
         },
 
         getPayloadMain(i_index) {
@@ -453,6 +464,7 @@ export default {
         addRow(parentId) {
             let rowItem = {
                 type: "row",
+                sectionRenderByTab: false,
                 id: this.idGenerator("row"),
                 name: null,
                 children: []
@@ -491,12 +503,11 @@ export default {
                 type: "row",
                 id: this.idGenerator("row"),
                 children: [],
-                visibleUserRoles: [],
-                visibleModelValue: null
+                visibleUserRoles: []
             };
 
             let sectionItem = {
-                name: "Section",
+                name: "",
                 type: "section",
                 id: this.idGenerator("section"),
                 span: {
@@ -645,16 +656,6 @@ export default {
                 .map(item => {
                     return this.removeFromTree(item, id);
                 });
-        },
-
-        clearVisibleValue(parentId) {
-            console.log("clearing " + parentId);
-            if (parentId != false) {
-                let el = this.findInTree(parentId, this.ui.schema);
-                console.log(el);
-               // el.visibleModelValue = null;
-            }
-
         }
     }
 };

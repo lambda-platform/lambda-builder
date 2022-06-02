@@ -1,19 +1,18 @@
 import Vue from "vue";
-import VueI18n from 'vue-i18n';
+import VueI18n from 'vue-i18n'
 import mn_MN from "./mn_MN";
 
 
 const messages = {
     mn_MN
 }
-Vue.use(VueI18n);
+Vue.use(VueI18n)
+
 export const i18n = new VueI18n({
     locale: 'mn_MN',
     fallbackLocale: 'mn_MN',
     messages
 })
-
-
 
 const loadedLanguages = ['mn_MN'];
 
@@ -35,8 +34,6 @@ export const loadLanguageAsync = (lang) => {
         return Promise.resolve(setI18nLanguage(lang))
     }
 
-
-
     if (window.lambda.static_words[lang]) {
         i18n.setLocaleMessage(lang, {auth: window.lambda.static_words[lang]});
         loadedLanguages.push(lang)
@@ -48,7 +45,6 @@ export const loadLanguageAsync = (lang) => {
 
                 i18n.setLocaleMessage(lang, messages.default)
                 loadedLanguages.push(lang)
-
                 return setI18nLanguage(lang)
             }
         )

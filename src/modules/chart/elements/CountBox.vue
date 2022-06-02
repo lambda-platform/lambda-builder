@@ -24,7 +24,7 @@ import {
     idGenerator
 } from "../utils/id"
 export default {
-    props: ['countFields', 'type', 'chart_title', 'id', 'chart_filter', 'filters', 'bgColor', 'icon', 'link', 'linkTitle', 'textColor'],
+    props: ['countFields', 'type', 'chart_title', 'id', 'chart_filter', 'filters', 'bgColor', 'icon', 'link', 'linkTitle', 'textColor', 'projectDomain'],
     methods: {
         showNumber(v){
             return getNumber(v);
@@ -41,8 +41,11 @@ export default {
 
         },
         dataCaller(filter) {
-
-            axios.post('/ve/get-data-count', {
+            let url = '/ve/get-data-count';
+            if(this.projectDomain){
+                url = this.projectDomain+url;
+            }
+            axios.post(url, {
                 countFields: this.countFields
 
             }).then(response => {

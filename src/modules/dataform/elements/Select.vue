@@ -65,42 +65,30 @@
             <Button shape="circle" type="primary"  icon="ios-help-circle" size="small" @click="showInfoModal"></Button>
         </div>
 
-        <paper-modal
-            :name="`add-modal-${model.component}`"
-            class="add-modal"
+        <Modal
             :min-width="200"
             :min-height="100"
-            :pivot-y="0.5"
-            :adaptive="true"
-            :reset="true"
             :draggable="true"
-            :resizable="true"
-            draggable=".add-tool"
-            width="600"
+            :footer-hide="true"
+            :title="label"
+            width="800"
             height="70%"
-            v-if="addAble">
-            <section class="add-modal">
-                <div class="add-tool">
+            v-model="modal_show"
+            v-if="addAble"
+        >
+            <section class="add-modal" v-if="modal_show">
 
-                    <h4>{{label}}</h4>
-                    <div class="add-tool-actions">
-
-
-                        <a href="javascript:void(0)" @click="closeModal">
-                            <i class="ti-close"></i>
-                        </a>
-                    </div>
-                </div>
 
                 <div class="add-body">
                     <dataform ref="form" :schemaID="meta.relation.addFrom"
                               :editMode="false"
                               :onSuccess="onSuccess"
+                              :url="addFromUrl()"
                               :do_render="modal_show"
                               :onError="onError"></dataform>
                 </div>
             </section>
-        </paper-modal>
+        </Modal>
     </FormItem>
 
 </template>
@@ -112,6 +100,14 @@
     export default {
         props: ["model", "rule", "label", "meta", "disabled", "relation_data", "do_render", "showInformationModal"],
         computed: {
+                lang() {
+                    const labels = ['dataNotFound', ];
+
+                    return labels.reduce((obj, key, i) => {
+                        obj[key] = this.$t('dataForm.' + labels[i]);
+                        return obj;
+                    }, {});
+                },
             options() {
                 if (isValid(this.meta) && isValid(this.meta.options) && this.meta.options.length >= 1) {
                     if(this.searchval)
@@ -176,9 +172,23 @@
                     }
                 }
             },
+            addFromUrl(){
+
+                if(window.init.microserviceSettings) {
+                    let si = window.init.microserviceSettings.findIndex(set=>set.project_id == this.meta.relation.addFromMicroservice);
+
+                    if(si >= 0){
+                        return  window.init.microserviceSettings[si].production_url;
+                    } else {
+                        return ""
+                    }
+                } else {
+                    return ""
+                }
+            },
             showAddModal() {
                 this.modal_show = true;
-                this.$modal.show(`add-modal-${this.model.component}`);
+               // this.$modal.show(`add-modal-${this.model.component}`);
             },
             clearState()
             {
@@ -188,7 +198,7 @@
             },
             closeModal() {
                 this.modal_show = false;
-                this.$modal.hide(`add-modal-${this.model.component}`);
+              //  this.$modal.hide(`add-modal-${this.model.component}`);
             },
             //Form functions
             onSuccess(val) {
@@ -209,7 +219,7 @@
                 if(this.model.form[this.model.component]){
                     window.showInformationModal(`${this.meta.info_url}${this.model.form[this.model.component]}`, this.meta.placeHolder);
                 } else {
-                    this.$Message.success('Өгөгдөл сонгогдоогүй байна !!!');
+                    this.$Message.success(this.lang.dataNotFound);
                 }
             }
         },
@@ -242,7 +252,13 @@
                     if (this.meta.relation.multiple == true) {
                         Vue.set(this.model.form, this.model.component, val.map(vv => vv['value']).join(','));
                     } else {
-                        Vue.set(this.model.form, this.model.component, val['value']);
+                        if (val['value'] == "" || val['value'] === null) {
+                            Vue.set(this.model.form, this.model.component, null);
+                        } else  if(!isNaN(val['value'])) {
+                            Vue.set(this.model.form, this.model.component, val['value']*1);
+                        } else {
+                            Vue.set(this.model.form, this.model.component, val['value']);
+                        }
                     }
                     this.clearAble=true;
                 }

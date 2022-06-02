@@ -17,11 +17,17 @@ export function toMoment(date) {
 }
 
 export function toTime(time) {
+
     return Moment(time, 'HH:mm:ss')
+
 }
 
 export function toDateTime(datetime) {
     return Moment(datetime, 'YYYY-MM-DD HH:mm:ss')
+}
+
+export function now() {
+    return Moment().format("YYYY-MM-DD HH:mm:ss")
 }
 
 export function getDateTime(date) {

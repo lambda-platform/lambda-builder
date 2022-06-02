@@ -44,7 +44,7 @@ export default {
             menu: [],
             property: {
                 template: "canvas",
-                title: "Бүртгэл",
+                title: "Ачааны бүртгэл",
                 grid: 158,
                 form: ""
             },

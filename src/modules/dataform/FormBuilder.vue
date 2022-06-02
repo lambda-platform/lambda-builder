@@ -4,25 +4,26 @@
         <div class="fb-sidebar">
             <div class="fb-control">
                 <div class="fb-control-item">
-                    <label>Формын нэр</label>
-                    <Input v-model="formName" placeholder="Формын нэр"/>
+                    <label>{{ lang.Form_name }}</label>
+                    <Input v-model="formName" :placeholder="lang.Form_name"/>
                 </div>
 
                 <div class="fb-control-item">
-                    <label>Формын төрөл</label>
-                    <Select v-model="dataform.ui.type" placeholder="Формын төрөл" clearable>
+                    <label>{{ lang.Form_type }}</label>
+                    <Select v-model="dataform.ui.type" :placeholder="lang.Form_type" clearable>
                         <Option value="normal">
-                            Энгийн форм
+                            {{ lang.Simple_form }}
                         </Option>
                         <Option value="wizard">
-                            Алхамтай форм
+                            {{ lang.Step_by_step_form }}
                         </Option>
                     </Select>
                 </div>
 
                 <div class="fb-control-item">
-                    <label>Өгөгдлийн хүснэгт</label>
-                    <Select v-if="!editMode" v-model="dataform.model" placeholder="Хүснэгт сонгох" clearable filterable
+                    <label>{{ lang.data_table }}</label>
+                    <Select v-if="!editMode" v-model="dataform.model" :placeholder="lang.selectTable" clearable
+                            filterable
                             @on-change="setBuilder">
                         <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
                     </Select>
@@ -30,8 +31,8 @@
                 </div>
 
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
-                    <label>ID талбар</label>
-                    <Select v-model="dataform.identity" placeholder="ID талбар" clearable>
+                    <label>{{ lang.idField }}</label>
+                    <Select v-model="dataform.identity" :placeholder="lang.idField" clearable>
                         <Option v-for="item in dataform.schema" :value="item.model" :key="item.index">{{ item.model }}
                         </Option>
                     </Select>
@@ -39,69 +40,87 @@
 
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
                     <Checkbox v-model="dataform.timestamp">
-                        <span>Огноо автоматаар үүсэх</span>
+                        <span>{{ lang.Date_generated_automatically }}</span>
+                    </Checkbox>
+                </div>
+
+                <div class="fb-control-item" v-if="isModelSelected || editMode">
+                    <Checkbox v-model="dataform.disableReset">
+                        <span>Шинээр бөглөх товч нуух</span>
+                    </Checkbox>
+                </div>
+                <div class="fb-control-item" v-if="isModelSelected || editMode">
+                    <Checkbox v-model="dataform.withBackButton">
+                        <span>Буцах товч</span>
                     </Checkbox>
                 </div>
 
                 <div class="divider" v-if="isModelSelected || editMode"></div>
 
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
-                    <label>Лабелын байршил</label>
+                    <label>{{ lang.Label_location }}</label>
                     <RadioGroup v-model="dataform.labelPosition" @on-change="setLabelWidth">
-                        <Radio label="top"></Radio>
-                        <Radio label="left"></Radio>
+                        <Radio label="top">
+                            <span>{{ lang._top }}</span>
+                        </Radio>
+                        <Radio label="left">
+                            <span>{{ lang._left }}</span>
+                        </Radio>
                     </RadioGroup>
                     <InputNumber v-if="dataform.labelPosition == 'left'" v-model="dataform.labelWidth"></InputNumber>
                 </div>
 
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
-                    <label>Формын өргөн /px/</label>
-                    <Input v-model="dataform.width" placeholder="Формын өргөн"/>
+                    <label>{{ lang.Form_width }} /px/</label>
+                    <Input v-model="dataform.width" :placeholder="lang.Form_width"/>
                 </div>
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
-                    <label>Хадгалах товчний үг</label>
-                    <Input v-model="dataform.save_btn_text" placeholder="Хадгалах товчны үг"/>
+                    <label>{{ lang.Save_button_word }}</label>
+                    <Input v-model="dataform.save_btn_text" :placeholder="lang.Save_button_word"/>
+                </div>
+                <div class="fb-control-item" v-if="isModelSelected || editMode">
+                    <label>Хадаглах үеийн дутуу бөгөлхөд харуулах алдаа</label>
+                    <Input v-model="dataform.formValidationCustomText"/>
                 </div>
 
                 <div class="fb-control-item" v-if="isModelSelected || editMode">
-                    <label>Padding - зай авалт /px/</label>
+                    <label>{{ lang.Padding_spacing }} /px/</label>
                     <InputNumber v-model="dataform.padding"></InputNumber>
                 </div>
             </div>
 
             <div class="fb-submit">
-                <Button type="success" long @click="saveForm">
-                    {{ `${$static_words ? $static_words.save : 'Хадгалах'}` }}
-                </Button>
+                <Button type="success" long @click="saveForm">{{ lang.save }}</Button>
             </div>
         </div>
 
         <div class="fb-workspace">
             <Tabs type="card" :animated="false">
-                <TabPane label="Үндсэн тохиргоо" :key="`main-tab`" icon="md-code-working">
+                <TabPane :label="lang.basicSettings" :key="`main-tab`" icon="md-code-working">
                     <div class="crud-config">
                         <div class="crud-table">
                             <Row class="crud-table-header">
-                                <Col span="5"> Модел</Col>
-                                <Col span="5"> Харагдах нэр</Col>
-                                <Col span="4"> Формын төрөл</Col>
-                                <Col span="2" class="center"> Нуух</Col>
-                                <Col span="2" class="center"> Идэвхигүй</Col>
-                                <Col span="2" class="center"> Орчуулга</Col>
-                                <Col span="3" class="center">
-                                    <span>...</span>
-                                </Col>
+                                <Col span="3"> {{ lang.model }}</Col>
+                                <Col span="5"> {{ lang.displayName }}</Col>
+                                <Col span="5"> {{ lang.Form_type }}</Col>
+                                <Col span="2" class="center"> {{ lang.hide }}</Col>
+                                <Col span="4" class="center"> {{ lang.inactive }}</Col>
+                                <Col span="3" class="center"> {{ lang.translation }}</Col>
+                                <Col span="2" class="center"><span>...</span></Col>
                             </Row>
                             <div class="crud-table-body">
                                 <form-item v-for="item in dataform.schema" v-if="item.formType !== 'SubForm' "
                                            :key="item.index" :schema="dataform.schema" :item="item" :edit="editMode"
-                                           :sub="false" :disabled="isDisabled(item)"></form-item>
+                                           :otherGrids="otherGrids"
+                                           :projectID="projectID"
+                                           :sub="false" :disabled="isDisabled(item)">
+                                </form-item>
                             </div>
                         </div>
                     </div>
                 </TabPane>
                 <!-- Formula confiration -->
-                <TabPane label="Томъёо" icon="md-calculator">
+                <TabPane :label="lang.formula" icon="md-calculator">
                     <div class="form-builder">
                         <div class="formula-wrapper">
                             <Row type="flex">
@@ -109,43 +128,42 @@
                                     <div class="formula-form-wrapper">
                                         <Form ref="formula" label-position="top" :model="formulaForm"
                                               :rules="formulaRule">
-                                            <FormItem prop="form" label="Форм ">
+                                            <FormItem prop="form" :label="lang._form">
                                                 <Select v-model="formulaForm.form">
                                                     <Option value="main">
-                                                        Үндсэн форм
+                                                        {{ lang.basic_from }}
                                                     </Option>
                                                     <Option v-for="f in dataform.schema" v-if="f.formType == 'SubForm'"
                                                             :key="f.index"
-                                                            :value="f.model">{{
-                                                            f.model
-                                                        }}
+                                                            :value="f.model">
+                                                        {{ f.model }}
                                                     </Option>
                                                 </Select>
                                             </FormItem>
-                                            <FormItem prop="template" label="Томъёо, Нөхцөл ">
+                                            <FormItem prop="template" :label="lang.formula_conditions">
                                                 <Input type="text" v-model="formulaForm.template"
-                                                       placeholder="Томъёо, Нөхцөл"/>
+                                                       :placeholder="lang.formula_conditions"/>
                                                 <p class="formula-helper">
-                                                    Томъёо: {a}+{b} | Нөхцөл: {a}>={b}, '{a}' == 'test' ...
+                                                    {{ lang.formula }}: {a}+{b} | {{ lang.conditions }}: {a}>={b}, '{a}'
+                                                    == 'test' ...
                                                 </p>
                                             </FormItem>
 
                                             <FormItem v-for="(target, index) in formulaForm.targets" :key="index"
-                                                      :label="'Талбар: '+ (index+1)">
+                                                      :label="lang.field + (index+1)">
                                                 <Row :gutter="8" :label="80">
                                                     <Col span="10">
                                                         <Select v-model="target.field"
-                                                                placeholder="Талбар" v-if="formulaForm.form == 'main'">
+                                                                :placeholder="lang.field"
+                                                                v-if="formulaForm.form == 'main'">
                                                             <Option v-for="(ss, index_) in dataform.schema"
                                                                     :value="ss.model" :key="index_">{{
                                                                     ss.model
                                                                 }}
                                                             </Option>
-
-
                                                         </Select>
                                                         <Select v-model="target.field"
-                                                                placeholder="Талбар"
+                                                                :placeholder="lang.field"
                                                                 v-for="(f, f_index) in dataform.schema" :key="f_index"
                                                                 v-if="f.formType == 'SubForm' && f.model == formulaForm.form && formulaForm.form != 'main'">
                                                             <Option v-for="(f_, f__index) in f.schema"
@@ -170,14 +188,12 @@
 
                                             <FormItem>
                                                 <Button type="dashed" long @click="addFormulaTarget" icon="md-add">
-                                                    Талбар нэмэх
+                                                    {{ lang.add_a_field }}
                                                 </Button>
                                             </FormItem>
 
                                             <FormItem>
-                                                <Button type="primary" @click="addFormula">
-                                                    {{ `${$static_words ? $static_words.add : 'Нэмэх'}` }}
-                                                </Button>
+                                                <Button type="primary" @click="addFormula">{{ lang.add }}</Button>
                                             </FormItem>
                                         </Form>
                                     </div>
@@ -187,61 +203,107 @@
                                            height="400"></Table>
                                 </Col>
                             </Row>
-
-
                         </div>
                     </div>
                 </TabPane>
 
-                <TabPane label="Триггер" icon="md-link">
+                <TabPane :label="`${lang.trigger}, Нэмэлт үйлдэл`" icon="md-link">
                     <div class="trigger-wrapper">
                         <table>
                             <tr>
                                 <td>
-                                    <label>Controller namespace</label>
+                                    <label>{{ lang.controller_namespace }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model="dataform.triggers.namespace" placeholder="Namespace"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Нэмэхийн өмнө</label>
-                                </td>
-                                <td>
-                                    <Input v-model="dataform.triggers.insert.before" placeholder="Before insert"/>
+                                    <Input v-model="dataform.triggers.namespace" :placeholder="lang.namespace"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Нэмсний дараа</label>
+                                    <label>{{ lang.before_insert }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model="dataform.triggers.insert.after" placeholder="After insert"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Шинэчлэхийн өмнө</label>
-                                </td>
-                                <td>
-                                    <Input v-model="dataform.triggers.update.before" placeholder="Before update"/>
+                                    <Input v-model="dataform.triggers.insert.before" :placeholder="lang.before_insert"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Шинэчилсний дараа</label>
+                                    <label>{{ lang.after_insert }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model="dataform.triggers.update.after" placeholder="After update"/>
+                                    <Input v-model="dataform.triggers.insert.after" :placeholder="lang.after_insert"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>{{ lang.before_update }}</label>
+                                </td>
+                                <td>
+                                    <Input v-model="dataform.triggers.update.before" :placeholder="lang.before_update"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>{{ lang.after_update }}</label>
+                                </td>
+                                <td>
+                                    <Input v-model="dataform.triggers.update.after" :placeholder="lang.after_update"/>
                                 </td>
                             </tr>
                         </table>
+                        <br>
+                        <div>
+                            <Row gutter="20">
+                                <Col span="12">
+                                    <h4>Нэмэлт товчлуур</h4>
+                                    <Form ref="extra_button" label-position="top" :model="extraButtonForm"
+                                          :rules="extraButtonRule">
+                                        <FormItem prop="icon" label="Icon">
+
+                                            <button type="button"
+                                                    class="ivu-btn ivu-btn-default ivu-btn-circle ivu-btn-icon-only"
+                                                    @click="iconSelector = true">
+                                                <i :class="`${extraButtonForm.icon} menu-icon-preview`"
+                                                   v-if="extraButtonForm.icon"></i>
+                                                <span v-else></span>
+                                            </button>
+                                        </FormItem>
+                                        <FormItem label="Өнгө" prop="color">
+                                            <ColorPicker v-model="extraButtonForm.color"  style="float: right" :alpha="false" />
+                                        </FormItem>
+                                        <FormItem>
+                                            <FormItem prop="title" label="Нэр">
+                                                <Input type="text" v-model="extraButtonForm.title"
+                                                       placeholder="Нэр"/>
+                                            </FormItem>
+                                        </FormItem>
+                                        <FormItem>
+                                            <FormItem prop="url" label="Холбоос">
+                                                <Input type="text" v-model="extraButtonForm.url"
+                                                       placeholder="Холбоос"/>
+                                            </FormItem>
+                                        </FormItem>
+
+                                        <Button @click="addExtraButton"
+                                                icon="md-add"> Нэмэх
+                                        </Button>
+                                    </Form>
+
+
+                                    <IconSelector @setIcon="setIcon" :iconSelector="iconSelector"/>
+                                </Col>
+                                <Col span="12">
+                                    <Table border size="small" :columns="extraButtonColumns" :data="dataform.extraButtons"
+                                           height="400"></Table>
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
                 </TabPane>
 
-                <TabPane label="Харагдах байдал" icon="md-apps">
-                    <form-moqup :mode="mode" :schema="dataform.schema" :ui="dataform.ui" :schemaID="schemaID" :meta="{
+                <TabPane :label="lang.userInterface" icon="md-apps">
+                    <form-moqup :mode="mode" :schema="dataform.schema" :ui="dataform.ui" :schemaID="schemaID"
+                                :identity="dataform.identity" :meta="{
                             labelPosition: dataform.labelPosition,
                             labelWidth: dataform.labelWidth
                         }" :isDisabled="isDisabled">
@@ -249,13 +311,14 @@
                 </TabPane>
 
                 <TabPane v-for="(f, index) in dataform.schema" v-if="f.formType == 'SubForm'" :key="index"
-                         :label="tabLabel(f.model, f.name)">
-                    <sub-form :f="f" :edit="editMode" :otherForms="otherForms"></sub-form>
+                         :label="tabLabel(f.model, f.name )">
+                    <sub-form :f="f" :edit="editMode" :otherForms="otherForms" :otherGrids="otherGrids"
+                              :projectID="projectID"></sub-form>
                 </TabPane>
 
                 <div slot="extra">
                     <Button @click="addSubForm" :disabled="!isModelSelected && !editMode" size="small"
-                            icon="md-add"> Дэд форм
+                            icon="md-add"> {{ lang._subform }}
                     </Button>
                 </div>
             </Tabs>
@@ -270,91 +333,75 @@ import subForm from "./SubForm";
 import FormMoqup from "./FormMoqup";
 import {idGenerator} from "./utils/methods";
 import {getTableMeta} from "./utils/helpers";
+import {getTableView} from "../../utils";
+import IconSelector from "../../components/IconSelector";
+
 
 export default {
-    props: ["src", "schemaID", "editMode", "onCreate", "onUpdate"],
+    props: ["src", "schemaID", "editMode", "onCreate", "onUpdate", "projectID"],
     components: {
         draggable,
+        IconSelector: IconSelector,
         "form-item": formItem,
         "sub-form": subForm,
         "form-moqup": FormMoqup,
     },
+    watch: {
+        reCallDataAw() {
+            console.log("watch ajilj bn");
+            //this.data();
+        },
+    },
+    computed: {
+        lang() {
+            const labels = ['Form_name', 'Form_type', 'Simple_form', 'Step_by_step_form', 'data_table', 'selectTable', 'idField',
+                'Date_generated_automatically', 'Label_location', 'Form_width', 'Save_button_word', 'Padding_spacing', 'save', 'model',
+                'displayName', 'hide', 'inactive', 'translation', 'basicSettings', 'formula', 'trigger', 'userInterface', '_subform', '_form'
+                , 'formula_conditions', 'field', 'basic_from', 'conditions', 'add_a_field', 'add', 'controller_namespace', 'namespace',
+                'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
+                'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab'];
 
-    data() {
-        return {
-            otherForms: [],
-            loadConfig: true,
-            loading: false,
-            //Form part
-            tableList: window.init.dbSchema.tableList,
-            isModelSelected: false,
-            formName: null,
-            dataform: {
-                model: null,
-                identity: null,
-                timestamp: false,
-                labelPosition: "top",
-                labelWidth: null,
-                width: "600px",
-                save_btn_text: "Хадгалах",
-                padding: 8,
-                schema: [],
-                ui: {
-                    type: "normal",
-                    schema: []
-                },
-                triggers: {
-                    namespace: '',
-                    insert: {
-                        before: null,
-                        after: null
-                    },
-                    update: {
-                        before: null,
-                        after: null
-                    }
-                }
-            },
-
-            //Formula data
-            formula: [],
-            formulaForm: {
-                form: 'main',
-                targets: [],
-                template: "",
-
-            },
-            formulaProps: ['value', 'hidden', 'disabled'],
-
-            formulaRule: {
-
-                template: [
-                    {
-                        required: true,
-                        message: "Томъёогоо оруулна уу",
-                        trigger: "blur"
-                    }
-                ]
-            },
-
-            formulaColumns: [
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        _alert() {
+            const labels = [
+                'formInformationSavedSuccessfully',
+                'please_enter_formula',
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('alertMessage.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        dataGrid() {
+            const labels = ['successfullySaved', 'anErrorOccurredWhileSaving'];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataGrid.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        formulaColumns() {
+            return [
                 {
-                    title: "Форм",
+                    title: this.lang._form,
                     key: "form",
                     minWidth: 150
                 },
                 {
-                    title: "Томъёо, Нөхцөл",
+                    title: this.lang.formula_conditions,
                     key: "template",
-                    minWidth: 150
+                    minWidth: 150,
                 },
                 {
-                    title: "Талбар",
+                    title: this.lang.field,
                     key: "targets",
-                    minWidth: 200
+                    minWidth: 200,
                 },
                 {
-                    title: "Устгах",
+                    title: this.lang._delete,
                     key: "action",
                     width: 100,
                     align: "center",
@@ -373,12 +420,226 @@ export default {
                                         }
                                     }
                                 },
+                                this.lang._delete
+                            )
+                        ]);
+                    }
+                }
+            ]
+        },
+        extraButtonColumns() {
+            return [
+                {
+                    title: "Нэр",
+                    key: "title",
+                    minWidth: 150
+                },
+                {
+                    title: "Icon",
+                    key: "icon",
+                    minWidth: 150,
+                },
+                {
+                    title: "Өнгө",
+                    key: "color",
+                    minWidth: 150,
+                },
+                {
+                    title: "Холбоос",
+                    key: "url",
+                    minWidth: 200,
+                },
+                {
+                    title: "Устгах",
+                    key: "action",
+                    width: 100,
+                    align: "center",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.dataform.extraButtons.splice(params.index, 1);
+                                        }
+                                    }
+                                },
                                 "Устгах"
                             )
                         ]);
                     }
                 }
-            ],
+            ]
+        },
+        formulaRule() {
+            return {
+                template: [
+                    {
+                        required: true,
+                        message: this._alert.please_enter_formula,
+                        trigger: "blur"
+                    }
+                ]
+            }
+        },
+        tableList() {
+            return getTableView("table");
+        },
+        extraButtonRule() {
+            return {
+                icon: [
+                    {
+                        required: true,
+                        message: "Icon сонгоно уу",
+                        trigger: "blur"
+                    },
+                ],
+
+                title: [
+                    {
+                        required: true,
+                        message: "Нэр оруулна уу",
+                        trigger: "blur"
+                    },
+                ],
+
+                color: [
+                    {
+                        required: true,
+                        message: "Өнгө оруулна уу",
+                        trigger: "blur"
+                    },
+                ],
+
+                url: [
+                    {
+                        required: true,
+                        message: "Холбоос оруулна уу",
+                        trigger: "blur"
+                    },
+                ]
+            }
+        },
+    },
+
+    data() {
+        return {
+            otherForms: [],
+            otherGrids: [],
+            loadConfig: true,
+            loading: false,
+            //Form part
+
+            isModelSelected: false,
+            formName: null,
+            dataform: {
+                model: null,
+                identity: null,
+                timestamp: false,
+                labelPosition: "top",
+                labelWidth: null,
+                width: "600px",
+                save_btn_text: "Хадгалах",
+                formValidationCustomText: "",
+                padding: 8,
+                schema: [],
+                ui: {
+                    type: "normal",
+                    schema: []
+                },
+                triggers: {
+                    namespace: '',
+                    insert: {
+                        before: null,
+                        after: null
+                    },
+                    update: {
+                        before: null,
+                        after: null
+                    }
+                },
+                extraButtons:[],
+                disableReset:false,
+                withBackButton:false
+            },
+
+            //Formula data
+            formula: [],
+            formulaForm: {
+                form: 'main',
+                targets: [],
+                template: "",
+
+            },
+            formulaProps: ['value', 'hidden', 'disabled'],
+            extraButtonForm: {
+                icon: "",
+                title: "",
+                url: "",
+                color:""
+            },
+            iconSelector: false,
+
+            // formulaRule: {
+            //
+            //     template: [
+            //         {
+            //             required: true,
+            //             message: "Томъёогоо оруулна уу1234",
+            //             trigger: "blur"
+            //         }
+            //     ]
+            // },
+
+            // formulaColumns: [
+            //     {
+            //         title: this.langPerWords('_form'),
+            //         // title: "Форм",
+            //         key: "form",
+            //         minWidth: 150
+            //     },
+            //     {
+            //         title: this.langPerWords('formula_conditions'),
+            //         // title: "Томъёо, Нөхцөл",
+            //         key: "template",
+            //         minWidth: 150,
+            //     },
+            //     {
+            //         title: "Талбар+++",
+            //         key: "targets",
+            //         minWidth: 200,
+            //     },
+            //     {
+            //         title: "Устгах",
+            //         key: "action",
+            //         width: 100,
+            //         align: "center",
+            //         render: (h, params) => {
+            //             return h("div", [
+            //                 h(
+            //                     "Button",
+            //                     {
+            //                         props: {
+            //                             type: "error",
+            //                             size: "small"
+            //                         },
+            //                         on: {
+            //                             click: () => {
+            //                                 this.removeFormula(params.index);
+            //                             }
+            //                         }
+            //                     },
+            //                     "Устгах"
+            //                 )
+            //             ]);
+            //         }
+            //     }
+            // ],
 
         };
     },
@@ -386,9 +647,33 @@ export default {
     created() {
         this.init();
     },
-
     methods: {
+
+        setIcon(icon) {
+            this.extraButtonForm.icon = icon;
+            this.iconSelector = false;
+        },
         idGenerator: idGenerator,
+        addExtraButton(){
+            this.$refs["extra_button"].validate(valid => {
+                if (valid) {
+                    if(this.dataform.extraButtons === undefined){
+                        this.dataform.extraButtons = [];
+                    }
+
+                    this.dataform.extraButtons.push({
+                        icon:this.extraButtonForm.icon,
+                        title:this.extraButtonForm.title,
+                        url:this.extraButtonForm.url,
+                        color:this.extraButtonForm.color,
+                    });
+                    this.extraButtonForm.icon = "";
+                    this.extraButtonForm.title = "";
+                    this.extraButtonForm.url = "";
+                    this.extraButtonForm.color = "";
+                }
+            });
+        },
         //Formula functions
         addFormula() {
             this.$refs["formula"].validate(valid => {
@@ -430,28 +715,49 @@ export default {
             this.formulaForm.targets.splice(index, 1);
         },
 
-        async callOtherForms() {
+        async callOtherFormsGrids() {
             window.otherFormsRequestCalled = true
             if (window.otherForms) {
                 this.otherForms = window.otherForms;
             } else {
-                let res = await axios.get('/lambda/puzzle/schema/form');
+                let url = '/lambda/puzzle/schema/form'
+
+                if (this.projectID) {
+                    // url = `/lambda/puzzle/project/${this.projectID}/form`
+                    url = `/lambda/puzzle/projects/form`
+
+                }
+
+                let res = await axios.get(url);
                 window.otherForms = res.data.data;
                 this.otherForms = res.data.data;
+            }
+            if (window.otherGrids) {
+                this.otherGrids = window.otherGrids;
+            } else {
+                let url = '/lambda/puzzle/schema/grid'
+                if (this.projectID) {
+                    url = `/lambda/puzzle/projects/grid`
+                }
+                let res = await axios.get(url);
+                window.otherGrids = res.data.data;
+                this.otherGrids = res.data.data;
             }
         },
         //Form functions
         async init() {
             if (this.$props.editMode == true) {
                 this.loading = true;
-                let res = await axios.get(this.$props.src + "/builder");
-
+                let res = await axios.get(this.$props.src + "/builder")
                 try {
-                    console.log(res.data);
+
 
                     this.formName = res.data.data.hasOwnProperty('name') ? res.data.data.name : res.data.data.model;
+
                     this.dataform = JSON.parse(res.data.data.schema);
-                    await this.callOtherForms();
+
+                    await this.callOtherFormsGrids();
+
                     await this.updateSyncForm();
 
                     this.loading = false;
@@ -462,7 +768,7 @@ export default {
 
 
             } else {
-                await this.callOtherForms();
+                await this.callOtherFormsGrids();
                 this.loading = false;
             }
         },
@@ -473,6 +779,7 @@ export default {
             //Remove DB deleted field from schema
             let preSchema = [];
             await Promise.all(this.dataform.schema.map(async (item) => {
+
 
                 let deletedField = _.find(dbSchema, {
                     model: item.model
@@ -488,6 +795,7 @@ export default {
                 }
 
                 if (item.formType == "SubForm") {
+
                     //DB field sync
                     let dbSchema_sub = getTableMeta(item.model);
 
@@ -521,7 +829,6 @@ export default {
 
 
             this.dataform.schema = preSchema;
-
             //Sync added DB field
             dbSchema.forEach(item => {
                 let newField = _.find(this.dataform.schema, {
@@ -537,18 +844,6 @@ export default {
                 Vue.set(this.dataform, "ui", {});
                 Vue.set(this.dataform.ui, "schema", []);
             }
-            //Check section has visible object and visibleUserRoles
-            // this.dataform.ui.schema.map(sch => {
-            //     sch.children.map((c) => {
-            //         if (c.type == "section" && !('visibleModelValue' in c)) {
-            //             c.visibleModelValue={model:null,eq:null,value:null};
-            //         }
-            //         if(c.type == "section" && !('visibleUserRoles' in c))
-            //         {
-            //             c.visibleUserRoles= [];
-            //         }
-            //     });
-            // });
 
             if (typeof this.dataform.triggers == "undefined") {
                 let triggers = {
@@ -564,10 +859,16 @@ export default {
 
                 Vue.set(this.dataform, "triggers", triggers);
             }
+            if (typeof this.dataform.extraButtons == "undefined") {
+
+                Vue.set(this.dataform, "extraButtons", []);
+            }
 
             this.dataform.schema.forEach(item => {
                 this.updateSyncItem(item);
             });
+
+
         },
 
         updateSyncItem(item) {
@@ -608,6 +909,7 @@ export default {
             });
 
             this.loading = false;
+
         },
 
         setSchemaItem(item) {
@@ -638,6 +940,7 @@ export default {
                 rules: [],
                 hasTranslation: false,
                 hasUserId: false,
+                fillByUserField: null,
                 hasEquation: false,
                 equations: '',
                 isGridSearch: false,
@@ -649,6 +952,7 @@ export default {
                 },
                 isFkey: false,
                 relation: {
+                    microservice_id: null,
                     table: null,
                     key: null,
                     fields: [],
@@ -657,7 +961,9 @@ export default {
                     multiple: false,
                     filter: "",
                     parentFieldOfForm: "",
-                    parentFieldOfTable: ""
+                    parentFieldOfTable: "",
+                    addFrom: false,
+                    addFromMicroservice: null
                 },
                 span: {
                     xs: 24,
@@ -690,23 +996,34 @@ export default {
         setLabelWidth(val) {
             this.dataform.labelWidth = val == "top" ? 0 : 80;
         },
-
         //Sub Form
         addSubForm() {
             let subForm = {
                 id: idGenerator("subform"),
                 identity: null,
-                name: "Дэд форм",
+                name: this.lang._subform,
                 min_height: null,
                 formType: "SubForm",
                 subtype: "Grid",
                 formId: null,
+                addFromGrid: false,
+                checkEmpty: false,
+                EmptyErrorMsg: "",
+                sourceMicroserviceID: null,
+                sourceGridID: null,
+                sourceGridModalTitle: "",
+                sourceGridTargetColumns: [],
+                sourceGridTitle: "",
+                sourceGridDescription: "",
+                sourceGridUserCondition: "",
+                sourceUniqueField: "",
                 parent: null,
                 model: null,
                 data: null,
                 rule: null,
                 timestamp: false,
                 disableDelete: false,
+                disableEdit: false,
                 disableCreate: false,
                 showRowNumber: false,
                 useTableType: false,
@@ -720,7 +1037,6 @@ export default {
                 },
                 schema: []
             };
-
             this.dataform.schema.push(subForm);
         },
 
@@ -747,7 +1063,7 @@ export default {
         removeConfirmation(model) {
             this.$Modal.confirm({
                 title: "",
-                content: "<p>Дэд формыг устгах уу?</p>",
+                content: "<p>" + this.lang.pleaseDeleteSubDForm + "</p>",
                 okText: "Тийм",
                 cancelText: "Үгүй",
                 onOk: () => {
@@ -763,15 +1079,19 @@ export default {
                 item => item.model !== model
             );
             this.dataform.ui.schema = this.removeSubFromUI(this.dataform.ui.schema, model);
+
+
         },
 
         removeSubFromUI(schema, model) {
             return schema.filter(
                 item => item.model !== model
             ).map(item => {
+
                 if (item.children) {
                     item.children = this.removeSubFromUI(item.children, model)
                 }
+
                 return item
             });
         },
@@ -797,7 +1117,9 @@ export default {
 
         syncSchema() {
             this.dataform.schema.forEach(item => {
+
                 this.findAndReplace(item, this.dataform.ui.schema);
+
                 return item;
             });
         },
@@ -808,28 +1130,31 @@ export default {
                 name: this.formName,
                 schema: JSON.stringify(this.dataform)
             };
-
+            let defualtURL = `/lambda/puzzle/schema/form`;
+            if (this.projectID) {
+                defualtURL = `/lambda/puzzle/project/${this.projectID}/form`
+            }
             let submitUrl = this.$props.editMode
                 ? this.$props.src
-                : `/lambda/puzzle/schema/form`;
+                : defualtURL;
 
             axios.post(submitUrl, data).then(({data}) => {
                 if (data.status) {
                     if (this.editMode) {
                         this.$Notice.success({
-                            title: 'Амжилттай хадгалагдлаа',
-                            desc: `"${this.formName}" формын мэдээлэл амжилттай засагдлаа.`
+                            title: `${this.dataGrid.successfullySaved}`,
+                            desc: `"${this.formName}" ${this._alert.formInformationSavedSuccessfully}`
                         });
                     } else {
                         this.$Notice.success({
-                            title: 'Амжилттай хадгалагдлаа',
-                            desc: `"${this.formName}" формын мэдээлэл амжилттай хадгалагдлаа.`
+                            title: `${this.dataGrid.successfullySaved}`,
+                            desc: `"${this.formName}" ${this._alert.formInformationSavedSuccessfully}`
                         });
                         window.history.back();
                     }
                 } else {
                     this.$Notice.error({
-                        title: 'Хадгалах үед алдаа гарлаа!',
+                        title: `${this.dataGrid.anErrorOccurredWhileSaving}`,
                     });
                 }
             });

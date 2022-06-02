@@ -11,7 +11,6 @@
 
 <script>
 
-    import {loadLanguageAsync} from "../../../locale";
 
     export default {
         computed: {
@@ -28,17 +27,6 @@
             },
         },
         methods:{
-            beforeMount() {
-                if (this.selectedLang != "mn") {
-                    loadLanguageAsync(this.selectedLang);
-                }
-            },
-
-            switchLanguage(val) {
-                this.selectedLang = val;
-                loadLanguageAsync(val);
-
-            },
         }
     }
 </script>

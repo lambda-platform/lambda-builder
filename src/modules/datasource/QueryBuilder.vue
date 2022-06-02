@@ -9,12 +9,13 @@
 // import sqlFormatter from "sql-formatter";
 import "./scss/_query_builder.scss";
 
-window.jQuery = require("jquery");
+window.jQuery = window.$ = require("jquery");
 require("dot");
 require("jQuery-QueryBuilder");
+
 window.SQLParser = require('sql-parser/browser/sql-parser');
 require("./utils/queryBuilder.i18.mn.js");
-
+import {getJsonLogic} from "./jsonLogic/json-logic"
 export default {
     props: ["fields", "query"],
     mounted() {
@@ -49,7 +50,7 @@ export default {
         },
 
         doFilter() {
-            console.log("===============")
+
             let filters = this.$props.fields.map(field => {
                 return {
                     id: field.model,
@@ -59,7 +60,7 @@ export default {
             });
 
             if (filters.length >= 1) {
-                jQuery(this.$el).queryBuilder({
+              jQuery(this.$el).queryBuilder({
                     filters: filters,
                     icons: {
                         add_rule: "ivu-icon ivu-icon-plus",
@@ -70,13 +71,25 @@ export default {
                     }
                 });
 
+
                 if (this.$props.query) {
                     let rules = jQuery(this.$el).queryBuilder(
                         "getRulesFromSQL",
                         this.$props.query
                     );
                     if (rules != null) {
-                        jQuery(this.$el).queryBuilder("setRules", rules);
+                        try {
+                            jQuery(this.$el).queryBuilder("setRules", rules);
+                        } catch (error) {
+                            console.error(error);
+
+                            this.$emit(
+                                "change",
+                                ""
+                            );
+                        }
+
+
                     }
                 }
 
@@ -84,6 +97,11 @@ export default {
                     this.$emit(
                         "change",
                         jQuery(this.$el).queryBuilder("getSQL", false)
+                    );
+                    let logicFilter = getJsonLogic(e.builder, e.builder.data);
+                    this.$emit(
+                        "changeValueByJS",
+                        logicFilter
                     );
                 });
             }

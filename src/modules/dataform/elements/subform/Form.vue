@@ -27,7 +27,7 @@
                        :relations="relations"
                        :formula="formula">
                 <template slot="action">
-                    <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit">
+                    <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit" v-if="!form.disableEdit">
                         <Icon type="md-create"/>
                     </a>
                     <a href="javscript:void(0)" @click="()=>remove(index)" v-if="!form.disableDelete">
@@ -53,11 +53,65 @@
         </table>
         <a class="sub-grid-add" href="javascript:void(0)" @click="add" v-if="form.min_height">
             <Icon type="plus"></Icon>
-            {{ `${$static_words ? $static_words.add : 'Нэмэх'}` }}
+            {{ lang.save }}
         </a>
 
+<!--        <paper-modal-->
+<!--            :name="`form-modal-${form.formId}`"-->
+<!--            class="form-modal"-->
+<!--            :min-width="200"-->
+<!--            :min-height="100"-->
+<!--            :pivot-y="0.5"-->
+<!--            :adaptive="true"-->
+<!--            :reset="true"-->
+<!--            :draggable="true"-->
+<!--            :resizable="true"-->
+<!--            draggable=".form-tool"-->
+<!--            width="800"-->
+<!--            height="70%"-->
+<!--        >-->
+        <Modal
+            :min-width="200"
+            :min-height="100"
+
+
+            :draggable="true"
+
+            :footer-hide="true"
+            :title="form.name"
+            width="800"
+            height="70%"
+            v-model="modal_show"
+
+        >
+            <section class="form-modal">
+<!--                <div class="form-tool">-->
+
+<!--                    <h4>{{ form.name }}</h4>-->
+<!--                    <div class="form-tool-actions">-->
+<!--                        <a href="javascript:void(0)" @click="closeModal">-->
+<!--                            <i class="ti-close"></i>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="form-body">
+
+                    <dataform ref="form" v-if="modal_show" :schemaID="form.formId"
+                              :do_render="modal_show"
+                              :editMode="editIndex >= 0 ? true : false"
+                              :isSubForm="true"
+                              :onSuccess="onSuccess"
+                              :url="url"
+                              :onReady="formReady"
+                              :onError="onError"></dataform>
+                </div>
+            </section>
+        </Modal>
+<!--        </paper-modal>-->
+
         <paper-modal
-            :name="`form-modal-${form.formId}`"
+            :name="`grid-modal-${form.sourceGridID}`"
             class="form-modal"
             :min-width="200"
             :min-height="100"
@@ -70,24 +124,47 @@
             width="800"
             height="70%"
         >
-            <section class="form-modal">
-                <div class="form-tool">
-                    <h4>{{ form.name }}</h4>
+            <section class="form-modal source-grid">
+                <div class="form-tool ">
+
+                    <h4>{{ form.sourceGridModalTitle }}</h4>
                     <div class="form-tool-actions">
-                        <a href="javascript:void(0)" @click="closeModal">
+                        <a href="javascript:void(0)" @click="closeSourceModal">
                             <i class="ti-close"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="form-body">
-                    <dataform ref="form" :schemaID="form.formId"
-                              :do_render="modal_show"
-                              :editMode="editIndex >= 0 ? true : false"
-                              :isSubForm="true"
-                              :onSuccess="onSuccess"
-                              :onReady="formReady"
-                              :onError="onError"></dataform>
+                <div class="form-body" v-if="modal_grid_show">
+
+                    <div v-if="form.sourceGridTitle && form.sourceGridDescription" class="source-grid-description">
+                        <h3>
+                            {{form.sourceGridTitle}}
+                        </h3>
+                        <p v-html="form.sourceGridDescription">
+
+                        </p>
+                    </div>
+                    <datagrid
+                        :schemaID="form.sourceGridID"
+                        :url="sourceGridUrl()"
+                        :onRowSelect="onRowSelect"
+                        :user_condition="user_condition"
+                        :paginate="50"
+                        :hasSelection="true"
+                        :permissions="{
+                          c:false,
+                          r:true,
+                          u:false,
+                          d:false,
+                      }"
+                    />
+                    <div class="add-from-pre-source">
+                        <Button shape="circle" type="primary" size="small" @click="addByFrom" :disabled="preSource.length >= 1" icon="md-add"
+                                class="sub-form-add-btn">Шинээр бүртгэх</Button>
+                        <Button shape="circle" type="success" size="small" @click="addFromPreSource" :disabled="preSource.length == 0" icon="md-add"
+                                class="sub-form-add-btn">Сонгох</Button>
+                    </div>
                 </div>
             </section>
         </paper-modal>
@@ -97,14 +174,17 @@
 <script>
 import {element} from "../index";
 import GridForm from "./GridForm";
-
+import subFormMix from "./subFormMix";
+const DataForm = () => import(/* webpackChunkName: "Dataform-el" */'../../Dataform');
 export default {
-    props: ["form", "model", "editMode", "relations", "formula"],
+    props: ["form", "model", "editMode", "relations", "formula", "url"],
+    mixins: [subFormMix],
     components: {
-        "grid-form": GridForm
+        "grid-form": GridForm,
+        "dataform": DataForm
     },
     mounted() {
-        console.log("loading sub form", this.form.formId);
+        this.equationRenderer();
 
         this.form.schema.forEach(field => {
             field.disabled = true;
@@ -112,6 +192,14 @@ export default {
 
     },
     computed: {
+            lang() {
+                const labels = ['pleaseCompleteFirstLine', ];
+                return labels.reduce((obj, key, i) => {
+                    obj[key] = this.$t('dataForm.' + labels[i]);
+                    return obj;
+                }, {});
+            },
+
         subStyle() {
             if (this.form.min_height) {
                 return {
@@ -121,7 +209,14 @@ export default {
             } else {
                 return undefined;
             }
-        }
+        },
+        Lang() {
+            const labels = [ 'add',];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
     },
     watch: {
         listData: {
@@ -188,29 +283,40 @@ export default {
             hasEq: false,
             modal_show: false,
             editIndex: -1,
+
         };
     },
     methods: {
         showAddModal() {
             this.modal_show = true;
-            this.$modal.show(`form-modal-${this.form.formId}`);
+            // this.$modal.show(`form-modal-${this.form.formId}`);
         },
         closeModal() {
             this.modal_show = false;
             this.editIndex = -1;
-            this.$modal.hide(`form-modal-${this.form.formId}`);
+            // this.$modal.hide(`form-modal-${this.form.formId}`);
         },
         formReady(formData, subSchema) {
+
             let parentFieldIndex = subSchema.findIndex(field => field.model == this.form.parent);
+
             if (parentFieldIndex > 0) {
                 subSchema[parentFieldIndex].hidden = true;
             }
-            if (this.editIndex >= 0) {
-                this.$refs.form.editModel(this.listData[this.editIndex].model[this.form.identity], {...this.listData[this.editIndex].model});
-            }
-        },
 
+            if (this.editIndex >= 0) {
+                this.$nextTick(() => {
+                    this.$refs.form.editModel(this.listData[this.editIndex].model[this.form.identity], {...this.listData[this.editIndex].model});
+                });
+            }
+
+
+        },
+        onError() {
+
+        },
         onSuccess(data) {
+
             console.log(data)
             if (this.editIndex >= 0) {
 
@@ -228,7 +334,9 @@ export default {
                     }
 
                     Vue.set(this.listData[this.editIndex].model, itemKey, data[itemKey]);
+
                 });
+
             } else {
                 let clonedForm = _.cloneDeep(this.form);
                 let clonedFormModel = {};
@@ -249,6 +357,7 @@ export default {
                             return;
                         }
                     }
+
                     Vue.set(clonedFormModel, key, data[key]);
                 });
 
@@ -257,10 +366,14 @@ export default {
                     model: clonedFormModel
                 };
 
-                if (this.model.form[this.model.component] == undefined) {
-                    this.model.form[this.model.component] = [];
+                let subItems = this.model.form[this.model.component];
+
+                if (subItems == undefined) {
+                    subItems = [];
                 }
-                this.model.form[this.model.component].push(clonedFormModel);
+                subItems.push(clonedFormModel);
+                Vue.set(this.model.form, this.model.component, subItems);
+
                 this.listData.push(listItem);
             }
 
@@ -288,7 +401,7 @@ export default {
                     if (hasValue) {
                         resolve(true)
                     } else {
-                        alert("Эхний мөрийг гүйцэд бөглөнө үү");
+                        alert(this.lang.pleaseCompleteFirstLine);
                         reject(false);
                     }
                 } else {
@@ -330,6 +443,15 @@ export default {
             this.listData.push(listItem);
         },
         add() {
+            if(this.form.addFromGrid && this.form.sourceGridID){
+                this.showAddSourceModal();
+            } else {
+
+                this.addByFrom();
+            }
+        },
+        addByFrom(){
+            this.closeSourceModal();
             this.editIndex = -1;
             this.showAddModal()
         },

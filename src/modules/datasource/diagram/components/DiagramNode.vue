@@ -11,9 +11,7 @@
     </rect>
     <svg
       x="0" y="0"
-      @mousedown="mouseDown"
-      @mouseenter="mouseenter"
-      @mouseleave="mouseleave">
+    >
       <rect
         fill="#000000"
         :fill-opacity="titleFillOpacity"
@@ -21,6 +19,9 @@
 
         :width="width-2" height="23"
         class="node-dark-background"
+        @mousedown="mouseDown"
+        @mouseenter="mouseenter"
+        @mouseleave="mouseleave"
         >
       </rect>
         <svg x="13" y="22" id="checkbox" viewBox="0 0 28 28" width="12" height="12" v-if="!all_checked"  @mousedown="selectAll">
@@ -47,7 +48,11 @@
             >
             </rect>
         </svg>
-        <text :x="29" :y="32" font-size="14" fill="#fff">{{title}}</text>
+        <text :x="29" :y="32" font-size="14" fill="#fff"
+              @mousedown="mouseDown"
+              @mouseenter="mouseenter"
+              @mouseleave="mouseleave"
+        >{{title}}</text>
 
 
         <svg  :x="width - 12"

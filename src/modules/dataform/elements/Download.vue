@@ -7,7 +7,7 @@
                 <div class="upload-list" v-for="item in uploadList" :key="item.index">
                     <template>
                         <img v-if="item" :src="item">
-                        <a class="upload-control" :href="item" download>Татах</a>
+                        <a class="upload-control" :href="item" download>{{lang.download}}</a>
                     </template>
                 </div>
             </div>
@@ -18,6 +18,15 @@
 <script>
     export default {
         props: ["model", "label", "rule", "meta", "do_render"],
+        computed: {
+            lang() {
+                const labels = ['download', ];
+                return labels.reduce((obj, key, i) => {
+                    obj[key] = this.$t('dataForm.' + labels[i]);
+                    return obj;
+                }, {});
+            },
+        },
         data(){
             return{
                 uploadList:[]

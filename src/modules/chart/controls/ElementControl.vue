@@ -8,7 +8,6 @@
                         <Tooltip :content="eType.label"><img :src="getPatch(eType.icon)" alt=""></Tooltip>
                     </a>
                 </li>
-
             </ul>
         </div>
         <div v-if="elementType == 'AreaChart' || elementType =='LineChart' || elementType =='ColumnChart'">
@@ -76,19 +75,11 @@ import Pie from "./Pie";
 import TablE from "./Table";
 import Radar from "./Radar";
 import CountBox from "./CountBox";
-import {loadLanguageAsync} from "../../../locale";
+
 
 export default {
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
+
         deleteValues(index) {
 
             this.other.filters.splice(index, 1);

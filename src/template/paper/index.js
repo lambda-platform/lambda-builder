@@ -11,7 +11,7 @@ import iView from 'iview';
 import vmodal from 'vue-js-modal'
 import VueSlimScroll from 'vue-slimscroll'
 import "./components"
-import {i18n} from '@lambda-platform/locale';
+import {i18n} from '../../locale';
 axios.interceptors.request.use(function (config) {
     config.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     return config;

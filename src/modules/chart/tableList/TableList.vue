@@ -146,18 +146,9 @@
 import draggable from "vuedraggable";
 import axios from "axios";
 import { mapGetters } from "vuex";
-import {loadLanguageAsync} from "../../../locale";
+
 export default {
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
         isShowAble(table, field, isTable) {
             if (isTable) {
                 let index = table.table.indexOf(this.search);

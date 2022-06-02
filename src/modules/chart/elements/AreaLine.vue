@@ -6,16 +6,22 @@
 import axios from "axios";
 import { idGenerator } from "../utils/id";
 export default {
-    props: ["axis", "lines", "type", "chart_title", "hideTitle", "filters", "hideZoom", "chartTitle", "chartData", "xData", "isRest", "minH", "chartColor"],
+    props: ["axis", "lines", "type", "chart_title", "hideTitle", "filters", "hideZoom", "chartTitle", "chartData", "xData", "isRest",  "minH", "chartColor", "projectDomain", "limit", "order"],
     methods: {
         getSeries() {},
         callData() {
             if (this.axis.length >= 1 && this.lines.length >= 1) {
+                let url = '/ve/get-data';
+                if(this.projectDomain){
+                    url = this.projectDomain+url;
+                }
                 axios
-                    .post("/ve/get-data", {
+                    .post(url, {
                         axis: this.axis,
                         lines: this.lines,
-                        filters:this.filters
+                        filters:this.filters,
+                        order: this.order ? this.order.toString() : undefined,
+                        limit: this.limit ? this.limit.toString() : undefined
                     })
                     .then(response => {
                         this.elementData = response.data;
@@ -60,6 +66,7 @@ export default {
                         type: "line",
                         smooth: true,
                         areaStyle: {},
+
                         data: seriesData
                     });
                 }
@@ -79,7 +86,11 @@ export default {
                         name: value.title,
                         type: "bar",
                         smooth: true,
-
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
                         data: seriesData
                     });
                 }
@@ -132,6 +143,12 @@ export default {
                         boundaryGap: true,
 
                         data: axis
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
                     },
                     yAxis: {
                         type: "value",
@@ -208,6 +225,9 @@ export default {
                             title: { line: "Шугман", bar: "Багнан" }
                         }
                     }
+                },
+                "grid": {
+                    "top": "25%",
                 },
                 xAxis: {
                     type: "category",

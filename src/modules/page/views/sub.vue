@@ -58,6 +58,7 @@
                     template: "canvas",
                     mode: window.init.crud_mode ? window.init.crud_mode : undefined,
                     title: "",
+                    projects_id: null,
                     grid: null,
                     form: null,
                     form_width: null,
@@ -69,6 +70,8 @@
                         r: false,
                         u: false,
                         d: false,
+                        gridDeleteConditionJS:"",
+                        gridEditConditionJS:"",
                     },
                 },
                 iframeUrl: '',
@@ -94,17 +97,24 @@
 
                             if (crudIndex >= 0) {
                                 this.property.page_id = page.id;
+
+
                                 // this.property. = 'canvas'
                                 // this.property.withoutHeader = this.withoutHeader;
                                 this.property.title = this.cruds[crudIndex].title;
+                                this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
                                 this.property.grid = this.cruds[crudIndex].grid;
                                 this.property.form = this.cruds[crudIndex].form;
+                                this.property.template = this.cruds[crudIndex].template;
+                                this.property.projects_id = this.cruds[crudIndex].projects_id;
                                 // this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
                                 this.property.view_url = this.cruds[crudIndex].view_url;
                                 this.property.permissions.c = this.permissions[page.id].c;
                                 this.property.permissions.r = this.permissions[page.id].r;
                                 this.property.permissions.u = this.permissions[page.id].u;
                                 this.property.permissions.d = this.permissions[page.id].d;
+                                this.property.permissions.gridDeleteConditionJS = this.permissions[page.id].gridDeleteConditionJS;
+                                this.property.permissions.gridEditConditionJS = this.permissions[page.id].gridEditConditionJS;
 
                                 let user_condition = {};
 
@@ -115,7 +125,10 @@
                                 if (this.permissions[page.id].gridCondition) {
                                     user_condition.gridCondition = this.permissions[page.id].gridCondition
                                 }
-
+                                // if (user_condition) {
+                                //     console.log(JSON.stringify(user_condition))
+                                //     this.property.user_condition = user_condition;
+                                // }
                                 if (user_condition) {
                                     this.property.user_condition = user_condition;
                                 }
