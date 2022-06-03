@@ -24,51 +24,52 @@
             </div>
         </paper-header>
         <section class="page-agent-form">
-            <dataform v-if="type == 'profile'" class="material-form" ref="agentForm" schemaID="user_profile" :editMode="editMode" :onSuccess="onSuccess"/>
-            <dataform v-if="type == 'password'" class="material-form" ref="agentForm" schemaID="user_password" :editMode="editMode" :onSuccess="onSuccess"/>
+            <dataform v-if="type == 'profile'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_profile" :editMode="editMode" :do_render="editMode" :onReady="editUser" :onSuccess="onSuccess"/>
+            <dataform v-if="type == 'password'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_password" :editMode="editMode" :do_render="editMode" a :onReady="editUser" :onSuccess="onSuccess"/>
         </section>
     </section>
 </template>
 
 <script>
-    import pagination from "./pagination";
+import pagination from "./pagination";
 
-    export default {
-        props:['type', 'withoutHeader'],
-        components: {
-            'dv-pagination': pagination
+export default {
+    props:['type', 'withoutHeader', 'baseUrl'],
+    components: {
+        'dv-pagination': pagination
+    },
+    computed: {
+        lang() {
+            const labels = ['db', 'changePassword', 'personalInformation'
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('user.' + labels[i]);
+                return obj;
+            }, {});
         },
-        computed: {
-            lang() {
-                const labels = ['db', 'changePassword', 'personalInformation'
-                ];
-                return labels.reduce((obj, key, i) => {
-                    obj[key] = this.$t('user.' + labels[i]);
-                    return obj;
-                }, {});
-            },
-        },
-        data() {
-            return {
-                editMode: true,
-            }
-        },
-
-        mounted() {
-            this.editUser(this.$user.id);
-        },
-
-        methods: {
-            onSuccess(data) {
-            },
-            editUser(id) {
-                this.$refs.agentForm.editModel(id);
-            },
-
-            showDefaultAvatar(e) {
-                e.target.src = "/assets/lambda/images/avatar.png";
-            },
-
+    },
+    data() {
+        return {
+            editMode: true,
         }
+    },
+
+
+
+    methods: {
+        onSuccess(data) {
+        },
+        editUser() {
+            this.$nextTick(() => {
+                this.$refs.agentForm.editModel(this.$user.id);
+            });
+
+        },
+
+        showDefaultAvatar(e) {
+            e.target.src = "/assets/lambda/images/avatar.png";
+        },
+
     }
+}
 </script>
