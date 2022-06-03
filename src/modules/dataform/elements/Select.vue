@@ -204,11 +204,16 @@
             onSuccess(val) {
                 let label = this.meta.relation.fields.map(field => val[field]);
                 label = label.join(', ');
-
-                this.relation_data.push({
+                let newOption = {
                     value: val[this.meta.relation.key],
                     label: label
-                });
+                };
+
+                if(this.meta.relation.parentFieldOfTable !== "" && this.meta.relation.parentFieldOfForm !== ""){
+                    newOption["parent_value"] = val[this.meta.relation.parentFieldOfTable].toString();
+                }
+
+                this.relation_data.push(newOption);
                 this.closeModal();
             },
 
