@@ -100,7 +100,7 @@
 
 <script>
 
-const Dataform = () => import(/* webpackChunkName: "Dataform-el" */'../../../../../../dataform/src/Dataform.vue')
+const Dataform = () => import(/* webpackChunkName: "Dataform-el" */'../../../../../dataform/Dataform.vue')
 
 export default {
     props: ['selectedLang'],
