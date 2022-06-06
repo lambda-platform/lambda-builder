@@ -326,7 +326,7 @@
                                     </Option>
                                 </Select>
                             </li>
-                            <li v-else>
+                            <li v-else >
                                 <label>{{ lang.Add_data_Form }}</label>
 
                                 <Select v-model="item.relation.addFrom" :placeholder="lang.Add_data_Form" clearable
@@ -962,6 +962,11 @@ export default {
             }
         }
         /*FOR OLD VB SCHEMA*/
+    },
+    mounted() {
+        if(this.item.relation.addAble){
+            this.callForms();
+        }
     },
 
     computed: {
