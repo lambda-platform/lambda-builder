@@ -644,32 +644,47 @@ export default {
                     })
                     .catch(e => {
                         let errorDesc = "";
-                        if (e.response.data.hasOwnProperty("error")) {
-                            if (typeof e.response.data.error === 'string' || e.response.data.error instanceof String) {
-                                errorDesc = e.response.data.error;
-                            } else {
-                                if (e.response.data.error instanceof Object) {
-                                    Object.keys(e.response.data.error).forEach(error => {
-                                        let desc = error + ": " + e.response.data.error[error].map(ed => ed + " ")
-                                        if (errorDesc != "") {
-                                            errorDesc = errorDesc + "<br/>" + desc;
-                                        } else {
-                                            errorDesc = desc;
-                                        }
-                                    })
+                        if(e.response){
+
+                            if (e.response.data.hasOwnProperty("error")) {
+
+                                if (typeof e.response.data.error === 'string' || e.response.data.error instanceof String) {
+                                    errorDesc = e.response.data.error;
+                                } else {
+                                    if (e.response.data.error instanceof Object) {
+                                        Object.keys(e.response.data.error).forEach(error => {
+                                            let desc = error + ": " + e.response.data.error[error].map(ed => ed + " ")
+                                            if (errorDesc != "") {
+                                                errorDesc = errorDesc + "<br/>" + desc;
+                                            } else {
+                                                errorDesc = desc;
+                                            }
+                                        })
+                                    }
                                 }
+
                             }
+                            this.$Notice.error({
+                                title: this.lang.errorSaving,
+                                duration: 3,
+                                desc: errorDesc
+                            });
+
+                        } else {
+                            this.$Notice.error({
+                                title: this.lang.errorSaving,
+                                duration: 3,
+                                desc: e
+                            });
+
 
                         }
-                        this.$Notice.error({
-                            title: this.lang.errorSaving,
-                            duration: 3,
-                            desc: errorDesc
-                        });
+
                         this.asyncMode = false;
                         if (this.$props.onError) {
                             this.$props.onError();
                         }
+
                     });
             }
         },

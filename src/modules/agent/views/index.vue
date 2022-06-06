@@ -170,193 +170,191 @@
         </section>
 
         <Drawer width="700" class="agent-form" :closable="false" v-model="showForm">
-            <dataform ref="agentForm" schemaID="user_form" :editMode="editMode" :onSuccess="onSuccess"/>
+            <dataform ref="agentForm" schemaID="user_form" :url="baseUrl ? baseUrl : ''" :editMode="editMode" :onSuccess="onSuccess"/>
         </Drawer>
     </section>
 </template>
 
 <script>
-    import moment from 'moment';
-    import pagination from "./pagination";
+import moment from 'moment';
+import pagination from "./pagination";
 
-    export default {
-        computed: {
-            lang() {
-                const labels = ['db', 'usersAndUserGroups', 'users', 'userGroupsPermission', 'sendDBSchema',
-                    'userList', 'totalEmployees', 'categorySearch', 'sort', 'searchForInformation', 'noMatchingData', 'addUser',
-                    'registrationConfirmed','registrationIsNotConfirmed', 'createdDate', 'firstNameandLastName', 'noInfo', 'noData', 'email',
-                    'ruconfinfo', 'ruconfinfoDelete', 'created', 'deleted', 'listOfDeletedUsers', 'byLoginName', 'yes', 'no', 'completeDestruction',
-                    'recovery', 'edit', ''
-                ];
-                return labels.reduce((obj, key, i) => {
-                    obj[key] = this.$t('user.' + labels[i]);
-                    return obj;
-                }, {});
+export default {
+    props:['baseUrl'],
+    computed: {
+        lang() {
+            const labels = ['db', 'usersAndUserGroups', 'users', 'userGroupsPermission', 'sendDBSchema',
+                'userList', 'totalEmployees', 'categorySearch', 'sort', 'searchForInformation', 'noMatchingData', 'addUser',
+                'registrationConfirmed','registrationIsNotConfirmed', 'createdDate', 'firstNameandLastName', 'noInfo', 'noData', 'email',
+                'ruconfinfo', 'ruconfinfoDelete', 'created', 'deleted', 'listOfDeletedUsers', 'byLoginName', 'yes', 'no', 'completeDestruction',
+                'recovery', 'edit', ''
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('user.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        _messageTranslate() {
+            const labels = [
+                'userDeleted',
+                'errorOccurredDeleting',
+                'UserInformationRestored',
+                'ErrorRetrievingData',
+                'NoSearchResultsFound'
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('agent_wizard.' + labels[i]);
+                return obj;
+            }, {});
+        },
+        url(){
+            return this.baseUrl ? this.baseUrl : "";
+        },
+    },
+    components: {
+        'dv-pagination': pagination
+    },
+    data() {
+        return {
+            showForm: false,
+            isDeleted: false,
+            loading: false,
+            editMode: false,
+            q: '',
+            users: {
+                total: 0
             },
+            deletedUsers: {
+                total: 0
+            },
+            query: {
+                column: 'id',
+                direction: 'asc',
+                page: 1,
+                per_page: 16,
+                role: 'all'
+            },
+            roles: [],
+            name1: this.wordSwap('recovery'),
+        }
+    },
+    created() {
+        this.getRoles();
+        this.fetchData();
+        this.fetchDeletedData();
+    },
+    methods: {
+
+        setMoment(date) {
+            return moment(date).format('YYYY-MM-DD')
         },
-        components: {
-            'dv-pagination': pagination
+        fetchData() {
+            axios.get(`${this.url}/agent/users?role=${this.query.role}&page=${this.query.page}&sort=${this.query.column}&direction=${this.query.direction}`).then(({data}) => {
+                this.users = data;
+            });
         },
-        data() {
-            return {
-                showForm: false,
-                isDeleted: false,
-                loading: false,
-                editMode: false,
-                q: '',
-                users: {
-                    total: 0
-                },
-                deletedUsers: {
-                    total: 0
-                },
-                query: {
-                    column: 'id',
-                    direction: 'asc',
-                    page: 1,
-                    per_page: 16,
-                    role: 'all'
-                },
-                roles: [],
-                name1: this.wordSwap('recovery'),
+        fetchDeletedData() {
+            axios.get(`${this.url}/agent/users/deleted?role=${this.query.role}&page=${this.query.page}&sort=${this.query.column}&direction=${this.query.direction}`).then(({data}) => {
+                this.deletedUsers = data;
+            });
+        },
+        onSuccess(data) {
+            if (this.editMode) {
+                this.users.data = this.users.data.map(item => {
+                    if (item.id == data.id) {
+                        item = data;
+                    }
+                    return item;
+                });
+                this.showForm = false;
+            } else {
+                this.users.data.push(data);
             }
         },
-        created() {
-            this.getRoles();
+        sortData(sort) {
+            this.query.direction = sort.order;
+            this.query.column = sort.key;
             this.fetchData();
             this.fetchDeletedData();
         },
-
-        methods: {
-            setMoment(date) {
-                return moment(date).format('YYYY-MM-DD')
-            },
-            fetchData() {
-                axios.get(`/agent/users?role=${this.query.role}&page=${this.query.page}&sort=${this.query.column}&direction=${this.query.direction}`).then(({data}) => {
-                    this.users = data;
-                })
-            },
-            fetchDeletedData() {
-                axios.get(`/agent/users/deleted?role=${this.query.role}&page=${this.query.page}&sort=${this.query.column}&direction=${this.query.direction}`).then(({data}) => {
-                    this.deletedUsers = data;
-                })
-            },
-
-            onSuccess(data) {
-                if (this.editMode) {
-                    this.users.data = this.users.data.map(item => {
-                        if (item.id == data.id) {
-                            item = data;
-                        }
-                        return item;
-                    });
-                    this.showForm = false;
+        editUser(id) {
+            this.editMode = true;
+            this.showForm = true;
+            this.$refs.agentForm.editModel(id);
+        },
+        deleteUser(id) {
+            axios.get(this.url+'/agent/delete/' + id).then(o => {
+                if (o.status) {
+                    this.$Message.success(`${this._messageTranslate.userDeleted}`);
+                    let deletedUser = this.users.data.find(item => item.id == id);
+                    this.deletedUsers.data.push(deletedUser);
+                    this.users.data = this.users.data.filter(item => item.id != id);
+                    this.deletedUsers.total++;
+                    this.users.total--;
                 } else {
-                    this.users.data.push(data);
+                    this.$Message.error(`${this._messageTranslate.errorOccurredDeleting}`);
                 }
-            },
-
-            sortData(sort) {
-                this.query.direction = sort.order;
-                this.query.column = sort.key;
-                this.fetchData();
-                this.fetchDeletedData();
-            },
-
-            editUser(id) {
-                this.editMode = true;
-                this.showForm = true;
-
-                this.$refs.agentForm.editModel(id);
-            },
-
-            deleteUser(id) {
-                axios.get('/agent/delete/' + id).then(o => {
+            })
+        },
+        deleteUserComplete(id) {
+            axios.get(this.url+'/agent/delete/complete/' + id).then(o => {
+                if (o.status) {
+                    this.$Message.success(`${this._messageTranslate.userDeleted}`)
+                    this.deletedUsers.data = this.deletedUsers.data.filter(item => item.id != id);
+                    this.deletedUsers.total--;
+                } else {
+                    this.$Message.error(`${this._messageTranslate.errorOccurredDeleting}`);
+                }
+            })
+        },
+        restoreUser(id) {
+            axios.get(this.url+'/agent/restore/' + id)
+                .then(o => {
                     if (o.status) {
-                        this.$Message.success('Хэрэглэгч устгагдлаа');
-
-                        let deletedUser = this.users.data.find(item => item.id == id);
-                        this.deletedUsers.data.push(deletedUser);
-
-                        this.users.data = this.users.data.filter(item => item.id != id);
-
-                        this.deletedUsers.total++;
-                        this.users.total--;
-                    } else {
-                        this.$Message.error('Устгах үед алдаа гарлаа');
-                    }
-                })
-            },
-
-            deleteUserComplete(id) {
-                axios.get('/agent/delete/complete/' + id).then(o => {
-                    if (o.status) {
-                        this.$Message.success('Хэрэглэгч устгагдлаа')
+                        this.$Message.success(`${this._messageTranslate.UserInformationRestored}`);
+                        let restoredUser = this.deletedUsers.data.find(item => item.id == id);
+                        this.users.data.push(restoredUser);
                         this.deletedUsers.data = this.deletedUsers.data.filter(item => item.id != id);
                         this.deletedUsers.total--;
+                        this.users.total++;
                     } else {
-                        this.$Message.error('Устгах үед алдаа гарлаа');
+                        this.$Message.error(`${this._messageTranslate.ErrorRetrievingData}`);
                     }
                 })
-            },
-
-            restoreUser(id) {
-                axios.get('/agent/restore/' + id)
-                    .then(o => {
-                        if (o.status) {
-                            this.$Message.success('Хэрэглэгчийн мэдээлэл сэргээгдлээ');
-                            let restoredUser = this.deletedUsers.data.find(item => item.id == id);
-                            this.users.data.push(restoredUser);
-                            this.deletedUsers.data = this.deletedUsers.data.filter(item => item.id != id);
-
-                            this.deletedUsers.total--;
-                            this.users.total++;
-                        } else {
-                            this.$Message.error("Мэдээлэл сэргээхэд алдаа гарлаа!");
-                        }
-                    })
-                    .catch(errors => {
-                        this.$Message.error("Мэдээлэл сэргээхэд алдаа гарлаа!");
-                    });
-            },
-
-            showDefaultAvatar(e) {
-                e.target.src = "/assets/lambda/images/avatar.png";
-            },
-
-
-            searchUser() {
-                if (this.q == null || this.q == '') {
-                    this.fetchData();
-                } else {
-                    this.handleSearch(this.q);
-                }
-            },
-
-            handleSearch(q) {
-                axios.get('/agent/search/' + q).then(o => {
-                    if (o.data.status) {
-                        this.users = o.data.data;
-                    } else {
-                        this.$Message.error("Хайлтанд илэрц олдсонгүй!");
-                    }
+                .catch(errors => {
+                    this.$Message.error(`${this._messageTranslate.ErrorRetrievingData}`);
                 });
-            },
-
-            getRoles() {
-                axios.get('/agent/roles').then(({data}) => {
-                    this.roles = data;
-                })
-            },
-
-            wordSwap(words){
-
-                console.log("words");
-                console.log(words);
-                //words = this.lang().words;
-
-                return words;
+        },
+        showDefaultAvatar(e) {
+            e.target.src = this.url+"/assets/lambda/images/avatar.png";
+        },
+        searchUser() {
+            if (this.q == null || this.q == '') {
+                this.fetchData();
+            } else {
+                this.handleSearch(this.q);
             }
+        },
+        handleSearch(q) {
+            axios.get(this.url+'/agent/search/' + q).then(o => {
+                if (o.data.status) {
+                    this.users = o.data.data;
+                } else {
+                    this.$Message.error(`${this._messageTranslate.NoSearchResultsFound}`);
+                }
+            });
+        },
+        getRoles() {
+            axios.get(this.url+'/agent/roles').then(({data}) => {
+                this.roles = data;
+            })
+        },
+        wordSwap(words){
+            console.log("words");
+            console.log(words);
+            //words = this.lang().words;
+            return words;
         }
     }
+}
 </script>
