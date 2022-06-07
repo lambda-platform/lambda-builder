@@ -490,9 +490,6 @@ export default {
                     let gridSchema = JSON.parse(res.data.data.schema);
                     this.sourceGridColumns = []
                     gridSchema.schema.forEach(col=>{
-                        if(col.model == "business_inventory_id"){
-                            console.log(col)
-                        }
 
                        if(col.hide !== true || col.label != ""){
                            this.sourceGridColumns.push({
