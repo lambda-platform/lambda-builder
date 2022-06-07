@@ -81,6 +81,7 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
 }
 
 export function doTrigger(model, val, model_, schema_, refs, Message, editMode) {
+
     if (val) {
         let model_index = getSchemaIndex(schema_, model);
         if (model_index >= 0) {

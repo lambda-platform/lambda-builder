@@ -88,7 +88,7 @@ const englishAlphabet = (rule, value, callback) => {
 };
 const mongolianCyrillic = (rule, value, callback) => {
     // var letterNumber = /^[\u0400-\u04FF\s*]+$/;
-    var letterNumber = /^[а-яөүА-ЯӨҮ0-9!@#\$%\^\&*\s*)\(+=._-]+$/;
+    var letterNumber = /^[а-яөүёА-ЯӨҮЁ0-9!@#\$%\^\&*\s*)\(+=._-]+$/;
     if(value.match(letterNumber)){
         callback();
     } else {
