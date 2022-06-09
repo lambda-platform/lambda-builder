@@ -15,8 +15,11 @@ const components = {
     'datagrid': Datagrid
 };
 
+console.log("DATAGRID:");
+
 const install = function (Vue) {
     if (install.installed) return;
+    install.installed=true;
     Object.keys(components).forEach(key => Vue.component(key, components[key]));
 };
 
