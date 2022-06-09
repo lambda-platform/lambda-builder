@@ -1035,7 +1035,9 @@ export default {
                     md: 24,
                     lg: 24
                 },
-                schema: []
+                schema: [],
+                trigger: '',
+                triggerTimeout: 0,
             };
             this.dataform.schema.push(subForm);
         },

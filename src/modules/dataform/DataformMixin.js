@@ -231,6 +231,7 @@ export default {
 
             }
         },
+
         clearConfig() {
             this.model = {};
             this.schema = [];
@@ -379,7 +380,9 @@ export default {
                     this.setModel(item.model, item.default, item.formType);
                     this.$watch("model." + item.model, {
                         handler: (value, oldValue) => {
-                            this.afterChange(item.model, value, oldValue);
+                            if(this.do_render){
+                                this.afterChange(item.model, value, oldValue);
+                            }
                         },
                         deep: true
                     });
@@ -422,6 +425,18 @@ export default {
                             emptyErrorMsg: item.EmptyErrorMsg ? item.EmptyErrorMsg : `${item.name}-д мэдээлэл бүртгэнэ үү`
                         });
                     }
+
+                    if(item.trigger != ""){
+                        this.$watch("model." + item.model, {
+                            handler: (value, oldValue) => {
+                                if(this.do_render){
+                                    this.afterChange(item.model, value, oldValue);
+                                }
+                            },
+                            deep: true
+                        });
+                    }
+
 
                 } else if (_.isArray(item.children)) {
                     this.setUiSchemaFormItem(item.children);

@@ -103,6 +103,18 @@
                 </div>
             </div>
             <div class="sub-form-source-grid">
+                <Row gutter="10">
+                    <Col span="12">
+                        <Label>Триггер (өгөгдөл дуудах URL)</Label>
+                        <Input type="text" v-model="f.trigger" placeholder="Триггер (өгөгдөл дуудах URL)" /> <br>
+
+                    </Col>
+                    <Col span="8">
+                        <Label>Триггер дуудах хугацаа </Label>
+                        <Input type="text" v-model="f.triggerTimeout" placeholder="Триггер дуудах хугацаа " /> <br>
+
+                    </Col>
+                </Row>
                 <Row>
                     <Col>
                         <Input v-if="f.checkEmpty" type="text" v-model="f.EmptyErrorMsg" placeholder="Хоосон үед харуулах алдаа" /> <br>
@@ -478,7 +490,8 @@ export default {
                     let gridSchema = JSON.parse(res.data.data.schema);
                     this.sourceGridColumns = []
                     gridSchema.schema.forEach(col=>{
-                       if(col.hide !== true && col.label != ""){
+
+                       if(col.hide !== true || col.label != ""){
                            this.sourceGridColumns.push({
                                model:col.model
                            })
