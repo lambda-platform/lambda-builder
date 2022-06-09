@@ -154,7 +154,7 @@ import {compareObj, isValid} from "./utils/methods";
 import {convertLink} from "./utils/formula";
 import Print from "./Print";
 import ExcelImport from "./ExcelImport";
-import DataFilter from "./DataFilter";
+import DataFilter from "./Datafilter";
 import {getNumber, number, formatedNumber} from "./utils/number.js";
 import {getRelation} from "./utils/userFilter.js";
 import GridActions from "./GridActions";
