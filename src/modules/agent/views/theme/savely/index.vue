@@ -14,13 +14,13 @@
 
             <div class="header">
                 <div class="logo">
-                    <img src="/assets/kb/images/logo.png" alt="logo"/>
+                    <img src="/assets/trade/images/logo-light.png" alt="logo"/>
                 </div>
 
                 <ul class="menu">
                     <li>
                         <a href="/">
-                            KHANBANK.COM ВЭБ
+                            VAS.MN БИРЖ
                         </a>
                     </li>
 
@@ -32,20 +32,24 @@
                 </ul>
             </div>
 
-<!--            <div class="footer">-->
-<!--                <h3>{{ lang.downloadYourMobileApp }}</h3>-->
-<!--                <div class="box-row app">-->
-<!--                    <a href="#">-->
-<!--                        <img src="/assets/trade/images/playstore.png" alt=""/> Play-->
-<!--                        store-->
-<!--                    </a>-->
+            <div class="footer">
+                <h3>{{ lang.downloadYourMobileApp }}</h3>
+                <div class="box-row app">
+                    <a
+                        href="#"
+                    >
+                        <img src="/assets/trade/images/playstore.png" alt=""/> Play
+                        store
+                    </a>
 
-<!--                    <a href="#">-->
-<!--                        <img src="/assets/trade/images/appstore.png" alt=""/> Apple-->
-<!--                        store-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
+                    <a
+                        href="#"
+                    >
+                        <img src="/assets/trade/images/appstore.png" alt=""/> Apple
+                        store
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="auth">
@@ -290,5 +294,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/kb/style";
+@import "../../../scss/theme/savely/style";
 </style>

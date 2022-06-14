@@ -14,13 +14,13 @@
 
             <div class="header">
                 <div class="logo">
-                    <img src="/assets/kb/images/logo.png" alt="logo"/>
+                    <img src="/assets/app/images/logo.png" alt="logo"/>
                 </div>
 
                 <ul class="menu">
                     <li>
-                        <a href="/">
-                            KHANBANK.COM ВЭБ
+                        <a href="https://amjilt.com" target="_blank">
+                            AMJILT.COM ВЭБ
                         </a>
                     </li>
 
@@ -290,5 +290,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/kb/style";
+@import "../../../scss/theme/amjilt/style";
 </style>
