@@ -1,4 +1,4 @@
-import {localeText} from "./agMn.js";
+import {localeText} from "./agMN.js";
 
 export const data = (vm) => {
     return {
