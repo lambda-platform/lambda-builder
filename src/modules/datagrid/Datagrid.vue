@@ -564,7 +564,7 @@ export default {
 
             // Setting actions
             if (!this.hasContextMenu &&
-                !this.$props.hasSelection &&
+                // !this.$props.hasSelection && !!!! select with actions
                 (gridSchema.actions.length > 0 ||
                     (this.$props.actions && this.$props.actions.length > 0))
             ) {
@@ -611,6 +611,7 @@ export default {
                         actionsVisibility: this.$props.actionvisibility,
                     }
                 };
+                console.log(this.permissions);
 
                 if (this.permissions) {
                     if (this.permissions.r || this.permissions.u || this.permissions.d) {
@@ -621,6 +622,8 @@ export default {
                         }
                     }
                 } else {
+                    console.log(this.actionPosition)
+                    console.log(this.actionPosition)
                     if (this.actionPosition == 0) {
                         this.$data.columns.push(actions);
                     } else {

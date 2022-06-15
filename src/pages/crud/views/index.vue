@@ -36,7 +36,7 @@
                         exportPath:"/crud/export?ids=",
                         gridSelector:false,
                         hasSelection:true,
-                        actions: []
+                        actions: [],
                     }
                 } else {
                     return {
@@ -49,7 +49,7 @@
                         exportPath:"/crud/export?ids=",
                         gridSelector:false,
                         hasSelection:true,
-                        actions: []
+                        actions: [],
                     }
                 }
 
