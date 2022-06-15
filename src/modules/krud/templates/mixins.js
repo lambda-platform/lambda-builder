@@ -7,7 +7,7 @@ export default {
         "dbClickAction", "onRowSelect", "rowCurrentChange",
         "permissions", "user_condition", "custom_condition",
         "view_url", "mode", "onPropertySuccess",
-        "onPropertyError", "page_id", "withoutHeader", "withCrudLog", "projects_id"],
+        "onPropertyError", "page_id", "withoutHeader", "withCrudLog", "projects_id", "exportSelectedRows", "exportPath", "exportLabel"],
     components: {
         krudtools
     },
@@ -27,6 +27,7 @@ export default {
             isRefresh: false,
             isSave: false,
             rowId: null,
+            selectedData:[]
         };
     },
     computed: {
@@ -173,6 +174,25 @@ export default {
             //From property
             if (this.onPropertyError) {
                 this.onPropertyError();
+            }
+        },
+        onRowSelectedEvent(selectedData, selectedNodes) {
+            if(this.exportSelectedRows){
+                this.selectedData = selectedData;
+
+            } else {
+                if(this.$props.onRowSelect){
+                    this.$props.onRowSelect(selectedData, selectedNodes)
+                }
+            }
+
+        },
+        exportByPath(){
+            if(this.exportPath){
+                if(this.selectedData){
+                    let ids=this.selectedData.map(row=>row[this.$refs.grid.identity]);
+                    window.open(this.exportPath+ids.join(","), '_blank').focus();
+                }
             }
         }
     },

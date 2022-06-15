@@ -45,6 +45,8 @@
         }
 
         .fb-control {
+            height: calc(100vh - 70px);
+            overflow-y: auto;
             &-item {
                 padding: 10px 0 5px;
                 width: 100%;
