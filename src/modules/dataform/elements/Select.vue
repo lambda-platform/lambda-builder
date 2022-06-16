@@ -35,7 +35,6 @@
                 </div>
             </template>
         </multiselect>
-
         <multiselect v-else
                      :multiple="true"
                      v-model="value"
