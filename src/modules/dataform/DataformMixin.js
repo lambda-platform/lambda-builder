@@ -531,6 +531,7 @@ export default {
         },
 
         setSchemaByModel(model, prop, value, subModel) {
+
             if (prop == "value") {
                 Vue.set(this.$data.model, model, value);
             } else if (prop == "sub-value") {
@@ -629,7 +630,7 @@ export default {
                 this.asyncMode = true;
                 axios.post(this.submitUrl, this.$data.model)
                     .then(({data}) => {
-                        //console.log(data);
+
                         if (data.status) {
                             this.$Notice.success({
                                 title: this.lang.successfullySaved
@@ -857,8 +858,6 @@ export default {
                     if (data.status) {
                         this.model = {...this.model, ...data.data};
                         delete this.model[this.identity];
-                        console.log(this.identity);
-                        console.log(this.model[this.identity]);
                         this.setEditModel(this.ui.schema);
                         this.setUserConditionValues(false);
                         this.setCustomData();
@@ -913,6 +912,11 @@ export default {
 
                     if (item.relation.filter == "" || typeof item.relation.filter === "undefined") {
                         item.relation.filter = userConditions;
+
+                        console.log(item.relation)
+
+                        this.setSchemaByModel(item.model, "relation", item.relation);
+
                     } else {
                         item.relation.filter = `(${item.relation.filter}) OR (${userConditions})`
                     }
@@ -932,7 +936,9 @@ export default {
             }
 
             if (item.relation.filter == "" || typeof item.relation.filter === "undefined") {
+
                 selects[item.relation.table] = item.relation;
+
             } else {
 
                 selects[item.model] = item.relation;
@@ -989,7 +995,7 @@ export default {
 
                                  if(!form_field.hidden && form_field.type == 'form'){
                                      visible_item_found = true;
-                                     console.log(form_field)
+
 
                                  }
 
@@ -1009,7 +1015,9 @@ export default {
 
         },
         getRelation(item) {
-            return getRelationData(item, this.relations)
+            let s_index = this.schema.findIndex(schema => schema.model == item.model);
+            let i = s_index >= 0 ? this.schema[s_index] : item;
+            return getRelationData(i, this.relations)
         },
         getFooterButtons() {
             let buttons = [];
@@ -1022,10 +1030,6 @@ export default {
         },
         setAndSend(model, value) {
             Vue.set(this.$data.model, model, value);
-
-            console.log(model, value);
-            console.log(this.$data.model);
-
             this.handleSubmit(this.meta.model + '-' + this.schemaID);
         }
     },
