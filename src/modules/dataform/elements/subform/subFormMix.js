@@ -56,6 +56,9 @@ export default {
             });
 
             this.form.sourceGridTargetColumns.forEach(source=>{
+                console.log(source);
+                console.log(source.sourceColumn);
+                console.log(row[source.sourceColumn]);
                 Vue.set(clonedFormModel, source.selfColumn, row[source.sourceColumn]);
             });
 

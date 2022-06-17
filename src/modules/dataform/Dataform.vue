@@ -3,13 +3,15 @@
         <Form :ref="meta.model +'-'+ schemaID" :model="model" :rules="rule" :label-position=meta.option.labelPosition
               :label-width="meta.option.labelPosition == 'top' ? undefined : meta.option.labelWidth">
             <div class="dataform-header">
-                <h3>{{ title ? title : formTitle }}<b v-if="showID"><span v-if="model[identity]">: {{ model[identity] }}</span></b></h3>
+                <h3>{{ title ? title : formTitle }}<b v-if="showID"><span v-if="model[identity]">: {{
+                        model[identity]
+                    }}</span></b></h3>
             </div>
             <div class="dataform-body" v-if="!loadConfig">
                 <Spin v-if="loadConfig" fix></Spin>
                 <!-- Tab Section -->
 
-                <Row  v-for="row in ui.schema" :key="row.index">
+                <Row v-for="row in ui.schema" :key="row.index">
                     <!-- Section -->
                     <Col v-for="col in row.children" v-if="isVisibleSection(col) && !row.sectionRenderByTab"
                          :key="col.index" :xs="col.span.xs"
@@ -31,11 +33,13 @@
                                             :form="setMeta(item, true)"
                                             :formula="formula"
                                             :relations="relations"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode">
                                         </component>
                                         <component
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render="do_render"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode"
                                             :is="element(item.formType)"
                                             :model="{form: model, component: item.model}"
@@ -55,6 +59,7 @@
                             </Row>
                         </div>
                     </Col>
+
                     <!-- Tab -->
                     <Tabs :value="0" v-if="row.sectionRenderByTab">
                         <TabPane :label="col.name" :name="col.index" v-for="col in row.children"
@@ -74,11 +79,13 @@
                                             :formula="formula"
                                             :url="url"
                                             :relations="relations"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode">
                                         </component>
                                         <component
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render="do_render"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode"
                                             :is="element(item.formType)"
                                             :model="{form: model, component: item.model}"
@@ -112,6 +119,7 @@
                                 :model="{form: model, component: item.model}"
                                 :form="setMeta(item, true)"
                                 :relations="relations"
+                                :asyncMode="asyncMode"
                                 :formula="formula"
                                 :schemaID="schemaID"
                                 :url="url"
@@ -127,6 +135,7 @@
                                 :label="item.label ? item.label : `[${item.model}]`" :rule="item.model"
                                 :meta="setMeta(item)"
                                 :identity="identity"
+                                :asyncMode="asyncMode"
                                 :getSchemaByModel="getSchemaByModel"
                                 :getSchemaRelationByModel="getSchemaRelationByModel"
                                 :setSchemaByModel="setSchemaByModel"
@@ -138,7 +147,6 @@
             </div>
 
             <div class="dataform-footer" v-if="!viewMode">
-
                 <Button @click="close" v-if="withBackButton"
                         style="margin-right: 8px">
                     Буцах
@@ -164,8 +172,9 @@
                 </Button>
 
                 <span v-for="button in getFooterButtons()" class="extra-buttons">
-                    <Button type="info" :loading="asyncMode" @click="setAndSend(button.model, option.value)" v-for="option in button.options"   :key="button.inex">
-                     {{option.label}}
+                    <Button type="info" :loading="asyncMode" @click="setAndSend(button.model, option.value)"
+                            v-for="option in button.options" :key="button.inex">
+                     {{ option.label }}
                     </Button>
                 </span>
             </div>
@@ -188,6 +197,7 @@
 
 <script>
 import mixins from "./DataformMixin";
+
 export default {
     mixins: [mixins],
 }

@@ -27,7 +27,7 @@ export default {
     ],
     data() {
         return {
-            formTitle:"",
+            formTitle: "",
             loadConfig: true,
             viewMode: false,
             asyncMode: false,
@@ -48,11 +48,11 @@ export default {
             showInfo: false,
             infoUrl: "",
             infoTitle: "",
-            showID: window.init ? window.init.showID ? window.init.showID : undefined :undefined,
-            subFormValidations:[],
-            extraButtons:[],
-            disableReset:false,
-            withBackButton:false
+            showID: window.init ? window.init.showID ? window.init.showID : undefined : undefined,
+            subFormValidations: [],
+            extraButtons: [],
+            disableReset: false,
+            withBackButton: false
         };
     },
 
@@ -124,7 +124,7 @@ export default {
     },
 
     methods: {
-        createWithTemplate(template){
+        createWithTemplate(template) {
             return dataFromTemplate(template, this.model);
         },
         isVisibleSection(col) {
@@ -157,7 +157,6 @@ export default {
             for (let item of items) {
 
 
-
                 if (item.type == "form" || item.type == "Form") {
 
 
@@ -169,20 +168,20 @@ export default {
                         return false;
                     }
                 } else {
-                    if(item.formType == "SubForm"){
+                    if (item.formType == "SubForm") {
                         return true;
                     } else {
-                        if(item.type == "row"){
+                        if (item.type == "row") {
                             let showableFieldFound = false;
                             for (let col of item.children) {
                                 let fieldShowAble = this.showAbleFields(col.children);
-                                if(fieldShowAble){
+                                if (fieldShowAble) {
                                     showableFieldFound = true;
                                 }
                             }
                             return showableFieldFound;
                         } else {
-                            if(item.hasOwnProperty("children")){
+                            if (item.hasOwnProperty("children")) {
                                 let showAbleChild = this.showAbleFields(item.children)
                                 if (showAbleChild) {
                                     return true;
@@ -225,7 +224,6 @@ export default {
         afterChange(model, val, oldValue) {
             doTrigger(model, val, this.model, this.schema, this.$refs, this.$Notice, this.editMode);
             if (this.do_render) {
-
                 if (val != oldValue) {
                     doFormula(this.formula, model, this.model, this.schema, this.rule, false);
                 }
@@ -269,7 +267,7 @@ export default {
             }
 
             let formSchema = {};
-            if(window.init){
+            if (window.init) {
                 if (window.init.formSchemas) {
                     if (window.init.formSchemas[this.$props.schemaID]) {
                         formSchema = window.init.formSchemas[this.$props.schemaID];
@@ -288,10 +286,10 @@ export default {
             this.schema = formSchema.schema;
 
             this.ui = formSchema.ui;
-            if(formSchema.save_btn_text){
+            if (formSchema.save_btn_text) {
                 this.save_btn_text = formSchema.save_btn_text;
             }
-            if(formSchema.formValidationCustomText){
+            if (formSchema.formValidationCustomText) {
                 this.formValidationCustomText = formSchema.formValidationCustomText;
             }
 
@@ -382,7 +380,9 @@ export default {
                     this.$watch("model." + item.model, {
                         handler: (value, oldValue) => {
                             if(this.do_render){
-                                this.afterChange(item.model, value, oldValue);
+                                if(value !== oldValue){
+                                    this.afterChange(item.model, value, oldValue);
+                                }
                             }
                         },
                         deep: true
@@ -418,12 +418,12 @@ export default {
                         }
                     }
 
-                } else if(item.formType == "SubForm"){
+                } else if (item.formType == "SubForm") {
                     this.setModel(item.model, [], "SubForm");
-                    if(item.checkEmpty){
+                    if (item.checkEmpty) {
                         this.subFormValidations.push({
-                            model:item.model,
-                            emptyErrorMsg:item.EmptyErrorMsg ? item.EmptyErrorMsg : `${item.name}-д мэдээлэл бүртгэнэ үү`
+                            model: item.model,
+                            emptyErrorMsg: item.EmptyErrorMsg ? item.EmptyErrorMsg : `${item.name}-д мэдээлэл бүртгэнэ үү`
                         });
                     }
 
@@ -475,14 +475,14 @@ export default {
                 case "Select":
                     if (value == "" || value === null) {
                         Vue.set(this.$data.model, name, null);
-                    } else  if(!isNaN(value)){
+                    } else if (!isNaN(value)) {
                         Vue.set(this.$data.model, name, value * 1);
-                    } else  {
+                    } else {
                         Vue.set(this.$data.model, name, value);
                     }
                     break;
                 case "Number":
-                    if(value !== null){
+                    if (value !== null) {
                         Vue.set(this.$data.model, name, value * 1);
                     }
                     break;
@@ -532,6 +532,7 @@ export default {
         },
 
         setSchemaByModel(model, prop, value, subModel) {
+
             if (prop == "value") {
                 Vue.set(this.$data.model, model, value);
             } else if (prop == "sub-value") {
@@ -540,11 +541,11 @@ export default {
             } else {
                 let index = this.schema.findIndex(item => item.model == model);
 
-                if (index >= 0){
-                    if(subModel !== undefined){
-                        if(this.schema[index].formType == "SubForm"){
+                if (index >= 0) {
+                    if (subModel !== undefined) {
+                        if (this.schema[index].formType == "SubForm") {
                             let sindex = this.schema[index].schema.findIndex(sitem => sitem.model == subModel);
-                            if(sindex >= 0){
+                            if (sindex >= 0) {
                                 Vue.set(this.schema[index].schema[sindex], prop, value)
                             }
                         }
@@ -569,7 +570,7 @@ export default {
         handleSubmit(name) {
             this.setIdentityManual();
             if (_.isEmpty(this.$data.rule)) {
-                if(this.subFormValidations.length >= 1){
+                if (this.subFormValidations.length >= 1) {
                     this.validateWithSubForm();
                 } else {
                     this.postData();
@@ -578,7 +579,7 @@ export default {
             } else {
                 this.$refs[name].validate(valid => {
                     if (valid) {
-                        if(this.subFormValidations.length >= 1){
+                        if (this.subFormValidations.length >= 1) {
                             this.validateWithSubForm();
                         } else {
                             this.postData();
@@ -595,14 +596,14 @@ export default {
                 });
             }
         },
-        validateWithSubForm(){
+        validateWithSubForm() {
             let subValid = true;
-            this.subFormValidations.forEach(sbValidation=>{
+            this.subFormValidations.forEach(sbValidation => {
                 let isArray = _.isArray(this.model[sbValidation.model]);
-                if(this.model[sbValidation.model] === undefined  || this.model[sbValidation.model] === null || isArray){
+                if (this.model[sbValidation.model] === undefined || this.model[sbValidation.model] === null || isArray) {
 
-                    if(isArray){
-                        if(this.model[sbValidation.model].length == 0){
+                    if (isArray) {
+                        if (this.model[sbValidation.model].length == 0) {
                             this.$Notice.error({
                                 title: this.lang.informationIsIncomplete,
                                 desc: sbValidation.emptyErrorMsg, duration: 0
@@ -618,7 +619,7 @@ export default {
                     }
                 }
             })
-            if(subValid){
+            if (subValid) {
                 this.postData();
             }
         },
@@ -630,7 +631,7 @@ export default {
                 this.asyncMode = true;
                 axios.post(this.submitUrl, this.$data.model)
                     .then(({data}) => {
-                        //console.log(data);
+
                         if (data.status) {
                             this.$Notice.success({
                                 title: this.lang.successfullySaved
@@ -659,7 +660,7 @@ export default {
                     })
                     .catch(e => {
                         let errorDesc = "";
-                        if(e.response){
+                        if (e.response) {
 
                             if (e.response.data.hasOwnProperty("error")) {
 
@@ -733,10 +734,10 @@ export default {
                 this.user_condition.forEach(user_condition => {
 
                     let schemaItem = this.getSchemaByModel(user_condition["form_field"]);
-                    if(schemaItem){
+                    if (schemaItem) {
                         if ((schemaItem.default != "" && schemaItem.default !== null && schemaItem.default != 0) || setFromUserData) {
                             if (this.model[schemaItem.model] == "" || this.model[schemaItem.model] === null || this.model[schemaItem.model] == 0) {
-                                if(setFromUserData){
+                                if (setFromUserData) {
                                     this.model[schemaItem.model] = window.init.user[user_condition["user_field"]];
                                     schemaItem.default = window.init.user[user_condition["user_field"]];
                                 } else {
@@ -749,30 +750,21 @@ export default {
                     }
 
 
-
                 });
             }
 
 
         },
-        setCustomData(){
-            if(this.formCustomData){
-                Object.keys(this.formCustomData).forEach(model=>{
-
+        setCustomData() {
+            if (this.formCustomData) {
+                Object.keys(this.formCustomData).forEach(model => {
                     let index = this.schema.findIndex(item => item.model == model);
-                    if (index >= 0){
+                    if (index >= 0) {
                         Vue.set(this.schema[index], "disabled", true);
                         Vue.set(this.schema[index], "default", this.formCustomData[model]);
                         Vue.set(this.$data.model, model, this.formCustomData[model]);
                     }
-
-
-
-
-
-
                 })
-
             }
         },
 
@@ -784,7 +776,6 @@ export default {
                     this.setUserConditionValues(false);
                     this.setCustomData();
                 }
-
             } else {
                 this.dataID = id;
                 setIdentity(this.identity, id);
@@ -810,7 +801,7 @@ export default {
 
         subFormFillData(subModel) {
             if (this.$refs[`sf${subModel}`]) {
-                if(this.$refs[`sf${subModel}`].length >= 1){
+                if (this.$refs[`sf${subModel}`].length >= 1) {
                     this.$refs[`sf${subModel}`][0].fillData();
                 } else {
                     setTimeout(() => {
@@ -827,7 +818,6 @@ export default {
         setEditModel(items) {
             items.forEach(item => {
                 if (item.type == "form" || item.type == "Form" || item.formType == "SubForm") {
-
                     switch (item.formType) {
                         case "SubForm":
                             this.subFormFillData(item.model);
@@ -862,14 +852,13 @@ export default {
                 }
             });
         },
+
         cloneModel(id) {
             axios.post(`/lambda/krud/${this.$props.schemaID}/edit/${id}`)
                 .then(({data}) => {
                     if (data.status) {
                         this.model = {...this.model, ...data.data};
                         delete this.model[this.identity];
-                        console.log(this.identity);
-                        console.log(this.model[this.identity]);
                         this.setEditModel(this.ui.schema);
                         this.setUserConditionValues(false);
                         this.setCustomData();
@@ -878,7 +867,6 @@ export default {
         },
 
         getOptionsByRelations(baseUrl, relations) {
-
             if (Object.keys(relations).length >= 1) {
                 axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, {relations: relations})
                     .then(({data}) => {
@@ -889,6 +877,7 @@ export default {
                     });
             }
         },
+
         getOptionsData(schema) {
             this.relations = this.getSelects(schema, undefined);
             if (window.init.microserviceSettings) {
@@ -908,31 +897,36 @@ export default {
         },
         getSelectItem(item, selects) {
 
-            if(item.relation.filterWithUser){
-                if(!!item.relation.filterWithUser && item.relation.filterWithUser.constructor === Array){
+            if (item.relation.filterWithUser) {
+                if (!!item.relation.filterWithUser && item.relation.filterWithUser.constructor === Array) {
                     let userConditions = ""
-                    item.relation.filterWithUser.forEach(userFilter=>{
+                    item.relation.filterWithUser.forEach(userFilter => {
 
                         let condition = `${userFilter["tableField"]} = '${window.init.user[userFilter["userField"]]}'`
 
-                        if(userConditions == ""){
+                        if (userConditions == "") {
                             userConditions = condition;
                         } else {
                             userConditions = userConditions + " AND " + condition
                         }
                     });
 
-                    if(item.relation.filter == "" || typeof item.relation.filter === "undefined"){
+                    if (item.relation.filter == "" || typeof item.relation.filter === "undefined") {
                         item.relation.filter = userConditions;
+
+                        console.log(item.relation)
+
+                        this.setSchemaByModel(item.model, "relation", item.relation);
+
                     } else {
                         item.relation.filter = `(${item.relation.filter}) OR (${userConditions})`
                     }
                 } else {
                     let condition = `${item.relation.filterWithUser["tableField"]} = '${window.init.user[item.relation.filterWithUser["userField"]]}'`
-                    if(item.relation.filter == "" || typeof item.relation.filter === "undefined"){
+                    if (item.relation.filter == "" || typeof item.relation.filter === "undefined") {
                         item.relation.filter = condition;
                     } else {
-                        item.relation.filter = item.relation.filter+ " AND " + condition
+                        item.relation.filter = item.relation.filter + " AND " + condition
                     }
                 }
 
@@ -943,7 +937,9 @@ export default {
             }
 
             if (item.relation.filter == "" || typeof item.relation.filter === "undefined") {
+
                 selects[item.relation.table] = item.relation;
+
             } else {
 
                 selects[item.model] = item.relation;
@@ -1000,7 +996,7 @@ export default {
 
                                  if(!form_field.hidden && form_field.type == 'form'){
                                      visible_item_found = true;
-                                     console.log(form_field)
+
 
                                  }
 
@@ -1020,24 +1016,53 @@ export default {
 
         },
         getRelation(item) {
-            return getRelationData(item, this.relations)
+            let s_index = this.schema.findIndex(schema => schema.model == item.model);
+            let i = s_index >= 0 ? this.schema[s_index] : item;
+            return getRelationData(i, this.relations)
         },
-        getFooterButtons(){
+        getFooterButtons() {
             let buttons = [];
             this.schema.forEach(item => {
-               if(item.formType == "FooterButton") {
-                   buttons.push({...item});
-               }
+                if (item.formType == "FooterButton") {
+                    buttons.push({...item});
+                }
             });
             return buttons;
         },
-        setAndSend(model, value){
-            Vue.set(this.$data.model, model, value);
+        setAndSend(model, value) {
 
-            console.log(model, value);
-            console.log(this.$data.model);
+            let name = this.meta.model + '-' + this.schemaID;
+            this.setIdentityManual();
+            if (_.isEmpty(this.$data.rule)) {
+                if (this.subFormValidations.length >= 1) {
+                    this.validateWithSubForm();
+                } else {
+                    this.asyncMode = true;
+                    Vue.set(this.$data.model, model, value);
+                    this.postData();
+                }
 
-            this.handleSubmit(this.meta.model +'-'+ this.schemaID);
+            } else {
+                this.$refs[name].validate(valid => {
+                    if (valid) {
+                        if (this.subFormValidations.length >= 1) {
+                            this.validateWithSubForm();
+                        } else {
+                            this.asyncMode = true;
+                            Vue.set(this.$data.model, model, value);
+                            this.postData();
+                        }
+                    } else {
+                        //auh дээр хэрэглэгдэж байгаа шүү
+                        this.$Notice.error({
+                            title: this.lang.informationIsIncomplete,
+                            desc: this.formValidationCustomText != "" ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
+                            , duration: 0
+                        });
+
+                    }
+                });
+            }
         }
     },
 

@@ -31,15 +31,25 @@
                         grid: '51',
                         form: '50',
                         custom_condition: `projects_id = ${this.$project.id}`,
-                        actions: []
+                        exportSelectedRows:true,
+                        exportLabel:"Lambda тохиргоо татах",
+                        exportPath:"/crud/export?ids=",
+                        gridSelector:false,
+                        hasSelection:true,
+                        actions: [],
                     }
                 } else {
                     return {
                         template: "canvas",
-                        title: "Маягт, хүснэгт нэгтгэл",
+                        title:  this.lang.form_and_table_consolidation,
                         grid: 'crud_grid',
                         form: 'crud_form',
-                        actions: []
+                        exportSelectedRows:true,
+                        exportLabel:"Lambda тохиргоо татах",
+                        exportPath:"/crud/export?ids=",
+                        gridSelector:false,
+                        hasSelection:true,
+                        actions: [],
                     }
                 }
 

@@ -86,7 +86,6 @@ export function doTrigger(model, val, model_, schema_, refs, Message, editMode) 
         let model_index = getSchemaIndex(schema_, model);
         if (model_index >= 0) {
             if (schema_[model_index]['trigger']) {
-
                 if (fieldTimeout) {
                     clearTimeout(fieldTimeout);
                 }
@@ -115,8 +114,8 @@ function setValueProps(field, model_, schema_, refs, is_sub) {
         let schema_index = getSchemaIndex(schema_, field.field);
         if (schema_index >= 0) {
             if ('value' in field) {
-                model_[field.field] = field.value;
-
+                //model_[field.field] = field.value;
+                Vue.set(model_, field.field, field.value);
                 let current_schema = schema_[schema_index];
                 if (current_schema.formType == "SubForm") {
                     refs[`sf${field.field}`][0].fillData();
@@ -124,7 +123,8 @@ function setValueProps(field, model_, schema_, refs, is_sub) {
             }
             if (field.props) {
                 Object.keys(field.props).forEach(prop => {
-                    schema_[schema_index][prop] = field.props[prop];
+                    // schema_[schema_index][prop] = field.props[prop];
+                    Vue.set(schema_[schema_index], prop, field.props[prop]);
                 });
             }
         }
@@ -157,12 +157,10 @@ function callFieldTrigger(trigger_url, model_, schema_, refs, Message, editMode)
                     Message.success({
                         duration: 3,
                         desc:data['message']['message']
-
                     });
                 } else {
                     Message.error({
                         duration: 3,
-
                         desc:data['message']['message']
                     });
                 }

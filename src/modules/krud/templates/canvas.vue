@@ -45,11 +45,12 @@
                 <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
                     <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
+                    <Button v-if="permissions ? permissions.c : true"
+                            @click="openSlidePanel = true; editMode = false;"  type="success" shape="circle" size="small"
                             icon="md-add">
                         {{lang._add}}
                     </Button>
+
                 </div>
 
                 <div class="crud-page-header-right">
@@ -70,7 +71,9 @@
                                :isRefresh="isRefresh"
                                :isSave="isSave"
                     />
+                    <Button v-if="exportSelectedRows"  @click="exportByPath" :disabled="selectedData.length < 1" type="success" shape="circle" size="small">{{exportLabel}}</Button>
                     <slot name="right"></slot>
+
                 </div>
             </div>
 
@@ -89,7 +92,9 @@
                               :fnView="view"
                               :actions="$props.actions"
                               :dblClick="$props.dbClickAction"
-                              :onRowSelect="$props.onRowSelect"
+                              :onRowSelect="onRowSelectedEvent"
+
+                              :hasSelection="hasSelection"
                               :permissions="permissions"
                               :page_id="page_id"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
