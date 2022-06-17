@@ -224,7 +224,6 @@ export default {
         afterChange(model, val, oldValue) {
             doTrigger(model, val, this.model, this.schema, this.$refs, this.$Notice, this.editMode);
             if (this.do_render) {
-
                 if (val != oldValue) {
                     doFormula(this.formula, model, this.model, this.schema, this.rule, false);
                 }
@@ -381,7 +380,9 @@ export default {
                     this.$watch("model." + item.model, {
                         handler: (value, oldValue) => {
                             if(this.do_render){
-                                this.afterChange(item.model, value, oldValue);
+                                if(value !== oldValue){
+                                    this.afterChange(item.model, value, oldValue);
+                                }
                             }
                         },
                         deep: true
@@ -1029,8 +1030,39 @@ export default {
             return buttons;
         },
         setAndSend(model, value) {
-            Vue.set(this.$data.model, model, value);
-            this.handleSubmit(this.meta.model + '-' + this.schemaID);
+
+            let name = this.meta.model + '-' + this.schemaID;
+            this.setIdentityManual();
+            if (_.isEmpty(this.$data.rule)) {
+                if (this.subFormValidations.length >= 1) {
+                    this.validateWithSubForm();
+                } else {
+                    this.asyncMode = true;
+                    Vue.set(this.$data.model, model, value);
+                    this.postData();
+                }
+
+            } else {
+                this.$refs[name].validate(valid => {
+                    if (valid) {
+                        if (this.subFormValidations.length >= 1) {
+                            this.validateWithSubForm();
+                        } else {
+                            this.asyncMode = true;
+                            Vue.set(this.$data.model, model, value);
+                            this.postData();
+                        }
+                    } else {
+                        //auh дээр хэрэглэгдэж байгаа шүү
+                        this.$Notice.error({
+                            title: this.lang.informationIsIncomplete,
+                            desc: this.formValidationCustomText != "" ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
+                            , duration: 0
+                        });
+
+                    }
+                });
+            }
         }
     },
 

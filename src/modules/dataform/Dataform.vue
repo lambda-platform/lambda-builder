@@ -33,11 +33,13 @@
                                             :form="setMeta(item, true)"
                                             :formula="formula"
                                             :relations="relations"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode">
                                         </component>
                                         <component
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render="do_render"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode"
                                             :is="element(item.formType)"
                                             :model="{form: model, component: item.model}"
@@ -77,11 +79,13 @@
                                             :formula="formula"
                                             :url="url"
                                             :relations="relations"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode">
                                         </component>
                                         <component
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render="do_render"
+                                            :asyncMode="asyncMode"
                                             :editMode="editMode"
                                             :is="element(item.formType)"
                                             :model="{form: model, component: item.model}"
@@ -115,6 +119,7 @@
                                 :model="{form: model, component: item.model}"
                                 :form="setMeta(item, true)"
                                 :relations="relations"
+                                :asyncMode="asyncMode"
                                 :formula="formula"
                                 :schemaID="schemaID"
                                 :url="url"
@@ -130,6 +135,7 @@
                                 :label="item.label ? item.label : `[${item.model}]`" :rule="item.model"
                                 :meta="setMeta(item)"
                                 :identity="identity"
+                                :asyncMode="asyncMode"
                                 :getSchemaByModel="getSchemaByModel"
                                 :getSchemaRelationByModel="getSchemaRelationByModel"
                                 :setSchemaByModel="setSchemaByModel"
