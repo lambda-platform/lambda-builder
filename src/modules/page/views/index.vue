@@ -3,32 +3,12 @@
         <router-view v-if="showSub" :key="$route.path">
             <nav slot="v-nav" v-show="showSub && menuMode != 'nested'">
                 <div class="card sub-nav-list">
-                    <h3 class="card-header">{{pageTitle}}</h3>
-                    <Collapse simple v-model="subMenuId" v-if="showNestedMenu">
-                        <Panel :name="item.id" v-for="(item, index) in subMenu" :key="index" v-if="can(item) && item.children.length >= 1">
-                            <span v-html="getTitle(item)"></span>
-                            <ul class="card-body" slot="content">
-                                <li v-for="(subitem, subindex) in item.children" :key="subindex" v-if="can(subitem)">
-                                    <router-link :to="`/p/${$route.params.menu_id}/${item.id}/${subitem.id}`" v-if="subitem.link_to != 'link' && subitem.link_to != 'router-link'">
-                                        <!-- <Badge count="3"></Badge> -->
-                                        <i v-if="subitem.icon" :class="subitem.icon"></i>
-                                        <span v-html="getTitle(subitem)"></span>
-                                    </router-link>
-                                    <router-link :to="subitem.url" v-if="subitem.link_to == 'router-link'">
-                                        <i v-if="subitem.icon" :class="subitem.icon"></i>
-                                        <span v-html="getTitle(subitem)"></span>
-                                    </router-link>
-                                    <a :href="subitem.url" v-if="subitem.link_to == 'link'" :target="item.target">
-                                        <i v-if="subitem.icon" :class="subitem.icon"></i>
-                                        <span v-html="getTitle(subitem)"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </Panel>
-                    </Collapse>
+                    <h3 class="card-header">{{ pageTitle }}</h3>
                     <ul class="card-body">
-                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)  && item.children.length <= 0">
-                            <router-link :to="`/p/${$route.params.menu_id}/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link'">
+                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)">
+                           <span v-if="item.children.length <= 0">
+                            <router-link :to="`/p/${$route.params.menu_id}/${item.id}`"
+                                         v-if="item.link_to != 'link' && item.link_to != 'router-link'">
                                 <!-- <Badge count="3"></Badge> -->
                                 <i v-if="item.icon" :class="item.icon"></i>
                                 <span v-html="getTitle(item)"></span>
@@ -41,6 +21,32 @@
                                 <i v-if="item.icon" :class="item.icon"></i>
                                 <span v-html="getTitle(item)"></span>
                             </a>
+                           </span>
+                            <Collapse simple v-if="showNestedMenu  && item.children.length >= 1">
+                                <Panel :name="item.id" :key="index">
+                                    <span v-html="getTitle(item)"></span>
+                                    <ul class="card-body" slot="content">
+                                        <li v-for="(subitem, subindex) in item.children" :key="subindex"
+                                            v-if="can(subitem)">
+                                            <router-link :to="`/p/${$route.params.menu_id}/${item.id}/${subitem.id}`"
+                                                         v-if="subitem.link_to != 'link' && subitem.link_to != 'router-link'">
+                                                <!-- <Badge count="3"></Badge> -->
+                                                <i v-if="subitem.icon" :class="subitem.icon"></i>
+                                                <span v-html="getTitle(subitem)"></span>
+                                            </router-link>
+                                            <router-link :to="subitem.url" v-if="subitem.link_to == 'router-link'">
+                                                <i v-if="subitem.icon" :class="subitem.icon"></i>
+                                                <span v-html="getTitle(subitem)"></span>
+                                            </router-link>
+                                            <a :href="subitem.url" v-if="subitem.link_to == 'link'"
+                                               :target="item.target">
+                                                <i v-if="subitem.icon" :class="subitem.icon"></i>
+                                                <span v-html="getTitle(subitem)"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </Panel>
+                            </Collapse>
                         </li>
                     </ul>
                 </div>
@@ -48,14 +54,14 @@
         </router-view>
 
         <div v-if="!showSub" :class="pageType == 'iframe' ? 'iframe-page' :'sub-page'">
-            <krud v-if="pageType == 'crud'" :template="property.template" :property="property"  class="material" >
+            <krud v-if="pageType == 'crud'" :template="property.template" :property="property" class="material">
                 <user-control slot="right"></user-control>
             </krud>
             <iframe v-if="pageType == 'iframe'" :src="iframeUrl"></iframe>
 
             <portal to="header-left" v-if="pageType == 'iframe' && property.withoutHeader">
 
-                <h3>{{iframeTitle}}</h3>
+                <h3>{{ iframeTitle }}</h3>
 
             </portal>
         </div>
@@ -67,10 +73,10 @@
 
 export default {
     computed: {
-        menuMode(){
+        menuMode() {
             let menuModeSaved = localStorage.getItem('menuMode');
 
-            if(menuModeSaved){
+            if (menuModeSaved) {
                 return menuModeSaved
             } else {
                 return undefined
@@ -86,8 +92,8 @@ export default {
 
             property: {
                 withCrudLog: window.init.withCrudLog,
-                withoutHeader:window.init.withoutHeader === true ? true : false,
-                page_id:null,
+                withoutHeader: window.init.withoutHeader === true ? true : false,
+                page_id: null,
                 template: "canvas",
                 mode: window.init.crud_mode ? window.init.crud_mode : undefined,
                 title: "",
@@ -103,8 +109,8 @@ export default {
                     r: false,
                     u: false,
                     d: false,
-                    gridDeleteConditionJS:"",
-                    gridEditConditionJS:"",
+                    gridDeleteConditionJS: "",
+                    gridEditConditionJS: "",
                 },
             },
             iframeUrl: '',
@@ -115,8 +121,8 @@ export default {
             cruds: window.init.cruds,
             permissions: window.init.permissions.permissions,
             pageTitle: '',
-            subMenuId:'0',
-            showNestedMenu:false
+            subMenuId: '0',
+            showNestedMenu: false
         };
     },
     methods: {
@@ -128,10 +134,10 @@ export default {
                 if (this.menu[menuIndex].children.length >= 1) {
 
 
-                    this.menu[menuIndex].children.forEach((sub, subIndex)=>{
-                        if(sub.children.length >= 1){
+                    this.menu[menuIndex].children.forEach((sub, subIndex) => {
+                        if (sub.children.length >= 1) {
                             this.showNestedMenu = true;
-                            if(this.$route.params.sub_menu_id == sub.id){
+                            if (this.$route.params.sub_menu_id == sub.id) {
                                 this.subMenuId = sub.id
                             }
 
