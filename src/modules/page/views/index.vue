@@ -60,9 +60,7 @@
             <iframe v-if="pageType == 'iframe'" :src="iframeUrl"></iframe>
 
             <portal to="header-left" v-if="pageType == 'iframe' && property.withoutHeader">
-
                 <h3>{{ iframeTitle }}</h3>
-
             </portal>
         </div>
     </section>
@@ -128,12 +126,8 @@ export default {
     methods: {
         checkSub() {
             let menuIndex = this.menu.findIndex(menu => menu.id == this.$route.params.menu_id);
-
             if (menuIndex >= 0) {
-
                 if (this.menu[menuIndex].children.length >= 1) {
-
-
                     this.menu[menuIndex].children.forEach((sub, subIndex) => {
                         if (sub.children.length >= 1) {
                             this.showNestedMenu = true;
@@ -143,12 +137,9 @@ export default {
 
                         }
                     });
-
                     this.pageTitle = this.getTitle(this.menu[menuIndex]);
-
                     this.pageTitle = this.getTitle(this.menu[menuIndex]);
                     if (this.$route.matched.length <= 1) {
-
                         let first = this.getShowAbleChild(this.menu[menuIndex].children);
                         if (first)
                             this.$router.push(`/p/${this.$route.params.menu_id}/${first.id}`);
@@ -157,10 +148,8 @@ export default {
                         this.showSub = true;
                     }
 
-
                 } else {
                     this.showSub = false;
-
                     this.getPage();
                 }
             }
@@ -207,8 +196,6 @@ export default {
                     case 'crud':
                         let crudIndex = this.cruds.findIndex(crud => crud.id == page.url);
                         if (crudIndex >= 0) {
-
-
                             // this.property. = 'canvas'
                             this.property.page_id = page.id;
                             this.property.title = this.cruds[crudIndex].title;
@@ -217,6 +204,7 @@ export default {
                             this.property.grid = this.cruds[crudIndex].grid;
                             this.property.form = this.cruds[crudIndex].form;
                             this.property.template = this.cruds[crudIndex].template;
+                            this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
                             this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
                             this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
                             this.property.view_url = this.cruds[crudIndex].view_url;
@@ -259,7 +247,6 @@ export default {
         }
     },
     mounted() {
-
         this.checkSub();
     }
 };

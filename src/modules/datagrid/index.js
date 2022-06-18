@@ -15,8 +15,6 @@ const components = {
     'datagrid': Datagrid
 };
 
-console.log("DATAGRID:");
-
 const install = function (Vue) {
     if (install.installed) return;
     install.installed=true;

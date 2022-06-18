@@ -202,7 +202,6 @@ export default {
         "page_id",
         "actionvisibility",
         "gridSelector",
-
         "url"
     ],
     computed: {
@@ -1518,7 +1517,8 @@ export default {
 
             let rowId = params.node.data.id;
             let actions = [];
-
+console.log("this.$props");
+console.log(this.$props);
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
                     let menuItem = {

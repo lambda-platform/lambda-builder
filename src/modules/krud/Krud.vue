@@ -39,6 +39,10 @@
     }
     export default {
         props: ["property"],
+        mounted(){
+            console.log("krud property");
+            console.log(this.property);
+        },
         methods: {
              renderTemplate(template) {
                 if(templates.hasOwnProperty(template)){
