@@ -96,7 +96,6 @@
                             let crudIndex = this.cruds.findIndex(crud => crud.id == page.url);
 
                             if (crudIndex >= 0) {
-                                console.log("HERE SUB");
                                 this.property.page_id = page.id;
                                 // this.property. = 'canvas'
                                 // this.property.withoutHeader = this.withoutHeader;

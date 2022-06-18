@@ -204,7 +204,9 @@ export default {
                             this.property.grid = this.cruds[crudIndex].grid;
                             this.property.form = this.cruds[crudIndex].form;
                             this.property.template = this.cruds[crudIndex].template;
-                            this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
+                            if(this.cruds[crudIndex].actions){
+                                this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
+                            }
                             this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
                             this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
                             this.property.view_url = this.cruds[crudIndex].view_url;

@@ -1517,19 +1517,31 @@ export default {
 
             let rowId = params.node.data.id;
             let actions = [];
-console.log("this.$props");
-console.log(this.$props);
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
-                    let menuItem = {
-                        name: item.label ? item.label : '',
-                        icon: "<span class='" + item.icon + "'></span>",
-                        action: () => {
-                            item.method(params.node.data);
-                        },
-                        disabled: item.disabled ? item.disabled : false
-                    };
-                    actions.push(menuItem);
+                    if(item.type=="Link")
+                    {
+                        let menuItem = {
+                            name: item.label ? item.label : '',
+                            icon: "<span class='" + item.icon + "'></span>",
+                            action: () => {
+                                window.open(item.url+"/"+rowId, item.target);
+                            },
+                            disabled: item.disabled ? item.disabled : false
+                        };
+                        actions.push(menuItem);
+                    }
+                    else {
+                        let menuItem = {
+                            name: item.label ? item.label : '',
+                            icon: "<span class='" + item.icon + "'></span>",
+                            action: () => {
+                                item.method(params.node.data);
+                            },
+                            disabled: item.disabled ? item.disabled : false
+                        };
+                        actions.push(menuItem);
+                    }
                 });
             }
 
