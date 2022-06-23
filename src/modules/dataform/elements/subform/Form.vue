@@ -25,7 +25,9 @@
                        :model="item.model"
                        :editMode="editMode"
                        :relations="relations"
-                       :formula="formula">
+                       :formula="formula"
+                       :schema="form.schema"
+            >
                 <template slot="action">
                     <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit" v-if="!form.disableEdit">
                         <Icon type="md-create"/>
@@ -79,8 +81,8 @@
 
             :footer-hide="true"
             :title="form.name"
-            width="800"
-            height="70%"
+            width="85%"
+            height="85%"
             v-model="modal_show"
 
         >
@@ -121,8 +123,8 @@
             :draggable="true"
             :resizable="true"
             draggable=".form-tool"
-            width="800"
-            height="70%"
+            width="85%"
+            height="85%"
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">

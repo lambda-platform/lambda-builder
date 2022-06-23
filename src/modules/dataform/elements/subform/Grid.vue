@@ -64,8 +64,8 @@
             :draggable="true"
             :resizable="true"
             draggable=".form-tool"
-            width="800"
-            height="70%"
+            width="85%"
+            height="85%"
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">
