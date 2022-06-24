@@ -407,13 +407,14 @@
                                 </h3>
                             </div>
                             <span>
-                                <label>{{ lang.trigger }} ({{ lang.data_loading_URL }})</label>
-                                <Input v-model="item.trigger" :placeholder="lang.trigger"/>
+                                <label>{{ lang.trigger }} ({{ lang.data_loading_URL }}) url1,url2</label>
+                                <Input v-model="item.trigger" type="textarea" :placeholder="lang.trigger"/>
                             </span>
                             <span>
                                 <label>{{ lang.Trigger_load_time }} </label>
                                 <Input v-model="item.triggerTimeout" placeholder="trigger Timeout"/>
                             </span>
+
                         </ul>
                     </Col>
 
@@ -926,6 +927,7 @@ export default {
                     sourceGridTitle:"",
                     sourceGridDescription:"",
                     sourceGridUserCondition:"",
+                    sourceGridParentBasedCondition:"",
                     sourceGridValueField:null
                 }
             }

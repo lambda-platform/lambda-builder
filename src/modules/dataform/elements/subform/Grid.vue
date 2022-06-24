@@ -65,8 +65,8 @@
             :draggable="true"
             :resizable="true"
             draggable=".form-tool"
-            width="800"
-            height="70%"
+            width="85%"
+            height="85%"
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">
@@ -96,6 +96,7 @@
                       :paginate="50"
                       :hasSelection="true"
                       :user_condition="user_condition"
+                      :custom_condition="custom_condition"
                       :permissions="{
                           c:false,
                           r:true,

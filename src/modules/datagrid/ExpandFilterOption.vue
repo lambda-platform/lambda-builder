@@ -31,7 +31,7 @@
                 </Row>
             </TabPane>
 
-            <TabPane :label="lang.data_settings" v-if="item.filter.type == 'Select'">
+            <TabPane :label="lang.data_settings" v-if="item.filter.type == 'Select' || item.filter.type == 'RadioButtonFilter'">
                 <Row type="flex">
                     <Col span="24" class="rel-col">
                         <div class="title">

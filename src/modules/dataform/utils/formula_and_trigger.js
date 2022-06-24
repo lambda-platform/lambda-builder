@@ -136,41 +136,47 @@ function setValueProps(field, model_, schema_, refs, is_sub) {
 function callFieldTrigger(trigger_url, model_, schema_, refs, Message, editMode) {
     // console.log('axios sent', trigger_url);
 
-    axios.post(trigger_url, {model: {...model_}, editMode: editMode})
-        .then(({data}) => {
-            if (data['schema']) {
-                data['schema'].forEach(field => {
-                    setValueProps(field, model_, schema_, refs)
-                })
-            }
-            if (data['schema_sub']) {
+    let services = trigger_url.split(",");
 
-                data['schema_sub'].forEach(schema_sub => {
-                    schema_sub.schema.forEach(field_sub => {
-                        setValueProps(field_sub, model_, schema_, refs, schema_sub.model)
+    services.forEach(service=>{
+        axios.post(service, {model: {...model_}, editMode: editMode})
+            .then(({data}) => {
+                if (data['schema']) {
+                    data['schema'].forEach(field => {
+                        setValueProps(field, model_, schema_, refs)
                     })
-
-                })
-            }
-            if (data['message']) {
-                if (data['message']['type'] == 'success') {
-                    Message.success({
-                        duration: 3,
-                        desc:data['message']['message']
-                    });
-                } else {
-                    Message.error({
-                        duration: 3,
-                        desc:data['message']['message']
-                    });
                 }
-            }
-            if (data['info']) {
-                data['info'].forEach(info => {
-                    document.getElementById(info.target).innerHTML = info.html;
-                })
-            }
-        })
+                if (data['schema_sub']) {
+
+                    data['schema_sub'].forEach(schema_sub => {
+                        schema_sub.schema.forEach(field_sub => {
+                            setValueProps(field_sub, model_, schema_, refs, schema_sub.model)
+                        })
+
+                    })
+                }
+                if (data['message']) {
+                    if (data['message']['type'] == 'success') {
+                        Message.success({
+                            duration: 3,
+                            desc:data['message']['message']
+                        });
+                    } else {
+                        Message.error({
+                            duration: 3,
+                            desc:data['message']['message']
+                        });
+                    }
+                }
+                if (data['info']) {
+                    data['info'].forEach(info => {
+                        document.getElementById(info.target).innerHTML = info.html;
+                    })
+                }
+            })
+    })
+
+
 }
 
 function getSchemaIndex(schema_, model) {
