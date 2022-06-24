@@ -958,6 +958,7 @@ export default {
                 //Number column
                 if (isValid(item.gridType) && item.gridType == "Number") {
                     colItem.cellRendererFramework = Number
+                    colItem.cellClass = "number-cell"
                 }
 
                 //Radio column
@@ -1212,7 +1213,8 @@ export default {
             this.aggregations.loading = true;
             this.aggregations.forumlaResult = "";
             this.aggregations.data = [];
-            axios.post(`/lambda/puzzle/grid/aggergation/${this.customShemaId ? this.customShemaId : this.$props.schemaID}`, filters).then(({data}) => {
+            let baseUrl = this.$props.url ? this.$props.url : '';
+            axios.post(`${baseUrl}/lambda/puzzle/grid/aggergation/${this.customShemaId ? this.customShemaId : this.$props.schemaID}`, filters).then(({data}) => {
                 let mirror_data = {};
 
                 this.aggregations.columnAggregations.map(columnAggregation => {
@@ -1350,7 +1352,8 @@ export default {
 
         remove(id, index) {
             this.delLoading = true;
-            axios.delete(this.page_id ? `/lambda/krud/delete/${this.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.schemaID}/${id}`)
+            let baseUrl = this.$props.url ? this.$props.url : '';
+            axios.delete(this.page_id ? `${baseUrl}/lambda/krud/delete/${this.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.schemaID}/${id}`)
                 .then(o => {
                     if (o.status) {
                         this.$Notice.success({

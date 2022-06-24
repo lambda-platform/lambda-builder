@@ -106,6 +106,10 @@ export const elementList = [
     {
         element: "Textarea",
         component: () => import(/* webpackChunkName: "grid-Textarea" */'./Textarea.vue'),
+    },
+    {
+        element: "RadioButtonFilter",
+        component: () => import(/* webpackChunkName: "grid-RadioButtonFilter" */'./RadioButtonFilter.vue'),
     }
 ]
 
