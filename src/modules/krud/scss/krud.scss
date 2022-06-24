@@ -203,7 +203,8 @@ $white: #ffffff;
                     overflow: hidden;
                     box-shadow: rgba(221, 221, 221, 0.7) 0px 0px 8px 1px !important;
                 }
-                .dg-filter{
+
+                .dg-filter {
                     display: flex;
                     flex-direction: column;
                 }
@@ -216,15 +217,18 @@ $white: #ffffff;
                     box-shadow: rgba(221, 221, 221, 0.7) 0px 0px 8px 1px !important;
 
                     width: 100%;
+
                     &-header {
                         background: #FAFAFA !important;
                     }
-                    &-body{
+
+                    &-body {
                         max-height: calc(100% - 32px);
                         overflow-y: auto;
 
                         width: 100%;
                         padding-bottom: 50px;
+
                         .multiselect__content-wrapper {
                             position: relative;
                         }
@@ -440,7 +444,7 @@ $white: #ffffff;
                 margin-top: 0;
                 padding: 0;
                 margin-bottom: 20px;
-                padding-bottom: 10px;
+                //padding-bottom: 10px;
                 margin-right: 0 !important;
                 box-shadow: rgba(221, 221, 221, 0.7) 0px 0px 8px 1px;
                 border-radius: 4px !important;
@@ -461,7 +465,6 @@ $white: #ffffff;
                     justify-content: space-between;
                     padding: 0px 20px;
                     border-bottom: 1px solid rgb(238, 238, 238);
-                    margin-bottom: 10px;
                 }
 
                 &-body {
@@ -469,6 +472,7 @@ $white: #ffffff;
                     padding: 0;
                     margin: 0;
                     overflow-y: auto;
+
                     li {
                         padding: 0;
                         margin: 0;
@@ -500,6 +504,20 @@ $white: #ffffff;
 
                             &.active {
                                 color: $primary;
+                            }
+                        }
+
+                        .ivu-collapse-simple {
+                            border: none !important;
+                            border-top: #dedee2 1px solid !important;
+
+                            .ivu-collapse-header {
+                                height: auto !important;
+                                display: flex !important;
+                                align-items: center !important;
+                                line-height: 20px !important;
+                                padding-bottom: 8px !important;
+                                padding-top: 8px !important;
                             }
                         }
                     }

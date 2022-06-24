@@ -132,6 +132,7 @@
 import slidePanel from "../components/slidePanel";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
+
 export default {
     mixins: [mixins],
     data() {

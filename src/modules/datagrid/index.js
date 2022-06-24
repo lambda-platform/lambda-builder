@@ -17,6 +17,7 @@ const components = {
 
 const install = function (Vue) {
     if (install.installed) return;
+    install.installed=true;
     Object.keys(components).forEach(key => Vue.component(key, components[key]));
 };
 

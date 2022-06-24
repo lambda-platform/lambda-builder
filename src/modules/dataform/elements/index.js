@@ -149,6 +149,10 @@ export const elementList = [
     //     component:()=> import(/* webpackChunkName: "form-field-UniqueGeneration" */'./UniqueGeneration.vue'),
     // },
     {
+        element: "JsonEditor",
+        component:()=> import(/* webpackChunkName: "form-field-AdminMenu" */'./JsonEditor.vue'),
+    },
+    {
         element: "AdminMenu",
         component:()=> import(/* webpackChunkName: "form-field-AdminMenu" */'./AdminMenu.vue'),
     },

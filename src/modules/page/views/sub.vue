@@ -97,8 +97,6 @@
 
                             if (crudIndex >= 0) {
                                 this.property.page_id = page.id;
-
-
                                 // this.property. = 'canvas'
                                 // this.property.withoutHeader = this.withoutHeader;
                                 this.property.title = this.cruds[crudIndex].title;
@@ -106,6 +104,9 @@
                                 this.property.grid = this.cruds[crudIndex].grid;
                                 this.property.form = this.cruds[crudIndex].form;
                                 this.property.template = this.cruds[crudIndex].template;
+                                if(this.cruds[crudIndex].actions){
+                                    this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
+                                }
                                 this.property.projects_id = this.cruds[crudIndex].projects_id;
                                 // this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
                                 this.property.view_url = this.cruds[crudIndex].view_url;
@@ -208,7 +209,6 @@
         },
         mounted() {
             this.checkSub();
-
         }
     };
 </script>

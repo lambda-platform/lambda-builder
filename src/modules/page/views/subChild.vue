@@ -85,11 +85,9 @@ export default {
                         this.pageType = page.link_to;
                         if (this.pageType == 'crud') {
 
-
                             let crudIndex = this.cruds.findIndex(crud => crud.id == page.url);
 
                             if (crudIndex >= 0) {
-
                                 // this.property. = 'canvas'
                                 // this.property.withoutHeader = this.withoutHeader;
                                 this.property.page_id = page.id;
@@ -98,6 +96,9 @@ export default {
                                 this.property.form = this.cruds[crudIndex].form;
                                 this.property.projects_id = this.cruds[crudIndex].projects_id;
                                 this.property.template = this.cruds[crudIndex].template;
+                                if(this.cruds[crudIndex].actions){
+                                    this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
+                                }
                                 this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
 
                                 this.property.form_width = this.cruds[crudIndex].form_width ? this.cruds[crudIndex].form_width : null;
