@@ -95,6 +95,7 @@
                       :paginate="50"
                       :hasSelection="true"
                       :user_condition="user_condition"
+                      :custom_condition="custom_condition"
                       :permissions="{
                           c:false,
                           r:true,

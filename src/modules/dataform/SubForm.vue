@@ -150,9 +150,14 @@
                </Row>
                 <Row   v-if="f.addFromGrid">
                     <Col span="24">
+                        <label >Хайлтын дээр харуулах гарчиг</label>
                         <Input type="text" v-model="f.sourceGridTitle" placeholder="Хайлтын дээр харуулах гарчиг" />
                         <br>
+                        <label >Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл [{"grid_field":"","user_field":""}]</label>
                         <Input type="text" v-model="f.sourceGridUserCondition" placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл" />
+                        <br>
+                        <label >Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}]</label>
+                        <Input type="text" v-model="f.sourceGridParentBasedCondition" placeholder="Формоос авах шүүлтүүр" />
                     </Col>
                     <Col span="24">
 

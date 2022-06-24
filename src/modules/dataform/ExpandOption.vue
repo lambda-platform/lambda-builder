@@ -927,6 +927,7 @@ export default {
                     sourceGridTitle:"",
                     sourceGridDescription:"",
                     sourceGridUserCondition:"",
+                    sourceGridParentBasedCondition:"",
                     sourceGridValueField:null
                 }
             }
