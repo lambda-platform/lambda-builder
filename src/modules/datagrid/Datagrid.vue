@@ -942,6 +942,9 @@ export default {
                 // Image column
                 if (isValid(item.gridType) && (item.gridType == "Image" || item.gridType == "SVG")) {
                     colItem.cellRendererFramework = Image
+                    // colItem.cellRendererParams = {
+                    //     baseUrl: this.$props.url
+                    // }
                 }
 
                 //Date only column

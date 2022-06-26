@@ -627,7 +627,6 @@ console.log("INITING")
 
                     this.layer.addLayer(this.setLayerOptions(l));
                 });
-
                 this.map.fitBounds(this.layer.getBounds());
 
             }
@@ -833,9 +832,11 @@ console.log("INITING")
 
             if ((value && !oldValue && this.editMode)) {
 
-                this.setElement();
+               // this.setElement();
+                this.initMap();
             } else if((!value && !oldValue && this.editMode)){
-                this.setElement();
+               // this.setElement();
+                this.initMap();
             }
 
         },
