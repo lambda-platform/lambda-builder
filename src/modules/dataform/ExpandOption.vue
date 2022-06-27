@@ -193,6 +193,9 @@
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
+
+                            </li>
+                            <li v-if="microservices.length >= 1">
                                 <label>{{ lang.table }}</label>
                                 <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
                                         filterable

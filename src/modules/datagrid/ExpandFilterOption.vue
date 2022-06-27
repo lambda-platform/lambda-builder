@@ -38,20 +38,69 @@
                             <h3>{{lang.dataLink}} </h3>
                         </div>
                         <ul>
-                            <li>
-                                <label>{{lang.table}}</label>
+
+                            <li v-if="microservices.length >= 1">
+                                <label >Microservice</label>
+
+                                <Select v-model="item.filter.relation.microservice_id" placeholder="Microservice" clearable
+                                        filterable
+                                >
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                        {{ microservice.microservice }}
+                                    </Option>
+                                </Select>
+
+                            </li>
+                            <li v-if="microservices.length >= 1">
+                                <label>{{ lang.selectTable }}</label>
                                 <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable @on-change="relationSchema">
-                                    <OptionGroup :label="lang.tableList">
-                                        <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}
+                                        filterable
+                                        @on-change="relationSchema">
+                                    <OptionGroup :label="`${microservice.microservice}: Table list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"  :key="microservice.index">
+                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
+                                            {{ item }}
                                         </Option>
                                     </OptionGroup>
-                                    <OptionGroup label="View list">
-                                        <Option v-for="item in viewList" :value="item" :key="item.index">{{ item }}
+                                    <OptionGroup :label="`${microservice.microservice}: View list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"  :key="microservice.index">
+                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
+                                            {{ item }}
                                         </Option>
                                     </OptionGroup>
                                 </Select>
                             </li>
+                            <li v-else>
+                                <label>{{ lang.selectTable }}</label>
+                                <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable
+                                        filterable
+                                        @on-change="relationSchema">
+                                    <OptionGroup label="Table list">
+                                        <Option v-for="item in tableList" :value="item" :key="item.index">
+                                            {{ item }}
+                                        </Option>
+                                    </OptionGroup>
+                                    <OptionGroup label="View list">
+                                        <Option v-for="item in viewList" :value="item" :key="item.index">
+                                            {{ item }}
+                                        </Option>
+                                    </OptionGroup>
+                                </Select>
+                            </li>
+
+<!--                            <li>-->
+<!--                                <label>{{lang.table}}</label>-->
+<!--                                <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable-->
+<!--                                        filterable-->
+<!--                                         @on-change="relationSchema">-->
+<!--                                    <OptionGroup :label="lang.tableList">-->
+<!--                                        <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}-->
+<!--                                        </Option>-->
+<!--                                    </OptionGroup>-->
+<!--                                    <OptionGroup label="View list">-->
+<!--                                        <Option v-for="item in viewList" :value="item" :key="item.index">{{ item }}-->
+<!--                                        </Option>-->
+<!--                                    </OptionGroup>-->
+<!--                                </Select>-->
+<!--                            </li>-->
                             <li>
                                 <label>{{lang.Related_fields}}</label>
                                 <Select v-model="item.filter.relation.key" :placeholder="lang.Related_fields" clearable
@@ -188,6 +237,7 @@
                 expanded: false,
                 tableList: window.init.dbSchema.tableList,
                 viewList: window.init.dbSchema.viewList,
+                microservices: window.init.microservices ? window.init.microservices : [],
                 elementList: elementList,
                 relSchema: [],
                 paramComparisons: [

@@ -627,7 +627,6 @@ console.log("INITING")
 
                     this.layer.addLayer(this.setLayerOptions(l));
                 });
-
                 this.map.fitBounds(this.layer.getBounds());
 
             }
@@ -686,8 +685,6 @@ console.log("INITING")
                 });
             }
             geoJson = this.layer.toGeoJSON();
-
-            console.log(geoJson)
 
             if (geoJson.features.length >= 1) {
 
@@ -822,7 +819,7 @@ console.log("INITING")
             //console.log(value, oldValue)
         },
         value_field_form(value, oldValue) {
-            console.log(value, oldValue, "this is form value")
+            // console.log(value, oldValue, "this is form value")
             if (value) {
                 this.handleSubmit();
             }
@@ -833,9 +830,11 @@ console.log("INITING")
 
             if ((value && !oldValue && this.editMode)) {
 
-                this.setElement();
+               // this.setElement();
+                this.initMap();
             } else if((!value && !oldValue && this.editMode)){
-                this.setElement();
+               // this.setElement();
+                this.initMap();
             }
 
         },
