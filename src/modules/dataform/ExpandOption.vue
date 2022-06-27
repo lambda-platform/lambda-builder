@@ -674,10 +674,8 @@
                     </Row>
                     <Row>
                         <Col>
-
-
-
-                            <vue-ckeditor ref="ckeditor" v-model="item.GSOption.sourceGridDescription" :config="configMini"  />
+                            <ckeditor ref="ckeditor" :editor="editor" v-model="item.GSOption.sourceGridDescription"
+                                      :config="editorConfig" ></ckeditor>
                         </Col>
                     </Row>
                     <br>
@@ -726,44 +724,38 @@
 import {elementList} from "./elements";
 import {rules} from "./rule";
 import {applyDrag, getTableMeta} from "./utils/helpers";
-import VueCkeditor from 'vue-ckeditor2';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import Editor from '../../assets/ckeditor5/build/ckeditor';
 import {Container, Draggable} from 'vue-smooth-dnd'
 export default {
     props: ["item", "edit", "sub", "schema", "otherGrids", "projectID"],
     components: {
         Container, Draggable,
-        VueCkeditor
+        ckeditor: CKEditor.component
     },
     data() {
         return {
+            editor: Editor,
+            editorConfig: {
+                toolbar:{items: ['heading', '|',
+                        'bold', 'italic', '|', 'link', '|',
+                        'blockQuote', '|',
+                        'insertTable', '|',
+                        "indent", "outdent", '|',
+                        'mediaEmbed'],  shouldNotGroupWhenFull: true
+                }
+            },
             dropPlaceholderOptions: {
                 className: 'drop-preview',
                 animationDuration: '150',
 
             },
-            configMini:[
-                [
-                    "Undo",
-                    "Redo",
-                    "-",
-                    "Find",
-                    "Replace",
-                    "-",
-                    "SelectAll",
-                    "RemoveFormat"
-                ],
-                [
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    "-",
-                    "Subscript",
-                    "Superscript"
-                ],
-                ["NumberedList", "BulletedList", "-", "Outdent", "Indent"],
-                ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"]
-            ],
+            configMini: [  'heading', '|',
+                'bold', 'italic', '|', 'link', '|',
+                'blockQuote', '|',
+                'insertTable', '|',
+                "indent","outdent", '|',
+                'mediaEmbed', '|'],
             expendPart: '1',
             loadConfig: true,
             tableList: window.init.dbSchema.tableList,
@@ -1074,7 +1066,7 @@ export default {
 
             //CK editor
             if (
-                item.formType == "CK" &&
+                (item.formType == "CK"||item.formType == "CkOld") &&
                 typeof item.editorType == "undefined"
             ) {
                 item.editorType = this.editorTypes[0].type;
