@@ -13,7 +13,7 @@
                                 <i-switch v-model="item.file.isMultiple" size="small"></i-switch>
                             </li>
 
-                            <li v-if="item.formType == 'CK'">
+                            <li v-if="item.formType == 'CK' || item.formType == 'CkOld'">
                                 <label>{{ lang.TypeOfTheEditor }}</label>
                                 <Select v-model="item.editorType" :placeholder="lang.TypeOfTheEditor">
                                     <Option v-for="editor in editorTypes" :key="editor.index" :value="editor.type">
