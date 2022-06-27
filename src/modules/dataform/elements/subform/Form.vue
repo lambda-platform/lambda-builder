@@ -11,7 +11,8 @@
                 <th class="row-number" v-if="form.showRowNumber">ДД</th>
                 <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
                     :key="item.index">
-                    {{ item.label }} <i class="ti-exchange-vertical"/>
+                    <div class="th-title">
+                        {{ item.label }} <i class="ti-exchange-vertical"/></div>
                 </th>
                 <th class="action">...</th>
             </tr>
@@ -187,7 +188,6 @@ export default {
     },
     mounted() {
         this.equationRenderer();
-
         this.form.schema.forEach(field => {
             field.disabled = true;
         })
@@ -319,9 +319,7 @@ export default {
         },
         onSuccess(data) {
 
-            console.log(data)
             if (this.editIndex >= 0) {
-
                 Object.keys(data).forEach(itemKey => {
                     if (
                         this.listData[this.editIndex].form.identity == itemKey

@@ -12,7 +12,8 @@
                 <th class="row-number" v-if="form.showRowNumber">ДД</th>
                 <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
                     :key="item.index">
-                    {{ item.label }} <i class="ti-exchange-vertical"/>
+                    <div class="th-title">
+                    {{ item.label }}<i class="ti-exchange-vertical"/></div>
                 </th>
                 <th class="action" v-if="!form.disableDelete">...</th>
             </tr>
@@ -125,11 +126,10 @@
             "grid-form": GridForm
         },
         mounted() {
-
             this.equationRenderer();
         },
         computed: {
-                lang() {
+            lang() {
                     const labels = ['pleaseCompleteFirstLine',
                     ];
                     return labels.reduce((obj, key, i) => {
@@ -144,7 +144,10 @@
                         background: '#f3f4f5'
                     }
                 } else {
-                    return undefined;
+                    return {
+                        minHeight: '30px',
+                        background: '#f3f4f5'
+                    }
                 }
             },
             Lang() {
@@ -218,14 +221,13 @@
                 equationData: [],
                 currentSortDir: 'asc',
                 hasEq: false,
-
                 rowLength: 0,
-
             };
         },
         methods: {
 
             element: element,
+
             checkAddable() {
                 return new Promise((resolve, reject) => {
                     let obj = this.listData[this.listData.length - 1];

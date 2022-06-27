@@ -4,10 +4,11 @@
             <slot name="rowNumber"></slot>
         </td>
         <td v-for="item in f.schema"
-            v-if="typeof item.formType !== 'undefined' && item.formType !== null && item.model && isShowAble(item.model) && item.model!=f.identity && item.model!=f.parent && item.model!='updated_at'&& item.model!='created_at'"
+            v-if="typeof item.formType !== 'undefined' && item.formType !== null
+            && item.model && isShowAble(item.model) && item.model!=f.identity
+            && item.model!=f.parent && item.model!='updated_at'
+            && item.model!='created_at' && !item.hidden"
             :key="item.index">
-<!--            {{item.hidden}}-->
-            <!--{{item.model}}-->
             <component :is="element(item.formType)"
                        :model="{form: model, component: item.model}"
                        v-if="model"
