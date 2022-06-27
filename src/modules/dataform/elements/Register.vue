@@ -28,6 +28,8 @@
                    :disabled="meta && meta.disabled ? meta.disabled : false"
                    @change="registerChanged"
                    type="number"
+                   :maxlength="8"
+                   :minlength="8"
                    v-model="registerNumber"/>
         </div>
         <div :id="`register_${model.component}`" class="ivu-form-item-error-tip"></div>
@@ -94,8 +96,7 @@
                     let secondchar = value.charAt(1);
                     this.registerChar2 = {value: secondchar, label: secondchar};
                     this.registerNumber = value.substring(2, 10);
-                }
-                else{
+                }  else{
                     this.registerNumber= null;
                     this.registerChar1= {value: 'А', label: 'А'};
                     this.registerChar2= {value: 'А', label: 'А'};
@@ -104,11 +105,21 @@
         },
         methods: {
             registerChanged() {
-                this.model.form[this.model.component] = this.registerChar1.value + this.registerChar2.value;
-                if(this.registerNumber)
-                {
-                    this.model.form[this.model.component]+=this.registerNumber;
+                if(this.registerNumber && this.registerChar1.value && this.registerChar2.value){
+                    let preFix = this.registerChar1.value + this.registerChar2.value;
+                    let number = this.registerNumber.substring(0, 8);
+                    let fillRD = preFix+number;
+                    if(this.registerNumber.length > 8){
+                        this.registerNumber = number;
+                    } else if(fillRD.length == 10){
+                        Vue.set(this.model.form, this.model.component, fillRD);
+                    } else {
+                        Vue.set(this.model.form, this.model.component, null);
+                    }
+                } else {
+                    Vue.set(this.model.form, this.model.component, null);
                 }
+
             }
         }
     };

@@ -686,8 +686,6 @@ console.log("INITING")
             }
             geoJson = this.layer.toGeoJSON();
 
-            console.log(geoJson)
-
             if (geoJson.features.length >= 1) {
 
                 if (this.geometryType == 'point') {
@@ -821,7 +819,7 @@ console.log("INITING")
             //console.log(value, oldValue)
         },
         value_field_form(value, oldValue) {
-            console.log(value, oldValue, "this is form value")
+            // console.log(value, oldValue, "this is form value")
             if (value) {
                 this.handleSubmit();
             }
