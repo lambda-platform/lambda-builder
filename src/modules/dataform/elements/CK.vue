@@ -9,7 +9,7 @@
 
 <script>
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import Editor from '../../../assets/ckeditor5/build/ckeditor';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 
 export default {
     props: ["label", "model", "rule", "meta"],

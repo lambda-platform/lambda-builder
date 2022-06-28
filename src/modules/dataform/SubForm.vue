@@ -254,7 +254,7 @@ import formItem from "./FormItem";
 import {idGenerator} from "./utils/methods";
 import {getTableMeta} from "./utils/helpers";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import Editor from '../../assets/ckeditor5/build/ckeditor';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 export default {
     props: ["f", "edit", "otherForms", "projectID", "otherGrids"],
     components: {

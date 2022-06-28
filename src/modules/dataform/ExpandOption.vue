@@ -728,7 +728,7 @@ import {elementList} from "./elements";
 import {rules} from "./rule";
 import {applyDrag, getTableMeta} from "./utils/helpers";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import Editor from '../../assets/ckeditor5/build/ckeditor';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import {Container, Draggable} from 'vue-smooth-dnd'
 export default {
     props: ["item", "edit", "sub", "schema", "otherGrids", "projectID"],
