@@ -32,6 +32,8 @@ export default {
     },
     computed: {
         hasVNavSlot() {
+            console.log("this.$slots['v-nav']:");
+            console.log(this.$slots['v-nav']);
             return !!this.$slots['v-nav']
         },
         hasNavSlot() {
