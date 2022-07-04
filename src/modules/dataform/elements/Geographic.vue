@@ -196,7 +196,7 @@ export default {
                     lat: 47.91876971846709,
                     lng: 106.91736415028574
                 },
-            zoom: 8,
+            zoom: 15,
             map:
                 null,
             currentBaseMap:
@@ -355,7 +355,7 @@ export default {
                                 if (turf.inside(point, searchLayer)) {
                                     not_inside = false;
                                 }
-                                console.log(not_inside, "not_inside")
+
                             }
 
                         });
@@ -521,7 +521,7 @@ export default {
             }
         },
         initMap() {
-console.log("INITING")
+            console.log("MAP INITING")
             var container = L.DomUtil.get('geographic');
             if(container != null){
                 container._leaflet_id = null;
@@ -531,6 +531,7 @@ console.log("INITING")
             this.map.addLayer(this.baseMaps[this.currentBaseMap].baseMap);
 
             if (!this.geo_data) {
+
                 this.layer.eachLayer((layer) => {
 
                     this.map.removeLayer(layer);
@@ -556,12 +557,16 @@ console.log("INITING")
 
             });
 
-            this.map.addLayer(this.layer);
+
 
 
             this.map.addControl(this.draw);
 
             L.control.scale().addTo(this.map);
+
+
+
+            this.setElement();
 
             this.map.on(L.Draw.Event.CREATED, (e) => {
                 let type = e.layerType,
@@ -592,7 +597,6 @@ console.log("INITING")
             });
 
 
-           this.setElement();
 
             if (this.formValueField && this.checkByArea) {
 
@@ -630,6 +634,7 @@ console.log("INITING")
                 this.map.fitBounds(this.layer.getBounds());
 
             }
+            this.map.addLayer(this.layer);
         },
         geometrySelectEvent(e) {
             if(this.meta && this.meta.disabled){
@@ -828,21 +833,24 @@ console.log("INITING")
         geo_data(value, oldValue) {
 
 
-            if ((value && !oldValue && this.editMode)) {
-
-               // this.setElement();
-                this.initMap();
-            } else if((!value && !oldValue && this.editMode)){
+            if(value && !oldValue){
+                this.setElement();
+            }
+            if((!value && !oldValue && this.editMode)){
                // this.setElement();
                 this.initMap();
             }
 
         },
-        do_render(value, oldValue) {
+        do_render(value) {
 
             if (value) {
                 if (!this.editMode) {
                     this.initMap();
+                } else{
+                    if(this.geo_data === null){
+                        this.initMap();
+                    }
                 }
 
 
