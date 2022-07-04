@@ -22,7 +22,7 @@
                                 <span v-html="getTitle(item)"></span>
                             </a>
                            </span>
-                            <Collapse simple v-if="showNestedMenu  && item.children.length >= 1">
+                            <Collapse simple v-if="showNestedMenu  && item.children.length >= 1" v-model="subMenuId">
                                 <Panel :name="item.id" :key="index">
                                     <span v-html="getTitle(item)"></span>
                                     <ul class="card-body" slot="content">
@@ -87,7 +87,6 @@ export default {
                 height: "1000px"
             },
             pageType: '',
-
             property: {
                 withCrudLog: window.init.withCrudLog,
                 withoutHeader: window.init.withoutHeader === true ? true : false,
@@ -127,14 +126,14 @@ export default {
         checkSub() {
             let menuIndex = this.menu.findIndex(menu => menu.id == this.$route.params.menu_id);
             if (menuIndex >= 0) {
+
                 if (this.menu[menuIndex].children.length >= 1) {
                     this.menu[menuIndex].children.forEach((sub, subIndex) => {
                         if (sub.children.length >= 1) {
                             this.showNestedMenu = true;
                             if (this.$route.params.sub_menu_id == sub.id) {
-                                this.subMenuId = sub.id
+                                this.subMenuId = sub.id;
                             }
-
                         }
                     });
                     this.pageTitle = this.getTitle(this.menu[menuIndex]);
@@ -145,6 +144,7 @@ export default {
                             this.$router.push(`/p/${this.$route.params.menu_id}/${first.id}`);
                     } else {
                         this.subMenu = this.menu[menuIndex].children;
+                       // this.subMenuId = this.menu[menuIndex].id;
                         this.showSub = true;
                     }
 

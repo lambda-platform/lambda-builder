@@ -91,8 +91,6 @@
 
                         this.pageType = page.link_to;
                         if (this.pageType == 'crud') {
-
-
                             let crudIndex = this.cruds.findIndex(crud => crud.id == page.url);
 
                             if (crudIndex >= 0) {

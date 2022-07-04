@@ -21,6 +21,9 @@
                 <user-control></user-control>
             </slot>
         </div>
+        <div slot="dg-slot-body">
+            <slot name="dg-slot-body"></slot>
+        </div>
     </component>
 </template>
 
@@ -31,6 +34,8 @@
         create: ()=> import(/* webpackChunkName: "krud-create" */'./templates/create.vue'),
         edit: ()=> import(/* webpackChunkName: "krud-create" */'./templates/edit.vue'),
         list: ()=> import(/* webpackChunkName: "krud-create" */'./templates/list.vue'),
+        empty: ()=> import(/* webpackChunkName: "krud-create" */'./templates/empty.vue'),
+        emptyWithSideMenu: ()=> import(/* webpackChunkName: "krud-create" */'./templates/empty-with-sidemenu.vue'),
         default: ()=> import(/* webpackChunkName: "krud-default" */'./templates/default.vue'),
         spa: ()=> import(/* webpackChunkName: "krud-spa" */'./templates/spa.vue'),
         window: ()=> import(/* webpackChunkName: "krud-window" */'./templates/window.vue'),

@@ -25,6 +25,7 @@
                                     </Divider>
                                     <span v-for="item in scol.children" :key="item.index">
                                         <component
+                                            :key="item.model"
                                             :ref="'sf'+item.model"
                                             :url="url"
                                             v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
@@ -37,6 +38,7 @@
                                             :editMode="editMode">
                                         </component>
                                         <component
+                                            :key="item"
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render="do_render"
                                             :asyncMode="asyncMode"
@@ -112,6 +114,7 @@
                         <Divider v-if="col.name" orientation="left" class="form-divider">{{ col.name }}</Divider>
                         <span v-for="item in col.children" :key="item.index">
                             <component
+                                :key="item.model"
                                 :ref="'sf'+item.model"
                                 v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                 :is="element(`subform/${item.subtype}`)"
@@ -126,6 +129,7 @@
                                 :editMode="editMode">
                             </component>
                             <component
+                                :key="item.model"
                                 v-if="isShow(item.model) && item.formType != 'SubForm'"
                                 :do_render="do_render"
                                 :editMode="editMode"

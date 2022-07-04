@@ -57,6 +57,10 @@ export const elementList = [
         component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
     },
     {
+        element: "CkOld",
+        component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK-old.vue'),
+    },
+    {
         element: "ColorPicker",
         component:()=> import(/* webpackChunkName: "form-field-ColorPicker" */'./ColorPicker.vue'),
     },
@@ -183,6 +187,7 @@ const requireCustomElement = (type)=>{
                 return require(`dataform_custom/${type}.vue`).default;
             }
             catch (exception_var) {
+                console.log(exception_var);
                 return CustomElement;
             }
         }else {

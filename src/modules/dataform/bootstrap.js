@@ -1,5 +1,6 @@
 // import Vue from "vue"
-import VueCkeditor from 'vue-ckeditor2';
+
+
 import Multiselect from 'vue-multiselect'
 import axios from 'axios';
 import lodash from 'lodash';
@@ -10,7 +11,7 @@ import CircularCountDownTimer from "vue-circular-count-down-timer";
 Vue.component('multiselect', Multiselect)
 // window.Vue = Vue;
 Vue.config.productionTip = false;
-Vue.use(VueCkeditor);
+
 // Vue.component('v-select', vSelect);
 window._ = lodash;
 window.axios = axios;
