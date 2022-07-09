@@ -9,6 +9,11 @@
                 </div>
 
                 <div class="fb-control-item">
+                    <label>Дэд гарчиг</label>
+                    <Input v-model="dataform.formSubName" placeholder="Дэд гарчиг"/>
+                </div>
+
+                <div class="fb-control-item">
                     <label>{{ lang.Form_type }}</label>
                     <Select v-model="dataform.ui.type" :placeholder="lang.Form_type" clearable>
                         <Option value="normal">
@@ -65,6 +70,9 @@
                         </Radio>
                         <Radio label="left">
                             <span>{{ lang._left }}</span>
+                        </Radio>
+                        <Radio label="float">
+                            <span>Float</span>
                         </Radio>
                     </RadioGroup>
                     <InputNumber v-if="dataform.labelPosition == 'left'" v-model="dataform.labelWidth"></InputNumber>
@@ -538,6 +546,7 @@ export default {
             isModelSelected: false,
             formName: null,
             dataform: {
+                formSubName: null,
                 model: null,
                 identity: null,
                 timestamp: false,
@@ -867,8 +876,6 @@ export default {
             this.dataform.schema.forEach(item => {
                 this.updateSyncItem(item);
             });
-
-
         },
 
         updateSyncItem(item) {
@@ -931,6 +938,7 @@ export default {
                 type: "form",
                 formType: null,
                 label: "",
+                warn: "",
                 placeHolder: "",
                 hidden: false,
                 disabled: false,
