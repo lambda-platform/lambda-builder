@@ -150,15 +150,21 @@
                </Row>
                 <Row   v-if="f.addFromGrid">
                     <Col span="24">
+                        <label >Хайлтын дээр харуулах гарчиг</label>
                         <Input type="text" v-model="f.sourceGridTitle" placeholder="Хайлтын дээр харуулах гарчиг" />
                         <br>
+                        <label >Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл [{"grid_field":"","user_field":""}]</label>
                         <Input type="text" v-model="f.sourceGridUserCondition" placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл" />
+                        <br>
+                        <label >Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}]</label>
+                        <Input type="text" v-model="f.sourceGridParentBasedCondition" placeholder="Формоос авах шүүлтүүр" />
                     </Col>
                     <Col span="24">
 
                         <label >Хайлтын дээр харуулах тайлбар</label>
 
-                        <vue-ckeditor ref="ckeditor" v-model="f.sourceGridDescription" :config="configMini"  />
+                        <ckeditor ref="ckeditor" :editor="editor" v-model="f.sourceGridDescription"
+                                  :config="editorConfig" ></ckeditor>
                     </Col>
                 </Row>
                 <br>
@@ -247,13 +253,14 @@ import {applyDrag} from './utils/helpers'
 import formItem from "./FormItem";
 import {idGenerator} from "./utils/methods";
 import {getTableMeta} from "./utils/helpers";
-import VueCkeditor from 'vue-ckeditor2';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 export default {
     props: ["f", "edit", "otherForms", "projectID", "otherGrids"],
     components: {
         Container, Draggable,
         "form-item": formItem,
-        VueCkeditor
+        ckeditor: CKEditor.component
     },
     computed: {
         lang() {
@@ -270,29 +277,16 @@ export default {
 
     data() {
         return {
-            configMini:[
-                [
-                    "Undo",
-                    "Redo",
-                    "-",
-                    "Find",
-                    "Replace",
-                    "-",
-                    "SelectAll",
-                    "RemoveFormat"
-                ],
-                [
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    "-",
-                    "Subscript",
-                    "Superscript"
-                ],
-                ["NumberedList", "BulletedList", "-", "Outdent", "Indent"],
-                ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"]
-            ],
+            editor: Editor,
+            editorConfig: {
+                toolbar:{items: ['heading', '|',
+                        'bold', 'italic', '|', 'link', '|',
+                        'blockQuote', '|',
+                        'insertTable', '|',
+                        "indent", "outdent", '|',
+                        'mediaEmbed'],  shouldNotGroupWhenFull: true
+                }
+            },
             dropPlaceholderOptions: {
                 className: 'drop-preview',
                 animationDuration: '150',

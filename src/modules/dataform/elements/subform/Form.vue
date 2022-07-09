@@ -11,7 +11,8 @@
                 <th class="row-number" v-if="form.showRowNumber">ДД</th>
                 <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
                     :key="item.index">
-                    {{ item.label }} <i class="ti-exchange-vertical"/>
+                    <div class="th-title">
+                        {{ item.label }} <i class="ti-exchange-vertical"/></div>
                 </th>
                 <th class="action">...</th>
             </tr>
@@ -25,7 +26,9 @@
                        :model="item.model"
                        :editMode="editMode"
                        :relations="relations"
-                       :formula="formula">
+                       :formula="formula"
+                       :schema="form.schema"
+            >
                 <template slot="action">
                     <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit" v-if="!form.disableEdit">
                         <Icon type="md-create"/>
@@ -79,8 +82,8 @@
 
             :footer-hide="true"
             :title="form.name"
-            width="800"
-            height="70%"
+            width="85%"
+            height="85%"
             v-model="modal_show"
 
         >
@@ -121,8 +124,8 @@
             :draggable="true"
             :resizable="true"
             draggable=".form-tool"
-            width="800"
-            height="70%"
+            width="85%"
+            height="50%"
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">
@@ -185,7 +188,6 @@ export default {
     },
     mounted() {
         this.equationRenderer();
-
         this.form.schema.forEach(field => {
             field.disabled = true;
         })
@@ -317,9 +319,7 @@ export default {
         },
         onSuccess(data) {
 
-            console.log(data)
             if (this.editIndex >= 0) {
-
                 Object.keys(data).forEach(itemKey => {
                     if (
                         this.listData[this.editIndex].form.identity == itemKey

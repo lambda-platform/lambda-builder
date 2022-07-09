@@ -13,7 +13,7 @@
                                 <i-switch v-model="item.file.isMultiple" size="small"></i-switch>
                             </li>
 
-                            <li v-if="item.formType == 'CK'">
+                            <li v-if="item.formType == 'CK' || item.formType == 'CkOld'">
                                 <label>{{ lang.TypeOfTheEditor }}</label>
                                 <Select v-model="item.editorType" :placeholder="lang.TypeOfTheEditor">
                                     <Option v-for="editor in editorTypes" :key="editor.index" :value="editor.type">
@@ -198,6 +198,9 @@
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
+
+                            </li>
+                            <li v-if="microservices.length >= 1">
                                 <label>{{ lang.table }}</label>
                                 <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
                                         filterable
@@ -412,13 +415,14 @@
                                 </h3>
                             </div>
                             <span>
-                                <label>{{ lang.trigger }} ({{ lang.data_loading_URL }})</label>
-                                <Input v-model="item.trigger" :placeholder="lang.trigger"/>
+                                <label>{{ lang.trigger }} ({{ lang.data_loading_URL }}) url1,url2</label>
+                                <Input v-model="item.trigger" type="textarea" :placeholder="lang.trigger"/>
                             </span>
                             <span>
                                 <label>{{ lang.Trigger_load_time }} </label>
                                 <Input v-model="item.triggerTimeout" placeholder="trigger Timeout"/>
                             </span>
+
                         </ul>
                     </Col>
 
@@ -678,10 +682,8 @@
                     </Row>
                     <Row>
                         <Col>
-
-
-
-                            <vue-ckeditor ref="ckeditor" v-model="item.GSOption.sourceGridDescription" :config="configMini"  />
+                            <ckeditor ref="ckeditor" :editor="editor" v-model="item.GSOption.sourceGridDescription"
+                                      :config="editorConfig" ></ckeditor>
                         </Col>
                     </Row>
                     <br>
@@ -730,44 +732,38 @@
 import {elementList} from "./elements";
 import {rules} from "./rule";
 import {applyDrag, getTableMeta} from "./utils/helpers";
-import VueCkeditor from 'vue-ckeditor2';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import {Container, Draggable} from 'vue-smooth-dnd'
 export default {
     props: ["item", "edit", "sub", "schema", "otherGrids", "projectID"],
     components: {
         Container, Draggable,
-        VueCkeditor
+        ckeditor: CKEditor.component
     },
     data() {
         return {
+            editor: Editor,
+            editorConfig: {
+                toolbar:{items: ['heading', '|',
+                        'bold', 'italic', '|', 'link', '|',
+                        'blockQuote', '|',
+                        'insertTable', '|',
+                        "indent", "outdent", '|',
+                        'mediaEmbed'],  shouldNotGroupWhenFull: true
+                }
+            },
             dropPlaceholderOptions: {
                 className: 'drop-preview',
                 animationDuration: '150',
 
             },
-            configMini:[
-                [
-                    "Undo",
-                    "Redo",
-                    "-",
-                    "Find",
-                    "Replace",
-                    "-",
-                    "SelectAll",
-                    "RemoveFormat"
-                ],
-                [
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    "-",
-                    "Subscript",
-                    "Superscript"
-                ],
-                ["NumberedList", "BulletedList", "-", "Outdent", "Indent"],
-                ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"]
-            ],
+            configMini: [  'heading', '|',
+                'bold', 'italic', '|', 'link', '|',
+                'blockQuote', '|',
+                'insertTable', '|',
+                "indent","outdent", '|',
+                'mediaEmbed', '|'],
             expendPart: '1',
             loadConfig: true,
             tableList: window.init.dbSchema.tableList,
@@ -931,6 +927,7 @@ export default {
                     sourceGridTitle:"",
                     sourceGridDescription:"",
                     sourceGridUserCondition:"",
+                    sourceGridParentBasedCondition:"",
                     sourceGridValueField:null
                 }
             }
@@ -1077,7 +1074,7 @@ export default {
 
             //CK editor
             if (
-                item.formType == "CK" &&
+                (item.formType == "CK"||item.formType == "CkOld") &&
                 typeof item.editorType == "undefined"
             ) {
                 item.editorType = this.editorTypes[0].type;

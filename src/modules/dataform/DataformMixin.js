@@ -281,7 +281,6 @@ export default {
                 formSchema = await this.initFromServerData(userCondition);
             }
 
-
             this.identity = formSchema.identity;
             this.schema = formSchema.schema;
 

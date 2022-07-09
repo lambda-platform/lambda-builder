@@ -1,5 +1,5 @@
 <template>
-    <a :href="link" :target="this.params.linkTarget">
+    <a :href="link" :target="this.params.linkTarget" v-if="params.value">
         <i v-if="this.params.icon" :class="this.params.icon"></i>
         <span v-if="!this.params.showOnlyIcon">{{ params.value }}</span>
     </a>
