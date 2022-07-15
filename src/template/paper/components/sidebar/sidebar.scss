@@ -61,6 +61,21 @@ $anchor-height: 52px;
                         }
                     }
                 }
+                .lambda-nav-more{
+                    overflow: initial!important;
+                    ul{
+                        display: none;
+                        position: absolute!important;
+                        left: 80px!important;
+                        bottom: 0!important;
+                        z-index: 9999999!important;
+                    }
+                }
+                .lambda-nav-more:hover{
+                    ul{
+                        display: block;
+                    }
+                }
             }
         }
     }
