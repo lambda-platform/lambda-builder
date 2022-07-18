@@ -131,8 +131,6 @@ export default {
 
         },
         addChildFind(item, childIndexs) {
-
-
             let newItem = _.cloneDeep(item);
 
             if (childIndexs.length >= 2) {
