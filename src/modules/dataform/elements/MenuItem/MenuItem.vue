@@ -158,8 +158,6 @@ export default {
         }
     },
     mounted() {
-        console.log("cruds:", this.$crudList);
-
         if (this.data.url !== null && this.data.url != "") {
             let crud_index = this.$crudList.findIndex(crud => crud.value == this.data.url);
             if (crud_index >= 0) {

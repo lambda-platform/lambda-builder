@@ -197,9 +197,9 @@ export default {
         element: element,
         evalstr: evalstr,
         isValid: isValid,
+
         isShow(model) {
             let index = this.schema.findIndex(item => item.model == model)
-
             if (index >= 0) {
                 if (this.schema[index].hidden) {
                     return false
@@ -342,8 +342,8 @@ export default {
                     item.source_disabled = item.disabled
                 }
             )
-
         },
+
         validatePassCheck(model, rule, value, callback) {
 
             let value_ = value ? value : ''
@@ -994,18 +994,17 @@ export default {
              return visible_item_found;
          }*/
         showInformationModal(url, title) {
-
-
             this.infoTitle = title
             this.infoUrl = url
             this.showInfo = true
-
         },
+
         getRelation(item) {
             let s_index = this.schema.findIndex(schema => schema.model == item.model)
             let i = s_index >= 0 ? this.schema[s_index] : item
             return getRelationData(i, this.relations)
         },
+
         getFooterButtons() {
             let buttons = []
             this.schema.forEach(item => {
@@ -1015,6 +1014,7 @@ export default {
             })
             return buttons
         },
+
         setAndSend(model, value) {
 
             let name = this.meta.model + '-' + this.schemaID
