@@ -32,8 +32,6 @@ export default {
     },
     computed: {
         hasVNavSlot() {
-            console.log("this.$slots['v-nav']:");
-            console.log(this.$slots['v-nav']);
             return !!this.$slots['v-nav']
         },
         hasNavSlot() {
@@ -77,8 +75,6 @@ export default {
 
         edit(id, row) {
             this.rowId = id;
-
-
                 if(this.permissions){
                     if(this.permissions.gridEditConditionJS != "" && this.permissions.gridEditConditionJS != null &&  this.permissions.gridEditConditionJS != undefined){
                         let isCantEdit = isCan(this.permissions.gridEditConditionJS, row);
@@ -87,18 +83,12 @@ export default {
                         }
                     }
                 }
-
-
-
                 this.editMode = true;
                 this.$refs.form.editModel(id);
                 //From template
                 if (this.templateEdit) {
                     this.templateEdit();
                 }
-
-
-
         },
 
         clone(id) {
@@ -140,7 +130,6 @@ export default {
         save() {
             this.$refs.grid.saveGridData();
         },
-
         //Form functions
         onSuccess(val) {
             // console.log("this.mode");
@@ -166,7 +155,6 @@ export default {
                 this.onPropertySuccess();
             }
         },
-
         onError() {
             //From template
             if (this.templateOnError) {
