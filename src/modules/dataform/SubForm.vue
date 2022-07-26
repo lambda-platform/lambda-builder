@@ -507,6 +507,15 @@ export default {
                 return true;
             }
             return false;
+            if (
+                item.model == this.f.parent ||
+                item.model == this.f.identity ||
+                (item.model == "created_at" && this.f.timestamp == true) ||
+                (item.model == "updated_at" && this.f.timestamp == true)
+            ) {
+                return true;
+            }
+            return false;
         },
 
 
