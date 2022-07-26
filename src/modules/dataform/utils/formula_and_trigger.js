@@ -18,7 +18,10 @@ export function evil(fn) {
 }
 
 export function doFormula(formulas, model, model_, schema_, rule_, subFormModelName) {
-
+    console.log("doing formula:")
+    console.log(formulas)
+    console.log(model)
+    console.log(model_)
     //formula
     if (formulas.length >= 1) {
         let formula_index = formulas.findIndex(formula => formula.model == model)
@@ -42,7 +45,6 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
         else if (subFormModelName) {
             if (formula['form'] == subFormModelName)
                 use_formula = true
-
         }
     } else
         use_formula = true;
@@ -55,7 +57,7 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
 
         if (pre_formula) {
             let calculated = evil(pre_formula);
-
+            console.log("calculated:",calculated)
             formula.targets.map(target => {
                 let schema_index = getSchemaIndex(schema_, target.field);
                 if (schema_index >= 0) {
@@ -69,7 +71,6 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
                                         rule_[target.field][0].required = calculated ? false : true;
                                 }
                             }
-
                         }
                         // schema_[schema_index][target.prop] = calculated;
                         Vue.set(schema_[schema_index], target.prop, calculated)

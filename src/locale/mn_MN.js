@@ -350,6 +350,7 @@ export default {
        "Choose_multiple_values":"Олон утга сонгох",
        "value":"Утга",
        "visible_word":"Харагдах үг",
+        "visible_thumb":"Харагдах зураг",
        "add":"Нэмэх",
        "table":"Хүснэгт",
        "selectTable":"Хүснэгт сонгох",

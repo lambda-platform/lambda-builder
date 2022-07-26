@@ -349,6 +349,7 @@ export default {
         "Choose_multiple_values":"Choose multiple values",
         "value":"Value",
         "visible_word":"A visible word",
+        "visible_thumb":"A visible image",
         "add":"Add",
         "table":"Table",
         "selectTable":"Select a table",
