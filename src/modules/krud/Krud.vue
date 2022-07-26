@@ -1,5 +1,5 @@
 <template>
-    <component ref="krud" :is="renderTemplate(property.template)" v-bind="property">
+    <component ref="krud" :is="renderTemplate(property.template)" :schema="property.form" :id="property.edit_id" v-bind="property">
         <template slot="left">
             <slot name="left"></slot>
         </template>
@@ -51,7 +51,6 @@
                 } else {
                     return templates["canvas"];
                 }
-
             }
         }
     };

@@ -34,6 +34,7 @@
                 <option value="noAction">{{ lang.No_action }}</option>
                 <option value="divider">{{ lang._division }}</option>
             </select>
+
             <div class="ivu-input-wrapper ivu-input-wrapper-small ivu-input-type menu-cruds"
                  v-if="data.link_to == 'crud'">
                 <div class="ivu-input-inner-container" style="">

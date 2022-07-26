@@ -7,20 +7,21 @@
                     <a href="/console" v-if="isMicroservice">
                         <img src="/assets/lambda/images/light.svg" alt="Lambda Platform">
                     </a>
-                    <img  v-else src="/assets/lambda/images/light.svg" alt="Puzzle Visual Builder">
+                    <img v-else src="/assets/lambda/images/light.svg" alt="Puzzle Visual Builder">
                 </div>
                 <div class="language-switcher">
-                    <Select  v-if="has_language && languages.length >= 2" v-model="selectedLang" @on-change="switchLanguage" >
-                        <Option  v-for="lang in languages" :value="lang.code" :key="lang.index">
+                    <Select v-if="has_language && languages.length >= 2" v-model="selectedLang"
+                            @on-change="switchLanguage">
+                        <Option v-for="lang in languages" :value="lang.code" :key="lang.index">
                             {{ lang.label }}
                         </Option>
                     </Select>
                 </div>
             </div>
 
-<!--            <div slot="brand" class="logo">-->
-<!--                <span class="app-text">{{ app_text }}</span>-->
-<!--            </div>-->
+            <!--            <div slot="brand" class="logo">-->
+            <!--                <span class="app-text">{{ app_text }}</span>-->
+            <!--            </div>-->
             <ul>
                 <li class="sub-title" v-if="isMicroservice">
                     <span>Microservice</span>
@@ -53,6 +54,13 @@
                     </router-link>
                 </li>
                 <li class="divider"></li>
+                <li>
+                    <router-link to="/process">
+                        <i class="ti-view-list-alt"></i>
+                        <span>Алхамт процесс</span>
+                    </router-link>
+                </li>
+                <li class="divider"></li>
                 <li class="sub-title">
                     <span>{{ lang.data_processor }}</span>
                 </li>
@@ -75,7 +83,7 @@
                         <span>{{ lang.original_preparation }}</span>
                     </router-link>
                 </li>
-                <li  v-if="!isMicroservice">
+                <li v-if="!isMicroservice">
                     <router-link to="/report">
                         <i class="ti-layout-accordion-list"></i>
                         <span>{{ lang._report }}</span>
@@ -97,7 +105,7 @@
                 <li>
                     <router-link to="/graphql">
                         <img src="/assets/lambda/images/graphql.svg" width="21">&nbsp;
-                        <span>{{lang.graphql_management}}</span>
+                        <span>{{ lang.graphql_management }}</span>
                     </router-link>
                 </li>
                 <li class="divider" v-if="accessAdminModule"></li>
@@ -219,9 +227,9 @@ export default {
                 return obj;
             }, {});
         },
-        accessAdminModule(){
-            if(this.isMicroservice){
-                if(this.microservoce.project_type === 'Client'){
+        accessAdminModule() {
+            if (this.isMicroservice) {
+                if (this.microservoce.project_type === 'Client') {
                     return true
                 }
                 return false
@@ -234,8 +242,8 @@ export default {
         const app_logo = window.init.app_logo;
         const app_text = window.init.app_text;
         return {
-            isMicroservice:window.init.isMicroservice,
-            microservoce:window.init.project,
+            isMicroservice: window.init.isMicroservice,
+            microservoce: window.init.project,
             logoutModal: false,
             app_logo: app_logo,
             app_text: app_text,
@@ -244,9 +252,7 @@ export default {
             selectedLang: localStorage.getItem("lang") == null ? window.lambda.default_language : localStorage.getItem("lang"),
         };
     },
-    components: {
-
-    },
+    components: {},
     mounted() {
 
     },

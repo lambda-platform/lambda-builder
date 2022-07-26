@@ -4,6 +4,7 @@
             <div class="crud-page-header">
 
                 <div class="crud-page-header-left">
+                    <h3>{{title}}</h3>
                     <slot name="nav"></slot>
                 </div>
 
@@ -27,12 +28,14 @@
 </template>
 
 <script>
+import mixins from "./mixins";
+
 export default {
     props: ["schema", "id"],
-
+    mixins: [mixins],
     mounted() {
         setTimeout(() => {
-            this.$refs.form.editModel(this.$props.id);
+            this.$refs.form.editModel(this.$props.id?this.$props.id:1);
         }, 500);
     },
 

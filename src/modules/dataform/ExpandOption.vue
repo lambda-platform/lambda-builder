@@ -23,6 +23,11 @@
                             </li>
 
                             <li>
+                                <label>Санамж текст</label>
+                                <Input v-model="item.warn" :placeholder="item.warn"/>
+                            </li>
+
+                            <li>
                                 <label>{{ lang.Placeholder }}</label>
                                 <Input v-model="item.placeHolder"
                                        :placeholder="item.placeHolder == '' ? item.label : item.placeHolder"/>

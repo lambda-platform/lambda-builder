@@ -22,6 +22,7 @@ export const generateItems = (count, creator) => {
     }
     return result
 }
+
 export const getTableMeta = (table)=>{
     if(table) {
         if (window.init.dbSchema.tableMeta[table]) {
@@ -34,9 +35,9 @@ export const getTableMeta = (table)=>{
     //     window.init.dbSchema.tableMeta = {}
     // }
     // window.init.dbSchema.tableMeta[table] = res.data
-    //
     // return res.data
 }
+
 export const getRelationData = (item, relations) =>{
     if (item.relation.filter == '' || typeof item.relation.filter === "undefined") {
         if (relations[item.relation.table])
