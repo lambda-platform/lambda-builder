@@ -101,15 +101,11 @@ export default {
     },
     mounted() {
         let dataUrl = `/lambda/krud/${this.meta.schemaID}/options`;
+
         if (this.meta.filter.relation.parentFieldOfForm != null && this.meta.filter.relation.parentFieldOfTable != null) {
             this.$watch("model.form." + this.meta.filter.relation.parentFieldOfForm, {
                 handler: (value, oldValue) => {
-
                     this.meta.filter.relation.filter = this.meta.filter.relation.parentFieldOfTable + "='" + value.toString()+"'";
-
-
-
-
                     axios.post(dataUrl, getRelation(this.meta.filter.relation)).then(({data}) => {
                         this.options = data;
                         this.loading = false;

@@ -4,7 +4,6 @@ export function getRelation(relation) {
     if(relation.filterWithUser){
         if(!!relation.filterWithUser && relation.filterWithUser.constructor === Array){
             relation.filterWithUser.forEach(userFilter=>{
-
                 let condition = `${userFilter["tableField"]} = '${window.init.user[userFilter["userField"]]}'`
                 if(relation.filter == "" || typeof relation.filter === "undefined"){
                     relation.filter = condition;
@@ -20,13 +19,9 @@ export function getRelation(relation) {
                 relation.filter = relation.filter+ " AND " + condition
             }
         }
-
-
         relation.filterWithUser = undefined;
-
-
     }
-    console.log(relation.filterWithUser)
+    console.log(relation)
 
     return relation
 }
