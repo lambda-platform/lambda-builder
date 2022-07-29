@@ -98,6 +98,7 @@
             //         this.unFilter2();
             //     }
             // });
+            this.init();
         },
 
         beforeDestroy() {
