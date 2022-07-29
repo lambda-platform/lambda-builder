@@ -2,7 +2,7 @@
     <FormItem :prop=rule :label=label>
         <!--        <vue-ckeditor ref="ckeditor" v-model="model.form[model.component]" :config="config" @blur="onBlur($event)" @focus="onFocus($event)" />-->
         <ckeditor ref="ckeditor" :editor="editor" :disabled="editorDisabled" v-model="model.form[model.component]"
-                  :config="editorConfig" :key="meta.editorType"
+                  :config="editorConfig" :key="meta.editorType" placeholder=""
                   @ready="onReady" @blur="onBlur($event)" @focus="onFocus($event)"></ckeditor>
     </FormItem>
 </template>
@@ -26,7 +26,8 @@ export default {
                     'insertTable', '|',
                     "indent", "outdent", '|',
                     'mediaEmbed'],  shouldNotGroupWhenFull: true
-                }
+                },
+                placeholder:'',
             },
             editorDisabled: this.meta && this.meta.disabled ? this.meta.disabled : false,
         };
@@ -84,8 +85,11 @@ export default {
         onFocus(editor) {
         },
         onReady(event) {
-           // console.log(Array.from(event.ui.componentFactory.names()));
-        },
+            if(!this.model.form[this.model.component])
+            {
+                this.model.form[this.model.component]='123';
+            }
+        }
     }
 };
 </script>

@@ -49,7 +49,8 @@
                             </li>
                             <li>
                                 <label>Хэрэглэгчээс утга авах</label>
-                                <Select v-model="item.fillByUserField" filterable clearable placeholder="Хэрэглэгчээс утга авах">
+                                <Select v-model="item.fillByUserField" filterable clearable
+                                        placeholder="Хэрэглэгчээс утга авах">
                                     <Option v-for="item in user_fields" :value="item" :key="item">{{ item }}</Option>
                                 </Select>
                             </li>
@@ -148,7 +149,7 @@
             </TabPane>
 
             <TabPane :label="lang.configureTheData"
-                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio' || item.formType == 'AdminMenu' || item.formType == 'FooterButton'">
+                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio'  || item.formType == 'RadioWithThumb' || item.formType == 'AdminMenu' || item.formType == 'FooterButton'">
                 <Row type="flex">
                     <Col span="24">
                         <div class="title">
@@ -174,14 +175,24 @@
                                         />
                                     </FormItem>
                                 </FormItem>
+                                <FormItem prop="model">
+                                    <FormItem prop="thumb">
+                                        <Upload
+                                            :on-success="img_upload_success"
+                                            :show-upload-list="false"
+                                            action="/lambda/krud/upload">
+                                            <Button>{{ lang.visible_thumb }}</Button>
+                                        </Upload>
+                                    </FormItem>
+                                </FormItem>
                                 <FormItem>
                                     <Button type="primary" @click="addOption">
-                                        {{lang.add}}
+                                        {{ lang.add }}
                                     </Button>
                                 </FormItem>
                             </Form>
 
-                            <Table border size="small" :columns="optionsColumns"
+                            <Table v-if="item.options && item.options.length>0" border size="small" :columns="optionsColumns" :key="item.options.length"
                                    :data="item.options ? item.options : []"
                                    height="250">
                             </Table>
@@ -189,12 +200,13 @@
 
                         <ul v-if="item.isFkey">
                             <li v-if="microservices.length >= 1">
-                                <label >Microservice</label>
+                                <label>Microservice</label>
 
                                 <Select v-model="item.relation.microservice_id" placeholder="Microservice" clearable
                                         filterable
-                                        >
-                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                >
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id"
+                                            :key="microservice.index">
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
@@ -205,12 +217,16 @@
                                 <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
                                         filterable
                                         :disabled="!item.isFkey" @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
+                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
+                                                 :key="microservice.index">
                                         <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
                                             {{ item }}
                                         </Option>
                                     </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                    <OptionGroup :label="`${microservice.microservice}: View list`"
+                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
+                                                 :key="microservice.index">
                                         <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
                                             {{ item }}
                                         </Option>
@@ -313,12 +329,13 @@
                         <ul v-if="item.relation.addAble">
 
                             <li v-if="microservices.length >= 1">
-                                <label >Microservice</label>
+                                <label>Microservice</label>
 
                                 <Select v-model="item.relation.addFromMicroservice" placeholder="Microservice" clearable
                                         filterable
                                 >
-                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id"
+                                            :key="microservice.index">
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
@@ -327,14 +344,16 @@
                                 <label>{{ lang.Add_data_Form }}</label>
                                 <Select v-model="item.relation.addFrom" :placeholder="lang.Add_data_Form" clearable
                                         filterable
-                                        :disabled="!item.isFkey" @on-change="relationSchema" v-if="item.relation.addFromMicroservice">
-                                    <Option v-for="of in otherForms" :value="of.id" :key="of.id" v-if="of.projects_id == item.relation.addFromMicroservice">{{
+                                        :disabled="!item.isFkey" @on-change="relationSchema"
+                                        v-if="item.relation.addFromMicroservice">
+                                    <Option v-for="of in otherForms" :value="of.id" :key="of.id"
+                                            v-if="of.projects_id == item.relation.addFromMicroservice">{{
                                             of.name
                                         }}
                                     </Option>
                                 </Select>
                             </li>
-                            <li v-else >
+                            <li v-else>
                                 <label>{{ lang.Add_data_Form }}</label>
 
                                 <Select v-model="item.relation.addFrom" :placeholder="lang.Add_data_Form" clearable
@@ -642,19 +661,20 @@
 
             <TabPane label="Grid Selector тохируулга" v-if="item.formType == 'GridSelector'">
                 <div>
-                    <Row   >
-                        <Col span="12"><Input type="text" v-model="item.GSOption.sourceGridModalTitle" placeholder="Modal дээр харуулах нэр" /></Col>
+                    <Row>
+                        <Col span="12"><Input type="text" v-model="item.GSOption.sourceGridModalTitle"
+                                              placeholder="Modal дээр харуулах нэр"/></Col>
                         <Col span="12">
 
 
                             <Select v-model="item.GSOption.sourceMicroserviceID" placeholder="Microservice" clearable
                                     filterable
                             >
-                                <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                <Option v-for="microservice in microservices" :value="microservice.microservice_id"
+                                        :key="microservice.index">
                                     {{ microservice.microservice }}
                                 </Option>
                             </Select>
-
 
 
                             <Select v-model="item.GSOption.sourceGridID" placeholder="Өгөгдөл дуудаж хүснэгт" clearable
@@ -663,39 +683,46 @@
                                     filterable
 
                             >
-                                <Option v-for="item in otherGrids" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                                <Option v-for="item in otherGrids" :value="item.id" :key="item.id">{{
+                                        item.name
+                                    }}
+                                </Option>
                             </Select>
                         </Col>
                     </Row>
-                    <Row   >
+                    <Row>
                         <Col span="24">
-                            <Input type="text" v-model="item.GSOption.sourceGridTitle" placeholder="Хайлтын дээр харуулах гарчиг" />
+                            <Input type="text" v-model="item.GSOption.sourceGridTitle"
+                                   placeholder="Хайлтын дээр харуулах гарчиг"/>
                             <br>
-                            <Input type="text" v-model="item.GSOption.sourceGridUserCondition" placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл" />
+                            <Input type="text" v-model="item.GSOption.sourceGridUserCondition"
+                                   placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл"/>
                         </Col>
 
                     </Row>
                     <Row>
                         <Col>
-                            <label >Хайлтын дээр харуулах тайлбар</label>
+                            <label>Хайлтын дээр харуулах тайлбар</label>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <ckeditor ref="ckeditor" :editor="editor" v-model="item.GSOption.sourceGridDescription"
-                                      :config="editorConfig" ></ckeditor>
+                                      :config="editorConfig"></ckeditor>
                         </Col>
                     </Row>
                     <br>
 
-                    <div >
+                    <div>
                         <Row>
                             <Col>
                                 <Select v-model="item.GSOption.sourceGridValueField" placeholder="Grid талбар" clearable
                                         filterable
 
                                 >
-                                    <Option v-for="(item, iIndex) in sourceGridColumns" :key="iIndex" :value="item.model">{{ item.model }}</Option>
+                                    <Option v-for="(item, iIndex) in sourceGridColumns" :key="iIndex"
+                                            :value="item.model">{{ item.model }}
+                                    </Option>
                                 </Select>
                             </Col>
                         </Row>
@@ -707,10 +734,10 @@
                             <Draggable v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns" :key="iIndex">
                                 <Row>
                                     <Col span="10">
-                                        {{item.model}}
+                                        {{ item.model }}
                                     </Col>
                                     <Col span="10">
-                                        {{item.label}}
+                                        {{ item.label }}
                                     </Col>
                                     <Col span="4">
                                         <Button type="primary" shape="circle" icon="ios-trash"
@@ -735,6 +762,7 @@ import {applyDrag, getTableMeta} from "./utils/helpers";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import {Container, Draggable} from 'vue-smooth-dnd'
+
 export default {
     props: ["item", "edit", "sub", "schema", "otherGrids", "projectID"],
     components: {
@@ -745,12 +773,13 @@ export default {
         return {
             editor: Editor,
             editorConfig: {
-                toolbar:{items: ['heading', '|',
+                toolbar: {
+                    items: ['heading', '|',
                         'bold', 'italic', '|', 'link', '|',
                         'blockQuote', '|',
                         'insertTable', '|',
                         "indent", "outdent", '|',
-                        'mediaEmbed'],  shouldNotGroupWhenFull: true
+                        'mediaEmbed'], shouldNotGroupWhenFull: true
                 }
             },
             dropPlaceholderOptions: {
@@ -758,11 +787,11 @@ export default {
                 animationDuration: '150',
 
             },
-            configMini: [  'heading', '|',
+            configMini: ['heading', '|',
                 'bold', 'italic', '|', 'link', '|',
                 'blockQuote', '|',
                 'insertTable', '|',
-                "indent","outdent", '|',
+                "indent", "outdent", '|',
                 'mediaEmbed', '|'],
             expendPart: '1',
             loadConfig: true,
@@ -799,7 +828,8 @@ export default {
             ],
             optionForm: {
                 value: null,
-                label: null
+                label: null,
+                thumb: null
             },
             optionRule: {
                 value: [
@@ -817,48 +847,11 @@ export default {
                     }
                 ]
             },
-            // optionsColumns: [
-            //     {
-            //         title: "Утга",
-            //         key: "value",
-            //
-            //     },
-            //     {
-            //         title: "Харагдах үг",
-            //         key: "label",
-            //
-            //     },
-            //     {
-            //         title: "Устгах",
-            //         key: "action",
-            //         width: 100,
-            //         align: "center",
-            //         render: (h, params) => {
-            //             return h("div", [
-            //                 h(
-            //                     "Button",
-            //                     {
-            //                         props: {
-            //                             type: "error",
-            //                             size: "small"
-            //                         },
-            //                         on: {
-            //                             click: () => {
-            //                                 this.removeOption(params.index);
-            //                             }
-            //                         }
-            //                     },
-            //                     "Устгах"
-            //                 )
-            //             ]);
-            //         }
-            //     }
-            // ],
             optionSelectFilterWithUser: {
                 userField: null,
                 tableField: null,
             },
-            sourceGridColumns:[]
+            sourceGridColumns: []
 
         };
     },
@@ -923,12 +916,12 @@ export default {
                     sourceMicroserviceID: null,
                     sourceGridID: null,
                     sourceGridModalTitle: "",
-                    sourceGridTargetColumns:[],
-                    sourceGridTitle:"",
-                    sourceGridDescription:"",
-                    sourceGridUserCondition:"",
-                    sourceGridParentBasedCondition:"",
-                    sourceGridValueField:null
+                    sourceGridTargetColumns: [],
+                    sourceGridTitle: "",
+                    sourceGridDescription: "",
+                    sourceGridUserCondition: "",
+                    sourceGridParentBasedCondition: "",
+                    sourceGridValueField: null
                 }
             }
         }
@@ -966,7 +959,7 @@ export default {
         /*FOR OLD VB SCHEMA*/
     },
     mounted() {
-        if(this.item.relation.addAble){
+        if (this.item.relation.addAble) {
             this.callForms();
         }
     },
@@ -978,19 +971,19 @@ export default {
                 'Parameter_name', 'Get_user_ID', 'Consolidation_formula', 'Whether_to_summarize', 'Choose_a_formula', 'Formula_type'
                 , 'Take_the_word_before_merger', 'example', 'total', 'number', 'ets', 'Symbol', 'get_sign_after_merger',
                 'Verification_conditions', 'Form_of_data_verification', 'Password_settings', 'Password_verification', 'Check_password_during_editing',
-                'number_precision', 'Whether_get_values_database', 'Choose_multiple_values', 'value', 'visible_word', 'add', 'table', 'selectTable',
+                'number_precision', 'Whether_get_values_database', 'Choose_multiple_values', 'value', 'visible_word', 'visible_thumb', 'add', 'table', 'selectTable',
                 'Related_fields', 'Visible_fields', 'Select_fields', 'Sort_field', 'Father_column', 'form', 'this_table', 'Display_Add_Data_button',
                 'Add_data_Form', 'List_of_tables', 'Link_terms', 'Get_customer', 'Custom_column', 'judgment_column', 'Call_from_server', 'data_loading_URL',
                 'Trigger_load_time', 'Example_data_returned_server', 'Successful', 'URL_call_information_link', 'Value_table', 'Value_return_field',
                 'Geographic_settings', 'attribute', 'properties', 'Geometric_type', 'point', 'line', 'polygon', 'length_center', 'latitude_center', 'Map_magnification',
                 'Background_map', 'Google_Street', 'Google_Space', 'Open_Street_Map', 'Check_overlap_area', 'Feature_Class_link', 'Search_field', 'Search_value_field',
-                'Success_message','Error_message', 'please_enter_value', 'values', '_delete', ];
+                'Success_message', 'Error_message', 'please_enter_value', 'values', '_delete',];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;
             }, {});
         },
-        optionsColumns(){
+        optionsColumns() {
             return [
                 {
                     title: this.lang.values,
@@ -1000,6 +993,26 @@ export default {
                 {
                     title: this.lang.visible_word,
                     key: "label",
+
+                },
+                {
+                    title: this.lang.visible_thumb,
+                    key: "thumb",
+                    render: (h, params) => {
+                        if (params.row.thumb == null) {
+                            return ""
+                        } else
+                            return h('img', {
+                                    style: {
+                                        height: 'auto',
+                                        width: '100px'
+                                    },
+                                    attrs: {
+                                        src: params.row.thumb
+                                    }
+                                },
+                            );
+                    }
 
                 },
                 {
@@ -1034,16 +1047,16 @@ export default {
     methods: {
 
         addOption() {
-
+            if (!this.item.options) {
+                this.item.options = [];
+            }
             this.$refs["option"].validate(valid => {
-                if (valid) {
-
+                if(valid) {
                     this.item.options.push({...this.optionForm});
-
-
                     this.optionForm = {
                         value: null,
-                        label: null
+                        label: null,
+                        thumb: null
                     };
                 }
             });
@@ -1074,7 +1087,7 @@ export default {
 
             //CK editor
             if (
-                (item.formType == "CK"||item.formType == "CkOld") &&
+                (item.formType == "CK" || item.formType == "CkOld") &&
                 typeof item.editorType == "undefined"
             ) {
                 item.editorType = this.editorTypes[0].type;
@@ -1135,10 +1148,10 @@ export default {
         deleteSelectUserFilter(index) {
             this.$props.item.relation.filterWithUser.splice(index, 1);
         },
-        async setGridSource(val){
-            if(val){
-                let defualtURL =`/lambda/puzzle/schema/grid/${val}`;
-                if(this.projectID){
+        async setGridSource(val) {
+            if (val) {
+                let defualtURL = `/lambda/puzzle/schema/grid/${val}`;
+                if (this.projectID) {
                     defualtURL = `/lambda/puzzle/projects/grid/${val}`
                 }
                 let res = await axios.get(defualtURL)
@@ -1148,13 +1161,13 @@ export default {
                     this.sourceGridColumns = getTableMeta(gridSchema.model);
 
                     this.item.GSOption.sourceGridTargetColumns = [];
-                    gridSchema.schema.forEach(field=>{
+                    gridSchema.schema.forEach(field => {
 
-                        if(!field.hide){
+                        if (!field.hide) {
                             this.item.GSOption.sourceGridTargetColumns.push({
-                                model:field.model,
-                                label:field.label,
-                                gridType:field.gridType,
+                                model: field.model,
+                                label: field.label,
+                                gridType: field.gridType,
                             })
                         }
 
@@ -1165,14 +1178,16 @@ export default {
             }
 
         },
-        deleteSourceGridTargetColumn(index){
+        deleteSourceGridTargetColumn(index) {
             this.item.GSOption.sourceGridTargetColumns.splice(index, 1);
         },
         onDropSub(dropResult) {
 
             this.item.GSOption.sourceGridTargetColumns = applyDrag(this.item.GSOption.sourceGridTargetColumns, dropResult);
         },
-
+        img_upload_success(val) {
+            this.optionForm.thumb = val;
+        },
     },
 
 };

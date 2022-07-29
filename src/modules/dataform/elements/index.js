@@ -117,6 +117,10 @@ export const elementList = [
         component:()=> import(/* webpackChunkName: "form-field-Radio" */'./Radio.vue'),
     },
     {
+        element: "RadioWithThumb",
+        component:()=> import(/* webpackChunkName: "form-field-Radio" */'./RadioWithThumb.vue'),
+    },
+    {
         element: "FooterButton",
         component:()=> import(/* webpackChunkName: "form-field-FooterButton" */'./FooterButton.vue'),
     },
