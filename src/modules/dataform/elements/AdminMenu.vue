@@ -80,9 +80,6 @@ export default {
     },
 
     mounted() {
-        console.log("options: ", this.meta.options);
-        console.log("options 1: ", this.relation_data);
-
         this.set_sort();
         if (Array.isArray(this.relation_data)) {
             if (this.relation_data.length >= 1) {
