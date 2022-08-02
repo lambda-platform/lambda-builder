@@ -1,6 +1,6 @@
 <template>
     <FormItem :label=label :prop=rule>
-        <RadioGroup v-model="model.form[model.component]" type="button" class="radio-with-thumb">
+        <RadioGroup :value="String(model.form[model.component])" type="button" class="radio-with-thumb" @on-change="onchange">
             <Radio :label="item.value" v-for="item in options" :key=item.index
                    :disabled="meta && meta.disabled ? meta.disabled : false">
                     <img :src="item.thumb" :alt="item.label" :title="item.label">
@@ -24,6 +24,12 @@ export default {
                     return x.value - y.value;
                 });
             }
+        }
+    },
+    methods:{
+        onchange(val)
+        {
+            this.model.form[this.model.component]=val;
         }
     }
 };
