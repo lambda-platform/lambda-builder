@@ -3,10 +3,10 @@
  */
 import "./bootstrap"
 const Datagrid = ()=> import(/* webpackChunkName: "Datagrid-el" */'./Datagrid.vue')
-import "ag-grid-enterprise/main";
+import "ag-grid-enterprise";
 import {
     LicenseManager
-} from "ag-grid-enterprise/main";
+} from "ag-grid-enterprise";
 
 LicenseManager.prototype.validateLicense = () => {
 };

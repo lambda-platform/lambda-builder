@@ -5,17 +5,17 @@
             <div class='fb-control'>
                 <div class='fb-control-item'>
                     <label>{{ lang.Form_name }}</label>
-                    <Input v-model='formName' :placeholder='lang.Form_name'/>
+                    <Input v-model='formName' :placeholder='lang.Form_name' />
                 </div>
 
                 <div class='fb-control-item'>
                     <label>Дэд гарчиг</label>
-                    <Input v-model='dataform.formSubName' placeholder='Дэд гарчиг'/>
+                    <Input v-model='dataform.formSubName' placeholder='Дэд гарчиг' />
                 </div>
 
                 <div class='fb-control-item'>
                     <label>{{ lang.Form_type }}</label>
-                    <Select v-model='dataform.ui.type' :placeholder='lang.Form_type' clearable>
+                    <Select v-model='dataform.formType' :placeholder='lang.Form_type' clearable>
                         <Option value='normal'>
                             {{ lang.Simple_form }}
                         </Option>
@@ -32,7 +32,7 @@
                             @on-change='setBuilder'>
                         <Option v-for='item in tableList' :value='item' :key='item.index'>{{ item }}</Option>
                     </Select>
-                    <Input v-model='dataform.model' disabled v-if='editMode'/>
+                    <Input v-model='dataform.model' disabled v-if='editMode' />
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
@@ -80,7 +80,7 @@
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>{{ lang.Form_width }} /px/</label>
-                    <Input v-model='dataform.width' :placeholder='lang.Form_width'/>
+                    <Input v-model='dataform.width' :placeholder='lang.Form_width' />
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
@@ -90,12 +90,12 @@
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>Дутуу бөглөхөд харуулах алдаа</label>
-                    <Input v-model='dataform.formValidationCustomText'/>
+                    <Input v-model='dataform.formValidationCustomText' />
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>{{ lang.Save_button_word }}</label>
-                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word'/>
+                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word' />
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
                                             </FormItem>
                                             <FormItem prop='template' :label='lang.formula_conditions'>
                                                 <Input type='text' v-model='formulaForm.template'
-                                                       :placeholder='lang.formula_conditions'/>
+                                                       :placeholder='lang.formula_conditions' />
                                                 <p class='formula-helper'>
                                                     {{ lang.formula }}: {a}+{b} | {{ lang.conditions }}: {a}>={b}, '{a}'
                                                     == 'test' ...
@@ -225,7 +225,7 @@
                                     <label>{{ lang.controller_namespace }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.namespace' :placeholder='lang.namespace'/>
+                                    <Input v-model='dataform.triggers.namespace' :placeholder='lang.namespace' />
                                 </td>
                             </tr>
                             <tr>
@@ -234,7 +234,7 @@
                                 </td>
                                 <td>
                                     <Input v-model='dataform.triggers.insert.before'
-                                           :placeholder='lang.before_insert'/>
+                                           :placeholder='lang.before_insert' />
                                 </td>
                             </tr>
                             <tr>
@@ -242,7 +242,7 @@
                                     <label>{{ lang.after_insert }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.insert.after' :placeholder='lang.after_insert'/>
+                                    <Input v-model='dataform.triggers.insert.after' :placeholder='lang.after_insert' />
                                 </td>
                             </tr>
                             <tr>
@@ -251,7 +251,7 @@
                                 </td>
                                 <td>
                                     <Input v-model='dataform.triggers.update.before'
-                                           :placeholder='lang.before_update'/>
+                                           :placeholder='lang.before_update' />
                                 </td>
                             </tr>
                             <tr>
@@ -259,7 +259,7 @@
                                     <label>{{ lang.after_update }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.update.after' :placeholder='lang.after_update'/>
+                                    <Input v-model='dataform.triggers.update.after' :placeholder='lang.after_update' />
                                 </td>
                             </tr>
                         </table>
@@ -282,18 +282,18 @@
                                         </FormItem>
                                         <FormItem label='Өнгө' prop='color'>
                                             <ColorPicker v-model='extraButtonForm.color' style='float: right'
-                                                         :alpha='false'/>
+                                                         :alpha='false' />
                                         </FormItem>
                                         <FormItem>
                                             <FormItem prop='title' label='Нэр'>
                                                 <Input type='text' v-model='extraButtonForm.title'
-                                                       placeholder='Нэр'/>
+                                                       placeholder='Нэр' />
                                             </FormItem>
                                         </FormItem>
                                         <FormItem>
                                             <FormItem prop='url' label='Холбоос'>
                                                 <Input type='text' v-model='extraButtonForm.url'
-                                                       placeholder='Холбоос'/>
+                                                       placeholder='Холбоос' />
                                             </FormItem>
                                         </FormItem>
 
@@ -303,7 +303,7 @@
                                     </Form>
 
 
-                                    <IconSelector @setIcon='setIcon' :iconSelector='iconSelector'/>
+                                    <IconSelector @setIcon='setIcon' :iconSelector='iconSelector' />
                                 </Col>
                                 <Col span='12'>
                                     <Table border size='small' :columns='extraButtonColumns'
@@ -320,30 +320,30 @@
                         <div class='email-address'>
                             <label>To:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.to' :limit='limit'
-                                       validate='email'/>
+                                       validate='email' />
                         </div>
 
                         <div class='email-address'>
                             <label>CC:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.cc' :limit='limit'
-                                       validate='email'/>
+                                       validate='email' />
                         </div>
 
                         <div class='email-address'>
                             <label>BCC:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.bcc' :limit='limit'
-                                       validate='email'/>
+                                       validate='email' />
                         </div>
 
                         <div class='subject'>
                             <label>Гарчиг:</label>
                             <Input placeholder='Subject' v-model='dataform.email.subject' :limit='limit'
-                                   validate='email'/>
+                                   validate='email' />
                         </div>
 
                         <div class='body'>
-                            <ckeditor ref="ckeditor" :editor="editor" v-model="dataform.email.body"
-                                      :config="editorConfig"/>
+                            <ckeditor ref='ckeditor' :editor='editor' v-model='dataform.email.body'
+                                      :config='editorConfig' />
                         </div>
                     </div>
                 </TabPane>
@@ -353,33 +353,33 @@
                                 :identity='dataform.identity' :meta='{
                             labelPosition: dataform.labelPosition,
                             labelWidth: dataform.labelWidth
-                        }' :isDisabled='isDisabled'/>
+                        }' :isDisabled='isDisabled' />
                 </TabPane>
 
-                <TabPane v-if="dataform.ui.type === 'step'" label='Алхам тохиргоо' icon='md-menu'>
-                    <div class="step-builder">
-                        <div class="step-builder-body">
+                <TabPane v-if="dataform.formType === 'step'" label='Алхам тохиргоо' icon='md-menu'>
+                    <div class='step-builder'>
+                        <div class='step-builder-body'>
                             <h3>Алхмууд</h3>
-                            <draggable v-model="dataform.step.list" :options="{group:'col', handle: '.drag-handler'}">
+                            <draggable v-model='dataform.step.list' :options="{group:'col', handle: '.drag-handler'}">
                                 <Step v-for='(f, index) in dataform.step.list' :key='index' :f='f' :edit='editMode'
-                                      :otherForms='otherForms' :remove-step="removeStep"/>
+                                      :otherForms='otherForms' :remove-step='removeStep' />
                             </draggable>
-                            <div class="step-builder-body-footer">
-                                <a href="javascript:void(0)" @click="addStep">
-                                    <i class="ti-plus"></i>
+                            <div class='step-builder-body-footer'>
+                                <a href='javascript:void(0)' @click='addStep'>
+                                    <i class='ti-plus'></i>
                                     <span>Алхам нэмэх</span>
                                 </a>
                             </div>
                         </div>
-                        <div class="step-builder-config">
-                            <div class="pb-control-item">
+                        <div class='step-builder-config'>
+                            <div class='pb-control-item'>
                                 <label>Эрх тохиргоо</label>
-                                <i-switch v-model="dataform.step.hasPermission" size="small"></i-switch>
+                                <i-switch v-model='dataform.step.hasPermission' size='small'></i-switch>
                             </div>
 
-                            <div class="pb-control-item">
+                            <div class='pb-control-item'>
                                 <label>Цуцлах</label>
-                                <i-switch v-model="dataform.step.isCancel" size="small"></i-switch>
+                                <i-switch v-model='dataform.step.isCancel' size='small'></i-switch>
                             </div>
                         </div>
                     </div>
@@ -408,14 +408,14 @@ import formItem from './FormItem'
 import subForm from './SubForm'
 import Step from './Step'
 import FormMoqup from './FormMoqup'
-import {idGenerator} from './utils/methods'
-import {getTableMeta} from './utils/helpers'
-import {getTableView} from '../../utils'
+import { idGenerator } from './utils/methods'
+import { getTableMeta } from './utils/helpers'
+import { getTableView } from '../../utils'
 import IconSelector from '../../components/IconSelector'
 import InputTag from 'vue-input-tag'
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import draggable from "vuedraggable"
+import CKEditor from '@ckeditor/ckeditor5-vue2'
+import Editor from 'ckeditor5-custom-build/build/ckeditor'
+import draggable from 'vuedraggable'
 
 export default {
     props: ['src', 'schemaID', 'editMode', 'onCreate', 'onUpdate', 'projectID'],
@@ -447,7 +447,7 @@ export default {
                         'bold', 'italic', '|', 'link', '|',
                         'blockQuote', '|',
                         'insertTable', '|',
-                        "indent", "outdent", '|',
+                        'indent', 'outdent', '|',
                         'mediaEmbed'], shouldNotGroupWhenFull: true
                 }
             },
@@ -463,8 +463,8 @@ export default {
                 formValidationCustomText: '',
                 padding: 8,
                 schema: [],
+                type: 'normal',
                 ui: {
-                    type: 'normal',
                     schema: []
                 },
                 step: {
@@ -987,6 +987,10 @@ export default {
                 Vue.set(this.dataform, 'extraButtons', [])
             }
 
+            if (typeof this.dataform.formType == 'undefined') {
+                Vue.set(this.dataform, 'formType', 'normal')
+            }
+
             this.dataform.schema.forEach(item => {
                 this.updateSyncItem(item)
             })
@@ -1204,10 +1208,11 @@ export default {
                 },
                 schema: [],
                 trigger: '',
-                triggerTimeout: 0
+                triggerTimeout: 0,
+                ui: null
             }
             this.dataform.step.list.push(step)
-            console.log(this.dataform.steps);
+            console.log(this.dataform.steps)
         },
 
         removeStep(formId) {
@@ -1300,6 +1305,8 @@ export default {
 
         saveForm() {
             this.syncSchema()
+            console.log(this.dataform);
+
             let data = {
                 name: this.formName,
                 schema: JSON.stringify(this.dataform)
@@ -1312,7 +1319,7 @@ export default {
                 ? this.$props.src
                 : defualtURL
 
-            axios.post(submitUrl, data).then(({data}) => {
+            axios.post(submitUrl, data).then(({ data }) => {
                 if (data.status) {
                     if (this.editMode) {
                         this.$Notice.success({

@@ -48,10 +48,24 @@
 }
 
 //render table
-
 .ag-theme-balham.ag-table {
     .ag-theme-balham {
         flex: none !important;
+    }
+
+    .ag-root-wrapper {
+        border: 0 !important;
+    }
+
+    .ag-cell-wrapper {
+        overflow-x: hidden !important;
+
+        .ag-cell-value {
+            img {
+                max-width: 100% !important;
+                cursor: pointer;
+            }
+        }
     }
 
     //Full texted version
@@ -90,6 +104,14 @@
                 .ag-cell {
                     border-right: 1px solid rgba(189, 195, 199, 0.39) !important;
                 }
+
+                .ag-cell-range-right, .ag-cell-focus {
+                    border-right: solid 1px #0091ea !important;
+
+                    &:focus {
+                        border-right: solid 1px #0091ea !important;
+                    }
+                }
             }
         }
     }
@@ -101,12 +123,14 @@
         &.has-grid {
             .ag-header {
                 &-row:last-child {
-                    border-bottom: solid 1px #cccccc;
+                    //border-bottom: solid 1px #cccccc;
                     //height: 24px !important;
                     .ag-header-cell {
                         padding: 0;
                         margin: 0;
                         background-color: #ffffff;
+                        display: flex;
+                        align-items: center;
 
                         .ag-floating-filter-body {
                             background: #ffffff;
@@ -123,10 +147,19 @@
                             text-align: center;
                             width: 20px;
                             height: 100%;
-                            margin-top: 0;
-                            padding-top: 5px;
-                            background: #ffffff;
+                            background: transparent;
                             margin-left: 0;
+                            display: inline-flex;
+                            align-items: center;
+                            cursor: pointer;
+
+                            &:hover {
+                                cursor: pointer !important;
+
+                                .ag-icon {
+                                    color: #363636;
+                                }
+                            }
                         }
                     }
                 }
@@ -137,6 +170,14 @@
                 .ag-cell-no-focus,
                 .no-border.ag-cell:focus {
                     border-right: 1px solid rgba(189, 195, 199, 0.39);
+                }
+
+                .ag-cell-range-right, .ag-cell-focus {
+                    border-right: solid 1px #0091ea !important;
+
+                    &:focus {
+                        border-right: solid 1px #0091ea !important;
+                    }
                 }
             }
         }
@@ -219,7 +260,7 @@
 
         .ag-header-cell::after,
         .ag-header-group-cell::after {
-            margin-top: 0 !important;
+            margin-top: -8px !important;
             height: 100% !important;
             border-right: 1px solid rgba(189, 195, 199, 0.36) !important;
         }
@@ -249,18 +290,31 @@
                 width: 100%;
             }
 
-            .ag-floating-filter-input {
-                padding: 0 5px;
+            .ag-floating-filter-input, .ag-input-wrapper {
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                width: 100%;
 
-                &:hover {
+                .ag-input-field-input {
+                    width: 100%;
+                    border: solid 1px transparent !important;
                     outline: none;
-                    border: solid 1px #cccccc;
-                }
+                    color: #363636 !important;
+                    height: 28px !important;
 
-                &:focus,
-                &:active {
-                    outline: none;
-                    border: solid 1px #0c78e6;
+                    &:hover {
+                        outline: #dedede !important;
+                        box-shadow: none !important;
+                        border: solid 1px #cccccc;
+                    }
+
+                    &:focus,
+                    &:active {
+                        outline: none !important;
+                        box-shadow: none !important;
+                        border: solid 1px #0c78e6;
+                    }
                 }
             }
         }
@@ -500,10 +554,12 @@ img.ag-grid-image {
 }
 
 .ag-floating-filter-full-body {
+    overflow: visible !important;
+
     .multiselect {
         min-height: 20px;
         font-size: 12px;
-        margin-top: 6px;
+        //margin-top: 6px;
     }
 
     .multiselect__placeholder {
