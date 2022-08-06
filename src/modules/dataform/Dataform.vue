@@ -38,7 +38,7 @@
                                             :editMode='editMode'
                                         />
                                         <component
-                                            :key='item'
+                                            :key='item.model'
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render='do_render'
                                             :asyncMode='asyncMode'
@@ -91,6 +91,7 @@
                                             :editMode='editMode'
                                             :is='element(item.formType)'
                                             :model='{form: model, component: item.model}'
+                                            :key="model"
                                             :url='url'
                                             :disabled='item.disabled ? item.disabled : false'
                                             :label='item.label ? item.label : `[${item.model}]`'
