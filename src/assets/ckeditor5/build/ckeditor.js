@@ -53441,7 +53441,7 @@
                 e.document.registerPostFixer((t => this._fixTitleElement(t)));
                 e.document.registerPostFixer((t => this._fixBodyElement(t)));
                 e.document.registerPostFixer((t => this._fixExtraParagraph(t)));
-                this._attachPlaceholders();
+               // this._attachPlaceholders();
                 this._attachTabPressHandling()
             }
 
@@ -53552,9 +53552,9 @@
                 const o = t.sourceElement;
                 const r = t.config.get("title.placeholder") || e("Type your title");
                 const s = t.config.get("placeholder") || o && o.tagName.toLowerCase() === "textarea" && o.getAttribute("placeholder") || e("Type or paste your content here.");
-                t.editing.downcastDispatcher.on("insert:title-content", ((t, e, i) => {
-                    Dv({view: n, element: i.mapper.toViewElement(e.item), text: r, keepOnFocus: true})
-                }));
+                // t.editing.downcastDispatcher.on("insert:title-content", ((t, e, i) => {
+                //     Dv({view: n, element: i.mapper.toViewElement(e.item), text: r, keepOnFocus: true})
+                // }));
                 let a;
                 n.document.registerPostFixer((t => {
                     const e = i.getChild(1);

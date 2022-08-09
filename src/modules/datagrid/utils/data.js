@@ -51,7 +51,7 @@ export const data = (vm) => {
             allowContextMenuWithControlKey: true,
             animateRows: false,
             localeText: localeText,
-            suppressCellSelection: true,
+            suppressCellFocus: true,
             groupIncludeFooter: false,
             groupIncludeTotalFooter: false,
             suppressNoRowsOverlay: true,
