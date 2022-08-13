@@ -76,7 +76,8 @@
                                     </a>
                                 </Poptip>
 
-                                <input type="text" v-model="td.label"/>
+                                <input type="text" v-model="td.label" placeholder="нэр" style="margin-bottom: 3px;"/>
+                                <input type="text" v-model="td.color" placeholder="өнгө"/>
                                 <div class="td-control">
                                     <div>
                                         <span>w</span>

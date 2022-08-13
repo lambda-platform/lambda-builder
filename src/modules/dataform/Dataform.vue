@@ -129,6 +129,7 @@
                                 :url='url'
                                 :editMode='editMode'>
                             </component>
+
                             <component
                                 :key='item.model'
                                 v-if="isShow(item.model) && item.formType != 'SubForm'"

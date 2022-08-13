@@ -25,6 +25,12 @@
                     </Select>
                 </div>
 
+                <div class='fb-control-item' v-if="dataform.formType === 'step'">
+                    <Checkbox v-model='dataform.step.singleTable'>
+                        <span>Нэг мэдээллийн хүснэгттэй</span>
+                    </Checkbox>
+                </div>
+
                 <div class='fb-control-item'>
                     <label>{{ lang.data_table }}</label>
                     <Select v-if='!editMode' v-model='dataform.model' :placeholder='lang.selectTable' clearable
@@ -470,6 +476,7 @@ export default {
                 step: {
                     hasPermission: false,
                     isCancel: false,
+                    singleTable: false,
                     list: []
                 },
                 triggers: {

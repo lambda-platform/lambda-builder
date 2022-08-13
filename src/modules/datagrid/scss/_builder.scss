@@ -54,6 +54,7 @@
                 &.r-flex {
                     flex-direction: row;
                     align-items: center;
+
                     label {
                         flex: 1;
                     }
@@ -63,7 +64,7 @@
                         margin-right: 5px;
                     }
 
-                    .ivu-input-number{
+                    .ivu-input-number {
                         margin-left: auto;
                         margin-right: 5px;
                     }
@@ -73,7 +74,8 @@
                     font-size: 13px;
                     color: #444444;
                     margin-bottom: 5px;
-                    small{
+
+                    small {
                         margin-left: auto;
                         float: right;
                         margin-right: 5px;
@@ -110,6 +112,18 @@
     .gb-workspace {
         width: 100%;
         max-width: calc(100vw - 470px);
+
+        .ivu-tabs-tabpane {
+            height: 100%;
+
+            .gb-config {
+                height: 100%;
+
+                .gb-table {
+                    height: 100%;
+                }
+            }
+        }
 
         .gb-config {
             padding: 20px;
@@ -219,7 +233,7 @@
             }
 
             &-body {
-                height: calc(100% - 80px);
+                height: calc(100% - 30px);
                 overflow-y: auto;
             }
 
@@ -327,7 +341,8 @@
                     }
                 }
             }
-            .new-virtual-column{
+
+            .new-virtual-column {
                 height: 45px;
                 background: #b3daf8;
                 width: 100%;
@@ -337,7 +352,7 @@
         }
     }
 
-    .auto-height{
+    .auto-height {
         height: auto !important;
         min-height: calc(50% - 120px);
     }

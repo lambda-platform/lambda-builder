@@ -13,6 +13,7 @@ $white: #ffffff;
 .form-builder {
     .ivu-tabs {
         flex: 1;
+        height: 100%;
 
         .ivu-tabs-bar {
             margin-bottom: 0;
@@ -59,6 +60,16 @@ $white: #ffffff;
             }
         }
 
+        .ivu-tabs-tabpane {
+            height: 100%;
+            .crud-config{
+                height: 100%;
+                .crud-table{
+                    height: 100%;
+                }
+            }
+        }
+
         .ivu-tabs-content {
             background: #ffffff;
             height: calc(100% - 30px); // padding: 20px;
@@ -95,25 +106,30 @@ $white: #ffffff;
 
 .form-item-register {
     display: flex !important;
+
     .select-char {
         width: 60px;
+
         .multiselect__tags {
             border-right: 0 !important;
             padding: 8px 30px 0 10px !important;
             height: 32px !important;
         }
     }
+
     .first-char {
         .multiselect__tags {
             border-top-right-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
         }
     }
+
     .second-char {
         .multiselect__tags {
             border-radius: 0 !important;
         }
     }
+
     .ivu-input {
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
@@ -242,6 +258,7 @@ $white: #ffffff;
     min-height: 32px;
     padding: 0 50px 0 8px;
     border: 1px solid #dcdee2;
+    height: 32px !important;
 }
 
 .multiselect__tag {
@@ -323,12 +340,14 @@ $white: #ffffff;
         justify-content: center;
         flex-direction: column;
         border-radius: 5px;
+
         .file-upload-handler {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 5px;
             cursor: pointer;
+
             i {
                 font-size: 16px;
                 margin-right: 5px;
@@ -341,9 +360,11 @@ $white: #ffffff;
             align-items: center;
             justify-content: center;
             border-top: dashed 1px #CCCCCC;
+
             a {
                 margin: 0 10px;
                 cursor: pointer;
+
                 i {
                     margin-right: 5px;
                 }
@@ -352,9 +373,10 @@ $white: #ffffff;
     }
 }
 
-.hidden{
+.hidden {
     display: none;
 }
-.jsoneditor{
-    height: 400px!important;
+
+.jsoneditor {
+    height: 400px !important;
 }
