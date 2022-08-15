@@ -2,11 +2,13 @@
     <div :class="viewMode ? 'dataform view-mode' : 'dataform'">
         <Form :ref="meta.model +'-'+ schemaID" :model='model' :rules='rule' :label-position=meta.option.labelPosition
               :label-width="meta.option.labelPosition == 'top' ? undefined : meta.option.labelWidth">
+
             <div class='dataform-header'>
                 <h3>{{ title ? title : formTitle }}<b v-if='showID'><span v-if='model[identity]'>: {{
                         model[identity]
                     }}</span></b></h3>
             </div>
+
             <div class='dataform-body' v-if='!loadConfig'>
                 <Spin v-if='loadConfig' fix></Spin>
                 <!-- Tab Section -->
@@ -187,8 +189,7 @@
             class='info-modal'
             v-model='showInfo'
             :title='infoTitle'
-            width='860px'
-        >
+            width='860px'>
             <iframe :src='infoUrl' frameborder='0'></iframe>
             <div slot='footer'>
                 <Button type='primary' size='large' @click='showInfo = false'>

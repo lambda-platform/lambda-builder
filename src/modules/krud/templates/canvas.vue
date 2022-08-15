@@ -105,7 +105,7 @@
 
             <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'600px']"
                          @close="coleSidePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
-                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''">
+                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''" style="height: 100%">
                     <dataform ref="form" :schemaID="form"
                               :title="title"
                               :url="url"
