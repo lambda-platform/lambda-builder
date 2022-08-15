@@ -2,11 +2,13 @@
     <div :class="viewMode ? 'dataform view-mode' : 'dataform'">
         <Form :ref="meta.model +'-'+ schemaID" :model='model' :rules='rule' :label-position=meta.option.labelPosition
               :label-width="meta.option.labelPosition == 'top' ? undefined : meta.option.labelWidth">
+
             <div class='dataform-header'>
                 <h3>{{ title ? title : formTitle }}<b v-if='showID'><span v-if='model[identity]'>: {{
                         model[identity]
                     }}</span></b></h3>
             </div>
+
             <div class='dataform-body' v-if='!loadConfig'>
                 <Spin v-if='loadConfig' fix></Spin>
                 <!-- Tab Section -->
@@ -38,7 +40,7 @@
                                             :editMode='editMode'
                                         />
                                         <component
-                                            :key='item'
+                                            :key='item.model'
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render='do_render'
                                             :asyncMode='asyncMode'
@@ -91,6 +93,7 @@
                                             :editMode='editMode'
                                             :is='element(item.formType)'
                                             :model='{form: model, component: item.model}'
+                                            :key="model"
                                             :url='url'
                                             :disabled='item.disabled ? item.disabled : false'
                                             :label='item.label ? item.label : `[${item.model}]`'
@@ -128,6 +131,7 @@
                                 :url='url'
                                 :editMode='editMode'>
                             </component>
+
                             <component
                                 :key='item.model'
                                 v-if="isShow(item.model) && item.formType != 'SubForm'"
@@ -186,8 +190,7 @@
             class='info-modal'
             v-model='showInfo'
             :title='infoTitle'
-            width='860px'
-        >
+            width='860px'>
             <iframe :src='infoUrl' frameborder='0'></iframe>
             <div slot='footer'>
                 <Button type='primary' size='large' @click='showInfo = false'>

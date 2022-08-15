@@ -12,6 +12,7 @@
                             v-for="td in tr.children"
                             :key="td.index"
                             :colspan="td.colspan"
+                            :style="`${td.color ? `background-color: ${td.color}` : ''}`"
                             :rowspan="td.rowspan">
                             <div :style="`width: ${td.width}; height: ${td.height}`"
                                  :class="td.rotate ? 'vertical-column' : ''">
@@ -39,17 +40,13 @@
                     :getContextMenuItems="getContextMenuItems"
                     :overlayLoadingTemplate="overlayLoadingTemplate"
                     :rowSelection="selectionMethod"
-                    :defaultColDef="{
-                                    sortable: true,
-                                    resizable: true,
-                                    filter: true
-                                }"
-
+                    :defaultColDef="defaultColDef"
                     :singleClickEdit="singleClickEdit"
                     :editType="editType"
                     :stopEditingWhenGridLosesFocus="true"
                     :frameworkComponents="frameworkComponents"
                     :enableCellChangeFlash="flashChanges"
+                    :enableRangeSelection="true"
                     @grid-ready="onGridReady"
                     @sort-changed="onSortChanged"
                     @filter-changed="onFilterChanged"
@@ -61,7 +58,7 @@
                     @rowEditingStopped="onRowEditingStopped"
                     @cellEditingStarted="onCellEditingStarted"
                     @cellEditingStopped="onCellEditingStopped"
-                    @columnResized="columnResized">
+                    @column-resized="columnResized">
                 </ag-grid-vue>
             </div>
 
@@ -136,7 +133,8 @@
         </Modal>
 
         <GridRowUpdate v-if="template == 0 || template==2"
-                       :permissions="permissions" :model="filterModel" :schema="schema" :url="url" :inFilter="false" :schemaID="schemaID"
+                       :permissions="permissions" :model="filterModel" :schema="schema" :url="url" :inFilter="false"
+                       :schemaID="schemaID"
         />
 
     </div>
@@ -344,7 +342,8 @@ export default {
             this.$parent.isSave = this.editableShouldSubmit = 'editableShouldSubmit' in gridSchema ? gridSchema.editableShouldSubmit : false;
 
             if (gridSchema.template == 2 || gridSchema.template == 3) {
-                this.gridOptions.floatingFilter = true;
+                // this.gridOptions.floatingFilter = true;
+                this.defaultColDef.floatingFilter = true;
             }
 
             /**
@@ -480,7 +479,7 @@ export default {
 
             // //setting selection
             if (this.$props.hasSelection) {
-                if(!this.$props.gridSelector){
+                if (!this.$props.gridSelector) {
                     this.selectionMethod = "multiple";
                 } else {
                     this.selectionMethod = "single";
@@ -627,6 +626,7 @@ export default {
                     }
                 }
             }
+
             //Getting data
             this.query.src = baseUrl + "/lambda/puzzle/grid/data/" + gridSchema["grid_id"];
             if (this.saveFilter) {
@@ -666,6 +666,9 @@ export default {
 
                 //Filterable
                 if (item.filterable) {
+                    // item.floatingFilter = true;
+                    // item.suppressMenu = true;
+
                     if (isValid(item.filter.param)) {
                         if (isValid(this.$route.query[item.filter.param])) {
                             this.filterModel[item.model] = {
@@ -1504,7 +1507,7 @@ export default {
             }
         },
         onRowClick(row) {
-            if(this.permissions){
+            if (this.permissions) {
                 if (this.permissions.u) {
                     if (this.gridActions.find(action => action == 'obl')) {
 
@@ -1525,19 +1528,17 @@ export default {
             let actions = [];
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
-                    if(item.type=="Link")
-                    {
+                    if (item.type == "Link") {
                         let menuItem = {
                             name: item.label ? item.label : '',
                             icon: "<span class='" + item.icon + "'></span>",
                             action: () => {
-                                window.open(item.url+"/"+rowId, item.target);
+                                window.open(item.url + "/" + rowId, item.target);
                             },
                             disabled: item.disabled ? item.disabled : false
                         };
                         actions.push(menuItem);
-                    }
-                    else {
+                    } else {
                         let menuItem = {
                             name: item.label ? item.label : '',
                             icon: "<span class='" + item.icon + "'></span>",
@@ -1597,6 +1598,12 @@ export default {
                     actions.push(menuItem);
                 }
             });
+
+            actions.push('separator')
+            actions.push('copy')
+            actions.push('copyWithHeaders')
+            actions.push('chartRange')
+            actions.push('excelExport')
 
             return actions;
         },

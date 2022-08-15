@@ -52,7 +52,10 @@ export default {
             subFormValidations: [],
             extraButtons: [],
             disableReset: false,
-            withBackButton: false
+            withBackButton: false,
+            scrollOptions:{
+                height:'100%',
+            }
         }
     },
 

@@ -5,6 +5,7 @@ $danger: #ff7675;
 .page-list {
     max-width: 1200px;
     border-right: solid 1px #dedede;
+    height: 100vh;
     &-header {
         padding: 10px 20px;
         display: flex;
@@ -23,7 +24,7 @@ $danger: #ff7675;
         }
     }
     .pz-list {
-        height: calc(100% - 50px);
+        height: calc(100vh - 50px);
         overflow-y: auto;
         padding: 20px;
         &-item {

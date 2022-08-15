@@ -37,6 +37,12 @@ export const data = (vm) => {
         singleClickEdit: true,
         flashChanges: false,
         editableShouldSubmit: false,
+        defaultColDef: {
+            sortable: true,
+            resizable: true,
+            filter: true,
+            floatingFilter: false
+        },
         gridOptions: {
             debug: false,
             floatingFilter: false,
@@ -45,7 +51,7 @@ export const data = (vm) => {
             allowContextMenuWithControlKey: true,
             animateRows: false,
             localeText: localeText,
-            suppressCellSelection: true,
+            suppressCellFocus: true,
             groupIncludeFooter: false,
             groupIncludeTotalFooter: false,
             suppressNoRowsOverlay: true,

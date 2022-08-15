@@ -46,6 +46,7 @@
                             {{ item.model }}
                         </Option>
                     </Select>
+
                     <RadioGroup v-model="datagrid.sortOrder">
                         <Radio label="asc">
                             <Icon type="arrow-up-c"></Icon>
@@ -217,16 +218,15 @@
                     <i-switch v-model="datagrid.showGrid" size="small"></i-switch>
                 </div>
 
-<!--                <div class="gb-control-item">-->
-<!--                    <label>Засах үйлдэл хаах багана</label>-->
-<!--                    <Input v-model="datagrid.updateDisableField" placeholder="Засах үйлдэл хаах багана"/>-->
-<!--                </div>-->
-<!--                <div class="gb-control-item">-->
-<!--                    <label>Засах үйлдэл хаах багана</label>-->
-<!--                    <Input v-model="datagrid.updateDisableFieldValue" placeholder="Засах үйлдэл хаах утга"/>-->
-<!--                </div>-->
+                <!--                <div class="gb-control-item">-->
+                <!--                    <label>Засах үйлдэл хаах багана</label>-->
+                <!--                    <Input v-model="datagrid.updateDisableField" placeholder="Засах үйлдэл хаах багана"/>-->
+                <!--                </div>-->
+                <!--                <div class="gb-control-item">-->
+                <!--                    <label>Засах үйлдэл хаах багана</label>-->
+                <!--                    <Input v-model="datagrid.updateDisableFieldValue" placeholder="Засах үйлдэл хаах утга"/>-->
+                <!--                </div>-->
             </div>
-
 
 
             <div class="gb-submit">
@@ -274,8 +274,9 @@
 
                             <!-- Schema fields -->
                             <div class="gb-table-body">
-                                <draggable v-model="datagrid.schema" :options="{group:'col', handle: '.drag-handler'}">
-                                    <grid-item v-for="(item, index) in datagrid.schema" :key="index" :index="index" :item="item" :fieldList="fieldList"
+                                <draggable v-model="datagrid.schema" :options="{group:'step', handle: '.drag-handler'}">
+                                    <grid-item v-for="(item, index) in datagrid.schema" :key="index" :index="index"
+                                               :item="item" :fieldList="fieldList"
                                                :meta="{width: datagrid.staticWidth}"
                                                :edit="editMode" :deleteVirtualColumn="deleteVirtualColumn"></grid-item>
                                 </draggable>
@@ -639,79 +640,81 @@
                 <TabPane :label="lang.gbExcelImport" icon="md-document">
                     <div class="gb-config">
                         <div class="gb-excel-import-form">
-                                    <div class="formula-wrapper">
-                                        <h3>{{ lang.excelImportFormTitle }}</h3>
-                                        <Form ref="excelUploadConfig" label-position="top" inline>
+                            <div class="formula-wrapper">
+                                <h3>{{ lang.excelImportFormTitle }}</h3>
+                                <Form ref="excelUploadConfig" label-position="top" inline>
 
-                                            <Row>
-                                                <Col :xs="24" :sm="24" :md="12" :lg="12">
-                                                    <FormItem prop="template" :label="lang.excelUploadSampleFile">
-                                                        <div class="file-uploader">
-                                                        <Upload action="/lambda/krud/upload"
-                                                                v-model="datagrid.excelUploadSample"
-                                                                :on-success="success"
-                                                                size="small">
-                                                            <div class="file-upload-handler">
-                                                                <span>{{ lang.pleaseSelectFile }}</span>
-                                                            </div>
-                                                        </Upload>
-                                                        <div v-if="datagrid.excelUploadSample != null" class="file-control">
-                                                            <a :href="datagrid.excelUploadSample" target="_blank" download> <i
+                                    <Row>
+                                        <Col :xs="24" :sm="24" :md="12" :lg="12">
+                                            <FormItem prop="template" :label="lang.excelUploadSampleFile">
+                                                <div class="file-uploader">
+                                                    <Upload action="/lambda/krud/upload"
+                                                            v-model="datagrid.excelUploadSample"
+                                                            :on-success="success"
+                                                            size="small">
+                                                        <div class="file-upload-handler">
+                                                            <span>{{ lang.pleaseSelectFile }}</span>
+                                                        </div>
+                                                    </Upload>
+                                                    <div v-if="datagrid.excelUploadSample != null" class="file-control">
+                                                        <a :href="datagrid.excelUploadSample" target="_blank" download>
+                                                            <i
                                                                 class="ti-download"></i>{{ lang.download }}</a>
-                                                            <a :href="datagrid.excelUploadSample" target="_blank"> <i
-                                                                class="ti-eye"></i>{{ lang.view }}</a>
-                                                        </div>
-                                                        </div>
-                                                    </FormItem>
-                                                </Col>
-                                                <Col :xs="24" :sm="24" :md="12" :lg="12">
-                                                    <FormItem prop="template" :label="lang.excelUploadCustomNamespace">
-                                                        <Input type="text" v-model="datagrid.excelUploadCustomNamespace"
-                                                               style="width:300px"/>
-                                                    </FormItem>
-                                                    <FormItem prop="template" :label="lang.excelUploadCustomTrigger">
-                                                        <Input type="text" v-model="datagrid.excelUploadCustomTrigger"
-                                                               placeholder="ExcelExportController@import1" style="width:300px"/>
-                                                    </FormItem>
-                                                </Col>
-                                                <Col :xs="24" :sm="24" :md="12" :lg="12">
-                                                    <FormItem prop="template" :label="lang.excelUploadRowtoStart">
-                                                        <Input type="text" v-model="datagrid.excelUploadRowtoStart"
-                                                               style="width:300px"/>
-                                                    </FormItem>
-                                                    <FormItem prop="template" :label="lang.excelUploadCustomUrl">
-                                                        <Input type="text" v-model="datagrid.excelUploadCustomUrl"
-                                                               placeholder="/admin/#/myExcelImport1" style="width:300px"/>
-                                                    </FormItem>
-                                                </Col>
-                                            </Row>
+                                                        <a :href="datagrid.excelUploadSample" target="_blank"> <i
+                                                            class="ti-eye"></i>{{ lang.view }}</a>
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        </Col>
+                                        <Col :xs="24" :sm="24" :md="12" :lg="12">
+                                            <FormItem prop="template" :label="lang.excelUploadCustomNamespace">
+                                                <Input type="text" v-model="datagrid.excelUploadCustomNamespace"
+                                                       style="width:300px"/>
+                                            </FormItem>
+                                            <FormItem prop="template" :label="lang.excelUploadCustomTrigger">
+                                                <Input type="text" v-model="datagrid.excelUploadCustomTrigger"
+                                                       placeholder="ExcelExportController@import1" style="width:300px"/>
+                                            </FormItem>
+                                        </Col>
+                                        <Col :xs="24" :sm="24" :md="12" :lg="12">
+                                            <FormItem prop="template" :label="lang.excelUploadRowtoStart">
+                                                <Input type="text" v-model="datagrid.excelUploadRowtoStart"
+                                                       style="width:300px"/>
+                                            </FormItem>
+                                            <FormItem prop="template" :label="lang.excelUploadCustomUrl">
+                                                <Input type="text" v-model="datagrid.excelUploadCustomUrl"
+                                                       placeholder="/admin/#/myExcelImport1" style="width:300px"/>
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
 
-                                        </Form>
-                                    </div>
+                                </Form>
+                            </div>
                         </div>
                         <div class="gb-table">
                             <Row class="gb-table-header">
                                 <Col span="3">
                                     <span class="drag-handler-head">#</span>
-                                    {{lang.model}}
+                                    {{ lang.model }}
                                 </Col>
                                 <Col span="1" class="center">
                                     <Tooltip :content="lang.whenEnteringDataFromExcelFile">
-                                        {{lang.excel}}
+                                        {{ lang.excel }}
                                     </Tooltip>
                                 </Col>
-                                <Col span="3"> {{lang.type}}</Col>
+                                <Col span="3"> {{ lang.type }}</Col>
 
-                                <Col span="3"> {{lang.excelImportFieldName}}</Col>
+                                <Col span="3"> {{ lang.excelImportFieldName }}</Col>
                                 <Col span="1" class="center">...</Col>
                             </Row>
 
                             <!-- Schema fields -->
                             <div class="gb-table-body">
                                 <draggable v-model="datagrid.schema" :options="{group:'col', handle: '.drag-handler'}">
-                                    <grid-item-excel-import v-for="item in datagrid.schema" :key="item.index" :item="item"
-                                               :meta="{width: datagrid.staticWidth}"
-                                               :edit="editMode"></grid-item-excel-import>
+                                    <grid-item-excel-import v-for="item in datagrid.schema" :key="item.index"
+                                                            :item="item"
+                                                            :meta="{width: datagrid.staticWidth}"
+                                                            :edit="editMode"></grid-item-excel-import>
                                 </draggable>
                             </div>
                         </div>
@@ -811,9 +814,9 @@ export default {
                 'filter', 'mini', 'simple', 'size', "controllerNameSpace", 'add', 'symbol', 'type', 'nickName', 'filtersettings', 'filtersAndSelectedLineSettings',
                 'sort', 'column', 'delete', 'actionsField', 'copy', 'doubleClicktoEdit', 'buttonEdit', 'firstColumn', 'actions', 'performActionWithMouse',
 
-                'renew', 'pleaseWaitForLoading', 'namespace', 'afterFetch', 'beforeFetch','makeExcel', 'numbered', 'basicTable', 'formInfoSavedSuccessfully',
+                'renew', 'pleaseWaitForLoading', 'namespace', 'afterFetch', 'beforeFetch', 'makeExcel', 'numbered', 'basicTable', 'formInfoSavedSuccessfully',
                 'tableDataHasBeenSuccessfullyEdited', 'successfullySaved', 'anErrorOccurredWhileSaving',
-                'gbExcelImport','excelImportFieldName','excelImportFormTitle','excelUploadSampleFile','excelUploadRowtoStart','excelUploadCustomUrl',  'excelUploadCustomNamespace','excelUploadCustomTrigger',
+                'gbExcelImport', 'excelImportFieldName', 'excelImportFormTitle', 'excelUploadSampleFile', 'excelUploadRowtoStart', 'excelUploadCustomUrl', 'excelUploadCustomNamespace', 'excelUploadCustomTrigger',
 
             ];
             return labels.reduce((obj, key, i) => {
@@ -929,7 +932,7 @@ export default {
 
         addVirtualColumn() {
             this.datagrid.schema.push({
-                "virtualColumn":true,
+                "virtualColumn": true,
                 "model": "",
                 "title": "",
                 "dbType": "int4",
@@ -973,7 +976,7 @@ export default {
                 "options": []
             });
         },
-        deleteVirtualColumn(index){
+        deleteVirtualColumn(index) {
             this.datagrid.schema.splice(index, 1);
         },
 
@@ -1062,7 +1065,7 @@ export default {
             }
 
             if (typeof this.datagrid.excelImportRelation == "undefined" || !this.datagrid.excelImportRelation.hasOwnProperty('table')) {
-                let excelImportRelationTemp= {
+                let excelImportRelationTemp = {
                     table: null,
                     key: null,
                     fields: [],
@@ -1215,8 +1218,8 @@ export default {
                 Vue.set(this.datagrid, "excelUploadCustomTrigger", null);
             }
 
-            if (typeof this.datagrid.excelImportRelation == "undefined" ||!this.datagrid.excelImportRelation.hasOwnProperty('table')) {
-                item.excelImportRelation= {
+            if (typeof this.datagrid.excelImportRelation == "undefined" || !this.datagrid.excelImportRelation.hasOwnProperty('table')) {
+                item.excelImportRelation = {
                     table: null,
                     key: null,
                     fields: [],
@@ -1337,8 +1340,8 @@ export default {
                 },
                 searchable: false,
                 hasTranslation: false,
-                canExcelImport:false,
-                excelImportFieldName:null,
+                canExcelImport: false,
+                excelImportFieldName: null,
                 options: []
             };
         },
@@ -1474,7 +1477,10 @@ export default {
             this.loadingSubmit = true;
             let data = {
                 name: this.gridName,
-                schema: JSON.stringify({...this.datagrid,  microservices: window.init.microSettings ? window.init.microSettings : []}),
+                schema: JSON.stringify({
+                    ...this.datagrid,
+                    microservices: window.init.microSettings ? window.init.microSettings : []
+                }),
 
             };
 
@@ -1506,7 +1512,7 @@ export default {
                             // title: 'Амжилттай хадгалагдлаа',
                             title: this.lang.successfullySaved,
                             // desc: `"${this.formName}" формын мэдээлэл амжилттай хадгалагдлаа.`
-                            desc: this.formName +' '+this.lang.formInfoSavedSuccessfully
+                            desc: this.formName + ' ' + this.lang.formInfoSavedSuccessfully
                         });
                         window.history.back();
                     }

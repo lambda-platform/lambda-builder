@@ -1,14 +1,15 @@
 <template>
     <section class="page page-puzzle">
+        <process-builder :editMode="editMode" :src="src" :onCreate="onCreate" :onUpdate="onUpdate" />
     </section>
 </template>
 
 <script>
-import pageHeader from "../../../components/pageHeader.vue";
+import ProcessBuilder from "../../../modules/process/ProcessBuilder"
 
 export default {
     components: {
-        "page-header": pageHeader
+        ProcessBuilder
     },
     data() {
         return {
@@ -32,14 +33,14 @@ export default {
                 this.src = `/lambda/puzzle/schema/grid/${this.$route.params.id}`;
             }
         }
-
     },
+
     methods: {
         onCreate() {
-            this.$router.push("/grid");
+            this.$router.push("/process");
         },
         onUpdate() {
-            this.$router.push("/grid");
+            this.$router.push("/process");
         }
     }
 };

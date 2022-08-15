@@ -32,35 +32,48 @@ export default Vue.extend({
     data() {
         return {
             loading: true,
-            options: [],
-            selected: null,
+            options: [{'value': null, 'label': 'Бүгд'}],
+            selected: {'value': null, 'label': 'Бүгд'},
             currentValue: null
         }
     },
-
     created() {
         let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
-        //console.log(this.params);
-        // if (this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null) {
-        //     this.$watch("model.form." + this.params.column.filter.relation.parentFieldOfForm, {
-        //         handler: (value, oldValue) => {
-        //             console.log(value);
-        //             // this.meta.filter.relation.filter = this.meta.filter.relation.parentFieldOfTable + "=" + value;
-        //             // axios.post(dataUrl, this.meta.filter.relation).then(({data}) => {
-        //             //     this.options = data;
-        //             //     this.loading = false;
-        //             // });
-        //         },
-        //         deep: true
-        //     });
-        // }
+        //get user condition
+        this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
 
+        //get cascading options
+        if (this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null) {
+            this.$watch(this.params.filterData, {
+                // this.$watch('params.filterModel.`${this.params.column.filter.relation.parentFieldOfTable}`', {
+                handler: (value, oldValue) => {
+                    let temp_relation = JSON.parse(JSON.stringify(this.params.column.filter.relation));
+                    if (temp_relation.parentFieldOfForm != null && temp_relation.parentFieldOfTable != null) {
 
+                        let condition = `${temp_relation.parentFieldOfTable}=${this.params.filterModel[temp_relation.parentFieldOfForm]}`;
+                        if (temp_relation.filter == "" || typeof temp_relation.filter === "undefined") {
+                            temp_relation.filter = condition;
+                        } else {
+                            temp_relation.filter = temp_relation.filter + " AND " + condition
+                        }
+                        axios.post(dataUrl, temp_relation).then(({data}) => {
+                            this.options = [{'value': null, 'label': 'Бүгд'}];
+                            this.options = this.options.concat(data);
+                            this.loading = false;
+                        });
+                    }
+                },
+                deep: true
+            });
+        } else {
+            //zaaval ajillana
+            axios.post(dataUrl, this.params.column.filter.relation).then(({data}) => {
+                this.options = [{'value': null, 'label': 'Бүгд'}];
+                this.options = this.options.concat(data);
+                this.loading = false;
+            });
+        }
 
-        axios.post(dataUrl, getRelation(this.params.column.filter.relation)).then(({data}) => {
-            this.options = data;
-            this.loading = false;
-        });
     },
 
     methods: {
@@ -72,12 +85,15 @@ export default Vue.extend({
 
         valueChanged(v) {
             this.params.filterModel[this.params.column.model] = 'value' in v ? v.value : v[0];
-            this.params.filterData(1);
+            //this.params.filterData(1);
+            this.params.filterData(this.params.filterModel);
         },
 
         onParentModelChanged(parentModel) {
+            console.log("parentModel");
+            console.log(parentModel);
             this.currentValue = !parentModel ? null : parentModel.filter
-        }
+        },
     }
 });
 </script>

@@ -15,20 +15,14 @@
 
                 <div class='fb-control-item'>
                     <label>{{ lang.Form_type }}</label>
-                    <Select v-model='dataform.formType' :placeholder='lang.Form_type' clearable>
+                    <Select v-model='dataform.ui.type' :placeholder='lang.Form_type' clearable>
                         <Option value='normal'>
                             {{ lang.Simple_form }}
                         </Option>
-                        <Option value='step'>
+                        <Option value='wizard'>
                             {{ lang.Step_by_step_form }}
                         </Option>
                     </Select>
-                </div>
-
-                <div class='fb-control-item' v-if="dataform.formType === 'step'">
-                    <Checkbox v-model='dataform.step.singleTable'>
-                        <span>Нэг мэдээллийн хүснэгттэй</span>
-                    </Checkbox>
                 </div>
 
                 <div class='fb-control-item'>
@@ -88,20 +82,18 @@
                     <label>{{ lang.Form_width }} /px/</label>
                     <Input v-model='dataform.width' :placeholder='lang.Form_width' />
                 </div>
-
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
-                    <label>{{ lang.Padding_spacing }} /px/</label>
-                    <InputNumber v-model='dataform.padding'></InputNumber>
+                    <label>{{ lang.Save_button_word }}</label>
+                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word' />
                 </div>
-
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
-                    <label>Дутуу бөглөхөд харуулах алдаа</label>
+                    <label>Хадаглах үеийн дутуу бөгөлхөд харуулах алдаа</label>
                     <Input v-model='dataform.formValidationCustomText' />
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
-                    <label>{{ lang.Save_button_word }}</label>
-                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word' />
+                    <label>{{ lang.Padding_spacing }} /px/</label>
+                    <InputNumber v-model='dataform.padding'></InputNumber>
                 </div>
             </div>
 
@@ -132,93 +124,6 @@
                                            :sub='false' :disabled='isDisabled(item)'>
                                 </form-item>
                             </div>
-                        </div>
-                    </div>
-                </TabPane>
-                <!-- Formula confiration -->
-                <TabPane :label='lang.formula' icon='md-calculator'>
-                    <div class='form-builder'>
-                        <div class='formula-wrapper'>
-                            <Row type='flex'>
-                                <Col span='10'>
-                                    <div class='formula-form-wrapper'>
-                                        <Form ref='formula' label-position='top' :model='formulaForm'
-                                              :rules='formulaRule'>
-                                            <FormItem prop='form' :label='lang._form'>
-                                                <Select v-model='formulaForm.form'>
-                                                    <Option value='main'>
-                                                        {{ lang.basic_from }}
-                                                    </Option>
-                                                    <Option v-for='f in dataform.schema' v-if="f.formType == 'SubForm'"
-                                                            :key='f.index'
-                                                            :value='f.model'>
-                                                        {{ f.model }}
-                                                    </Option>
-                                                </Select>
-                                            </FormItem>
-                                            <FormItem prop='template' :label='lang.formula_conditions'>
-                                                <Input type='text' v-model='formulaForm.template'
-                                                       :placeholder='lang.formula_conditions' />
-                                                <p class='formula-helper'>
-                                                    {{ lang.formula }}: {a}+{b} | {{ lang.conditions }}: {a}>={b}, '{a}'
-                                                    == 'test' ...
-                                                </p>
-                                            </FormItem>
-
-                                            <FormItem v-for='(target, index) in formulaForm.targets' :key='index'
-                                                      :label='lang.field + (index+1)'>
-                                                <Row :gutter='8' :label='80'>
-                                                    <Col span='10'>
-                                                        <Select v-model='target.field'
-                                                                :placeholder='lang.field'
-                                                                v-if="formulaForm.form == 'main'">
-                                                            <Option v-for='(ss, index_) in dataform.schema'
-                                                                    :value='ss.model' :key='index_'>{{
-                                                                    ss.model
-                                                                }}
-                                                            </Option>
-                                                        </Select>
-                                                        <Select v-model='target.field'
-                                                                :placeholder='lang.field'
-                                                                v-for='(f, f_index) in dataform.schema' :key='f_index'
-                                                                v-if="f.formType == 'SubForm' && f.model == formulaForm.form && formulaForm.form != 'main'">
-                                                            <Option v-for='(f_, f__index) in f.schema'
-                                                                    :value='f_.model' :key='f__index'>{{
-                                                                    f_.model
-                                                                }}
-                                                            </Option>
-                                                        </Select>
-                                                    </Col>
-
-                                                    <Col span='10'>
-                                                        <AutoComplete v-model='target.prop' placeholder='Prop'
-                                                                      :data='formulaProps'></AutoComplete>
-                                                    </Col>
-
-                                                    <Col span='4'>
-                                                        <Button @click='deleteFormulaTarget(index)'
-                                                                icon='ios-trash'></Button>
-                                                    </Col>
-                                                </Row>
-                                            </FormItem>
-
-                                            <FormItem>
-                                                <Button type='dashed' long @click='addFormulaTarget' icon='md-add'>
-                                                    {{ lang.add_a_field }}
-                                                </Button>
-                                            </FormItem>
-
-                                            <FormItem>
-                                                <Button type='primary' @click='addFormula'>{{ lang.add }}</Button>
-                                            </FormItem>
-                                        </Form>
-                                    </div>
-                                </Col>
-                                <Col span='14'>
-                                    <Table border size='small' :columns='formulaColumns' :data='dataform.formula'
-                                           height='400'></Table>
-                                </Col>
-                            </Row>
                         </div>
                     </div>
                 </TabPane>
@@ -275,7 +180,7 @@
                                 <Col span='12'>
                                     <h4>Нэмэлт товчлуур</h4>
                                     <Form ref='extra_button' label-position='top' :model='extraButtonForm'
-                                          :rules='extraButtonRule' class="trigger-add-btn-form">
+                                          :rules='extraButtonRule'>
                                         <FormItem prop='icon' label='Icon'>
 
                                             <button type='button'
@@ -311,23 +216,23 @@
 
                                     <IconSelector @setIcon='setIcon' :iconSelector='iconSelector' />
                                 </Col>
-                                <Col span='12' class="trigger-add-btn-table">
+                                <Col span='12'>
                                     <Table border size='small' :columns='extraButtonColumns'
                                            :data='dataform.extraButtons'
                                            height='400'></Table>
                                 </Col>
                             </Row>
                         </div>
-                        <br>
-                        <div>
-                            <Row gutter='20'>
-                                <Col span='24'>
-                                    <h4>Cache цэвэрлэх зам</h4>
-                                    <Input v-model='dataform.triggers.cache_clear_url' :placeholder='lang.cache_clear_url' />
-                                </Col>
-                            </Row>
-                        </div>
                     </div>
+                </TabPane>
+
+                <TabPane :label='lang.userInterface' icon='md-apps'>
+                    <form-moqup :mode='mode' :schema='dataform.schema' :ui='dataform.ui' :schemaID='schemaID'
+                                :identity='dataform.identity' :meta='{
+                            labelPosition: dataform.labelPosition,
+                            labelWidth: dataform.labelWidth
+                        }' :isDisabled='isDisabled'>
+                    </form-moqup>
                 </TabPane>
 
                 <TabPane label='Имэйл' icon='md-mail'>
@@ -357,45 +262,8 @@
                         </div>
 
                         <div class='body'>
-                            <ckeditor ref='ckeditor' :editor='editor' v-model='dataform.email.body'
-                                      :config='editorConfig' />
-                        </div>
-                    </div>
-                </TabPane>
-
-                <TabPane :label='lang.userInterface' icon='md-apps'>
-                    <form-moqup :mode='mode' :schema='dataform.schema' :ui='dataform.ui' :schemaID='schemaID'
-                                :identity='dataform.identity' :meta='{
-                            labelPosition: dataform.labelPosition,
-                            labelWidth: dataform.labelWidth
-                        }' :isDisabled='isDisabled' />
-                </TabPane>
-
-                <TabPane v-if="dataform.formType === 'step'" label='Алхам тохиргоо' icon='md-menu'>
-                    <div class='step-builder'>
-                        <div class='step-builder-body'>
-                            <h3>Алхмууд</h3>
-                            <draggable v-model='dataform.step.list' :options="{group:'col', handle: '.drag-handler'}">
-                                <Step v-for='(f, index) in dataform.step.list' :key='index' :f='f' :edit='editMode'
-                                      :otherForms='otherForms' :remove-step='removeStep' />
-                            </draggable>
-                            <div class='step-builder-body-footer'>
-                                <a href='javascript:void(0)' @click='addStep'>
-                                    <i class='ti-plus'></i>
-                                    <span>Алхам нэмэх</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class='step-builder-config'>
-                            <div class='pb-control-item'>
-                                <label>Эрх тохиргоо</label>
-                                <i-switch v-model='dataform.step.hasPermission' size='small'></i-switch>
-                            </div>
-
-                            <div class='pb-control-item'>
-                                <label>Цуцлах</label>
-                                <i-switch v-model='dataform.step.isCancel' size='small'></i-switch>
-                            </div>
+                            <ckeditor ref="ckeditor" :editor="editor" v-model="dataform.email.body"
+                                      :config="editorConfig" />
                         </div>
                     </div>
                 </TabPane>
@@ -419,30 +287,26 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
-import formItem from './FormItem'
-import subForm from './SubForm'
-import Step from './Step'
-import FormMoqup from './FormMoqup'
-import { idGenerator } from './utils/methods'
-import { getTableMeta } from './utils/helpers'
+import formItem from '../dataform/FormItem'
+import subForm from '../dataform/SubForm'
+import FormMoqup from '../dataform/FormMoqup'
+import { idGenerator } from '../dataform/utils/methods'
+import { getTableMeta } from '../dataform/utils/helpers'
 import { getTableView } from '../../utils'
 import IconSelector from '../../components/IconSelector'
 import InputTag from 'vue-input-tag'
-import CKEditor from '@ckeditor/ckeditor5-vue2'
-import Editor from 'ckeditor5-custom-build/build/ckeditor'
-import draggable from 'vuedraggable'
+import CKEditor from '@ckeditor/ckeditor5-vue2';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 
 export default {
     props: ['src', 'schemaID', 'editMode', 'onCreate', 'onUpdate', 'projectID'],
     components: {
         InputTag,
-        draggable,
         ckeditor: CKEditor.component,
         IconSelector: IconSelector,
         'form-item': formItem,
         'sub-form': subForm,
-        'form-moqup': FormMoqup,
-        Step
+        'form-moqup': FormMoqup
     },
 
     data() {
@@ -457,13 +321,12 @@ export default {
             formName: null,
             editor: Editor,
             editorConfig: {
-                toolbar: {
-                    items: ['heading', '|',
+                toolbar:{items: ['heading', '|',
                         'bold', 'italic', '|', 'link', '|',
                         'blockQuote', '|',
                         'insertTable', '|',
-                        'indent', 'outdent', '|',
-                        'mediaEmbed'], shouldNotGroupWhenFull: true
+                        "indent", "outdent", '|',
+                        'mediaEmbed'],  shouldNotGroupWhenFull: true
                 }
             },
             dataform: {
@@ -478,15 +341,9 @@ export default {
                 formValidationCustomText: '',
                 padding: 8,
                 schema: [],
-                type: 'normal',
                 ui: {
+                    type: 'normal',
                     schema: []
-                },
-                step: {
-                    hasPermission: false,
-                    isCancel: false,
-                    singleTable: false,
-                    list: []
                 },
                 triggers: {
                     namespace: '',
@@ -497,8 +354,7 @@ export default {
                     update: {
                         before: null,
                         after: null
-                    },
-                    cache_clear_url:null
+                    }
                 },
                 extraButtons: [],
                 disableReset: false,
@@ -594,7 +450,7 @@ export default {
                 'Date_generated_automatically', 'Label_location', 'Form_width', 'Save_button_word', 'Padding_spacing', 'save', 'model',
                 'displayName', 'hide', 'inactive', 'translation', 'basicSettings', 'formula', 'trigger', 'userInterface', '_subform', '_form'
                 , 'formula_conditions', 'field', 'basic_from', 'conditions', 'add_a_field', 'add', 'controller_namespace', 'namespace',
-                'before_insert', 'after_insert', 'before_update', 'after_update','cache_clear_url', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
+                'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
                 'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab']
 
             return labels.reduce((obj, key, i) => {
@@ -968,14 +824,6 @@ export default {
                 Vue.set(this.dataform.ui, 'schema', [])
             }
 
-            if (typeof this.dataform.step == 'undefined') {
-                let stepObj = {
-                    hasPermission: false,
-                    list: []
-                }
-                Vue.set(this.dataform, 'step', stepObj)
-            }
-
             if (typeof this.dataform.email == 'undefined') {
                 Vue.set(this.dataform, 'email', {
                     to: [],
@@ -1002,10 +850,6 @@ export default {
 
             if (typeof this.dataform.extraButtons == 'undefined') {
                 Vue.set(this.dataform, 'extraButtons', [])
-            }
-
-            if (typeof this.dataform.formType == 'undefined') {
-                Vue.set(this.dataform, 'formType', 'normal')
             }
 
             this.dataform.schema.forEach(item => {
@@ -1185,59 +1029,6 @@ export default {
             this.dataform.schema.push(subForm)
         },
 
-        addStep() {
-            let step = {
-                id: idGenerator('step'),
-                identity: null,
-                name: 'Алхам',
-                min_height: null,
-                formType: 'SubForm',
-                subtype: 'Grid',
-                formId: null,
-                addFromGrid: false,
-                checkEmpty: false,
-                EmptyErrorMsg: '',
-                sourceMicroserviceID: null,
-                sourceGridID: null,
-                sourceGridModalTitle: '',
-                sourceGridTargetColumns: [],
-                sourceGridTitle: '',
-                sourceGridDescription: '',
-                sourceGridUserCondition: '',
-                sourceUniqueField: '',
-                parent: null,
-                model: null,
-                data: null,
-                rule: null,
-                timestamp: false,
-                disableDelete: false,
-                disableEdit: false,
-                disableCreate: false,
-                showRowNumber: false,
-                useTableType: false,
-                tableTypeColumn: '',
-                tableTypeValue: '',
-                span: {
-                    xs: 24,
-                    sm: 24,
-                    md: 24,
-                    lg: 24
-                },
-                schema: [],
-                trigger: '',
-                triggerTimeout: 0,
-                ui: null
-            }
-            this.dataform.step.list.push(step)
-            console.log(this.dataform.steps)
-        },
-
-        removeStep(formId) {
-            this.dataform.step.list = this.dataform.step.list.filter(
-                item => item.formId !== formId
-            )
-        },
-
         tabLabel(model, label) {
             return h => {
                 return h('span', [
@@ -1277,6 +1068,8 @@ export default {
                 item => item.model !== model
             )
             this.dataform.ui.schema = this.removeSubFromUI(this.dataform.ui.schema, model)
+
+
         },
 
         removeSubFromUI(schema, model) {
@@ -1322,8 +1115,6 @@ export default {
 
         saveForm() {
             this.syncSchema()
-            console.log(this.dataform);
-
             let data = {
                 name: this.formName,
                 schema: JSON.stringify(this.dataform)

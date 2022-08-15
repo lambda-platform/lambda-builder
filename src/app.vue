@@ -53,13 +53,13 @@
                         <span>{{ lang.form_and_table_consolidation }}</span>
                     </router-link>
                 </li>
-                <li class="divider"></li>
-                <li>
-                    <router-link to="/process">
-                        <i class="ti-view-list-alt"></i>
-                        <span>Алхамт процесс</span>
-                    </router-link>
-                </li>
+<!--                <li class="divider"></li>-->
+<!--                <li>-->
+<!--                    <router-link to="/process">-->
+<!--                        <i class="ti-view-list-alt"></i>-->
+<!--                        <span>Алхамт процесс</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
                 <li class="divider"></li>
                 <li class="sub-title">
                     <span>{{ lang.data_processor }}</span>
