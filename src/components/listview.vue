@@ -32,8 +32,7 @@
             </div>
         </div>
 
-        <Row v-else :gutter="16" class="pz-list"
-             v-slimscroll="{height:'100%-30',size:7,alwaysVisible: true,wheelStep:7,color:'#2C3A47'}">
+        <Row v-else :gutter="16" class="pz-list" v-slimscroll="{height:'100vh-30',size:7,alwaysVisible: true,wheelStep:7,color:'#2C3A47'}">
             <Col :xs="24" :sm="12" :md="8" :lg="6" v-for="item in filteredList" :key="item.index">
                 <div class="pz-list-item">
                     <div class="pz-list-item-body">

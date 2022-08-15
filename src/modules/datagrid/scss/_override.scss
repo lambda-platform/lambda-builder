@@ -2,6 +2,7 @@
 .grid-builder {
     .ivu-tabs {
         flex: 1;
+        height: 100%;
 
         .ivu-tabs-bar {
             margin-bottom: 0;
@@ -661,5 +662,16 @@ img.ag-grid-image {
     .multiselect__option:after {
         line-height: 24px;
         font-size: 12px;
+    }
+}
+
+.dg-table.custom-table {
+    .ag-header-cell.ag-floating-filter {
+        border-top: 0 !important;
+        border-bottom: 0 !important;
+        border-top: solid 1px #dedede !important;
+    }
+    .ag-floating-filter-input{
+        overflow: hidden !important;
     }
 }

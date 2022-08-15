@@ -12,6 +12,7 @@
                             v-for="td in tr.children"
                             :key="td.index"
                             :colspan="td.colspan"
+                            :style="`${td.color ? `background-color: ${td.color}` : ''}`"
                             :rowspan="td.rowspan">
                             <div :style="`width: ${td.width}; height: ${td.height}`"
                                  :class="td.rotate ? 'vertical-column' : ''">
@@ -1524,14 +1525,7 @@ export default {
             }
 
             let rowId = params.node.data.id;
-            let actions = [
-                'autoSizeAll',
-                'copy',
-                'copyWithHeaders',
-                'chartRange',
-                'excelExport',
-                'separator',
-            ];
+            let actions = [];
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
                     if (item.type == "Link") {
@@ -1604,6 +1598,12 @@ export default {
                     actions.push(menuItem);
                 }
             });
+
+            actions.push('separator')
+            actions.push('copy')
+            actions.push('copyWithHeaders')
+            actions.push('chartRange')
+            actions.push('excelExport')
 
             return actions;
         },
