@@ -428,6 +428,7 @@ export default {
        "after_insert":"Нэмсний дараа",
        "before_update":"Шинэчлэхийн өмнө",
        "after_update":"Шинэчлэгдсэний дараа",
+       "cache_clear_url":"Cache цэвэрлэх зам",
        "_type":"Төрөл",
        "_top":"дээд",
        "_left":"зүүн",

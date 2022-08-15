@@ -427,6 +427,7 @@ export default {
         "after_insert": "After insert",
         "before_update": "Before update",
         "after_update": "After update",
+        "cache_clear_url":"Cache clear url",
         "_type":"Type",
         "_top":"top",
         "_left":"left",

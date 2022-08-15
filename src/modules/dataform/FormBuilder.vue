@@ -275,7 +275,7 @@
                                 <Col span='12'>
                                     <h4>Нэмэлт товчлуур</h4>
                                     <Form ref='extra_button' label-position='top' :model='extraButtonForm'
-                                          :rules='extraButtonRule'>
+                                          :rules='extraButtonRule' class="trigger-add-btn-form">
                                         <FormItem prop='icon' label='Icon'>
 
                                             <button type='button'
@@ -311,10 +311,19 @@
 
                                     <IconSelector @setIcon='setIcon' :iconSelector='iconSelector' />
                                 </Col>
-                                <Col span='12'>
+                                <Col span='12' class="trigger-add-btn-table">
                                     <Table border size='small' :columns='extraButtonColumns'
                                            :data='dataform.extraButtons'
                                            height='400'></Table>
+                                </Col>
+                            </Row>
+                        </div>
+                        <br>
+                        <div>
+                            <Row gutter='20'>
+                                <Col span='24'>
+                                    <h4>Cache цэвэрлэх зам</h4>
+                                    <Input v-model='dataform.triggers.cache_clear_url' :placeholder='lang.cache_clear_url' />
                                 </Col>
                             </Row>
                         </div>
@@ -488,7 +497,8 @@ export default {
                     update: {
                         before: null,
                         after: null
-                    }
+                    },
+                    cache_clear_url:null
                 },
                 extraButtons: [],
                 disableReset: false,
@@ -584,7 +594,7 @@ export default {
                 'Date_generated_automatically', 'Label_location', 'Form_width', 'Save_button_word', 'Padding_spacing', 'save', 'model',
                 'displayName', 'hide', 'inactive', 'translation', 'basicSettings', 'formula', 'trigger', 'userInterface', '_subform', '_form'
                 , 'formula_conditions', 'field', 'basic_from', 'conditions', 'add_a_field', 'add', 'controller_namespace', 'namespace',
-                'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
+                'before_insert', 'after_insert', 'before_update', 'after_update','cache_clear_url', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
                 'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab']
 
             return labels.reduce((obj, key, i) => {
