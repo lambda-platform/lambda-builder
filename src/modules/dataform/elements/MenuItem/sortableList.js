@@ -1007,6 +1007,7 @@
                 url:li.data( 'url' ) ? li.data( 'url' ) : null,
                 title:li.data( 'title' ) ? li.data( 'title' ) : null,
                 icon:li.data( 'icon' ) ? li.data( 'icon' ) : null,
+                svg:li.data( 'svg' ) ? li.data( 'svg' ) : null,
                 // c:li.data( 'c' ),
                 // r:li.data( 'r' ),
                 // u:li.data( 'u' ),

@@ -139,26 +139,34 @@ export default {
     },
 
     methods: {
-        setIcon(icon) {
+        setIcon(icon, isSVG) {
             if (this.iconMenuIndex.length >= 2) {
                 let itemIndex = this.iconMenuIndex[0];
                 this.iconMenuIndex.splice(0, 1);
-                this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon);
+                this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG);
             } else {
-                this.items[this.iconMenuIndex[0]].icon = icon;
+                if(isSVG)
+                    this.items[this.iconMenuIndex[0]]["svg"] = icon;
+                else
+                    this.items[this.iconMenuIndex[0]].icon = icon;
                 this.iconSelector = false;
                 this.iconMenuIndex = null;
                 this.iconSearch = "";
             }
         },
 
-        setIconFind(item, childIndexs, icon) {
+
+        setIconFind(item, childIndexs, icon, isSVG) {
             if (childIndexs.length >= 2) {
                 let itemIndex = childIndexs[0];
                 childIndexs.splice(0, 1);
-                item.children[itemIndex] = this.setIconFind(item.children[itemIndex], childIndexs, icon);
+                item.children[itemIndex] = this.setIconFind(item.children[itemIndex], childIndexs, icon, isSVG);
             } else {
-                item.children[childIndexs[0]].icon = icon;
+                if(isSVG)
+                    item.children[childIndexs[0]]["svg"] = icon;
+                else
+                   item.children[childIndexs[0]].icon = icon;
+
                 this.iconSelector = false;
                 this.iconMenuIndex = null;
                 this.iconSearch = "";
@@ -177,6 +185,7 @@ export default {
                 url: null,
                 title: null,
                 icon: null,
+                svg: null,
                 children: [],
                 id: this.guid()
                 // c: true,
