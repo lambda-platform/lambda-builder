@@ -76,10 +76,7 @@
         <Modal
             :min-width="200"
             :min-height="100"
-
-
             :draggable="true"
-
             :footer-hide="true"
             :title="form.name"
             width="85%"

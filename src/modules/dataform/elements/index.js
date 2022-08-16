@@ -152,6 +152,10 @@ export const elementList = [
         element: "Time",
         component:()=> import(/* webpackChunkName: "form-field-Time" */'./Time.vue'),
     },
+    {
+        element: "QGis",
+        component:()=> import(/* webpackChunkName: "form-field-QGis" */'./QGis.vue'),
+    },
     // {
     //     element: "UniqueGeneration",
     //     component:()=> import(/* webpackChunkName: "form-field-UniqueGeneration" */'./UniqueGeneration.vue'),
@@ -205,7 +209,6 @@ const requireCustomElement = (type)=>{
 }
 
 export const element = (type) => {
-
     if (type !== null && typeof type !== "undefined") {
         const elIndex = elementList.findIndex(el=>el.element == type);
 
