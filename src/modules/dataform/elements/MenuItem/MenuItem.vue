@@ -4,6 +4,7 @@
         :data-url="data.url"
         :data-title="data.title"
         :data-icon="data.icon"
+        :data-svg="data.svg"
         :data-c="data.c"
         :data-r="data.r"
         :data-u="data.u"
@@ -21,6 +22,7 @@
                 <button type="button" class="ivu-btn ivu-btn-default ivu-btn-circle ivu-btn-icon-only"
                         @click="showIconModal">
                     <i :class="`${data.icon} menu-icon-preview`" v-if="data.icon"></i>
+                    <inline-svg :src="data.svg" v-else-if="data.svg"></inline-svg>
                     <span v-else></span>
                 </button>
 
@@ -100,9 +102,12 @@
 </template>
 
 <script>
-
+import InlineSvg from 'vue-inline-svg';
 export default {
     props: ["data", "cruds", "menuIndex", "meta"],
+    components: {
+        InlineSvg,
+    },
     computed: {
         lang() {
             const labels = ['Consolidation_forms_and_tables', '_link', 'iframe_page', 'name', 'menuType','connectionPath', 'target',

@@ -96,7 +96,6 @@
 
 .icons-list {
   h3 {
-    text-transform: uppercase;
     font-weight: 700;
     margin: 1em 0;
     font-size: 1.5em;
@@ -107,6 +106,7 @@
     clear: both;
     overflow: hidden;
   }
+
 
   .icon-container {
     width: 240px;
@@ -124,6 +124,11 @@
       border: none;
       padding: 0;
     }
+     svg{
+         [fill]:not([fill="none"])  {
+             fill: #3699FF;
+         }
+     }
 
     .icon-name {
       color: #666;
