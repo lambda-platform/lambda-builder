@@ -18,8 +18,12 @@ $anchor-height: 52px;
             height: auto;
         }
     }
+    .nav-wrap{
+        height: calc(100vh - 144px);
+        flex: 1;
+    }
+
     nav {
-        height: auto;
         width: 100%;
         display: flex;
         padding-top: 10px; // align-items: center;

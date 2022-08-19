@@ -1,7 +1,6 @@
 <template>
     <div class="paper-theme aside-page">
         <sidebar class="wide">
-
             <div slot="brand">
                 <div class="logo">
                     <a href="/console" v-if="isMicroservice">
