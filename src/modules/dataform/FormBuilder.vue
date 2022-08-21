@@ -1180,7 +1180,8 @@ export default {
                 },
                 schema: [],
                 trigger: '',
-                triggerTimeout: 0
+                triggerTimeout: 0,
+                hidden: false
             }
             this.dataform.schema.push(subForm)
         },
