@@ -34,7 +34,8 @@
             || ('d' in params.actionsVisibility
             && params.data[params.actionsVisibility.d.field]!=params.actionsVisibility.d.value))  && isCanDelete()"
                 confirm :title="lang.ruSureYouDeleteInfo" :transfer="true"
-                :ok-text="lang.yes" :cancel-text="lang.no" @on-ok="params.methods.remove(params.value, params.rowIndex)">
+                :ok-text="lang.yes" :cancel-text="lang.no"
+                @on-ok="params.methods.remove(params.value, params.rowIndex)">
                 <Button shape="circle" icon="ios-trash" size="small"></Button>
             </Poptip>
         </span>
@@ -75,29 +76,23 @@ export default Vue.extend({
             }, {});
         },
     },
-    methods:{
-        edit(){
-
-
+    methods: {
+        edit() {
             this.params.methods.edit(this.params.value, this.params.data)
-
         },
-        isCanEdit(){
 
-            if(this.params.methods.permissions){
-
-                if(this.params.methods.permissions.gridEditConditionJS != "" && this.params.methods.permissions.gridEditConditionJS != null &&  this.params.methods.permissions.gridEditConditionJS != undefined){
-
+        isCanEdit() {
+            if (this.params.methods.permissions) {
+                if (this.params.methods.permissions.gridEditConditionJS != "" && this.params.methods.permissions.gridEditConditionJS != null && this.params.methods.permissions.gridEditConditionJS != undefined) {
                     return isCan(this.params.methods.permissions.gridEditConditionJS, this.params.data)
                 }
             }
-
             return true;
         },
-        isCanDelete(){
 
-            if(this.params.methods.permissions){
-                if(this.params.methods.permissions.gridDeleteConditionJS != "" && this.params.methods.permissions.gridDeleteConditionJS != null &&  this.params.methods.permissions.gridDeleteConditionJS != undefined){
+        isCanDelete() {
+            if (this.params.methods.permissions) {
+                if (this.params.methods.permissions.gridDeleteConditionJS != "" && this.params.methods.permissions.gridDeleteConditionJS != null && this.params.methods.permissions.gridDeleteConditionJS != undefined) {
                     return isCan(this.params.methods.permissions.gridDeleteConditionJS, this.params.data)
                 }
             }

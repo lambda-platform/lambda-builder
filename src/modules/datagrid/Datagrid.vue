@@ -181,6 +181,8 @@ import SetFilterAltered from "./elements/SetFilterAltered"
 import "./elements/ExcelFilter.js"
 import GridRowUpdate from "./GridRowUpdate";
 
+import {isCan} from "./utils/permission"
+
 export default {
     props: [
         "schemaID",
@@ -1506,6 +1508,7 @@ export default {
                 }
             }
         },
+
         onRowClick(row) {
             if (this.permissions) {
                 if (this.permissions.u) {
@@ -1520,6 +1523,8 @@ export default {
         },
 
         getContextMenuItems(params) {
+            console.log("permissions: ", this.permissions);
+
             if (!this.hasContextMenu || params.node == null) {
                 return null;
             }
@@ -1572,7 +1577,7 @@ export default {
                     console.log("v action");
                 }
 
-                if (item == 'e') {
+                if (item == 'e' && this.permissions.u) {
                     let menuItem = {
                         name: "Засах",
                         icon:
@@ -1584,7 +1589,7 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'd') {
+                if (item == 'd' && this.permissions.d) {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
@@ -1599,7 +1604,9 @@ export default {
                 }
             });
 
-            actions.push('separator')
+            if(this.permissions.u || this.permissions.d) {
+                actions.push('separator')
+            }
             actions.push('copy')
             actions.push('copyWithHeaders')
             actions.push('chartRange')
