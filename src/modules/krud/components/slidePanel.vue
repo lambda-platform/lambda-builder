@@ -110,6 +110,8 @@ export default {
             this.isVisibleDock = this.value;
         },
         widths() {
+            console.log("widths:");
+            console.log(this.widths);
             this.init();
         }
     },

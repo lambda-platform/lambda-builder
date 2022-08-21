@@ -98,3 +98,24 @@
     }
   }
 }
+
+.dataform-model-form{
+    width: 80vw;
+    .ivu-modal-wrap{
+        overflow: hidden;
+        .ivu-modal-content{
+            width: 80vw;
+            .ivu-modal-body {
+                height: 80vh;
+                overflow-y: auto;
+                .form-body{
+                    overflow: hidden;
+                    .dataform-body{
+                        max-height: 73vh;
+                        overflow-x: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
