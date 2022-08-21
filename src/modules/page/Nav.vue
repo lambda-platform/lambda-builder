@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="(item, index) in menu" :key="index" v-if="item.link_to == 'wrap' || can(item)">
+        <li v-for="(item, index) in menu" v-if="item.link_to == 'wrap' || can(item)" :key="index">
             <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'wrap' && item.link_to != 'link' && item.link_to != 'router-link'">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
