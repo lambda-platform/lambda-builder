@@ -659,6 +659,75 @@
                 </div>
             </TabPane>
 
+            <TabPane label="QGis" v-if="item.formType == 'QGis'">
+                <div style="padding: 20px">
+                    <Row v-if="item.qgisOptions">
+                        <Col span="8">
+                            <Input v-model="item.qgisOptions.service" placeholder="Geo Service"/>
+                        </Col>
+                        <Col span="8">
+                            <Input v-model="item.qgisOptions.link" placeholder="Давхаргын холбоос"/>
+                        </Col>
+
+                        <Col span="24">
+                            <div class="title">
+                                <h3>Зургийн баазын мэдээлэл</h3>
+                            </div>
+                        </Col>
+
+                        <Col span="8">
+                            <Input v-model="item.qgisOptions.cTable" placeholder="Зургийн хүснэгт"/>
+                        </Col>
+                        <Col span="8">
+                            <Input v-model="item.qgisOptions.cShapeField" placeholder="Зургийн мэдээлэлтэй талбар"/>
+                        </Col>
+                        <Col span="8">
+                            <Input v-model="item.qgisOptions.cAttr" placeholder="Давхаргын холбогдох attr"/>
+                        </Col>
+
+                        <Col span="24">
+                            <div class="title">
+                                <h3>Давхаргын attribute & баазын холбоос</h3>
+                            </div>
+                        </Col>
+                        <Col span="24">
+                            <div class="qgis-attrs">
+                                <div class="localSelectOptions">
+                                    <Form ref="qgis-option" :model="optionForm" :rules="optionRule" inline>
+                                        <FormItem prop="value">
+                                            <Input type="text" v-model="optionForm.value"
+                                                   placeholder="Layer attribute-н нэр"/>
+                                        </FormItem>
+                                        <FormItem prop="label">
+                                            <Select v-model="optionForm.label" filterable
+                                                    clearable
+                                                    placeholder="Утга оноох талбар">
+                                                <Option v-for="item in schema" :value="item.model"
+                                                        :key="item.model">
+                                                    {{ item.label ? item.label : item.model }}
+                                                </Option>
+                                            </Select>
+                                        </FormItem>
+                                        <FormItem prop="label">
+                                            {{ optionForm.label }}
+                                        </FormItem>
+                                        <FormItem>
+                                            <Button type="primary" @click="addQgisOption">
+                                                {{ `${$static_words ? $static_words.add : 'Нэмэх'}` }}
+                                            </Button>
+                                        </FormItem>
+                                    </Form>
+
+                                    <Table border size="small" :columns="qgisColumns"
+                                           :data="item.qgisOptions.attrList"
+                                           height="250"></Table>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </TabPane>
+
             <TabPane label="Grid Selector тохируулга" v-if="item.formType == 'GridSelector'">
                 <div>
                     <Row>
