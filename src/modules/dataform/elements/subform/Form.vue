@@ -79,24 +79,13 @@
             :draggable="true"
             :footer-hide="true"
             :title="form.name"
-            width="85%"
-            height="85%"
+            class="dataform-model-form"
+            width="80vw"
             v-model="modal_show"
 
         >
             <section class="form-modal">
-<!--                <div class="form-tool">-->
-
-<!--                    <h4>{{ form.name }}</h4>-->
-<!--                    <div class="form-tool-actions">-->
-<!--                        <a href="javascript:void(0)" @click="closeModal">-->
-<!--                            <i class="ti-close"></i>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
                 <div class="form-body">
-
                     <dataform ref="form" v-if="modal_show" :schemaID="form.formId"
                               :do_render="modal_show"
                               :editMode="editIndex >= 0 ? true : false"
@@ -122,7 +111,7 @@
             :resizable="true"
             draggable=".form-tool"
             width="85%"
-            height="50%"
+            height="80vh"
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">
