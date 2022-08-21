@@ -331,7 +331,11 @@ export default {
                 if (res.data.status) {
                     this.roles = res.data.roles.map(role => {
                         if (role.permissions != null && role.permissions != "") {
-                            role.permissions = JSON.parse(role.permissions);
+                            try {
+                                role.permissions = JSON.parse(role.permissions);
+                            }catch (e){
+                                console.log(e);
+                            }
                         }
                         return role;
                     });
@@ -351,6 +355,7 @@ export default {
                 }
             })
         },
+
         selectMenu(index) {
             this.selectedMenu = this.menus[index];
 

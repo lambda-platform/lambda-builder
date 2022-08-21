@@ -53,8 +53,8 @@ export default {
             extraButtons: [],
             disableReset: false,
             withBackButton: false,
-            scrollOptions:{
-                height:'100%',
+            scrollOptions: {
+                height: '100%'
             }
         }
     },
@@ -218,7 +218,6 @@ export default {
                 if (val != oldValue) {
                     doFormula(this.formula, model, this.model, this.schema, this.rule, false)
                 }
-
             }
         },
 
@@ -364,7 +363,6 @@ export default {
         setUiSchemaFormItem(items) {
             items.forEach(item => {
                 if (item.type == 'form') {
-
                     this.setModel(item.model, item.default, item.formType)
                     this.$watch('model.' + item.model, {
                         handler: (value, oldValue) => {
@@ -378,9 +376,9 @@ export default {
                     })
 
                     if (item.rules) {
-
                         this.setRule(item.model, item.rules)
                     }
+
                     if (item.formType == 'Password') {
                         if (item.passwordOption) {
                             if (item.passwordOption.confirm) {
@@ -426,8 +424,6 @@ export default {
                             deep: true
                         })
                     }
-
-
                 } else if (_.isArray(item.children)) {
                     this.setUiSchemaFormItem(item.children)
                 }
@@ -435,7 +431,6 @@ export default {
         },
 
         setModel(name, value, type) {
-
             switch (type) {
                 case 'Switch':
                     let val = false
