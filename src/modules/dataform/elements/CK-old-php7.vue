@@ -82,18 +82,20 @@ export default {
                     return {
                         toolbar: this.article,
                         height: 250,
-                        filebrowserBrowseUrl : '/vendor/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                        filebrowserUploadUrl : '/vendor/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                        filebrowserImageBrowseUrl : '/vendor/filemanager/dialog.php?type=1&editor=ckeditor&fldr=',
+                        filebrowserBrowseUrl: '/vendor/ckeditor/ckfinder/ckfinder.html',
+                        filebrowserImageBrowseUrl: '/vendor/ckeditor/ckfinder/ckfinder.html?type=Images',
+                        filebrowserUploadUrl: '/vendor/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                        filebrowserImageUploadUrl: '/vendor/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
                         readOnly:this.meta && this.meta.disabled ? this.meta.disabled : false,
                         extraPlugins : 'video'
                     };
                 default:
                     return {
                         height: 350,
-                        filebrowserBrowseUrl : '/vendor/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                        filebrowserUploadUrl : '/vendor/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                        filebrowserImageBrowseUrl : '/vendor/filemanager/dialog.php?type=1&editor=ckeditor&fldr=',
+                        filebrowserBrowseUrl: '/vendor/ckeditor/ckfinder/ckfinder.html',
+                        filebrowserImageBrowseUrl: '/vendor/ckeditor/ckfinder/ckfinder.html?type=Images',
+                        filebrowserUploadUrl: '/vendor/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                        filebrowserImageUploadUrl: '/vendor/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
                         readOnly:this.meta && this.meta.disabled ? this.meta.disabled : false,
                         extraPlugins : 'video'
                     };
