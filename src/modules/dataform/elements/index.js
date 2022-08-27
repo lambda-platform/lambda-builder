@@ -61,6 +61,10 @@ export const elementList = [
         component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK-old.vue'),
     },
     {
+        element: "CkOldPhp7",
+        component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK-old-php7.vue'),
+    },
+    {
         element: "ColorPicker",
         component:()=> import(/* webpackChunkName: "form-field-ColorPicker" */'./ColorPicker.vue'),
     },
