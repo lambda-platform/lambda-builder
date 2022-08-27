@@ -285,7 +285,7 @@ export default {
         getGisData() {
             this.isLoading = true;
 
-            axios.get(`https://urban.gov.mn/urban/gis/${this.meta.qgisOptions.cTable}/${this.meta.qgisOptions.cShapeField}/${this.meta.qgisOptions.cAttr}/${this.geoVal}`)
+            axios.get(`/urban/gis/${this.meta.qgisOptions.cTable}/${this.meta.qgisOptions.cShapeField}/${this.meta.qgisOptions.cAttr}/${this.geoVal}`)
                 .then(({data}) => {
                     if (data.status) {
                         this.map.removeLayer(this.selectedLayer);

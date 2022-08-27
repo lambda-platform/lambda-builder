@@ -40,8 +40,10 @@
                                   :fnView="view"
                                   :actions="$props.actions"
                                   :dblClick="$props.dbClickAction"
+                                  :user_condition="$props.user_condition? $props.user_condition :null"
+                                  :custom_condition="$props.custom_condition? $props.custom_condition :null"
                                   :onRowSelect="$props.onRowSelect"
-                        ></datagrid>
+                        />
                     </div>
 
                     <div class="data-form" :style="`width: ${form_width ? form_width : 600}`">

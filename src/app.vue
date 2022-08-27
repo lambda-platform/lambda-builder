@@ -4,17 +4,18 @@
             <div slot="brand">
                 <div class="logo">
                     <a href="/console" v-if="isMicroservice">
-                        <img src="/assets/lambda/images/light.svg" alt="Lambda Platform">
+                        <img src="/assets/lambda/images/logo.svg" alt="Lambda Platform">
                     </a>
-                    <img v-else src="/assets/lambda/images/light.svg" alt="Puzzle Visual Builder">
-                </div>
-                <div class="language-switcher">
-                    <Select v-if="has_language && languages.length >= 2" v-model="selectedLang"
-                            @on-change="switchLanguage">
-                        <Option v-for="lang in languages" :value="lang.code" :key="lang.index">
-                            {{ lang.label }}
-                        </Option>
-                    </Select>
+                    <img v-else src="/assets/lambda/images/logo.svg" alt="Puzzle Visual Builder">
+
+                    <div class="language-switcher">
+                        <Select size="small" v-if="has_language && languages.length >= 2" v-model="selectedLang"
+                                @on-change="switchLanguage">
+                            <Option v-for="lang in languages" :value="lang.code" :key="lang.index">
+                                {{ lang.code }}
+                            </Option>
+                        </Select>
+                    </div>
                 </div>
             </div>
 
@@ -52,13 +53,13 @@
                         <span>{{ lang.form_and_table_consolidation }}</span>
                     </router-link>
                 </li>
-<!--                <li class="divider"></li>-->
-<!--                <li>-->
-<!--                    <router-link to="/process">-->
-<!--                        <i class="ti-view-list-alt"></i>-->
-<!--                        <span>Алхамт процесс</span>-->
-<!--                    </router-link>-->
-<!--                </li>-->
+                <!--                <li class="divider"></li>-->
+                <!--                <li>-->
+                <!--                    <router-link to="/process">-->
+                <!--                        <i class="ti-view-list-alt"></i>-->
+                <!--                        <span>Алхамт процесс</span>-->
+                <!--                    </router-link>-->
+                <!--                </li>-->
                 <li class="divider"></li>
                 <li class="sub-title">
                     <span>{{ lang.data_processor }}</span>
@@ -105,6 +106,13 @@
                     <router-link to="/graphql">
                         <img src="/assets/lambda/images/graphql.svg" width="21">&nbsp;
                         <span>{{ lang.graphql_management }}</span>
+                    </router-link>
+                </li>
+
+                <li>
+                    <router-link to="/visual-builder">
+                        <i class="ti-panel"></i>
+                        <span>Вэб хуудас</span>
                     </router-link>
                 </li>
                 <li class="divider" v-if="accessAdminModule"></li>

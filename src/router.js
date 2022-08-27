@@ -180,6 +180,11 @@ let routes = [{
     },
 
     {
+        path: '/visual-builder',
+        component: () => import(/* webpackChunkName: "menu-index" */ './pages/visual-builder/views/index.vue')
+    },
+
+    {
         path: '/module/:module',
         component: () => import(/* webpackChunkName: "render-index" */ './pages/render/views/module.vue')
     },

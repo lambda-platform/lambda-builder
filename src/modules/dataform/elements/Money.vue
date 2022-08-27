@@ -7,7 +7,7 @@
                 separator=","
                 v-model="model.form[model.component]"
                 :disabled="meta && meta.disabled ? meta.disabled : false"
-        ></numeric>
+        />
     </FormItem>
 </template>
 
