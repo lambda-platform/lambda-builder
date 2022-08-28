@@ -49,6 +49,17 @@
 
                 <div class="role-config" v-if="!loading">
                     <div id="menu-tree" v-if="selectedRole != null">
+                        <Select v-if="Object.keys(permissions).length >=1"
+                                v-model="roles[selectedRole].permission_kb_product.default_menu_id" clearable
+                                placeholder="Анх сонгогдох цэс сонгох"
+                                style="width: 200px">
+                            <Option v-for="item in Object.keys(permissions)"
+                                    :value="permissions[item].menu_id"
+                                    :key="permissions[item].menu_id" v-if="permissions[item].show">{{
+                                    permissions[item].title
+                                }}
+                            </Option>
+                        </Select>
                         <Button icon="android-done" type="success" @click="saveRole">{{ lang._save }}</Button>
 
                         <ul class="menuTree listsClass" v-if="selectedMenu != null">
@@ -180,22 +191,22 @@ export default {
 
             if (this.selectedMenu) {
 
-                let menu_index = this.selectedMenu.items.findIndex(menu => menu.id == menu_id);
+                let menu_index = this.selectedMenu.findIndex(menu => menu.id == menu_id);
 
                 if (menu_index >= 0) {
                     url = this.getUrlByMenu(this.selectedMenu.items[menu_index], undefined, undefined)
                 } else {
                     this.selectedMenu.items.forEach(menu => {
 
-                        let sub_menu_index = menu.children.findIndex(sub_menu => sub_menu.id == menu_id);
+                        let sub_menu_index = menu.items.findIndex(sub_menu => sub_menu.id == menu_id);
 
                         if (sub_menu_index >= 0) {
-                            url =  this.getUrlByMenu(menu.children[sub_menu_index], menu.id);
+                            url =  this.getUrlByMenu(menu.items[sub_menu_index], menu.id);
                         } else {
-                            menu.children.forEach(sub_menu => {
-                                let sub_child_menu_index = sub_menu.children.findIndex(sub_child_menu => sub_child_menu.id == menu_id);
+                            menu.items.forEach(sub_menu => {
+                                let sub_child_menu_index = sub_menu.items.findIndex(sub_child_menu => sub_child_menu.id == menu_id);
                                 if (sub_child_menu_index >= 0) {
-                                    url = this.getUrlByMenu(sub_menu.children[menu_index], menu.id, sub_menu.id)
+                                    url = this.getUrlByMenu(sub_menu.items[menu_index], menu.id, sub_menu.id)
                                 }
                             });
                         }
@@ -236,7 +247,10 @@ export default {
             if (this.roles[this.selectedRole].permission_kb_product === null || this.roles[this.selectedRole].permission_kb_product == '') {
                 this.menuIndex = 1;
                 this.selectedMenu = this.menus;
-                this.roles[this.selectedRole].permission_kb_product = {}
+                this.roles[this.selectedRole].permission_kb_product = {
+                    default_menu_id: null,
+                    permissions: {}
+                }
                 this.initPermissions({});
 
             } else {
@@ -244,7 +258,7 @@ export default {
                     setTimeout(() => {
                         this.selectedMenu = this.menus;
                         this.menuIndex = 1;
-                        this.initPermissions(this.roles[this.selectedRole].permission_kb_product, this.roles[this.selectedRole].permission_kb_product.default_menu);
+                        this.initPermissions(this.roles[this.selectedRole].permission_kb_product.permissions, this.roles[this.selectedRole].permission_kb_product.default_menu_id);
                     }, 100);
 
             }
@@ -258,9 +272,12 @@ export default {
             // }
 
         },
-        initPermissions(permissions, default_menu) {
+        initPermissions(permissions, default_menu_id) {
             let role_permission = this.roles[this.selectedRole].permission_kb_product;
-            this.roles[this.selectedRole].permission_kb_product = this.getPermissions(permissions ? permissions : {}, this.selectedMenu)
+            this.roles[this.selectedRole].permission_kb_product = {
+                default_menu_id: default_menu_id,
+                permissions: this.getPermissions(permissions ? permissions : {}, this.selectedMenu)
+            }
         },
         getPermissions(permissions, menuItems) {
 
@@ -271,6 +288,7 @@ export default {
                 } else {
                         new_permissions[menu.id] = {
                             menu_id: menu.id,
+                            e: false,
                             c: false,
                             r: false,
                             u: false,
@@ -293,8 +311,9 @@ export default {
             return new_permissions;
         },
         saveRole() {
-
+            console.log(this.roles[this.selectedRole].permission_kb_product);
             if (this.roles[this.selectedRole].permission_kb_product) {
+                if (this.roles[this.selectedRole].permission_kb_product.default_menu_id) {
                     axios.post(`/kb/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id='+this.$project.id:'' : ''}`, {
                         id: this.roles[this.selectedRole].id,
                         permissions: this.roles[this.selectedRole].permission_kb_product
@@ -303,6 +322,9 @@ export default {
                     }).catch(err => {
                         this.$Message.error('Уучлаарай алдаа гарлаа');
                     })
+                } else {
+                    this.$Message.error('Анхдагч цэс сонгоно уу');
+                }
             } else {
                 this.$Message.error('Цэс сонгоно уу');
             }
@@ -337,7 +359,7 @@ export default {
         permissions() {
             if (this.selectedRole !== null) {
                 if (this.roles[this.selectedRole].permission_kb_product) {
-                    return this.roles[this.selectedRole].permission_kb_product
+                    return this.roles[this.selectedRole].permission_kb_product.permissions
                 } else {
                     return {};
                 }
