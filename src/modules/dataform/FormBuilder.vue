@@ -463,7 +463,7 @@ export default {
                         'blockQuote', '|',
                         'insertTable', '|',
                         'indent', 'outdent', '|',
-                        'mediaEmbed'], shouldNotGroupWhenFull: true
+                        'mediaEmbed' ,'|', 'sourceEditing'], shouldNotGroupWhenFull: true
                 }
             },
             dataform: {
