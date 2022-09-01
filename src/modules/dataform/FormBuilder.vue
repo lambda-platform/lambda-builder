@@ -357,8 +357,11 @@
                         </div>
 
                         <div class='body'>
-                            <ckeditor ref='ckeditor' :editor='editor' v-model='dataform.email.body'
-                                      :config='editorConfig' />
+                            <editor
+                                api-key="6tb1o5o4z4v2dhvr0ctybwoltlyqx4xx0emp7wp3datunsx8"
+                                v-model='dataform.email.body'
+                                :init="initEditorConfig"
+                            />
                         </div>
                     </div>
                 </TabPane>
@@ -428,8 +431,7 @@ import { getTableMeta } from './utils/helpers'
 import { getTableView } from '../../utils'
 import IconSelector from '../../components/IconSelector'
 import InputTag from 'vue-input-tag'
-import CKEditor from '@ckeditor/ckeditor5-vue2'
-import Editor from 'ckeditor5-custom-build/build/ckeditor'
+import Editor from '@tinymce/tinymce-vue'
 import draggable from 'vuedraggable'
 
 export default {
@@ -437,7 +439,7 @@ export default {
     components: {
         InputTag,
         draggable,
-        ckeditor: CKEditor.component,
+        'editor': Editor,
         IconSelector: IconSelector,
         'form-item': formItem,
         'sub-form': subForm,
@@ -447,6 +449,23 @@ export default {
 
     data() {
         return {
+            initEditorConfig: {
+                max_height: 1200,
+                min_height: 600,
+                images_upload_url: '/lambda/krud/upload-tinymce',
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount responsivefilemanager'
+                ],
+                toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | responsivefilemanager | removeformat | help | newsbutton | productbutton | otherbutton',
+                external_filemanager_path:"/vendor/filemanager/",
+                filemanager_title:"Responsive Filemanager" ,
+                external_plugins: { "filemanager" : "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+            },
             otherForms: [],
             otherGrids: [],
             loadConfig: true,
@@ -456,16 +475,6 @@ export default {
             isModelSelected: false,
             formName: null,
             editor: Editor,
-            editorConfig: {
-                toolbar: {
-                    items: ['heading', '|',
-                        'bold', 'italic', '|', 'link', '|',
-                        'blockQuote', '|',
-                        'insertTable', '|',
-                        'indent', 'outdent', '|',
-                        'mediaEmbed' ,'|', 'sourceEditing'], shouldNotGroupWhenFull: true
-                }
-            },
             dataform: {
                 formSubName: null,
                 model: null,
