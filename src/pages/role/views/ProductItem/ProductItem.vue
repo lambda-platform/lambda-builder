@@ -17,6 +17,7 @@
             <div class="menu-control">
                 <span>&nbsp;</span>
                 <span>
+                    <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].e">E</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].c">C</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].r">R</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].u">U</Checkbox>
@@ -288,11 +289,13 @@ import {loadLanguageAsync} from "../../../../locale/index";
             changePermissionPre(type, value, permissions) {
 
                 if(value === true){
+                    permissions.e = true;
                     permissions.c = true;
                     permissions.r = true;
                     permissions.u = true;
                     permissions.d = true;
                 } else {
+                    permissions.e = false;
                     permissions.c = false;
                     permissions.r = false;
                     permissions.u = false;

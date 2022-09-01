@@ -58,12 +58,12 @@
                                         @on-change="relationSchema">
                                     <OptionGroup :label="`${microservice.microservice}: Table list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"  :key="microservice.index">
                                         <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
-                                            {{ item }}
+                                            {{ item }} 1
                                         </Option>
                                     </OptionGroup>
                                     <OptionGroup :label="`${microservice.microservice}: View list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"  :key="microservice.index">
                                         <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
-                                            {{ item }}
+                                            {{ item }} 2
                                         </Option>
                                     </OptionGroup>
                                 </Select>
@@ -75,12 +75,12 @@
                                         @on-change="relationSchema">
                                     <OptionGroup label="Table list">
                                         <Option v-for="item in tableList" :value="item" :key="item.index">
-                                            {{ item }}
+                                            {{ item }} 1234
                                         </Option>
                                     </OptionGroup>
                                     <OptionGroup label="View list">
                                         <Option v-for="item in viewList" :value="item" :key="item.index">
-                                            {{ item }}
+                                            {{ item }} 1235
                                         </Option>
                                     </OptionGroup>
                                 </Select>
@@ -106,7 +106,7 @@
                                 <Select v-model="item.filter.relation.key" :placeholder="lang.Related_fields" clearable
                                         filterable>
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
-                                        item.model }}
+                                        item.model }} 34
                                     </Option>
                                 </Select>
                             </li>
@@ -268,6 +268,7 @@
         },
         methods: {
             async relationSchema(val) {
+                console.log(val);
                 this.relSchema = await getTableMeta(val)
             },
             //Filter event

@@ -1,4 +1,3 @@
-
 <template>
     <section class="page">
         <paper-header class="mini">
@@ -37,7 +36,7 @@
                         <h3>{{ lang.please_wait }}</h3>
                     </div>
                 </div>
-                <div class="role-list" v-if="!loading">
+                <div v-if="!loading" class="role-list">
                     <Button icon="md-add" type="success" long @click="addRole">{{ lang.add }}</Button>
                     <ul>
                         <li v-for="(role, index) in roles" :key="index" :class="index == selectedRole ? 'active' : ''">
@@ -52,7 +51,7 @@
                     </ul>
                 </div>
 
-                <div class="role-config" v-if="!loading">
+                <div v-if="!loading" class="role-config">
                     <div id="menu-tree" v-if="selectedRole != null">
                         <Select v-model="menuIndex" clearable :placeholder="lang.menuSelection" style="width: 300px"
                                 @on-change="selectMenu">
@@ -80,11 +79,11 @@
                                 :data="menu_item"
                                 :menuIndex="[index]"
                                 :cruds="cruds"
-                                :permissions="permissions" >
+                                :permissions="permissions">
                             </MenuItem>
                         </ul>
 
-                        <div class="advanced">
+                        <div class="advanced" v-if="roles[selectedRole].permissions.extra">
                             <h4>{{ lang.optional }}</h4>
                             <Checkbox size="large" v-model="roles[selectedRole].permissions.extra.datasource">
                                 <span>{{ lang.data_source }}</span>
@@ -210,19 +209,19 @@ export default {
             this.selectedLang = val;
             loadLanguageAsync(val);
         },
-        getUrlByMenu(menu, parentID, subParentID){
+        getUrlByMenu(menu, parentID, subParentID) {
 
-            if(menu){
-                if(menu.link_to == "router-link"){
+            if (menu) {
+                if (menu.link_to == "router-link") {
 
-                    return "#"+menu.url
+                    return "#" + menu.url
                 } else {
-                    if(parentID && subParentID){
-                        return  "#/p/" + parentID + "/" + subParentID +"/" + menu.id;
-                    } else if(parentID && !subParentID){
-                        return  "#/p/" + parentID + "/" + menu.id;
+                    if (parentID && subParentID) {
+                        return "#/p/" + parentID + "/" + subParentID + "/" + menu.id;
+                    } else if (parentID && !subParentID) {
+                        return "#/p/" + parentID + "/" + menu.id;
                     } else {
-                        return  "#/p/" + menu.id;
+                        return "#/p/" + menu.id;
                     }
 
                 }
@@ -244,7 +243,7 @@ export default {
                         let sub_menu_index = menu.children.findIndex(sub_menu => sub_menu.id == menu_id);
 
                         if (sub_menu_index >= 0) {
-                            url =  this.getUrlByMenu(menu.children[sub_menu_index], menu.id);
+                            url = this.getUrlByMenu(menu.children[sub_menu_index], menu.id);
                         } else {
                             menu.children.forEach(sub_menu => {
                                 let sub_child_menu_index = sub_menu.children.findIndex(sub_child_menu => sub_child_menu.id == menu_id);
@@ -263,8 +262,6 @@ export default {
             this.showRoleForm = true;
         },
         editRole(role) {
-
-            console.log(role)
 
             this.roleForm.name = role.name;
             this.roleForm.display_name = role.display_name;
@@ -295,17 +292,10 @@ export default {
 
                     let saveUrl = this.editID ? `/lambda/puzzle/roles/store/${this.editID}` : '/lambda/puzzle/roles/create'
                     axios.post(saveUrl, {...this.roleForm}).then(res => {
-
-
                         this.getData();
-
-
                         this.closeRole();
                         this.$Message.success('Амжилттай хадаглагдлаа');
-
-
                     }).catch(err => {
-
                         this.loadingForm = false;
                         this.$Message.error('Уучлаарай алдаа гарлаа');
                     })
@@ -339,7 +329,7 @@ export default {
                         if (role.permissions != null && role.permissions != "") {
                             try {
                                 role.permissions = JSON.parse(role.permissions);
-                            }catch (e){
+                            } catch (e) {
                                 console.log(e);
                             }
                         }
@@ -367,6 +357,7 @@ export default {
             if (index >= 0)
                 this.initPermissions({});
             else {
+
                 this.roles[this.selectedRole].permissions = {
                     menu_id: null,
                     default_menu: null,
@@ -382,18 +373,19 @@ export default {
                     }
                 }
             }
-        },
 
+        },
         selectRole(index) {
             this.selectedRole = index;
-
             if (this.roles[this.selectedRole].permissions === null || this.roles[this.selectedRole].permissions == '') {
+
                 this.selectedMenu = null;
                 this.menuIndex = null;
                 this.extra = {
                     datasource: false,
                     moqup: false,
                     chart: false
+
                 };
 
                 this.roles[this.selectedRole].permissions = {
@@ -412,17 +404,25 @@ export default {
                 }
 
             } else {
-                let menu_index = this.menus.findIndex(menu => menu.id == this.roles[this.selectedRole].permissions.menu_id);
+                let menu_index = 0;
+                if (this.roles[this.selectedRole].permissions.menu_id) {
+                    menu_index = this.menus.findIndex(menu => menu.id == this.roles[this.selectedRole].permissions.menu_id);
+                } else {
+                    menu_index = this.menus.findIndex(menu => menu.id == 486);
+                    this.roles[this.selectedRole].permissions.menu_id = 486;
+                }
 
                 if (menu_index >= 0) {
                     this.selectedMenu = null;
                     setTimeout(() => {
                         this.selectedMenu = JSON.parse(JSON.stringify(this.menus[menu_index]))
+
                         this.menuIndex = menu_index;
                         this.initPermissions(this.roles[this.selectedRole].permissions.permissions, this.roles[this.selectedRole].permissions.default_menu);
                     }, 100);
                 }
             }
+
         },
         changePermission(type, menu_item_id, value) {
 
@@ -437,7 +437,7 @@ export default {
 
             let role_permission = this.roles[this.selectedRole].permissions;
             let extra = null;
-            if (!role_permission['extra']) {
+            if (!role_permission.hasOwnProperty('extra')) {
                 extra = {...this.extra};
             } else {
                 extra = {...role_permission.extra}
@@ -453,15 +453,10 @@ export default {
 
         },
         getPermissions(permissions, menuItems) {
-
-
             let new_permissions = {};
             menuItems.map(menu => {
-
-
                 if (permissions.hasOwnProperty(menu.id)) {
                     new_permissions[menu.id] = {...permissions[menu.id]}
-
                 } else {
                     if (menu.link_to == 'crud') {
                         new_permissions[menu.id] = {
@@ -472,10 +467,10 @@ export default {
                             d: false,
                             show: false,
                             title: this.getTitle(menu),
-                            gridEditConditionSQL:"",
-                            gridDeleteConditionSQL:"",
-                            gridDeleteConditionJS:"",
-                            gridEditConditionJS:"",
+                            gridEditConditionSQL: "",
+                            gridDeleteConditionSQL: "",
+                            gridDeleteConditionJS: "",
+                            gridEditConditionJS: "",
                         }
                     } else {
                         new_permissions[menu.id] = {
@@ -500,8 +495,8 @@ export default {
         saveRole() {
 
             if (this.roles[this.selectedRole].permissions) {
-                if (this.roles[this.selectedRole].permissions.default_menu) {
-                    axios.post(`/lambda/puzzle/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id='+this.$project.id:'' : ''}`, {
+                if (this.roles[this.selectedRole].permissions.default_menu && this.roles[this.selectedRole].permissions.menu_id) {
+                    axios.post(`/lambda/puzzle/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id=' + this.$project.id : '' : ''}`, {
                         id: this.roles[this.selectedRole].id,
                         permissions: this.roles[this.selectedRole].permissions,
                         extra: {...this.extra},
@@ -511,7 +506,7 @@ export default {
                         this.$Message.error('Уучлаарай алдаа гарлаа');
                     })
                 } else {
-                    this.$Message.error('Анхдагч цэс сонгоно уу');
+                    this.$Message.error('Цэсүүд сонголт хийнэ үү');
                 }
 
             } else {

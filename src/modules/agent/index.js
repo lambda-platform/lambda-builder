@@ -5,7 +5,7 @@ import AgentForm from "./views/agentform";
 
 const components = {
     'agent': Agent,
-    'agent-form': AgentForm,
+    'agent-form': AgentForm
 };
 
 const install = function (Vue, options) {
