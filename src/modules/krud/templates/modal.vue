@@ -2,15 +2,10 @@
     <section class="offcanvas-template">
         <div class="crud-page">
             <portal to="header-left" v-if="withoutHeader">
-
                 <h3>{{ title }}</h3>
-
                 <span v-if="permissions ? permissions.c : true" class="divider"></span>
-
-                <Button v-if="permissions ? permissions.c : true" type="success"
-                        @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                        icon="md-add">
-                    {{ lang._add }}
+                <Button v-if="permissions ? permissions.c : true" type="success" @click="showModal" shape="circle"
+                        size="small" icon="md-add">{{ lang._add }}
                 </Button>
             </portal>
 
@@ -93,26 +88,22 @@
                 </div>
             </div>
 
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'600px']"
-                         @close="openSlidePanel = false" :closeByBtn="true" :withCrudLog="withCrudLog">
-                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''">
-                    <dataform ref="form" :schemaID="form"
-                              :editMode="editMode"
-                              :onSuccess="onSuccess"
-                              :onReady="onReady"
-                              :do_render="openSlidePanel"
-                              :permissions="permissions"
-                              :page_id="page_id"
-                              :user_condition="user_condition ? user_condition.formCondition : null"
-                              :onError="onError"/>
-                </div>
-            </slide-panel>
+            <modal name="krud-modal" :width="[form_width ? form_width :'600px']">
+                <dataform ref="form" :schemaID="form"
+                          :editMode="editMode"
+                          :onSuccess="onSuccess"
+                          :onReady="onReady"
+                          :do_render="openSlidePanel"
+                          :permissions="permissions"
+                          :page_id="page_id"
+                          :user_condition="user_condition ? user_condition.formCondition : null"
+                          :onError="onError"/>
+            </modal>
         </div>
     </section>
 </template>
 
 <script>
-import slidePanel from "../components/slidePanel";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -126,8 +117,10 @@ export default {
         };
     },
     components: {
-        "slide-panel": slidePanel,
         "crud-log": crudLog,
+    },
+    created() {
+        console.log("modal krud")
     },
     computed: {
         lang() {
@@ -142,6 +135,12 @@ export default {
         },
     },
     methods: {
+        showModal() {
+            console.log('showing modal');
+
+            this.$modal.show('krud-modal');
+            this.editMode = false;
+        },
         templateEdit() {
             this.openSlidePanel = true;
         },

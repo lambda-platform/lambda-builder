@@ -38,7 +38,9 @@
         emptyWithSideMenu: ()=> import(/* webpackChunkName: "krud-create" */'./templates/empty-with-sidemenu.vue'),
         default: ()=> import(/* webpackChunkName: "krud-default" */'./templates/default.vue'),
         spa: ()=> import(/* webpackChunkName: "krud-spa" */'./templates/spa.vue'),
+        modal: ()=> import(/* webpackChunkName: "krud-window" */'./templates/modal.vue'),
         window: ()=> import(/* webpackChunkName: "krud-window" */'./templates/window.vue'),
+        windowForm: ()=> import(/* webpackChunkName: "krud-window" */'./templates/window-form.vue'),
         withSubCruds: ()=> import(/* webpackChunkName: "krud-withSubCruds" */'./templates/withSubCruds.vue'),
         progressList: ()=> import(/* webpackChunkName: "krud-progress-list" */'./templates/progress-list.vue'),
     }
@@ -46,6 +48,8 @@
         props: ["property"],
         methods: {
              renderTemplate(template) {
+                 console.log("template: ", template);
+
                 if(templates.hasOwnProperty(template)){
                     return templates[template];
                 } else {
