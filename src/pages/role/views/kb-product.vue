@@ -314,7 +314,7 @@ export default {
             console.log(this.roles[this.selectedRole].permission_kb_product);
             if (this.roles[this.selectedRole].permission_kb_product) {
                 if (this.roles[this.selectedRole].permission_kb_product.default_menu_id) {
-                    axios.post(`/kb/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id='+this.$project.id:'' : ''}`, {
+                    axios.post(`/kb/save-kb-role`, {
                         id: this.roles[this.selectedRole].id,
                         permissions: this.roles[this.selectedRole].permission_kb_product
                     }).then(res => {

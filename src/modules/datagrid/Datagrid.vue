@@ -166,6 +166,7 @@ import Radio from "./elements/Radio";
 import Html from "./elements/Html";
 import Custom from "./elements/Custom";
 import Link from "./elements/Link";
+import Select from "./elements/Select";
 
 //Editable elements
 import editableText from "./elements/editableText"
@@ -180,8 +181,6 @@ import SetFilterDate from "./elements/SetFilterDate"
 import SetFilterAltered from "./elements/SetFilterAltered"
 import "./elements/ExcelFilter.js"
 import GridRowUpdate from "./GridRowUpdate";
-
-import {isCan} from "./utils/permission"
 
 export default {
     props: [
@@ -928,7 +927,6 @@ export default {
                 if (item.pinned) {
                     colItem.pinned = item.pinPosition;
                     colItem.lockPosition = true;
-                    console.log(item.width)
                     colItem.width = item.width;
                 }
 
@@ -939,9 +937,10 @@ export default {
 
                 // Select
                 if (isValid(item.gridType) && item.gridType == "Select") {
-                    // console.log('select element');
+                     // console.log('select element');
+                     // console.log(item)
                     // colItem.keyCreator = colKeyCreator;
-                    // colItem.cellRenderer = countryCellRenderer;
+                    // colItem.cellRenderer = Select;
                 }
 
                 // Image column
@@ -1523,8 +1522,6 @@ export default {
         },
 
         getContextMenuItems(params) {
-            console.log("permissions: ", this.permissions);
-
             if (!this.hasContextMenu || params.node == null) {
                 return null;
             }
