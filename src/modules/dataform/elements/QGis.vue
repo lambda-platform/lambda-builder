@@ -4,6 +4,7 @@
             <Spin fix v-if="isLoading"></Spin>
             <Spin fix v-if="isLoadingLayer"></Spin>
             <div id="qgis" style="height: 350px; border-radius: 10px;"></div>
+
             <div class="map-layer-switcher">
                 <a href="javascript:void(0)" @click="switchLayer('googleRoad')">
                     <img src="/images/maps/google-road.jpg" alt="">
@@ -20,15 +21,49 @@
                     <span>Open Street Map</span>
                 </a>
             </div>
+
+            <div class="map-filter">
+                <Select v-model="filterFrm.aimag_id" placeholder="Аймаг/Хот" size="small" @on-change="getSum">
+                    <Option
+                        v-for="item in aimag"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                    </Option>
+                </Select>
+
+                <Select v-model="filterFrm.sum_id" placeholder="Сум/Дүүрэг" @on-change="getBag"
+                        size="small">
+                    <Option
+                        v-for="item in soum"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                    </Option>
+                </Select>
+
+                <Select v-model="filterFrm.bag_id" placeholder="Баг/Хороо" @on-change="zoomToBag"
+                        size="small">
+                    <Option
+                        v-for="item in bag"
+                        :key="item.code"
+                        :label="item.name"
+                        :value="item.code">
+                    </Option>
+                </Select>
+            </div>
         </div>
     </FormItem>
 </template>
 <script>
-import * as wkx from "wkx";
 
 export default {
     props: ["model", "rule", "label", "meta", "do_render", "editMode", "is_show"],
     components: {},
+
+    created() {
+        this.getAimag();
+    },
 
     mounted() {
         if (this.do_render) {
@@ -93,6 +128,15 @@ export default {
                 alagacForest: new ol.source.TileImage({url: "https://geoportal.nsdi.gov.mn/alagac/rest/services/ALAGAC/CTM_map/MapServer/tile/{z}/{y}/{x}"}),
                 nsdi: new ol.source.TileImage({url: "https://gisserver01.nsdi.gov.mn/gzbgzzg/rest/services/EngineerHM/Ulaanbaatar_Gazar_Hudlul_Bichil_Mujlal_Hursnii_Orgil_Hurdatgal_UTM48N/MapServer/export?bbox=606139.8364730093,5264976.112310054,765882.3714873542,5333060.391939491"})
             },
+            filterFrm: {
+                aimag_id: '011',
+                sum_id: null,
+                bag_id: null,
+            },
+            aimag: [],
+            soum: [],
+            bag: [],
+            selectedAu: null
         };
     },
 
@@ -176,10 +220,10 @@ export default {
                                             //     this.drawSelectedPoint(item.geometry.coordinates);
                                             //     // console.log(item.geometry.coordinates);
                                             // }else {
-                                                this.setFormField(item.properties);
-                                                this.model.form[this.model.component] = item.properties[this.meta.qgisOptions.cAttr];
-                                                this.geoVal = item.properties[this.meta.qgisOptions.cAttr];
-                                                this.getGisData(item.geometry.type);
+                                            this.setFormField(item.properties);
+                                            this.model.form[this.model.component] = item.properties[this.meta.qgisOptions.cAttr];
+                                            this.geoVal = item.properties[this.meta.qgisOptions.cAttr];
+                                            this.getGisData(item.geometry.type);
                                             // }
                                         }
                                     })
@@ -260,6 +304,8 @@ export default {
         },
 
         drawLayer() {
+            this.map.removeLayer(this.parcelLayer);
+
             this.isLoadingLayer = true;
             this.parcelLayer = new ol.layer.Tile({
                 name: "wms",
@@ -273,6 +319,7 @@ export default {
                         "STYLES": '',
                         "LAYERS": this.meta.qgisOptions.link,
                         "exceptions": 'application/vnd.ogc.se_inimage',
+                        "viewparams": "au1:" + this.filterFrm.aimag_id + ";au2:" + this.filterFrm.sum_id + ";au3:" + this.filterFrm.bag_id,
                         tilesOrigin: 619573.6875 + "," + 5296553.5
                     }
                 })
@@ -289,10 +336,10 @@ export default {
                 .then(({data}) => {
                     if (data.status) {
                         this.map.removeLayer(this.selectedLayer);
-                        if(data.point){
+                        if (data.point) {
                             let point = JSON.parse(data.geo_shape);
                             this.drawSelectedPoint(point.coordinates)
-                        }else {
+                        } else {
                             this.drawSelected(data.shape);
                         }
                         let center = JSON.parse(data.center);
@@ -368,6 +415,82 @@ export default {
             this.map.getView().setCenter(ol.proj.fromLonLat([106.831832, 47.8916288]));
             this.map.getView().setZoom(12);
         },
+
+        getAimag() {
+            axios.get("/api/aimag").then(o => {
+                this.aimag = o.data;
+                this.getSum(this.filterFrm.aimag_id)
+            });
+        },
+
+        getSum(val) {
+            this.soum = [];
+            this.filterFrm.sum_id = null;
+
+            axios.get("/api/sum/" + val).then(o => {
+                this.soum = o.data;
+            });
+
+            let currentAimag = this.aimag.find(item => item.code == val);
+            let center = JSON.parse(currentAimag.center)
+            this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
+            this.map.getView().setZoom(7);
+            this.drawPolygon(currentAimag.shape)
+            this.drawLayer();
+        },
+
+        getBag(val) {
+            this.bag = [];
+            this.filterFrm.bag_id = null;
+
+            axios.get("/api/baghoroo/" + val).then(o => {
+                this.bag = o.data;
+            });
+
+            let currentSoum = this.soum.find(item => item.code == val);
+            let center = JSON.parse(currentSoum.center)
+            this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
+            this.map.getView().setZoom(7);
+            this.drawPolygon(currentSoum.shape)
+            this.drawLayer();
+        },
+
+        zoomToBag(val) {
+            let currentBag = this.bag.find(item => item.code == val);
+            let center = JSON.parse(currentBag.center)
+            this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
+            this.map.getView().setZoom(11);
+            this.drawPolygon(currentBag.shape)
+            this.drawLayer();
+        },
+
+        drawPolygon(geoData, opacity = '0.0') {
+            if (this.selectedAu != null) {
+                this.map.removeLayer(this.selectedAu);
+            }
+
+            geoData = JSON.parse(geoData);
+
+            let parcelVector = new ol.source.Vector({
+                features: (new ol.format.GeoJSON()).readFeatures(geoData, {featureProjection: "EPSG:3857"})
+            });
+
+            this.selectedAu = new ol.layer.Vector({
+                source: parcelVector,
+                style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: "rgba(0, 0, 0, 0.3)",
+                        lineDash: [4],
+                        width: 2
+                    }),
+                    fill: new ol.style.Fill({
+                        color: "rgba(0,0,0, 0.1)"
+                    })
+                })
+            });
+
+            this.map.addLayer(this.selectedAu);
+        },
     }
-};
+}
 </script>
