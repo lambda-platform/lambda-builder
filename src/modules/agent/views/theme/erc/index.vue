@@ -29,7 +29,7 @@
                     </li>
 
                     <li>
-                        <a href="http://erc.gov.mn/web/mn/contact" target="_blank">
+                        <a href="https://erc.bits.mn/web/mn/contact" target="_blank">
                             {{ lang.toContaqt }}
                         </a>
                     </li>
