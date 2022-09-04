@@ -2,7 +2,7 @@
     <section class="offcanvas-template">
         <div class="crud-page">
             <portal to="header-left" v-if="withoutHeader">
-                <h3>{{title}}</h3>
+                <h3>{{ title }}</h3>
 
                 <span v-if="permissions ? permissions.c : true" class="divider"></span>
 
@@ -38,7 +38,7 @@
                     <Button v-if="permissions ? permissions.c : true" type="success"
                             @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
                             icon="md-add">
-                        {{lang._add}}
+                        {{ lang._add }}
                     </Button>
                 </div>
 
@@ -46,9 +46,9 @@
                     <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
                     <Button v-if="permissions ? permissions.c : true"
-                            @click="openSlidePanel = true; editMode = false;"  type="success" shape="circle" size="small"
+                            @click="openSlidePanel = true; editMode = false;" type="success" shape="circle" size="small"
                             icon="md-add">
-                        {{lang._add}}
+                        {{ lang._add }}
                     </Button>
 
                 </div>
@@ -71,7 +71,9 @@
                                :isRefresh="isRefresh"
                                :isSave="isSave"
                     />
-                    <Button v-if="exportSelectedRows"  @click="exportByPath" :disabled="selectedData.length < 1" type="success" shape="circle" size="small">{{exportLabel}}</Button>
+                    <Button v-if="exportSelectedRows" @click="exportByPath" :disabled="selectedData.length < 1"
+                            type="success" shape="circle" size="small">{{ exportLabel }}
+                    </Button>
                     <slot name="right"></slot>
 
                 </div>
@@ -93,7 +95,6 @@
                               :actions="$props.actions"
                               :dblClick="$props.dbClickAction"
                               :onRowSelect="onRowSelectedEvent"
-
                               :hasSelection="hasSelection"
                               :permissions="permissions"
                               :page_id="page_id"
@@ -103,10 +104,11 @@
                 </div>
             </div>
 
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'1024px']"
+            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width + 'px' :'1024px']"
                          @close="coleSidePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
                 <div :class="withCrudLog && editMode ? 'with-crud-log' : ''" style="height: 100%">
-                    <dataform ref="form" :schemaID="form"
+                    <dataform ref="form"
+                              :schemaID="form"
                               :title="title"
                               :url="url"
                               :editMode="editMode"
@@ -118,9 +120,7 @@
                               :user_condition="user_condition ? user_condition.formCondition : null"
                               :onError="onError"
                               :close="coleSidePanel"
-                    >
-
-                    </dataform>
+                    />
                     <crud-log v-if="withCrudLog && editMode" :form="form" :rowId="rowId" :grid="grid"/>
                 </div>
             </slide-panel>
@@ -139,7 +139,7 @@ export default {
         return {
             form_width: 800,
             openSlidePanel: false,
-            exportLoading:false
+            exportLoading: false
         };
     },
     components: {
@@ -150,7 +150,7 @@ export default {
         lang() {
             const labels = [
                 '_add',
-                'Information_viewing_history','excelUpload'
+                'Information_viewing_history', 'excelUpload'
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('crud.' + labels[i]);
@@ -172,7 +172,7 @@ export default {
         onReady(formOption) {
             this.form_width = formOption.width
         },
-        coleSidePanel(){
+        coleSidePanel() {
             this.openSlidePanel = false;
             this.rowId = null;
         }

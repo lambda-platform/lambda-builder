@@ -1077,7 +1077,7 @@ export default {
         },
 
         columnResized(event) {
-            if (event.finished) {
+            if (event.finished && event.column != null) {
                 window.localStorage.setItem(this.$props.schemaID + "_column_width_" + event.column.colId, event.column.actualWidth);
             }
         },

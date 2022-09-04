@@ -91,3 +91,35 @@
 .step-control-wrap{
     padding: 20px;
 }
+
+.step-form{
+    background: #ffffff;
+    border: 1px solid rgba(132, 146, 189, .2);
+    border-radius: 5px;
+    box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
+    margin: 15px;
+    height: calc(100vh - 80px);
+    &-header{
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f5;
+    }
+    &-body{
+        position: relative;
+        height: calc(100vh - 140px);
+        .dataform{
+            background: #ffffff;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            overflow-y: auto;
+            &-header, &-footer{
+                display: none !important;
+            }
+        }
+    }
+}

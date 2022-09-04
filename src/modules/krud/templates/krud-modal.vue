@@ -1,16 +1,11 @@
 <template>
-    <section class="offcanvas-template">
+    <section class="modal-template">
         <div class="crud-page">
             <portal to="header-left" v-if="withoutHeader">
-
                 <h3>{{ title }}</h3>
-
                 <span v-if="permissions ? permissions.c : true" class="divider"></span>
-
-                <Button v-if="permissions ? permissions.c : true" type="success"
-                        @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                        icon="md-add">
-                    {{ lang._add }}
+                <Button v-if="permissions ? permissions.c : true" type="success" @click="showModal" shape="circle"
+                        size="small" icon="md-add">{{ lang._add }}
                 </Button>
             </portal>
 
@@ -35,7 +30,7 @@
                     <slot name="nav"></slot>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
                     <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
+                            @click="showModal" shape="circle" size="small"
                             icon="md-add">
                         {{ lang._add }}}
                     </Button>
@@ -45,7 +40,7 @@
                     <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
                     <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
+                            @click="showModal" shape="circle" size="small"
                             icon="md-add">
                         {{ lang._add }}
                     </Button>
@@ -79,7 +74,7 @@
                               :schemaID="grid"
                               :paginate="50"
                               :fnClone="clone"
-                              :fnEdit="edit"
+                              :fnEdit="editOnModal"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
                               :actions="$props.actions"
@@ -93,26 +88,30 @@
                 </div>
             </div>
 
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'600px']"
-                         @close="openSlidePanel = false" :closeByBtn="true" :withCrudLog="withCrudLog">
-                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''">
-                    <dataform ref="form" :schemaID="form"
-                              :editMode="editMode"
-                              :onSuccess="onSuccess"
-                              :onReady="onReady"
-                              :do_render="openSlidePanel"
-                              :permissions="permissions"
-                              :page_id="page_id"
-                              :user_condition="user_condition ? user_condition.formCondition : null"
-                              :onError="onError"/>
-                </div>
-            </slide-panel>
+            <paper-modal
+                name="krud-modal"
+                :draggable="false"
+                :resizable="true"
+                height="80%"
+                @opened="fillModalForm"
+                :width="[form_width ? form_width :'600px']">
+                <dataform ref="form"
+                          :schemaID="form"
+                          :editMode="editMode"
+                          :onSuccess="onSuccess"
+                          :onReady="onReady"
+                          :do_render="openSlidePanel"
+                          :permissions="permissions"
+                          :page_id="page_id"
+                          :user_condition="user_condition ? user_condition.formCondition : null"
+                          template="modal"
+                          :onError="onError"/>
+            </paper-modal>
         </div>
     </section>
 </template>
 
 <script>
-import slidePanel from "../components/slidePanel";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -121,13 +120,15 @@ export default {
     data() {
         return {
             form_width: 800,
-            openSlidePanel: false,
             exportLoading: false
         };
     },
     components: {
-        "slide-panel": slidePanel,
-        "crud-log": crudLog,
+        "crud-log": crudLog
+    },
+    created() {
+        console.log("modal krud")
+        this.$modal.show('k-modal');
     },
     computed: {
         lang() {
@@ -142,15 +143,23 @@ export default {
         },
     },
     methods: {
+        showModal() {
+            this.$modal.show('krud-modal');
+            this.editMode = false;
+        },
+
         templateEdit() {
-            this.openSlidePanel = true;
+            this.$modal.show('krud-modal');
         },
+
         templateOnSuccess() {
-            this.openSlidePanel = false;
+            this.$modal.hide('krud-modal');
         },
+
         templateOnError() {
             // this.openSlidePanel = false;
         },
+
         onReady(formOption) {
             this.form_width = formOption.width
         }
