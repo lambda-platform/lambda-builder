@@ -117,6 +117,9 @@ export default {
                 return obj;
             }, {});
         },
+        myValue(){
+            return this.data.url
+        }
 
     },
     methods: {
@@ -129,7 +132,7 @@ export default {
             return myIndex;
         },
         setCrud() {
-            let crud_index = this.$crudList.findIndex(crud => crud.label == this.url);
+            let crud_index = this.$crudList.findIndex(crud => crud.label === this.url);
             if (crud_index >= 0) {
                 this.data.url = this.$crudList[crud_index].value;
             }
@@ -152,10 +155,15 @@ export default {
         addItem() {
             this.$emit("addChild", this.menuIndex);
         },
-
         deleteChild() {
             this.$emit("deleteChild", this.menuIndex);
         },
+        setInput(){
+            let crud_index = this.$crudList.findIndex(crud => crud.value === this.data.url);
+            if (crud_index >= 0) {
+                this.url = this.$crudList[crud_index].label
+            }
+        }
     },
     data() {
         return {
@@ -163,11 +171,13 @@ export default {
         }
     },
     mounted() {
-        if (this.data.url !== null && this.data.url != "") {
-            let crud_index = this.$crudList.findIndex(crud => crud.value == this.data.url);
-            if (crud_index >= 0) {
-                this.url = this.$crudList[crud_index].label
-            }
+        if (this.data.url !== null && this.data.url !== "") {
+            this.setInput();
+        }
+    },
+    watch:{
+        myValue(){
+           this.setInput();
         }
     }
 
