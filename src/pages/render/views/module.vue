@@ -11,16 +11,16 @@
         <agent-form v-if="$route.params.module == 'password'" type="password" :baseUrl="microserviceUrl">
             <user-control slot="user-control"></user-control>
         </agent-form>
+<div class="role">
+        <lambda-role v-if="$route.params.module == 'role'">
+        </lambda-role>
+</div>
     </section>
 </template>
 
 <script>
-import UserControl from "../../../components/UserControl"
-
 export default {
-    components: {
-        UserControl
-    },
+
     computed:{
         microserviceUrl(){
             if(window.init.projectSettings){

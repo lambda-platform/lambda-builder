@@ -3,6 +3,7 @@
     border-radius: 10px;
     overflow: hidden;
     position: relative;
+    background: #363636;
 }
 
 .qgis-search{
@@ -15,7 +16,23 @@
 .ol-full-screen{
     left: 0.5em !important;
     top: 80px !important;
-    width: 50px;
+    width: 30px;
+}
+
+.map-filter{
+    display: flex;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+    .ivu-select{
+        margin: 3px 8px;
+        min-width: 120px;
+    }
 }
 
 .map-layer-switcher {

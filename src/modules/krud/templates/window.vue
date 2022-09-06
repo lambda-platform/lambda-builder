@@ -1,14 +1,14 @@
 <template>
-    <section class="offcanvas-template">
+    <section class="window-template">
         <div class="crud-page">
             <portal to="header-left" v-if="withoutHeader">
 
-                <h3>{{title}}</h3>
+                <h3>{{ title }}</h3>
 
                 <span v-if="permissions ? permissions.c : true" class="divider"></span>
 
                 <Button v-if="permissions ? permissions.c : true" type="success"
-                        @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
+                        @click="openForm" shape="circle" size="small"
                         icon="md-add">
                     {{ lang._add }}
                 </Button>
@@ -30,47 +30,61 @@
                 />
             </portal>
 
-            <div class="crud-page-header" v-if="!withoutHeader">
-                <div v-if="hasNavSlot" class="crud-page-header-left">
-                    <slot name="nav"></slot>
-                    <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                            icon="md-add">
-                        {{ lang._add }}}
-                    </Button>
-                </div>
-
-                <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
-                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
-                    <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                            icon="md-add">
-                        {{ lang._add }}
-                    </Button>
-                </div>
-
-                <div class="crud-page-header-right">
-                    <div class="tooloptions">
-                        <slot name="tooloptions"></slot>
+            <div v-if="!withoutHeader">
+                <!-- List mode -->
+                <div class="crud-page-header" v-if="$route.query.window != 'form'">
+                    <div v-if="hasNavSlot" class="crud-page-header-left">
+                        <slot name="nav"></slot>
+                        <span v-if="permissions ? permissions.c : true" class="divider"></span>
+                        <Button v-if="permissions ? permissions.c : true" type="success"
+                                @click="openForm" shape="circle" size="small"
+                                icon="md-add">
+                            {{ lang._add }}}
+                        </Button>
                     </div>
-                    <krudtools :search="search"
-                               :refresh="refresh"
-                               :exportExcel="exportExcel"
-                               :exportLoading="exportLoading"
-                               :print="print"
-                               :save="save"
-                               :isPrint="isPrint"
-                               :isExcel="isExcel"
-                               :isRefresh="isRefresh"
-                               :isSave="isSave"
-                    />
-                    <slot name="right"></slot>
+
+                    <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
+                        <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
+                        <span v-if="permissions ? permissions.c : true" class="divider"></span>
+                        <Button v-if="permissions ? permissions.c : true" type="success"
+                                @click="openForm" shape="circle" size="small"
+                                icon="md-add">
+                            {{ lang._add }}
+                        </Button>
+                    </div>
+
+                    <div class="crud-page-header-right">
+                        <div class="tooloptions">
+                            <slot name="tooloptions"></slot>
+                        </div>
+                        <krudtools :search="search"
+                                   :refresh="refresh"
+                                   :exportExcel="exportExcel"
+                                   :exportLoading="exportLoading"
+                                   :print="print"
+                                   :save="save"
+                                   :isPrint="isPrint"
+                                   :isExcel="isExcel"
+                                   :isRefresh="isRefresh"
+                                   :isSave="isSave"
+                        />
+                        <slot name="right"></slot>
+                    </div>
                 </div>
             </div>
 
-            <div class="crud-page-body">
+            <dataform v-if="$route.query.window === 'form'" ref="form" :schemaID="form"
+                      :editMode="editMode"
+                      :onSuccess="onSuccessWindow"
+                      :onReady="onReady"
+                      :do_render="openSlidePanel"
+                      :permissions="permissions"
+                      :page_id="page_id"
+                      template="window"
+                      :user_condition="user_condition ? user_condition.formCondition : null"
+                      :onError="onError"/>
+
+            <div v-else class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
                 </div>
@@ -92,27 +106,11 @@
                     </datagrid>
                 </div>
             </div>
-
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'600px']"
-                         @close="openSlidePanel = false" :closeByBtn="true" :withCrudLog="withCrudLog">
-                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''">
-                    <dataform ref="form" :schemaID="form"
-                              :editMode="editMode"
-                              :onSuccess="onSuccess"
-                              :onReady="onReady"
-                              :do_render="openSlidePanel"
-                              :permissions="permissions"
-                              :page_id="page_id"
-                              :user_condition="user_condition ? user_condition.formCondition : null"
-                              :onError="onError"/>
-                </div>
-            </slide-panel>
         </div>
     </section>
 </template>
 
 <script>
-import slidePanel from "../components/slidePanel";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -122,12 +120,14 @@ export default {
         return {
             form_width: 800,
             openSlidePanel: false,
-            exportLoading:false
+            exportLoading: false
         };
     },
     components: {
-        "slide-panel": slidePanel,
-        "crud-log": crudLog,
+        "crud-log": crudLog
+    },
+    created() {
+        // this.$router.push({path: this.$route.path, query: {window: 'list'}});
     },
     computed: {
         lang() {
@@ -153,6 +153,10 @@ export default {
         },
         onReady(formOption) {
             this.form_width = formOption.width
+        },
+        openForm() {
+            this.editMode = false;
+            this.$router.push({path: this.$route.path, query: {window: 'form'}});
         }
     },
 };

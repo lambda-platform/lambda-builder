@@ -1,15 +1,11 @@
 <template>
-    <section class="offcanvas-template">
+    <section class="modal-template">
         <div class="crud-page">
             <portal to="header-left" v-if="withoutHeader">
                 <h3>{{ title }}</h3>
-
                 <span v-if="permissions ? permissions.c : true" class="divider"></span>
-
-                <Button v-if="permissions ? permissions.c : true" type="success"
-                        @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                        icon="md-add">
-                    {{ lang._add }}
+                <Button v-if="permissions ? permissions.c : true" type="success" @click="showModal" shape="circle"
+                        size="small" icon="md-add">{{ lang._add }}
                 </Button>
             </portal>
 
@@ -24,8 +20,6 @@
                            :isPrint="isPrint"
                            :isExcel="isExcel"
                            :isExcelUpload="isExcelUpload"
-                           :excelUploadCustomUrl="excelUploadCustomUrl"
-                           :excelUploadMethod="excelUploadMethod"
                            :isRefresh="isRefresh"
                            :isSave="isSave"
                 />
@@ -36,21 +30,20 @@
                     <slot name="nav"></slot>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
                     <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
+                            @click="showModal" shape="circle" size="small"
                             icon="md-add">
-                        {{ lang._add }}
+                        {{ lang._add }}}
                     </Button>
                 </div>
 
                 <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
                     <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                     <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true"
-                            @click="openSlidePanel = true; editMode = false;" type="success" shape="circle" size="small"
+                    <Button v-if="permissions ? permissions.c : true" type="success"
+                            @click="showModal" shape="circle" size="small"
                             icon="md-add">
                         {{ lang._add }}
                     </Button>
-
                 </div>
 
                 <div class="crud-page-header-right">
@@ -65,17 +58,10 @@
                                :save="save"
                                :isPrint="isPrint"
                                :isExcel="isExcel"
-                               :isExcelUpload="isExcelUpload"
-                               :excelUploadMethod="excelUploadMethod"
-                               :excelUploadCustomUrl="excelUploadCustomUrl"
                                :isRefresh="isRefresh"
                                :isSave="isSave"
                     />
-                    <Button v-if="exportSelectedRows" @click="exportByPath" :disabled="selectedData.length < 1"
-                            type="success" shape="circle" size="small">{{ exportLabel }}
-                    </Button>
                     <slot name="right"></slot>
-
                 </div>
             </div>
 
@@ -85,17 +71,15 @@
                 </div>
                 <div class="dg-flex">
                     <datagrid v-if="permissions ? permissions.r : true" ref="grid"
-                              :url="url"
                               :schemaID="grid"
                               :paginate="50"
                               :fnClone="clone"
-                              :fnEdit="edit"
+                              :fnEdit="editOnModal"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
                               :actions="$props.actions"
                               :dblClick="$props.dbClickAction"
-                              :onRowSelect="onRowSelectedEvent"
-                              :hasSelection="hasSelection"
+                              :onRowSelect="$props.onRowSelect"
                               :permissions="permissions"
                               :page_id="page_id"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
@@ -104,32 +88,30 @@
                 </div>
             </div>
 
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width + 'px' :'1024px']"
-                         @close="coleSidePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
-                <div :class="withCrudLog && editMode ? 'with-crud-log' : ''" style="height: 100%">
-                    <dataform ref="form"
-                              :schemaID="form"
-                              :title="title"
-                              :url="url"
-                              :editMode="editMode"
-                              :onSuccess="onSuccess"
-                              :onReady="onReady"
-                              :do_render="openSlidePanel"
-                              :permissions="permissions"
-                              :page_id="page_id"
-                              :user_condition="user_condition ? user_condition.formCondition : null"
-                              :onError="onError"
-                              :close="coleSidePanel"
-                    />
-                    <crud-log v-if="withCrudLog && editMode" :form="form" :rowId="rowId" :grid="grid"/>
-                </div>
-            </slide-panel>
+            <paper-modal
+                name="krud-modal"
+                :draggable="false"
+                :resizable="true"
+                height="80%"
+                @opened="fillModalForm"
+                :width="[form_width ? form_width :'600px']">
+                <dataform ref="form"
+                          :schemaID="form"
+                          :editMode="editMode"
+                          :onSuccess="onSuccess"
+                          :onReady="onReady"
+                          :do_render="openSlidePanel"
+                          :permissions="permissions"
+                          :page_id="page_id"
+                          :user_condition="user_condition ? user_condition.formCondition : null"
+                          template="modal"
+                          :onError="onError"/>
+            </paper-modal>
         </div>
     </section>
 </template>
 
 <script>
-import slidePanel from "../components/slidePanel";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -138,43 +120,48 @@ export default {
     data() {
         return {
             form_width: 800,
-            openSlidePanel: false,
             exportLoading: false
         };
     },
     components: {
-        "slide-panel": slidePanel,
-        "crud-log": crudLog,
+        "crud-log": crudLog
+    },
+    created() {
+        console.log("modal krud")
+        this.$modal.show('k-modal');
     },
     computed: {
         lang() {
             const labels = [
                 '_add',
-                'Information_viewing_history', 'excelUpload'
+                'Information_viewing_history',
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('crud.' + labels[i]);
                 return obj;
             }, {});
         },
-
     },
     methods: {
+        showModal() {
+            this.$modal.show('krud-modal');
+            this.editMode = false;
+        },
+
         templateEdit() {
-            this.openSlidePanel = true;
+            this.$modal.show('krud-modal');
         },
+
         templateOnSuccess() {
-            this.openSlidePanel = false;
+            this.$modal.hide('krud-modal');
         },
+
         templateOnError() {
             // this.openSlidePanel = false;
         },
+
         onReady(formOption) {
             this.form_width = formOption.width
-        },
-        coleSidePanel() {
-            this.openSlidePanel = false;
-            this.rowId = null;
         }
     },
 };

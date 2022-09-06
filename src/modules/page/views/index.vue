@@ -57,6 +57,7 @@
             <krud v-if="pageType == 'crud'" :template="property.template" :property="property" class="material">
                 <user-control slot="right"></user-control>
             </krud>
+
             <iframe v-if="pageType == 'iframe'" :src="iframeUrl"></iframe>
 
             <portal to="header-left" v-if="pageType == 'iframe' && property.withoutHeader">
@@ -144,7 +145,7 @@ export default {
                             this.$router.push(`/p/${this.$route.params.menu_id}/${first.id}`);
                     } else {
                         this.subMenu = this.menu[menuIndex].children;
-                       // this.subMenuId = this.menu[menuIndex].id;
+                        // this.subMenuId = this.menu[menuIndex].id;
                         this.showSub = true;
                     }
 
@@ -205,7 +206,7 @@ export default {
                             this.property.form = this.cruds[crudIndex].form;
                             this.property.edit_id = this.cruds[crudIndex].edit_id;
                             this.property.template = this.cruds[crudIndex].template;
-                            if(this.cruds[crudIndex].actions){
+                            if (this.cruds[crudIndex].actions) {
                                 this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
                             }
                             this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;

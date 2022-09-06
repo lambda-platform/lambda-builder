@@ -2,12 +2,16 @@ import krudtools from "./krudtools.vue"
 import {isCan} from "../../datagrid/utils/permission";
 
 export default {
-    props: ["title", "icon", "grid", "form",
+    props: [
+        "title", "icon", "grid", "form",
         "hideHeader", "hasSelection", "actions",
         "dbClickAction", "onRowSelect", "rowCurrentChange",
         "permissions", "user_condition", "custom_condition",
         "view_url", "mode", "onPropertySuccess",
-        "onPropertyError", "page_id", "withoutHeader", "withCrudLog", "projects_id", "exportSelectedRows", "exportPath", "exportLabel"],
+        "onPropertyError", "page_id", "withoutHeader",
+        "withCrudLog", "projects_id", "exportSelectedRows",
+        "exportPath", "exportLabel"
+    ],
     components: {
         krudtools
     },
@@ -27,7 +31,8 @@ export default {
             isRefresh: false,
             isSave: false,
             rowId: null,
-            selectedData:[]
+            row: null,
+            selectedData: []
         };
     },
     computed: {
@@ -40,17 +45,17 @@ export default {
         hasLeftSlot() {
             return !!this.$slots['left']
         },
-        url(){
-            if(this.projects_id !== null && this.projects_id != "" && this.projects_id != undefined){
-                if(window.init.microserviceSettings){
-                    if(window.init.microserviceSettings.length >= 1){
-                        let si = window.init.microserviceSettings.findIndex(set=>set.project_id == this.projects_id);
-                        if(si >= 0){
+        url() {
+            if (this.projects_id !== null && this.projects_id != "" && this.projects_id != undefined) {
+                if (window.init.microserviceSettings) {
+                    if (window.init.microserviceSettings.length >= 1) {
+                        let si = window.init.microserviceSettings.findIndex(set => set.project_id == this.projects_id);
+                        if (si >= 0) {
 
-                            if(window.lambda.microservice_dev){
-                                return  window.init.microserviceSettings[si].dev_url;
+                            if (window.lambda.microservice_dev) {
+                                return window.init.microserviceSettings[si].dev_url;
                             } else {
-                                return  window.init.microserviceSettings[si].production_url;
+                                return window.init.microserviceSettings[si].production_url;
                             }
 
                         }
@@ -75,20 +80,46 @@ export default {
 
         edit(id, row) {
             this.rowId = id;
-                if(this.permissions){
-                    if(this.permissions.gridEditConditionJS != "" && this.permissions.gridEditConditionJS != null &&  this.permissions.gridEditConditionJS != undefined){
-                        let isCantEdit = isCan(this.permissions.gridEditConditionJS, row);
-                        if(!isCantEdit){
-                            return
-                        }
+            this.row = row;
+            if (this.permissions) {
+                if (this.permissions.gridEditConditionJS != "" && this.permissions.gridEditConditionJS != null && this.permissions.gridEditConditionJS != undefined) {
+                    let isCantEdit = isCan(this.permissions.gridEditConditionJS, row);
+                    if (!isCantEdit) {
+                        return
                     }
                 }
-                this.editMode = true;
-                this.$refs.form.editModel(id);
-                //From template
-                if (this.templateEdit) {
-                    this.templateEdit();
+            }
+
+            this.editMode = true;
+            this.$refs.form.editModel(id);
+            //From template
+            if (this.templateEdit) {
+                this.templateEdit();
+            }
+        },
+
+        async editOnModal(id, row) {
+            this.rowId = id;
+            this.row = id;
+            this.$modal.show('krud-modal');
+        },
+
+        fillModalForm(){
+            if (this.permissions) {
+                if (this.permissions.gridEditConditionJS != "" && this.permissions.gridEditConditionJS != null && this.permissions.gridEditConditionJS != undefined) {
+                    let isCantEdit = isCan(this.permissions.gridEditConditionJS, row);
+                    if (!isCantEdit) {
+                        return
+                    }
                 }
+            }
+
+            this.editMode = true;
+            this.$refs.form.editModel(this.rowId);
+            //From template
+            if (this.templateEdit) {
+                this.templateEdit();
+            }
         },
 
         clone(id) {
@@ -111,9 +142,9 @@ export default {
             this.$refs.grid.searchData(q, 1);
         },
 
-        stopLoading(isExported){
+        stopLoading(isExported) {
             this.exportLoading = false;
-            if(!isExported){
+            if (!isExported) {
                 this.$Message.error('Татах үед алдаа гарлаа!');
             }
         },
@@ -124,7 +155,7 @@ export default {
         print() {
             this.$refs.grid.print();
         },
-        excelUploadMethod(){
+        excelUploadMethod() {
             this.$refs.grid.importExcel();
         },
         save() {
@@ -132,8 +163,6 @@ export default {
         },
         //Form functions
         onSuccess(val) {
-            // console.log("this.mode");
-            // console.log(this.mode);
             if (typeof this.mode !== 'undefined' && this.mode && this.mode == 'refresh') {
                 this.$refs.grid.refresh();
             } else {
@@ -155,6 +184,33 @@ export default {
                 this.onPropertySuccess();
             }
         },
+
+        onSuccessWindow(val) {
+            this.$router.push({path: this.$route.path, query: {window: 'list'}});
+            setTimeout(() => {
+                if (typeof this.mode !== 'undefined' && this.mode && this.mode == 'refresh') {
+                    this.$refs.grid.refresh();
+                } else {
+                    if (this.editMode) {
+                        this.$refs.grid.update(val);
+                    } else {
+                        this.$refs.grid.append(val);
+                    }
+                }
+                this.editMode = false;
+
+                //From template
+                if (this.templateOnSuccess) {
+                    this.templateOnSuccess(val);
+                }
+
+                //From property
+                if (this.onPropertySuccess) {
+                    this.onPropertySuccess();
+                }
+            }, 500)
+        },
+
         onError() {
             //From template
             if (this.templateOnError) {
@@ -167,21 +223,21 @@ export default {
             }
         },
         onRowSelectedEvent(selectedData, selectedNodes) {
-            if(this.exportSelectedRows){
+            if (this.exportSelectedRows) {
                 this.selectedData = selectedData;
 
             } else {
-                if(this.$props.onRowSelect){
+                if (this.$props.onRowSelect) {
                     this.$props.onRowSelect(selectedData, selectedNodes)
                 }
             }
 
         },
-        exportByPath(){
-            if(this.exportPath){
-                if(this.selectedData){
-                    let ids=this.selectedData.map(row=>row[this.$refs.grid.identity]);
-                    window.open(this.exportPath+ids.join(","), '_blank').focus();
+        exportByPath() {
+            if (this.exportPath) {
+                if (this.selectedData) {
+                    let ids = this.selectedData.map(row => row[this.$refs.grid.identity]);
+                    window.open(this.exportPath + ids.join(","), '_blank').focus();
                 }
             }
         }

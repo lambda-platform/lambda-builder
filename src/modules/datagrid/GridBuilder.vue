@@ -1483,7 +1483,7 @@ export default {
                 }),
 
             };
-
+            //console.log(data);
 
             let defualtURL = `/lambda/puzzle/schema/grid`;
             if (this.projectID) {
