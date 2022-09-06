@@ -29,7 +29,7 @@
                     </li>
 
                     <li>
-                        <a href="https://erc.bits.mn/web/mn/contact" target="_blank">
+                        <a href="http://erc.gov.mn/web/mn/contact" target="_blank">
                             {{ lang.toContaqt }}
                         </a>
                     </li>
@@ -37,7 +37,7 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="/erc.test/assets/erc/login.json"/>
+                    <lottie-animation path="/erc.bits.mn/assets/erc/login.json"/>
                 </div>
             </div>
 
