@@ -1,8 +1,9 @@
 <template>
     <div class="crud-page-header-right-inside">
-        <!--<Tooltip content="Устсан мэдээлэл харах">-->
-        <!--<Button ghost class="crud-tool" icon="eye-disabled" @click="refreshGrid"></Button>-->
-        <!--</Tooltip>-->
+<!--        <Tooltip content="Устсан мэдээлэл харах">-->
+<!--            <Button ghost class="crud-tool" icon="eye-disabled" @click="refreshGrid"></Button>-->
+<!--        </Tooltip>-->
+<!--        -->
         <Tooltip :content="lang._save">
             <a @click="$props.save" class="btnLine" v-if="isSave">
                 <i class="ti-save"></i>

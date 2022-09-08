@@ -129,14 +129,15 @@ export default {
                 nsdi: new ol.source.TileImage({url: "https://gisserver01.nsdi.gov.mn/gzbgzzg/rest/services/EngineerHM/Ulaanbaatar_Gazar_Hudlul_Bichil_Mujlal_Hursnii_Orgil_Hurdatgal_UTM48N/MapServer/export?bbox=606139.8364730093,5264976.112310054,765882.3714873542,5333060.391939491"})
             },
             filterFrm: {
-                aimag_id: '011',
+                aimag_id: null,
                 sum_id: null,
                 bag_id: null,
             },
             aimag: [],
             soum: [],
             bag: [],
-            selectedAu: null
+            selectedAu: null,
+            auCode: null
         };
     },
 
@@ -319,7 +320,7 @@ export default {
                         "STYLES": '',
                         "LAYERS": this.meta.qgisOptions.link,
                         "exceptions": 'application/vnd.ogc.se_inimage',
-                        "viewparams": "au1:" + this.filterFrm.aimag_id + ";au2:" + this.filterFrm.sum_id + ";au3:" + this.filterFrm.bag_id,
+                        "viewparams": "code:" + this.auCode,
                         tilesOrigin: 619573.6875 + "," + 5296553.5
                     }
                 })
@@ -436,6 +437,7 @@ export default {
             this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
             this.map.getView().setZoom(7);
             this.drawPolygon(currentAimag.shape)
+            this.auCode = val;
             this.drawLayer();
         },
 
@@ -450,8 +452,9 @@ export default {
             let currentSoum = this.soum.find(item => item.code == val);
             let center = JSON.parse(currentSoum.center)
             this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
-            this.map.getView().setZoom(7);
+            this.map.getView().setZoom(10);
             this.drawPolygon(currentSoum.shape)
+            this.auCode = val;
             this.drawLayer();
         },
 
@@ -459,8 +462,9 @@ export default {
             let currentBag = this.bag.find(item => item.code == val);
             let center = JSON.parse(currentBag.center)
             this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
-            this.map.getView().setZoom(11);
+            this.map.getView().setZoom(12);
             this.drawPolygon(currentBag.shape)
+            this.auCode = val;
             this.drawLayer();
         },
 

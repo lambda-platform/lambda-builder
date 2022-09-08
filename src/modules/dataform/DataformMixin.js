@@ -1,9 +1,9 @@
-import { element } from './elements'
-import { getRule, setModel, setIdentity } from './rule'
-import { dataFromTemplate } from './utils/formula.js'
-import { doFormula, doTrigger } from './utils/formula_and_trigger.js'
-import { evalstr, isValid } from './utils/methods.js'
-import { getRelationData } from './utils/helpers.js'
+import {element} from './elements'
+import {getRule, setModel, setIdentity} from './rule'
+import {dataFromTemplate} from './utils/formula.js'
+import {doFormula, doTrigger} from './utils/formula_and_trigger.js'
+import {evalstr, isValid} from './utils/methods.js'
+import {getRelationData} from './utils/helpers.js'
 
 export default {
     name: 'dataform',
@@ -23,7 +23,9 @@ export default {
         'page_id',
         'public',
         'title',
-        'close'
+        'close',
+        'template',
+        'step'
     ],
     data() {
         return {
@@ -39,6 +41,7 @@ export default {
             },
             model: {},
             schema: [],
+            formType: 'normal',
             ui: {},
             formula: [],
             rule: {},
@@ -55,7 +58,9 @@ export default {
             withBackButton: false,
             scrollOptions: {
                 height: '100%'
-            }
+            },
+            currentStep: 0,
+            step: {},
         }
     },
 
@@ -247,6 +252,7 @@ export default {
                 return undefined
             }
         },
+
         async initForm() {
             // this.clearConfig();
             let userCondition = []
@@ -272,6 +278,11 @@ export default {
 
             this.identity = formSchema.identity
             this.schema = formSchema.schema
+            this.formType = formSchema.formType;
+            if(formSchema.step) {
+                this.step = formSchema.step;
+                console.log(this.step);
+            }
 
             this.ui = formSchema.ui
             if (formSchema.save_btn_text) {
@@ -395,7 +406,7 @@ export default {
                                 let rules_current_password = [{
                                     type: 'required',
                                     msg: this.lang.pleaseEnterPasswordYouUCurrentlyUsing
-                                }, { type: 'check_current_password', msg: null }]
+                                }, {type: 'check_current_password', msg: null}]
                                 rules_current_password.forEach(rule => {
                                     let r = getRule(rule, this.url)
                                     rules_for_current_password.push(r)
@@ -550,6 +561,14 @@ export default {
             })
         },
 
+        closeForm() {
+            if (this.template === 'modal') {
+                this.$modal.hide('krud-modal');
+            }
+            if (this.template === 'window') {
+                this.$router.push({path: this.$route.path, query: {window: 'list'}});
+            }
+        },
 
         handleSubmit(name) {
             this.setIdentityManual()
@@ -614,8 +633,7 @@ export default {
             } else {
                 this.asyncMode = true
                 axios.post(this.submitUrl, this.$data.model)
-                    .then(({ data }) => {
-
+                    .then(({data}) => {
                         if (data.status) {
                             this.$Notice.success({
                                 title: this.lang.successfullySaved
@@ -631,6 +649,10 @@ export default {
                                 if (this.$props.onSuccess) {
                                     this.$props.onSuccess(data.data)
                                 }
+                            }
+
+                            if (this.template === 'modal') {
+                                this.$modal.hide('krud-modal');
                             }
                         } else {
                             this.$Notice.error({
@@ -755,7 +777,7 @@ export default {
 
         editModel(id, editData) {
             if (editData) {
-                this.model = { ...this.model, ...editData }
+                this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
                     this.setEditModel(this.ui.schema)
                     this.setUserConditionValues(false)
@@ -765,9 +787,9 @@ export default {
                 this.dataID = id
                 setIdentity(this.identity, id)
                 axios.post(this.page_id ? `${this.baseUrl}/lambda/krud/${this.$props.schemaID}/edit/${id}?page_id=${this.page_id}` : `${this.baseUrl}/lambda/krud/${this.$props.schemaID}/edit/${id}`)
-                    .then(({ data }) => {
+                    .then(({data}) => {
                         if (data.status) {
-                            this.model = { ...this.model, ...data.data }
+                            this.model = {...this.model, ...data.data}
                             if (this.ui && this.ui.hasOwnProperty('schema')) {
                                 this.setEditModel(this.ui.schema)
                             }
@@ -840,9 +862,9 @@ export default {
 
         cloneModel(id) {
             axios.post(`/lambda/krud/${this.$props.schemaID}/edit/${id}`)
-                .then(({ data }) => {
+                .then(({data}) => {
                     if (data.status) {
-                        this.model = { ...this.model, ...data.data }
+                        this.model = {...this.model, ...data.data}
                         delete this.model[this.identity]
                         this.setEditModel(this.ui.schema)
                         this.setUserConditionValues(false)
@@ -853,10 +875,10 @@ export default {
 
         getOptionsByRelations(baseUrl, relations) {
             if (Object.keys(relations).length >= 1) {
-                axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, { relations: relations })
-                    .then(({ data }) => {
+                axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, {relations: relations})
+                    .then(({data}) => {
                         Object.keys(data).map(relation => {
-                            let r = { ...this.relations[relation], data: data[relation] }
+                            let r = {...this.relations[relation], data: data[relation]}
                             Vue.set(this.$data.relations, relation, r)
                         })
                     })
@@ -962,7 +984,7 @@ export default {
                     if (item.schema) {
                         let pre_selects = this.getSelects(item.schema, microserviceID)
                         if (pre_selects) {
-                            selects = { ...selects, ...pre_selects }
+                            selects = {...selects, ...pre_selects}
                         }
                     }
 
@@ -1008,14 +1030,13 @@ export default {
             let buttons = []
             this.schema.forEach(item => {
                 if (item.formType == 'FooterButton') {
-                    buttons.push({ ...item })
+                    buttons.push({...item})
                 }
             })
             return buttons
         },
 
         setAndSend(model, value) {
-
             let name = this.meta.model + '-' + this.schemaID
             this.setIdentityManual()
             if (_.isEmpty(this.$data.rule)) {
@@ -1048,8 +1069,18 @@ export default {
                     }
                 })
             }
+        },
+
+        moveStep(stepNumber) {
+            this.currentStep = stepNumber;
+        },
+
+        onStepSuccess(){
+
+        },
+
+        onStepError(){
+
         }
     }
-
-
 }
