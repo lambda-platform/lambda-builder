@@ -762,6 +762,7 @@ export default {
 
         },
         setCustomData() {
+            console.log(this.formCustomData);
             if (this.formCustomData) {
                 Object.keys(this.formCustomData).forEach(model => {
                     let index = this.schema.findIndex(item => item.model == model)
