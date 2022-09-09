@@ -3,7 +3,6 @@
         <div class="step-form-header">
             <Steps :current="0" size="small">
                 <Step v-for="s in step.list" :key="s.id" :title="s.name"></Step>
-                <Step title="Үр дүн"></Step>
             </Steps>
         </div>
         <div class="step-form-body" v-for="(s, index) in step.list" v-if="index === currentStep" :key="s.id">

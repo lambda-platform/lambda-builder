@@ -1,4 +1,4 @@
-export const elementList = [
+export const elements = [
     {
         element: "Text",
         component:()=> import(/* webpackChunkName: "form-field-text" */'./Text.vue'),
@@ -185,6 +185,7 @@ export const elementList = [
         component:()=> import(/* webpackChunkName: "form-field-sub-form" */'./subform/Form.vue'),
     },
 ];
+export const elementList = elements.map(e=>e.element).sort()
 
 const Notfount = ()=> import(/* webpackChunkName: "form-field-not-fount" */'./NotFound.vue');
 const CustomElement = ()=> import(/* webpackChunkName: "form-field-CustomElement" */'./CustomElement.vue');
@@ -214,10 +215,10 @@ const requireCustomElement = (type)=>{
 
 export const element = (type) => {
     if (type !== null && typeof type !== "undefined") {
-        const elIndex = elementList.findIndex(el=>el.element == type);
+        const elIndex = elements.findIndex(el=>el.element == type);
 
         if(elIndex >= 0){
-            return elementList[elIndex].component;
+            return elements[elIndex].component;
         }
     }
 

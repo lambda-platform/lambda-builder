@@ -238,7 +238,7 @@
 
                     <Button @click="handleReset(meta.model +'-'+ schemaID)" v-if='!editMode && !disableReset'
                             style='margin-left: 8px'>
-                        {{ lang.fillInTheNewOne }}
+                        {{ lang.resetFrom }}
                     </Button>
 
                     <span v-for='button in getFooterButtons()' class='extra-buttons'>

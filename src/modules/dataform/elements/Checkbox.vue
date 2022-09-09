@@ -6,6 +6,7 @@
             :true-value="1"
             :false-value="0">{{ label }}
         </Checkbox>
+        <Alert type="warning" v-if="meta.warn">{{meta.warn}}</Alert>
     </FormItem>
 </template>
 
