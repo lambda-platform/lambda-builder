@@ -8,20 +8,45 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-Select" */'./Select.vue'),
     },
     {
-        element: "TreeSelect",
-        component:()=> import(/* webpackChunkName: "form-field-TreeSelect" */'./TreeSelect.vue'),
-    },
-    {
         element: "Number",
         component:()=> import(/* webpackChunkName: "form-field-Number" */'./Number.vue'),
+    },
+    {
+        element: "Date",
+        component:()=> import(/* webpackChunkName: "form-field-Date" */'./Date.vue'),
     },
     {
         element: "Textarea",
         component:()=> import(/* webpackChunkName: "form-field-Textarea" */'./Textarea.vue'),
     },
     {
-        element: "Date",
-        component:()=> import(/* webpackChunkName: "form-field-Date" */'./Date.vue'),
+        element: "Checkbox",
+        component:()=> import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox.vue'),
+    },
+    {
+        element: "Image",
+        component:()=> import(/* webpackChunkName: "form-field-Image" */'./Image.vue'),
+    },
+    {
+        element: "File",
+        component:()=> import(/* webpackChunkName: "form-field-File" */'./File.vue'),
+    },
+    {
+        element: "Radio",
+        component:()=> import(/* webpackChunkName: "form-field-Radio" */'./Radio.vue'),
+    },
+    {
+        element: "subform/Grid",
+        component:()=> import(/* webpackChunkName: "form-field-sub-form-grid" */'./subform/Grid.vue'),
+    },
+    {
+        element: "subform/Form",
+        component:()=> import(/* webpackChunkName: "form-field-sub-form" */'./subform/Form.vue'),
+    },
+
+    {
+        element: "ImageDrag",
+        component:()=> import(/* webpackChunkName: "form-field-ImageDrag" */'./ImageDrag.vue'),
     },
     {
         element: "DateTime",
@@ -32,30 +57,10 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-Divider" */'./Divider.vue'),
     },
     {
-        element: "Image",
-        component:()=> import(/* webpackChunkName: "form-field-Image" */'./Image.vue'),
-    },
-    {
-        element: "HTML",
-        component:()=> import(/* webpackChunkName: "form-field-HTML" */'./HTML.vue'),
-    },
-    {
-        element: "ImageSubform",
-        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
-    },
-    {
-        element: "ImageDrag",
-        component:()=> import(/* webpackChunkName: "form-field-ImageDrag" */'./ImageDrag.vue'),
-    },
-
-    {
-        element: "Checkbox",
-        component:()=> import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox.vue'),
-    },
-    {
         element: "CK",
         component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
     },
+
     {
         element: "CkOld",
         component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK-old.vue'),
@@ -63,6 +68,14 @@ export const elements = [
     {
         element: "CkOldPhp7",
         component:()=> import(/* webpackChunkName: "form-field-CK" */'./CK-old-php7.vue'),
+    },
+    {
+        element: "Password",
+        component:()=> import(/* webpackChunkName: "form-field-Password" */'./Password.vue'),
+    },
+    {
+        element: "Money",
+        component:()=> import(/* webpackChunkName: "form-field-Money" */'./Money.vue'),
     },
     {
         element: "ColorPicker",
@@ -77,9 +90,10 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-Email" */'./Email.vue'),
     },
     {
-        element: "File",
-        component:()=> import(/* webpackChunkName: "form-field-File" */'./File.vue'),
+        element: "TreeSelect",
+        component:()=> import(/* webpackChunkName: "form-field-TreeSelect" */'./TreeSelect.vue'),
     },
+
     {
         element: "Download",
         component:()=> import(/* webpackChunkName: "form-field-Download" */'./Download.vue'),
@@ -96,10 +110,7 @@ export const elements = [
         element: "Map",
         component:()=> import(/* webpackChunkName: "form-field-Map" */'./Map.vue'),
     },
-    {
-        element: "Money",
-        component:()=> import(/* webpackChunkName: "form-field-Money" */'./Money.vue'),
-    },
+
     {
         element: "MoneyWithoutCurrency",
         component:()=> import(/* webpackChunkName: "form-field-Money" */'./MoneyWithoutCurrency.vue'),
@@ -108,26 +119,17 @@ export const elements = [
         element: "NumberGenerate",
         component:()=> import(/* webpackChunkName: "form-field-NumberGenerate" */'./NumberGenerate.vue'),
     },
-    {
-        element: "Password",
-        component:()=> import(/* webpackChunkName: "form-field-Password" */'./Password.vue'),
-    },
+
     {
         element: "PasswordGenerate",
         component:()=> import(/* webpackChunkName: "form-field-PasswordGenerate" */'./PasswordGenerate.vue'),
     },
-    {
-        element: "Radio",
-        component:()=> import(/* webpackChunkName: "form-field-Radio" */'./Radio.vue'),
-    },
+
     {
         element: "RadioWithThumb",
         component:()=> import(/* webpackChunkName: "form-field-Radio" */'./RadioWithThumb.vue'),
     },
-    {
-        element: "FooterButton",
-        component:()=> import(/* webpackChunkName: "form-field-FooterButton" */'./FooterButton.vue'),
-    },
+
     {
         element: "RadioWithTextInput",
         component:()=> import(/* webpackChunkName: "form-field-RadioWithTextInput" */'./RadioWithTextInput.vue'),
@@ -165,6 +167,14 @@ export const elements = [
     //     component:()=> import(/* webpackChunkName: "form-field-UniqueGeneration" */'./UniqueGeneration.vue'),
     // },
     {
+        element: "HTML",
+        component:()=> import(/* webpackChunkName: "form-field-HTML" */'./HTML.vue'),
+    },
+    {
+        element: "ImageSubform",
+        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
+    },
+    {
         element: "JsonEditor",
         component:()=> import(/* webpackChunkName: "form-field-AdminMenu" */'./JsonEditor.vue'),
     },
@@ -177,15 +187,12 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-GridSelector" */'./GridSelector.vue'),
     },
     {
-        element: "subform/Grid",
-        component:()=> import(/* webpackChunkName: "form-field-sub-form-grid" */'./subform/Grid.vue'),
+        element: "FooterButton",
+        component:()=> import(/* webpackChunkName: "form-field-FooterButton" */'./FooterButton.vue'),
     },
-    {
-        element: "subform/Form",
-        component:()=> import(/* webpackChunkName: "form-field-sub-form" */'./subform/Form.vue'),
-    },
+
 ];
-export const elementList = elements.map(e=>e.element).sort()
+export const elementList = elements.map(e=>e.element)
 
 const Notfount = ()=> import(/* webpackChunkName: "form-field-not-fount" */'./NotFound.vue');
 const CustomElement = ()=> import(/* webpackChunkName: "form-field-CustomElement" */'./CustomElement.vue');
