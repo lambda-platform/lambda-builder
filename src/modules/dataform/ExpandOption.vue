@@ -8,7 +8,7 @@
                             <h3>{{ lang.AdditionalValues }}</h3>
                         </div>
                         <ul>
-                            <li v-if="item.formType == 'Image'">
+                            <li v-if="item.formType == 'Image' || item.formType == 'File'">
                                 <label>{{ lang.selectMultipleImg }}</label>
                                 <i-switch v-model="item.file.isMultiple" size="small"></i-switch>
                             </li>
