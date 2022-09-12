@@ -11,7 +11,7 @@
         <Col span="4">
             <Select v-model="item.formType" :placeholder="lang._type" clearable filterable :disabled="disabled"
                     @on-change="changeItemType">
-                <Option v-for="item in elementList" :value="item.element" :key="item.index">{{ item.element }}
+                <Option v-for="item in elementList" :value="item" :key="item.index">{{ item }}
                 </Option>
             </Select>
         </Col>
@@ -59,8 +59,9 @@ export default {
     },
     data() {
         let elements = window.init.data_form_custom_elements ? [...elementList, ...window.init.data_form_custom_elements.map(element => {
-            return element
+            return element.element
         })] : elementList;
+
         return {
             loadConfig: true,
             elementList: elements,
