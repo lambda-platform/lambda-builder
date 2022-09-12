@@ -27,6 +27,7 @@ export default {
             isPrint: false,
             isExcel: false,
             isExcelUpload: false,
+            excelUploadSample:null,
             excelUploadCustomUrl: null,
             isRefresh: false,
             isSave: false,

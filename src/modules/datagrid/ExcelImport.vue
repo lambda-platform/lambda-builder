@@ -11,11 +11,8 @@
             </div>
         </div>
 
-        <div class="print-body">
-            <div style="display: flex;
-    padding: 20px;
-    border-bottom: 1px dashed #eee;   justify-content: end;
-    flex-direction: row;">
+        <div class="excel-import-body">
+            <div class="excel-import-btns">
                 <Upload action="/lambda/krud/upload"
                         v-model="excelForm.excelFile"
                         :on-success="success"
@@ -30,35 +27,41 @@
                         @click="excelImport">{{ lang.excelImportModalSaveBtn }}
                 </Button>
             </div>
-
-            <div v-if="summary==null" class="notif" style="height: 100%;
+            <div class="excel_upload_loading notif" v-if="isLoading" style="padding:20px">
+                Ачаалж байна түр хүлээнэ үү ...
+            </div>
+            <div v-else>
+                <div v-if="summary==null" class="notif" style="height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
+    padding:20px;
     color: #ccc;">
-                Эксел файлаа оруулаад өгөгдөл хадгалах товчийг дарна уу
-            </div>
-            <div v-else-if="summary==1" class="notif" style="height: 100%;
+                    Эксел файлаа оруулаад өгөгдөл хадгалах товчийг дарна уу
+                </div>
+                <div v-else-if="summary==1" class="notif" style="height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
     color: #149755;">
-                Амжилттай хадгалагдлаа, Хүснэгтээ дахин ачаалж мэдээллээ шалгана уу
+                    Амжилттай хадгалагдлаа, Хүснэгтээ дахин ачаалж мэдээллээ шалгана уу
 
-            </div>
-            <div v-else style="padding: 20px">
-                <div>
-                <h3> Эксел файл оруулах үеийн лог </h3></div>
-                <div>Доорх алдааг засаж дахин оруулна уу, алдаа гараагүй өгөгдлүүд баазад орсон</div>
-                <div style="border-top:1px dotted #eee; padding: 20px; overflow-y: auto" >
-                    <ul>
-                        <li v-for="sum in summary" :key="sum">
-                        {{sum.row}} - {{sum.error}}</li>
-                    </ul>
                 </div>
+                <div v-else style="padding: 20px">
+                    <div>
+                        <h3> Эксел файл оруулах үеийн лог </h3></div>
+                    <div>Доорх алдааг засаж дахин оруулна уу, алдаа гараагүй өгөгдлүүд баазад орсон</div>
+                    <div style="border-top:1px dotted #eee; padding: 20px; overflow-y: auto">
+                        <ul>
+                            <li v-for="sum in summary" :key="sum">
+                                {{ sum.row }} - {{ sum.error }}
+                            </li>
+                        </ul>
+                    </div>
 
+                </div>
             </div>
         </div>
     </section>
@@ -71,19 +74,13 @@ export default {
     props: ["schemaID", "schema", "options"],
     data() {
         return {
-            isLoading: true,
+            isLoading: false,
             excelForm: {
                 excelFile: null,
                 schemaID: this.schemaID
             },
             summary: null
         }
-    },
-
-    created() {
-        console.log("schema:");
-        console.log(this.schema);
-        console.log(this.options);
     },
 
     computed: {
@@ -95,18 +92,21 @@ export default {
             }, {});
         },
     },
-
     methods: {
         excelImport() {
+            this.isLoading = true;
             axios.post('/lambda/krud/import-excel', this.excelForm).then(res => {
                 console.log("excelImport:");
                 console.log(res.data);
+
                 if (res.data.status) {
                     this.summary = 1;
                 } else {
                     this.summary = res.data.data;
                 }
+                this.isLoading = false;
             }).catch(e => {
+                this.isLoading = false;
                 console.log(e.message);
             });
 

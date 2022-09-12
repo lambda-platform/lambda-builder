@@ -454,8 +454,8 @@ export default {
                 this.$parent.isExcelUpload = gridSchema.isExcelUpload;
             }
 
-            if (gridSchema.isExcelUploadSample) {
-                this.$parent.isExcelUploadSample = gridSchema.isExcelUploadSample;
+            if (gridSchema.excelUploadSample) {
+                this.$parent.excelUploadSample = gridSchema.excelUploadSample;
             }
 
             if (gridSchema.isRefresh) {
