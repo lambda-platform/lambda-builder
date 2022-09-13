@@ -32,12 +32,12 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
     },
     {
-        element: "ImageFile",
-        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
-    },
-    {
         element: "File",
         component:()=> import(/* webpackChunkName: "form-field-File" */'./File.vue'),
+    },
+    {
+        element: "FileSubform",
+        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
     },
     {
         element: "Radio",
