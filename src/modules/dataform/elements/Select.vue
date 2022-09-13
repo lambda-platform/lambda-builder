@@ -1,5 +1,5 @@
 <template>
-    <FormItem :label=label :prop=rule>
+    <FormItem class="select-item" :label=label :prop=rule>
         <multiselect v-if="!meta.relation.multiple"
                      v-model="value"
                      :disabled="meta.disabled"
