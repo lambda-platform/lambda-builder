@@ -173,25 +173,10 @@
                     <label>{{ lang.makeExcel }}</label>
                     <i-switch v-model="datagrid.isExcel" size="small"></i-switch>
                 </div>
+
                 <div class="gb-control-item r-flex" v-if="isModelSelected || editMode">
                     <label>{{ lang.excelUpload }}</label>
                     <i-switch v-model="datagrid.isExcelUpload" size="small"></i-switch>
-                </div>
-
-                <div class="gb-control-item gb-control-item-file" v-if="datagrid.isExcelUpload">
-                    <Upload action="/lambda/krud/upload"
-                            v-model="datagrid.excelUploadSample"
-                            :on-success="success"
-                            size="small">
-                        <div class="file-upload-handler">
-                            <span>{{ lang.pleaseSelectFile }}</span>
-                        </div>
-                    </Upload>
-                    <div v-if="datagrid.excelUploadSample != null" class="file-control">
-                        <a :href="datagrid.excelUploadSample" target="_blank" download> <i
-                            class="ti-download"></i>{{ lang.download }}</a>
-                        <a :href="datagrid.excelUploadSample" target="_blank"> <i class="ti-eye"></i>{{ lang.view }}</a>
-                    </div>
                 </div>
 
                 <div class="gb-control-item r-flex" v-if="isModelSelected || editMode">
