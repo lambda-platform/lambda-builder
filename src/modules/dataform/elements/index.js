@@ -28,6 +28,14 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-Image" */'./Image.vue'),
     },
     {
+        element: "ImageSubform",
+        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
+    },
+    {
+        element: "ImageFile",
+        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
+    },
+    {
         element: "File",
         component:()=> import(/* webpackChunkName: "form-field-File" */'./File.vue'),
     },
@@ -43,7 +51,6 @@ export const elements = [
         element: "subform/Form",
         component:()=> import(/* webpackChunkName: "form-field-sub-form" */'./subform/Form.vue'),
     },
-
     {
         element: "ImageDrag",
         component:()=> import(/* webpackChunkName: "form-field-ImageDrag" */'./ImageDrag.vue'),
@@ -170,10 +177,7 @@ export const elements = [
         element: "HTML",
         component:()=> import(/* webpackChunkName: "form-field-HTML" */'./HTML.vue'),
     },
-    {
-        element: "ImageSubform",
-        component:()=> import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),
-    },
+
     {
         element: "JsonEditor",
         component:()=> import(/* webpackChunkName: "form-field-AdminMenu" */'./JsonEditor.vue'),
