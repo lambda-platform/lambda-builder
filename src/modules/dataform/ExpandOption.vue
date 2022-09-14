@@ -920,8 +920,42 @@ export default {
                 userField: null,
                 tableField: null,
             },
-            sourceGridColumns: []
-
+            sourceGridColumns: [],
+            qgisColumns: [
+                {
+                    title: "QGis attribute",
+                    key: "value",
+                },
+                {
+                    title: "Баазын талбарын нэр",
+                    key: "label",
+                },
+                {
+                    title: "Устгах",
+                    key: "action",
+                    width: 100,
+                    align: "center",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.removeQgisOption(params.index);
+                                        }
+                                    }
+                                },
+                                "Устгах"
+                            )
+                        ]);
+                    }
+                }
+            ],
         };
     },
 
@@ -991,6 +1025,19 @@ export default {
                     sourceGridUserCondition: "",
                     sourceGridParentBasedCondition: "",
                     sourceGridValueField: null
+                }
+            }
+        }
+
+        if (this.item.formType == 'QGis') {
+            if (this.item.qgisOptions == undefined) {
+                this.item.qgisOptions = {
+                    service: "",
+                    cTable: "",
+                    cShapeField: "",
+                    cAttr: "",
+                    link: "",
+                    attrList: []
                 }
             }
         }
@@ -1256,6 +1303,24 @@ export default {
         },
         img_upload_success(val) {
             this.optionForm.thumb = val;
+        },
+
+        addQgisOption() {
+            console.log(this.optionForm);
+            this.$refs["qgis-option"].validate(valid => {
+                if (valid) {
+                    this.item.qgisOptions.attrList.push({...this.optionForm});
+                    this.optionForm = {
+                        value: null,
+                        label: null
+                    };
+                    console.log(this.item.qgisOptions.attrList);
+                }
+            });
+        },
+
+        removeQgisOption(index) {
+            this.item.qgisOptions.attrList.splice(index, 1);
         },
     },
 
