@@ -79,6 +79,7 @@
                                             <Draggable v-for='(col, column_index) in row.children' :key='column_index'>
                                                 <!-- Section column -->
                                                 <Col :span='col.span[mode.type]'
+                                                     class="drag-able-column"
                                                      v-if="col.type == 'section'">
                                                     <div class='pz-col easing'>
                                                         <div class='pz-col-control'>
@@ -210,7 +211,7 @@
                                                     </div>
                                                 </Col>
                                                 <!--  Standart column -->
-                                                <Col :span='col.span[mode.type]' v-if="col.type == 'col'">
+                                                <Col :span='col.span[mode.type]'     class="drag-able-column" v-if="col.type == 'col'">
                                                     <div class='pz-col easing'>
                                                         <div class='pz-col-control'>
                                                             <Input type='text' v-model='col.id' size='small'
