@@ -125,7 +125,7 @@
                                 <Col span='2' class='center'><span>...</span></Col>
                             </Row>
                             <div class='crud-table-body'>
-                                <form-item v-for='item in dataform.schema' v-if="item.formType !== 'SubForm' "
+                                <form-item v-for="item in dataform.schema.filter(i=>i.formType !== 'SubForm')"
                                            :key='item.index' :schema='dataform.schema' :item='item' :edit='editMode'
                                            :otherGrids='otherGrids'
                                            :projectID='projectID'
@@ -149,7 +149,7 @@
                                                     <Option value='main'>
                                                         {{ lang.basic_from }}
                                                     </Option>
-                                                    <Option v-for='f in dataform.schema' v-if="f.formType == 'SubForm'"
+                                                    <Option v-for="f in dataform.schema.filter(s=>s.formType === 'SubForm')"
                                                             :key='f.index'
                                                             :value='f.model'>
                                                         {{ f.model }}
@@ -180,8 +180,7 @@
                                                         </Select>
                                                         <Select v-model='target.field'
                                                                 :placeholder='lang.field'
-                                                                v-for='(f, f_index) in dataform.schema' :key='f_index'
-                                                                v-if="f.formType == 'SubForm' && f.model == formulaForm.form && formulaForm.form != 'main'">
+                                                                v-for="(f, f_index) in dataform.schema.filter(ff=>ff.formType === 'SubForm' && ff.model === formulaForm.form && formulaForm.form !== 'main')" :key='f_index'>
                                                             <Option v-for='(f_, f__index) in f.schema'
                                                                     :value='f_.model' :key='f__index'>{{
                                                                     f_.model
@@ -405,7 +404,7 @@
 
                 <TabPane v-for="(f, index) in dataform.schema.filter(s=>s.formType === 'SubForm')" :key='index'
                          :label='tabLabel(f.model, f.name )'>
-                    <sub-form :f='f' :edit='editMode' :otherForms='otherForms' :otherGrids='otherGrids'
+                    <sub-form :f='f' :edit='editMode' :otherForms='otherForms' :otherGrids='otherGrids' :schemaList="schemaList"
                               :projectID='projectID'></sub-form>
                 </TabPane>
 
@@ -777,6 +776,10 @@ export default {
                     }
                 ]
             }
+        },
+
+        schemaList(){
+            return this.dataform.schema.map(s=>s.model);
         }
     },
 

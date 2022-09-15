@@ -15,7 +15,7 @@
                     </Select>
                 </div>
 
-                <div class='fb-control-sub-item' v-if="f.subtype == 'Form'">
+                <div class='fb-control-sub-item' v-if="f.subtype === 'Form'">
                     <Select v-model='f.formId' :placeholder='lang._subform' clearable
                             filterable
                             @on-change='setBuilder'>
@@ -25,7 +25,7 @@
                     </Select>
                 </div>
 
-                <div class='fb-control-sub-item' v-if="f.subtype != 'Form'">
+                <div class='fb-control-sub-item' v-if="f.subtype !== 'Form'">
                     <Select v-model='f.model' :placeholder='lang.selectTable' clearable @on-change='setBuilder'
                             :disabled='isEdit'>
                         <Option v-for='item in tableList' :value='item' :key='item.index'>
@@ -269,7 +269,7 @@ import Editor from 'ckeditor5-custom-build/build/ckeditor'
 import Vue from 'vue'
 
 export default {
-    props: ['f', 'edit', 'otherForms', 'projectID', 'otherGrids'],
+    props: ['f', 'edit', 'otherForms', 'projectID', 'otherGrids', 'schemaList'],
     components: {
         Container, Draggable,
         'form-item': formItem,
@@ -448,46 +448,56 @@ export default {
 
         async setBuilder(val) {
             if (val) {
-                if (this.f.subtype == 'Form') {
-
-                    this.f.formId = val
-
-                    let defualtURL = `/lambda/puzzle/schema/form/${val}/builder`
-                    if (this.projectID) {
-                        defualtURL = `/lambda/puzzle/project/${this.projectID}/form/${val}/builder`
-                    }
-                    let res = await axios.get(defualtURL)
-
-                    if (res.data.data) {
-                        let formSchema = JSON.parse(res.data.data.schema)
-                        this.f.schema = getTableMeta(formSchema.model)
-                        this.f.model = formSchema.model
-                    }
-
+                let index = this.schemaList.findIndex(l=>l === val);
+                if(index >= 0){
+                    this.f.formId = null;
+                    this.f.model = null;
+                    this.$Notice.error({
+                        title: `${val} давхцаж байна !!!`
+                    })
                 } else {
-                    this.f.model = val
-                    this.f.schema = getTableMeta(val)
-                    this.isModelSelected = true
+                    if (this.f.subtype === 'Form') {
+
+                        this.f.formId = val
+
+                        let defualtURL = `/lambda/puzzle/schema/form/${val}/builder`
+                        if (this.projectID) {
+                            defualtURL = `/lambda/puzzle/project/${this.projectID}/form/${val}/builder`
+                        }
+                        let res = await axios.get(defualtURL)
+
+                        if (res.data.data) {
+                            let formSchema = JSON.parse(res.data.data.schema)
+                            this.f.schema = getTableMeta(formSchema.model)
+                            this.f.model = formSchema.model
+                        }
+
+                    } else {
+                        this.f.model = val
+                        this.f.schema = getTableMeta(val)
+                        this.isModelSelected = true
+                    }
+                    //Setting config schema
+                    this.f.schema = this.f.schema.map(item => {
+                        //Default identity field
+                        if (item.extra == 'auto_increment' || item.key == 'PRI') {
+                            this.f.identity = item.model
+                        }
+
+                        //Has default value on DB
+                        if (item.model == 'created_at' || item.model == 'updated_at') {
+                            this.f.timestamp = true
+                        }
+
+                        //Customized schema item
+                        return {
+                            ...item,
+                            id: this.idGenerator('form-item'),
+                            ..._.cloneDeep(this.schemaItemDefaults, true)
+                        }
+                    })
                 }
-                //Setting config schema
-                this.f.schema = this.f.schema.map(item => {
-                    //Default identity field
-                    if (item.extra == 'auto_increment' || item.key == 'PRI') {
-                        this.f.identity = item.model
-                    }
 
-                    //Has default value on DB
-                    if (item.model == 'created_at' || item.model == 'updated_at') {
-                        this.f.timestamp = true
-                    }
-
-                    //Customized schema item
-                    return {
-                        ...item,
-                        id: this.idGenerator('form-item'),
-                        ..._.cloneDeep(this.schemaItemDefaults, true)
-                    }
-                })
             }
         },
         async setGridSource(val) {
