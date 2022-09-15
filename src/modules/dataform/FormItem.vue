@@ -32,7 +32,7 @@
             </a>
         </Col>
         <Col span="24" :class="`item-more-options ${ expanded ? 'active' : '' }`">
-            <expand-option :item="item" :edit="edit" :sub="sub" :schema="schema" :otherGrids="otherGrids" :projectID="projectID"></expand-option>
+            <expand-option v-if="expanded" :item="item" :edit="edit" :sub="sub" :schema="schema" :otherGrids="otherGrids" :projectID="projectID"></expand-option>
         </Col>
     </Row>
 </template>
@@ -42,7 +42,8 @@ import expandOption from "./ExpandOption";
 import {elementList} from "./elements";
 import {rules} from "./rule";
 
-export default {
+export default
+{
     props: ["item", "edit", "sub", "disabled", "schema" , "otherGrids", "projectID"],
     components: {
         "expand-option": expandOption

@@ -241,7 +241,8 @@
                     <Container
                         group-name='sub-form-columns'
                         :drop-placeholder='dropPlaceholderOptions'
-                        @drop='onDropSub($event)'>
+                        :get-child-payload='(i_index)=>getPayloadColumns(i_index)'
+                        @drop='(e)=>onDropSub(e)'>
                         <!--form element-->
                         <Draggable v-for='(item, iIndex) in f.schema' :key='iIndex'>
                             <form-item
@@ -424,8 +425,10 @@ export default {
         //Form functions
         idGenerator: idGenerator,
         onDropSub(dropResult) {
-
-            this.f.schema = applyDrag(this.f.schema, dropResult)
+            this.f.schema = applyDrag(this.f.schema, dropResult);
+        },
+        getPayloadColumns(i_index) {
+            return this.f.schema[i_index]
         },
         callForms(val) {
             this.f.type = val
