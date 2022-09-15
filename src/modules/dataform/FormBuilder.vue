@@ -476,6 +476,7 @@ export default {
             formName: null,
             editor: Editor,
             dataform: {
+                formType:'normal',
                 formSubName: null,
                 model: null,
                 identity: null,
