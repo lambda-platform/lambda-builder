@@ -57,7 +57,6 @@ export default {
         },
 
         callWindowForm(){
-            console.log('I am called');
             this.renderTemplate('windowForm')
         }
     }
