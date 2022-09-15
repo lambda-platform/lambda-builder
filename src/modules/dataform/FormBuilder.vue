@@ -403,7 +403,7 @@
                     </div>
                 </TabPane>
 
-                <TabPane v-for='(f, index) in dataform.schema' v-if="f.formType == 'SubForm'" :key='index'
+                <TabPane v-for="(f, index) in dataform.schema.filter(s=>s.formType === 'SubForm')" :key='index'
                          :label='tabLabel(f.model, f.name )'>
                     <sub-form :f='f' :edit='editMode' :otherForms='otherForms' :otherGrids='otherGrids'
                               :projectID='projectID'></sub-form>
@@ -1284,10 +1284,10 @@ export default {
         },
 
         removeSubForm(model) {
-            this.dataform.schema = this.dataform.schema.filter(
+            Vue.set(this.dataform, "schema", this.dataform.schema.filter(
                 item => item.model !== model
-            )
-            this.dataform.ui.schema = this.removeSubFromUI(this.dataform.ui.schema, model)
+            ));
+            Vue.set(this.dataform.ui, "schema", this.removeSubFromUI(this.dataform.ui.schema, model));
         },
 
         removeSubFromUI(schema, model) {
