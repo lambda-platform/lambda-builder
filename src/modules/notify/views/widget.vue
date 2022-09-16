@@ -59,12 +59,13 @@ export default {
 
     mounted() {
         console.log("Notify mounted");
-
-        if (!firebase.apps.length) {
-            this.initFirebase();
-            this.getNotificationGrant();
-        }
-        this.getUnseenNotification();
+if(window.init.firebase_config) {
+    if (!firebase.apps.length) {
+        this.initFirebase();
+        this.getNotificationGrant();
+    }
+    this.getUnseenNotification();
+}
     },
     computed: {
         lang() {
