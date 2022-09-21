@@ -241,29 +241,25 @@ $white: #ffffff;
     box-shadow: 0 0 0 2px rgba($primary-compact, .2);
 }
 */
-.ivu-form-item-content{
-
-}
 
 .multiselect {
-    min-height: 32px !important;
+    height: 32px;
     font-size: 12px;
 }
 
 .multiselect__placeholder {
-    margin-bottom: 0;
-    padding-top: 0;
-    height: 30px;
-    font-size: 12px;
-    white-space: nowrap;
+    //margin-bottom: 0;
+    //padding-top: 0;
+    //height: 30px;
+    //font-size: 12px;
+    //white-space: nowrap;
 }
 
 .multiselect__tags {
     min-height: 32px !important;
-    padding: 0 50px 0 8px;
-    border: 1px solid #dcdee2;
-    //height: 32px;
-    //height: 32px !important;
+//    padding: 0 50px 0 8px;
+//    border: 1px solid #dcdee2;
+    padding: 0 !important;
 }
 
 .multiselect__tag {
@@ -295,6 +291,7 @@ $white: #ffffff;
     overflow: hidden;
     font-size: 12px;
     height: 30px;
+    line-height: 32px;
     background: transparent !important;
 }
 
@@ -337,6 +334,7 @@ $white: #ffffff;
     line-height: 32px;
     font-size: 12px;
 }
+
 
 .maygt-form {
     .file-uploader {
