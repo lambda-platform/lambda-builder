@@ -18,7 +18,7 @@ let routes = [
     {
         name: 'Error',
         path: '/*',
-        component: ()=>import(/* webpackChunkName: "page-404" */ './views/404.vue')
+        component: ()=>import(/* webpackChunkName: "page-404" */ './views/404')
     }
 ];
 const install = (Vue, options) => {

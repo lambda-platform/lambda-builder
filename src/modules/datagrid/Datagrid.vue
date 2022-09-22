@@ -14,7 +14,7 @@
                             :colspan="td.colspan"
                             :style="`${td.color ? `background-color: ${td.color}` : ''}`"
                             :rowspan="td.rowspan">
-                            <div :style="`width: ${td.width}; height: ${td.height}`"
+                            <div :style="`width: ${td.width}px; height: ${td.height}px;`"
                                  :class="td.rotate ? 'vertical-column' : ''">
                                 <div>{{ td.label }}</div>
                             </div>
@@ -937,8 +937,8 @@ export default {
 
                 // Select
                 if (isValid(item.gridType) && item.gridType == "Select") {
-                     // console.log('select element');
-                     // console.log(item)
+                    // console.log('select element');
+                    // console.log(item)
                     // colItem.keyCreator = colKeyCreator;
                     // colItem.cellRenderer = Select;
                 }
@@ -1601,7 +1601,7 @@ export default {
                 }
             });
 
-            if(this.permissions.u || this.permissions.d) {
+            if (this.permissions.u || this.permissions.d) {
                 actions.push('separator')
             }
             actions.push('copy')
