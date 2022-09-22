@@ -6,4 +6,3 @@ Vue.prototype.$bus = new Vue({})
 window.Vue = Vue;
 Vue.config.productionTip = false;
 
-console.log("BOOTSRAP CURD")
