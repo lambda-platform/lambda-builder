@@ -128,6 +128,9 @@
                             <FormItem prop="display_name">
                                 <Input type="text" v-model="roleForm.display_name" :placeholder="lang.appearance_name"/>
                             </FormItem>
+                            <FormItem prop="display_name">
+                                <Input type="text" v-model="roleForm.extra" placeholder="extra"/>
+                            </FormItem>
                             <FormItem prop="description">
                                 <Input type="textarea" v-model="roleForm.description" :placeholder="lang.note"/>
                             </FormItem>
@@ -175,6 +178,7 @@ export default {
                 name: '',
                 display_name: '',
                 description: '',
+                extra: '',
             },
             extra: {
                 datasourcce: false,
