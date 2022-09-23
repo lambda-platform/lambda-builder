@@ -1103,13 +1103,14 @@ export default {
         saveFilterState() {
             localStorage.setItem(`grid-${this.schemaID}`, JSON.stringify(this.gridApi.getFilterModel()));
         },
-        setUserConditionValues(filters) {
 
+        setUserConditionValues(filters) {
             this.user_condition.forEach(userCondition => {
                 filters[userCondition.grid_field] = window.init.user[userCondition.user_field]
             })
             return filters;
         },
+
         // Getting grid data
         fetchData() {
             this.gridApi.showLoadingOverlay();
@@ -1133,8 +1134,9 @@ export default {
                 url = `${url}&search=${this.searchModel}`;
             }
 
+
             if (this.user_condition) {
-                filters = this.setUserConditionValues(filters)
+                filters.user_condition = this.user_condition;
             }
 
             if (this.custom_condition) {
