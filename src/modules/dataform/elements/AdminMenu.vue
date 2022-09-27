@@ -145,10 +145,14 @@ export default {
                 this.iconMenuIndex.splice(0, 1);
                 this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG);
             } else {
-                if(isSVG)
-                    this.items[this.iconMenuIndex[0]]["svg"] = icon;
-                else
-                    this.items[this.iconMenuIndex[0]].icon = icon;
+                if(isSVG){
+                    Vue.set(this.items[this.iconMenuIndex[0]], "svg", icon);
+                    Vue.set(this.items[this.iconMenuIndex[0]], "icon", null);
+                } else{
+                    Vue.set(this.items[this.iconMenuIndex[0]], "svg", null);
+                    Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
+                }
+
                 this.iconSelector = false;
                 this.iconMenuIndex = null;
                 this.iconSearch = "";
@@ -162,10 +166,15 @@ export default {
                 childIndexs.splice(0, 1);
                 item.children[itemIndex] = this.setIconFind(item.children[itemIndex], childIndexs, icon, isSVG);
             } else {
-                if(isSVG)
-                    item.children[childIndexs[0]]["svg"] = icon;
-                else
-                   item.children[childIndexs[0]].icon = icon;
+
+                if(isSVG){
+                    Vue.set(item.children[childIndexs[0]], "svg", icon);
+                    Vue.set(item.children[childIndexs[0]], "icon", null);
+                } else{
+                    Vue.set(item.children[childIndexs[0]], "svg", null);
+                    Vue.set(item.children[childIndexs[0]], "icon", icon);
+                }
+
 
                 this.iconSelector = false;
                 this.iconMenuIndex = null;
