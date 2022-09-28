@@ -1287,13 +1287,19 @@ export default {
         },
 
         removeSubForm(model) {
+
             Vue.set(this.dataform, "schema", this.dataform.schema.filter(
                 item => item.model !== model
             ));
-            Vue.set(this.dataform.ui, "schema", this.removeSubFromUI(this.dataform.ui.schema, model));
+
+            if(model !== undefined){
+                Vue.set(this.dataform.ui, "schema", this.removeSubFromUI(this.dataform.ui.schema, model));
+            }
+           
         },
 
         removeSubFromUI(schema, model) {
+
             return schema.filter(
                 item => item.model !== model
             ).map(item => {
