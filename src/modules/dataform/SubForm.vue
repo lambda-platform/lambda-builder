@@ -248,6 +248,7 @@
                             <form-item
                                 :schema='f.schema'
                                 :item='item'
+                                :otherGrids='otherGrids'
                                 :edit='edit'
                                 :sub='true' :disabled='isDisabled(item)'>
                             </form-item>
