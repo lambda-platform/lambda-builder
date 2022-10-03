@@ -789,7 +789,7 @@
                                         filterable
 
                                 >
-                                    <Option v-for="(item, iIndex) in sourceGridColumns" :key="iIndex"
+                                    <Option v-for="(item, iIndex) in sourceGridColumns.filter(c=>c!== null)" :key="iIndex"
                                             :value="item.model">{{ item.model }}
                                     </Option>
                                 </Select>
@@ -800,7 +800,7 @@
                             :drop-placeholder="dropPlaceholderOptions"
                             @drop="onDropSub($event)">
                             <!--form element-->
-                            <Draggable v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns" :key="iIndex">
+                            <Draggable v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns.filter(c=>c!== null)" :key="iIndex">
                                 <Row>
                                     <Col span="10">
                                         {{ item.model }}
