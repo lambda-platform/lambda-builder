@@ -614,6 +614,7 @@ export default {
         "beforeDeleting": "Устгахын өмнө",
         "afterDeleting": "Устгасны дараа",
         "beforePrinting": "Хэвлэхийн өмнө",
+        "cacheClearTriggerLabel": "Cache цэвэрлэх холбоос",
         "spreadsheetForm": "Хүснэгтэн форм",
         "fromType": "Форм төрөл",
         "update": "Шинэчлэгдэх",

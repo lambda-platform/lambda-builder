@@ -552,6 +552,15 @@
                                                :placeholder="lang.beforePrinting"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <label>{{ lang.cacheClearTriggerLabel }}</label>
+                                    </td>
+                                    <td>
+                                        <Input v-model="datagrid.triggers.cacheClearUrl"
+                                               :placeholder="lang.cacheClearTriggerLabel"/>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -802,6 +811,7 @@ export default {
                 'renew', 'pleaseWaitForLoading', 'namespace', 'afterFetch', 'beforeFetch', 'makeExcel', 'numbered', 'basicTable', 'formInfoSavedSuccessfully',
                 'tableDataHasBeenSuccessfullyEdited', 'successfullySaved', 'anErrorOccurredWhileSaving',
                 'gbExcelImport', 'excelImportFieldName', 'excelImportFormTitle', 'excelUploadSampleFile', 'excelUploadRowtoStart', 'excelUploadCustomUrl', 'excelUploadCustomNamespace', 'excelUploadCustomTrigger',
+                'cacheClearTriggerLabel'
 
             ];
             return labels.reduce((obj, key, i) => {
@@ -1089,7 +1099,8 @@ export default {
                     beforeFetch: '',
                     afterFetch: '',
                     beforeDelete: '',
-                    afterDelete: ''
+                    afterDelete: '',
+                    cacheClearUrl:''
                 };
                 Vue.set(this.datagrid, "triggers", triggers);
             }

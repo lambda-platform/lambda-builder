@@ -166,7 +166,8 @@ export default {
         onSuccess(val) {
             if (typeof this.mode !== 'undefined' && this.mode && this.mode == 'refresh') {
                 this.$refs.grid.refresh();
-            } else {
+            }
+            else {
                 if (this.editMode) {
                     this.$refs.grid.update(val);
                 } else {

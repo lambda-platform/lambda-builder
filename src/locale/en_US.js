@@ -613,6 +613,7 @@ export default {
         "beforeDeleting": "Before deleting",
         "afterDeleting": "After deleting",
         "beforePrinting": "Before printing",
+        "cacheClearTriggerLabel": "Cache clear link",
         "spreadsheetForm": "Spreadsheet form",
         "fromType": "Form type",
         "update": "Updated",

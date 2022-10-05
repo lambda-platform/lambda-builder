@@ -448,6 +448,7 @@ export default {
 
     data() {
         return {
+            email_templates: window.init.email_templates,
             initEditorConfig: {
                 max_height: 1200,
                 min_height: 600,
@@ -464,6 +465,35 @@ export default {
                 external_filemanager_path:"/vendor/filemanager/",
                 filemanager_title:"Responsive Filemanager" ,
                 external_plugins: { "filemanager" : "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+                setup: (editor) => {
+                    if(this.email_templates)
+                    editor.ui.registry.addMenuButton('newsbutton', {
+                        text: 'Бэлдсэн загвар',
+                        fetch: (callback) => {
+                            let local_email_templates=[];
+                            this.email_templates.forEach(item => {
+                                local_email_templates.push({
+                                    type: 'menuitem',
+                                    text: item.name,
+                                    onAction: function () {
+                                        editor.insertContent(item.content);
+                                    }
+                                });
+                            });
+                            let items = [
+                                {
+                                    type: 'nestedmenuitem',
+                                    text: 'И-мэйл загвар',
+                                    getSubmenuItems: function () {
+                                        return local_email_templates
+                                    }
+                                }
+                            ];
+                            callback(items);
+                        }
+                    });
+
+                }
             },
             otherForms: [],
             otherGrids: [],
@@ -1295,7 +1325,7 @@ export default {
             if(model !== undefined){
                 Vue.set(this.dataform.ui, "schema", this.removeSubFromUI(this.dataform.ui.schema, model));
             }
-           
+
         },
 
         removeSubFromUI(schema, model) {

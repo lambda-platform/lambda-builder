@@ -329,6 +329,7 @@ export default {
                 this.$props.onReady(formSchema, this.schema)
             }
         },
+
         setHiddenItemModel(schema) {
             schema.forEach(item => {
                     if (item.hidden || item.disabled) {
