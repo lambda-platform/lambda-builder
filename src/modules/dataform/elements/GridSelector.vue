@@ -5,23 +5,23 @@
                 {{ meta.GSOption.sourceGridModalTitle }}
 
             </div>
-            <table border="1" >
+            <table border="1" v-if="meta.GSOption">
                 <thead>
-                <tr>
+                <tr v-if="meta.GSOption.sourceGridTargetColumns && meta.GSOption.sourceGridTargetColumns instanceof Array">
 
-                    <th v-for="item in meta.GSOption.sourceGridTargetColumns"
-                        :key="item.index">
-                        {{ item.label }}
+                    <th v-for="(sourceGridTargetColumn, cindex) in meta.GSOption.sourceGridTargetColumns.filter(c=>c!== null)"
+                        :key="cindex">
+                        {{ sourceGridTargetColumn.label }}
                     </th>
                     <th class="action">...</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr v-if="meta.GSOption.sourceGridTargetColumns && meta.GSOption.sourceGridTargetColumns instanceof Array">
 
-                    <td v-for="item in meta.GSOption.sourceGridTargetColumns"
-                        :key="item.index">
-                        {{selectedRow[item.model]}}
+                    <td v-for="(sourceGridTargetColumn, cindex) in meta.GSOption.sourceGridTargetColumns.filter(c=>c!== null)"
+                        :key="cindex">
+                        {{selectedRow[sourceGridTargetColumn.model]}}
                     </td>
                     <td class="action">
                         <a href="javascript:void(0);" @click="showAddSourceModal" v-if="!meta.disabled">

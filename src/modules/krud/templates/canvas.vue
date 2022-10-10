@@ -112,6 +112,7 @@
                               :title="title"
                               :url="url"
                               :editMode="editMode"
+                              mode="refresh"
                               :onSuccess="onSuccess"
                               :onReady="onReady"
                               :do_render="openSlidePanel"
@@ -141,6 +142,9 @@ export default {
             openSlidePanel: false,
             exportLoading: false
         };
+    },
+    created(){
+       // console.log("HIHIHIH");
     },
     components: {
         "slide-panel": slidePanel,

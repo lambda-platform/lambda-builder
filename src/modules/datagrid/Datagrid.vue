@@ -1349,10 +1349,12 @@ export default {
             this.data = this.data.map(item => {
                 if (item[this.identity] == val[this.identity]) {
                     item = val;
-                    // _.merge(item, val);
+                    console.log("start set Row Data");
+                    this.gridApi.setRowData(this.data);
                 }
                 return item;
             });
+
         },
 
         view(id) {

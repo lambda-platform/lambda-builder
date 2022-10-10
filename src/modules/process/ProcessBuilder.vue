@@ -1067,8 +1067,9 @@ export default {
             this.dataform.schema = this.dataform.schema.filter(
                 item => item.model !== model
             )
-            this.dataform.ui.schema = this.removeSubFromUI(this.dataform.ui.schema, model)
-
+            if(model !== undefined) {
+                this.dataform.ui.schema = this.removeSubFromUI(this.dataform.ui.schema, model)
+            }
 
         },
 

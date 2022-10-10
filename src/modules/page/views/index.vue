@@ -141,8 +141,9 @@ export default {
                     this.pageTitle = this.getTitle(this.menu[menuIndex]);
                     if (this.$route.matched.length <= 1) {
                         let first = this.getShowAbleChild(this.menu[menuIndex].children);
-                        if (first)
+                        if (first) {
                             this.$router.push(`/p/${this.$route.params.menu_id}/${first.id}`);
+                        }
                     } else {
                         this.subMenu = this.menu[menuIndex].children;
                         // this.subMenuId = this.menu[menuIndex].id;
@@ -166,6 +167,8 @@ export default {
         },
 
         can(menu) {
+            console.log(menu);
+            console.log(this.permissions[menu.id]);
             if (this.permissions[menu.id]) {
                 if (this.permissions[menu.id].show) {
                     return true

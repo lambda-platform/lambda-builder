@@ -248,6 +248,7 @@
                             <form-item
                                 :schema='f.schema'
                                 :item='item'
+                                :otherGrids='otherGrids'
                                 :edit='edit'
                                 :sub='true' :disabled='isDisabled(item)'>
                             </form-item>
@@ -373,7 +374,8 @@ export default {
         // if(this.f.type == "Form"){
         //   this.callOtherForms();
         // }
-        this.isEdit = this.f.schema.length > 0
+        this.isEdit = this.f.schema.length > 0;
+
         //if there is new object item it check and add
         if (this.isEdit) {
             if (this.f.subtype != 'Form') {
@@ -459,6 +461,7 @@ export default {
                         title: `${val} давхцаж байна !!!`
                     })
                 } else {
+
                     if (this.f.subtype === 'Form') {
 
                         this.f.formId = val
