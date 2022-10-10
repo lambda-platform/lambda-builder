@@ -50,7 +50,7 @@
             </tfoot>
         </table>
         <a class="sub-grid-add" href="javascript:void(0)" @click="add" v-if="form.min_height && !form.disableCreate">
-            <Icon type="plus"></Icon>
+            <i class="ti-plus"></i>
             {{lang.add}}
         </a>
 

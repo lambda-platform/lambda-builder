@@ -13,6 +13,7 @@
 
         <div class="excel-import-body">
             <div class="excel-import-btns">
+
                 <Upload action="/lambda/krud/upload"
                         v-model="excelForm.excelFile"
                         :on-success="success"
@@ -23,8 +24,9 @@
                         <span>Файл оруулах</span>
                     </div>
                 </Upload>
+
                 <Button icon="i-icon ti-printer" type="default"
-                        @click="excelImport">{{ lang.excelImportModalSaveBtn }}
+                        @click="excelImport">Хадгалах
                 </Button>
             </div>
             <div class="excel_upload_loading notif" v-if="isLoading" style="padding:20px">

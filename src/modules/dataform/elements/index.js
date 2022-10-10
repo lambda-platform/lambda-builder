@@ -194,6 +194,10 @@ export const elements = [
         element: "FooterButton",
         component:()=> import(/* webpackChunkName: "form-field-FooterButton" */'./FooterButton.vue'),
     },
+    {
+        element: "TimeMask",
+        component:()=> import(/* webpackChunkName: "form-field-TimeMask" */'./TimeMask.vue'),
+    },
 
 ];
 export const elementList = elements.map(e=>e.element)

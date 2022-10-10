@@ -98,7 +98,7 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 axios
-                    .post("/auth/login", this.credentials)
+                    .post("/api/ldap/signin", this.credentials)
                     .then(({data}) => {
                         setTimeout(() => {
                             this.loading = false;

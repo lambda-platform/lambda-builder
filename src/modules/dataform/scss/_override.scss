@@ -242,8 +242,13 @@ $white: #ffffff;
 }
 */
 
+.select-item{
+    //margin-bottom: 20px !important;
+}
+
 .multiselect {
     height: 32px;
+    //min-height: 32px !important;
     font-size: 12px;
 }
 
@@ -386,6 +391,6 @@ $white: #ffffff;
 
 .select-item {
     .ivu-form-item-content{
-        line-height: 12px !important;
+        //line-height: 12px !important;
     }
 }

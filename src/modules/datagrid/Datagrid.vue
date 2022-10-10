@@ -242,6 +242,10 @@ export default {
         };
     },
 
+    created() {
+        console.log('actions', this.actions);
+    },
+
     watch: {
         update(val) {
             if (val !== null) {
@@ -1576,7 +1580,7 @@ export default {
                     console.log("v action");
                 }
 
-                if (item == 'e' && this.permissions.u) {
+                if (item == 'e' && this.permissions && this.permissions.u) {
                     let menuItem = {
                         name: "Засах",
                         icon:
@@ -1588,7 +1592,7 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'd' && this.permissions.d) {
+                if (item == 'd' && this.permissions && this.permissions.d) {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
@@ -1603,7 +1607,7 @@ export default {
                 }
             });
 
-            if (this.permissions.u || this.permissions.d) {
+            if (this.permissions && (this.permissions.u || this.permissions.d)) {
                 actions.push('separator')
             }
             actions.push('copy')
