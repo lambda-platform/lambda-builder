@@ -40,8 +40,8 @@ export default Vue.extend({
             if (this.params.isClient) {
                 this.params.filterData(this.params.column.model, e.target.value, 'contains');
             } else {
-                this.params.filterModel[this.params.column.model] = e.target.value;
-                this.params.filterData(1);
+                // this.params.filterModel[this.params.column.model] = e.target.value;
+                this.params.filterData(this.params.column.model, e.target.value);
             }
         },
 

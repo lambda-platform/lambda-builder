@@ -1,9 +1,9 @@
 <template>
     <div class="crud-page-header-right-inside">
-<!--        <Tooltip content="Устсан мэдээлэл харах">-->
-<!--            <Button ghost class="crud-tool" icon="eye-disabled" @click="refreshGrid"></Button>-->
-<!--        </Tooltip>-->
-<!--        -->
+        <!--        <Tooltip content="Устсан мэдээлэл харах">-->
+        <!--            <Button ghost class="crud-tool" icon="eye-disabled" @click="refreshGrid"></Button>-->
+        <!--        </Tooltip>-->
+        <!--        -->
         <Tooltip :content="lang._save">
             <a @click="$props.save" class="btnLine" v-if="isSave">
                 <i class="ti-save"></i>
@@ -56,7 +56,7 @@
 export default {
     props: ["refresh", "exportExcel", "print",
         "search", "save", "options", "isExcel",
-        "isExcelUpload","excelUploadCustomUrl", "excelUploadMethod",
+        "isExcelUpload", "excelUploadCustomUrl", "excelUploadMethod",
         "isPrint", "isRefresh",
         "isSave", "isSearch", "exportLoading"],
     data() {
@@ -67,9 +67,11 @@ export default {
     computed: {
         lang() {
             const labels = [
-                '_save', 're_call',
+                '_save',
+                're_call',
                 '_print',
-                'download_file','excelUpload'
+                'download_file',
+                'excelUpload'
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('crud.' + labels[i]);

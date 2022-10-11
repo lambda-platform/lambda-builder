@@ -578,10 +578,13 @@ img.ag-grid-image {
     .multiselect__tags {
         min-height: 20px;
         max-height: 20px;
-        padding: 0 50px 0 8px;
-        border: 1px solid #cccccc;
+        padding: 0 50px 0 8px !important;
+        //border: 1px solid #cccccc;
+        border: 0 !important;
         border-radius: 0;
-        border: none;
+        display: flex;
+        align-items: center;
+        background: transparent !important;
     }
 
     .multiselect__tag {
@@ -595,7 +598,7 @@ img.ag-grid-image {
         height: 20px;
         width: 24px;
         right: 0;
-        top: 0;
+        top: 5px;
         line-height: 20px;
         font-weight: normal;
     }

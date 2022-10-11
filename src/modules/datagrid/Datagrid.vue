@@ -740,7 +740,7 @@ export default {
                                     schemaID: this.schemaID,
                                     column: this.schema.find(col => col.model == item.model),
                                     filterModel: this.filterModel,
-                                    filterData: this.filterData
+                                    filterData: this.updateFilterModel
                                 };
                             } else {
                                 colItem.filter = "agTextColumnFilter";
@@ -761,7 +761,7 @@ export default {
                                     schemaID: this.schemaID,
                                     column: this.schema.find(col => col.model == item.model),
                                     filterModel: this.filterModel,
-                                    filterData: this.filterData
+                                    filterData: this.updateFilterModel
                                 };
                             } else {
                                 colItem.filter = "agTextColumnFilter";
@@ -828,7 +828,7 @@ export default {
                                     isClient: this.isClient,
                                     filterModel: this.filterModel,
                                     filterType: 'text',
-                                    filterData: this.isClient ? this.onClientFilter : this.filterData
+                                    filterData: this.isClient ? this.onClientFilter : this.updateFilterModel
                                 };
 
                                 this.selectInputModels.push(item.model);
@@ -862,7 +862,7 @@ export default {
                                     isClient: this.isClient,
                                     filterModel: this.filterModel,
                                     filterType: 'text',
-                                    filterData: this.isClient ? this.onClientFilter : this.filterData
+                                    filterData: this.isClient ? this.onClientFilter : this.updateFilterModel
                                 };
 
                                 this.selectInputModels.push(item.model);
@@ -1216,6 +1216,13 @@ export default {
                 this.gridApi.hideOverlay();
                 this.isLoading = false;
             });
+        },
+
+        updateFilterModel(model, val) {
+            this.filterModel[model] = val;
+            console.log("onfilter change", model, val);
+
+            this.filterData(1);
         },
 
         filterData(page) {
@@ -1678,6 +1685,7 @@ export default {
 
         onClientFilter(model, val, type) {
             console.log("working here", type);
+
             let filterComponent = this.gridApi.getFilterInstance(model);
             // filterComponent.selectNothing();
 

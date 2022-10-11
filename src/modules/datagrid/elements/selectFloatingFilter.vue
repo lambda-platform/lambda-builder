@@ -12,7 +12,7 @@
 import Vue from "vue";
 import axios from "axios";
 import mSelect from "vue-multiselect";
-import {element} from "../elements";
+import {element} from "../elements/index";
 import {getRelation} from "../utils/userFilter";
 
 export default Vue.extend({
@@ -38,6 +38,10 @@ export default Vue.extend({
         }
     },
     created() {
+        console.log("filter model: ", this.params.filterModel);
+        console.log("model: ", this.params.column.model);
+
+
         let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
         //get user condition
         this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
@@ -84,9 +88,8 @@ export default Vue.extend({
         },
 
         valueChanged(v) {
-            this.params.filterModel[this.params.column.model] = 'value' in v ? v.value : v[0];
-            //this.params.filterData(1);
-            this.params.filterData(this.params.filterModel);
+            let val = 'value' in v ? v.value : v[0];
+            this.params.filterData(this.params.column.model, val);
         },
 
         onParentModelChanged(parentModel) {
