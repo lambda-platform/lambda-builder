@@ -288,6 +288,8 @@ $white: #ffffff;
     vertical-align: middle;
     line-height: unset;
     margin-bottom: 0;
+    align-items: center;
+    display: flex;
 }
 
 .multiselect__input, .multiselect__single {
