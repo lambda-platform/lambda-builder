@@ -220,8 +220,8 @@
                         <Option v-for="theme in gridThemes" :value="theme" :key="theme.index">{{ theme }}</Option>
                     </Select>
                 </div>
-                <div class="grid-theme">
-                    <h3>{{ lang.size }}</h3>
+                <div class="gb-control-item">
+                    <label>{{ lang.size }}</label>
                     <RadioGroup v-model="datagrid.theme">
                         <Radio label="normal">
                             <span>{{ lang.simple }}</span>
