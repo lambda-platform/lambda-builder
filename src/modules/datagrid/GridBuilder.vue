@@ -211,6 +211,26 @@
                 <!--                    <label>Засах үйлдэл хаах багана</label>-->
                 <!--                    <Input v-model="datagrid.updateDisableFieldValue" placeholder="Засах үйлдэл хаах утга"/>-->
                 <!--                </div>-->
+
+
+                <div class="gb-control-item">
+                    <label>{{ lang.theme }}</label>
+                    <Select v-model="datagrid.griTheme" :placeholder="lang.theme"
+                            filterable>
+                        <Option v-for="theme in gridThemes" :value="theme" :key="theme.index">{{ theme }}</Option>
+                    </Select>
+                </div>
+                <div class="grid-theme">
+                    <h3>{{ lang.size }}</h3>
+                    <RadioGroup v-model="datagrid.theme">
+                        <Radio label="normal">
+                            <span>{{ lang.simple }}</span>
+                        </Radio>
+                        <Radio label="mini">
+                            <span>{{ lang.mini }}</span>
+                        </Radio>
+                    </RadioGroup>
+                </div>
             </div>
 
 
@@ -752,20 +772,9 @@
                                 </div>
                             </div>
                         </Col>
-                        <Col span="8">
-                            <div class="grid-theme">
-                                <h3>{{ lang.size }}</h3>
-                                <RadioGroup v-model="datagrid.theme">
-                                    <Radio label="normal">
-                                        <span>{{ lang.simple }}</span>
-                                    </Radio>
-                                    <Radio label="mini">
-                                        <span>{{ lang.mini }}</span>
-                                    </Radio>
-                                </RadioGroup>
-                            </div>
-                        </Col>
+
                     </Row>
+
 
                     <header-builder v-if="!loading" :header="datagrid.header"
                                     :schema="datagrid.schema"></header-builder>
@@ -811,7 +820,7 @@ export default {
                 'renew', 'pleaseWaitForLoading', 'namespace', 'afterFetch', 'beforeFetch', 'makeExcel', 'numbered', 'basicTable', 'formInfoSavedSuccessfully',
                 'tableDataHasBeenSuccessfullyEdited', 'successfullySaved', 'anErrorOccurredWhileSaving',
                 'gbExcelImport', 'excelImportFieldName', 'excelImportFormTitle', 'excelUploadSampleFile', 'excelUploadRowtoStart', 'excelUploadCustomUrl', 'excelUploadCustomNamespace', 'excelUploadCustomTrigger',
-                'cacheClearTriggerLabel'
+                'cacheClearTriggerLabel', 'theme'
 
             ];
             return labels.reduce((obj, key, i) => {
