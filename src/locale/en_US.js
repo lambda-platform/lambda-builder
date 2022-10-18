@@ -690,7 +690,8 @@ export default {
         "pleaseSelectUpdateLine": " Please select an update line.",
         "errorOccWhileDeleting": "An error occurred while deleting",
         "errorMsg": "Sorry, an error occurred",
-        "noChangesHaveBeenReported": "No changes have been reported"
+        "noChangesHaveBeenReported": "No changes have been reported",
+        "theme":"Theme"
     },
     "dataSource": {
         "database": "Database",

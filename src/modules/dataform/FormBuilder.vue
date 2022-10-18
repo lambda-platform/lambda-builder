@@ -267,6 +267,14 @@
                                     <Input v-model='dataform.triggers.update.after' :placeholder='lang.after_update' />
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <label>И-мэйл илгээх үед</label>
+                                </td>
+                                <td>
+                                    <Input v-model='dataform.triggers.email' placeholder='Имэйл илгээх үед ажиллах триггер' />
+                                </td>
+                            </tr>
                         </table>
                         <br>
                         <div>
@@ -353,6 +361,10 @@
                             <label>Гарчиг:</label>
                             <Input placeholder='Subject' v-model='dataform.email.subject' :limit='limit'
                                    validate='email' />
+                        </div>
+                        <div class='subject'>
+                            <label>Attach илгээх эсэх:</label>
+                            <Checkbox  v-model='dataform.email.has_attach'/>
                         </div>
 
                         <div class='body'>
@@ -537,6 +549,7 @@ export default {
                         before: null,
                         after: null
                     },
+                    email:null,
                     cache_clear_url:null
                 },
                 extraButtons: [],
@@ -547,7 +560,8 @@ export default {
                     cc: [],
                     bcc: [],
                     subject: null,
-                    body: null
+                    body: null,
+                    has_attach:0
                 }
             },
 

@@ -50,15 +50,15 @@
             </div>
           </span>
                 </button>
-                <p>
-                    <router-link class="forgot" to="/forgot">{{ lang.forgot }}</router-link>
-                </p>
+<!--                <p>-->
+<!--                    <router-link class="forgot" to="/forgot">{{ lang.forgot }}</router-link>-->
+<!--                </p>-->
             </div>
         </form>
 
         <div id="msg">
             <span v-if="isSuccess" class="success">{{ lang.loginSuccess }}</span>
-            <span v-if="isError" class="error">{{ lang.loginError }}</span>
+            <span v-if="isError" class="error">{{ errMsg }}</span>
         </div>
     </div>
 </template>
@@ -73,6 +73,7 @@ export default {
             loading: false,
             isSuccess: false,
             isError: false,
+            errMsg:null,
             credentials: {
                 login: null,
                 password: null,
@@ -109,6 +110,7 @@ export default {
                                 }, 600);
                             } else {
                                 this.isError = true;
+                                this.errMsg=data.msg;
                             }
                         }, 1000);
                     })

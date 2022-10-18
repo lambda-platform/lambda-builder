@@ -18,6 +18,7 @@ export const data = (vm) => {
         model: null,
         template: 2,
         theme: 'normal',
+        gridTheme: 'material',
         isClient: false,
         isPrint: false,
         isNumbered: false,
@@ -161,6 +162,7 @@ export const builderData = (vm) => {
                 afterDelete: '',
                 beforePrint: '',
             },
+            gridTheme: 'material',
             theme: 'normal',
             fullText: false,
             editableAction: null,
@@ -175,7 +177,7 @@ export const builderData = (vm) => {
         },
 
         fieldList: [],
-        gridThemes: ['normal', 'mini'],
+        gridThemes: ['material', 'balham'],
         //Formula
         formulaForm: {
             model: "",

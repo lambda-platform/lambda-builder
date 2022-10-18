@@ -691,7 +691,8 @@ export default {
         "pleaseSelectUpdateLine": " Шинэчлэх мөрөө сонгоно уу.",
         "errorOccWhileDeleting": "Устгах үед алдаа гарлаа",
         "errorMsg": "Уучлаарай алдаа гарлаа",
-        "noChangesHaveBeenReported": "Өөрчлөлт орсон мэдээлэл байхгүй байна"
+        "noChangesHaveBeenReported": "Өөрчлөлт орсон мэдээлэл байхгүй байна",
+        "theme":"Загвар"
     },
     "dataSource": {
         "database": "Өгөгдлийн сан",
