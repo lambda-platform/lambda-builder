@@ -696,7 +696,7 @@ export default {
                         });
                     }
 
-
+                    let filterColumn = this.schema.find(col => col.model == item.model);
                     switch (item.filter.type) {
                         case 'Number':
                             colItem.filter = "agNumberColumnFilter";
@@ -738,7 +738,7 @@ export default {
                                     selectAllOnMiniFilter: true,
                                     suppressFilterButton: true,
                                     schemaID: this.schemaID,
-                                    column: this.schema.find(col => col.model == item.model),
+                                    column: filterColumn,
                                     filterModel: this.filterModel,
                                     filterData: this.updateFilterModel
                                 };
@@ -759,7 +759,7 @@ export default {
                                     selectAllOnMiniFilter: true,
                                     suppressFilterButton: true,
                                     schemaID: this.schemaID,
-                                    column: this.schema.find(col => col.model == item.model),
+                                    column: filterColumn,
                                     filterModel: this.filterModel,
                                     filterData: this.updateFilterModel
                                 };
@@ -857,7 +857,7 @@ export default {
 
                                 colItem.floatingFilterComponentParams = {
                                     schemaID: this.schemaID,
-                                    column: this.schema.find(col => col.model == item.model),
+                                    column: filterColumn,
                                     width: item.width,
                                     isClient: this.isClient,
                                     filterModel: this.filterModel,
@@ -873,7 +873,7 @@ export default {
 
                             if (!this.isClient) {
                                 colItem.filterParams = {
-                                    newRowsAction: "keep",
+                                    // newRowsAction: "keep",
                                     suppressAndOrCondition: true,
                                     textCustomComparator: (filter, value, filterText) => {
                                         return filterText.replace('*', '');
@@ -1158,17 +1158,6 @@ export default {
                         this.$data.data = data.data;
                     }
                 } else {
-                    //for tuushin llc
-                    // if (this.$props.schemaID == 224) {
-                    //     this.info.total = data.data.total;
-                    //     this.info.totalPage = data.data.last_page;
-                    //     //getting data
-                    //     this.$data.data = data.data.data;
-                    //     this.gridOptions.api.setRowData(data.data.data)
-                    //
-                    //     //after data has been rendered
-                    //     this.fetchAggregationsTuushin(filters, data.footer);
-                    // } else {
                     this.info.total = data.total;
                     this.info.totalPage = data.last_page;
                     //getting data
@@ -1200,13 +1189,6 @@ export default {
                         let instance = this.gridApi.getFilterInstance(filterModel);
                         instance.selectNothing();
                     });
-
-                    // if(this.hasCheckbox){
-                    //
-                    //   this.gridApi.forEachNode( (node) =>{
-                    //     node.setSelected(true);
-                    //   });
-                    // }
                 }, 100);
 
 
@@ -1220,12 +1202,12 @@ export default {
 
         updateFilterModel(model, val) {
             this.filterModel[model] = val;
-            console.log("onfilter change", model, val);
-
             this.filterData(1);
         },
 
         filterData(page) {
+            console.log("on filter change", this.filterModel);
+
             this.changePage(page);
         },
 
@@ -1714,7 +1696,12 @@ export default {
 
             //when enable server side filter
             if (!this.isClient) {
-                this.filterModel = {};
+                for(let key in this.filterModel){
+                    if(typeof this.filterModel[key] === 'object'){
+                        delete this.filterModel[key];
+                    }
+                }
+
                 let filters = event.api.getFilterModel();
                 for (let key in filters) {
                     this.filterModel[key] = filters[key];

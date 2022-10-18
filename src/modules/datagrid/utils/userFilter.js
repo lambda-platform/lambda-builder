@@ -21,7 +21,6 @@ export function getRelation(relation) {
         }
         relation.filterWithUser = undefined;
     }
-    console.log(relation)
-
+    // console.log(relation)
     return relation
 }

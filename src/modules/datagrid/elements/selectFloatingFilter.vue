@@ -21,8 +21,7 @@ export default Vue.extend({
     },
     computed: {
         lang() {
-            const labels = ['choosevalue',
-            ];
+            const labels = ['choosevalue'];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataGrid.' + labels[i]);
                 return obj;
@@ -34,26 +33,27 @@ export default Vue.extend({
             loading: true,
             options: [{'value': null, 'label': 'Бүгд'}],
             selected: {'value': null, 'label': 'Бүгд'},
-            currentValue: null
+            currentValue: null,
+            isCascade: false,
         }
     },
     created() {
-        console.log("filter model: ", this.params.filterModel);
-        console.log("model: ", this.params.column.model);
-
-
         let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
         //get user condition
         this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
 
-        //get cascading options
-        if (this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null) {
-            this.$watch(this.params.filterData, {
-                // this.$watch('params.filterModel.`${this.params.column.filter.relation.parentFieldOfTable}`', {
-                handler: (value, oldValue) => {
-                    let temp_relation = JSON.parse(JSON.stringify(this.params.column.filter.relation));
-                    if (temp_relation.parentFieldOfForm != null && temp_relation.parentFieldOfTable != null) {
+        console.log('select params: ', this.params);
 
+        //get cascading options
+        this.$watch(this.params.filterData, {
+            handler: (value, oldValue) => {
+                console.log('I am called')
+                if (this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null) {
+                    console.log("cascade: ", this.params.column.filter.relation.parentFieldOfForm);
+
+                    let temp_relation = JSON.parse(JSON.stringify(this.params.column.filter.relation));
+
+                    if (temp_relation.parentFieldOfForm != null && temp_relation.parentFieldOfTable != null) {
                         let condition = `${temp_relation.parentFieldOfTable}=${this.params.filterModel[temp_relation.parentFieldOfForm]}`;
                         if (temp_relation.filter == "" || typeof temp_relation.filter === "undefined") {
                             temp_relation.filter = condition;
@@ -66,18 +66,18 @@ export default Vue.extend({
                             this.loading = false;
                         });
                     }
-                },
-                deep: true
-            });
-        } else {
-            //zaaval ajillana
+                }
+            },
+            deep: true
+        });
+
+        if (!(this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null)) {
             axios.post(dataUrl, this.params.column.filter.relation).then(({data}) => {
                 this.options = [{'value': null, 'label': 'Бүгд'}];
                 this.options = this.options.concat(data);
                 this.loading = false;
             });
         }
-
     },
 
     methods: {
@@ -89,12 +89,24 @@ export default Vue.extend({
 
         valueChanged(v) {
             let val = 'value' in v ? v.value : v[0];
+            this.params.filterModel[this.params.column.model] = val;
             this.params.filterData(this.params.column.model, val);
         },
 
+        getOptions(){
+            // let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
+            // //get user condition
+            // this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
+            //
+            // axios.post(dataUrl, this.params.column.filter.relation).then(({data}) => {
+            //     this.options = [{'value': null, 'label': 'Бүгд'}];
+            //     this.options = this.options.concat(data);
+            //     this.loading = false;
+            // });
+        },
+
         onParentModelChanged(parentModel) {
-            console.log("parentModel");
-            console.log(parentModel);
+            console.log('I am working');
             this.currentValue = !parentModel ? null : parentModel.filter
         },
     }
