@@ -296,7 +296,7 @@
                 </TabPane>
 
                 <!-- Filter -->
-                <TabPane :label="lang.filtersAndSelectedLineSettings" icon="md-funnel">
+                <TabPane :label="lang.filtersettings" icon="md-funnel">
                     <div class="gb-config">
                         <Row>
                             <Col :xs="24" :sm="24" :md="14" :lg="16">
@@ -317,26 +317,7 @@
                                                           :edit="editMode"></grid-filter-item>
                                     </div>
                                 </div>
-                                <h3>{{ lang.updateSelectedLineDataSettings }}</h3>
-                                <div class="gb-table">
-                                    <Row class="gb-table-header">
-                                        <Col span="3"> {{ lang.model }}</Col>
-                                        <Col span="3"> {{ lang.name }}</Col>
-                                        <Col span="4"> {{ lang.fieldName }}</Col>
-                                        <Col span="4"> {{ lang.buttonName }}</Col>
-                                        <Col span="4"> {{ lang.type }}</Col>
-                                        <Col span="4"> {{ lang.updateAndReboot }}</Col>
-                                        <Col span="2" class="center">
-                                        </Col>
-                                    </Row>
 
-                                    <!-- Schema fields -->
-                                    <div class="gb-table-body auto-height">
-                                        <grid-row-update-item v-for="item in datagrid.schema" v-if="item.updateable"
-                                                              :key="item.index" :item="item" :schema="datagrid.schema"
-                                                              :edit="editMode"></grid-row-update-item>
-                                    </div>
-                                </div>
                             </Col>
 
                             <Col :xs="24" :sm="24" :md="10" :lg="8">
@@ -779,6 +760,37 @@
                     <header-builder v-if="!loading" :header="datagrid.header"
                                     :schema="datagrid.schema"></header-builder>
 
+                </TabPane>
+
+                <TabPane :label="lang.updateSelectedLineDataSettings" icon="md-code-working">
+                    <div class="gb-config">
+                        <Row>
+                            <Col :xs="24" :sm="24" :md="14" :lg="16">
+                                <h3>{{ lang.updateSelectedLineDataSettings }}</h3>
+                                <div class="gb-table">
+                                    <Row class="gb-table-header">
+                                        <Col span="3"> {{ lang.model }}</Col>
+                                        <Col span="3"> {{ lang.name }}</Col>
+                                        <Col span="4"> {{ lang.fieldName }}</Col>
+                                        <Col span="4"> {{ lang.buttonName }}</Col>
+                                        <Col span="4"> {{ lang.type }}</Col>
+                                        <Col span="4"> {{ lang.updateAndReboot }}</Col>
+                                        <Col span="2" class="center">
+                                        </Col>
+                                    </Row>
+
+                                    <!-- Schema fields -->
+                                    <div class="gb-table-body auto-height">
+                                        <grid-row-update-item v-for="item in datagrid.schema.filter(i=>i.updateable)"
+                                                              :key="item.index" :item="item" :schema="datagrid.schema"
+                                                              :edit="editMode"></grid-row-update-item>
+                                    </div>
+                                </div>
+
+                            </Col>
+
+                        </Row>
+                    </div>
                 </TabPane>
 
             </Tabs>
