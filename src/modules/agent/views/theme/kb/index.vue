@@ -2,7 +2,7 @@
     <div class="login">
         <div class="content">
             <div class="slider">
-                <Carousel v-model="currentSlide" arrow="none">
+                <Carousel v-model="currentSlide">
                     <CarouselItem v-for="item in slides" :key="item.index">
                         <div class="bg-cover"
                             :style="{backgroundImage: 'url(' + item.image + ')'}"
@@ -19,16 +19,16 @@
 
                 <ul class="menu">
                     <li>
-                        <a href="/">
+                        <a href="https://khanbank.com">
                             KHANBANK.COM ВЭБ
                         </a>
                     </li>
 
-                    <li>
-                        <a href="javascript:void(0)" @click="showInstructModal">
-                           <i class="ti-info-alt"></i> {{ lang.instructionsUse }}
-                        </a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a href="javascript:void(0)" @click="showInstructModal">-->
+<!--                           <i class="ti-info-alt"></i> {{ lang.instructionsUse }}-->
+<!--                        </a>-->
+<!--                    </li>-->
                 </ul>
             </div>
 
