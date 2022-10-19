@@ -1138,10 +1138,23 @@ export default {
                 url = `${url}&search=${this.searchModel}`;
             }
 
-
             if (this.user_condition) {
+
+
                 filters.user_condition = this.user_condition;
+
+                if (window.init.microserviceSettings) {
+                    if (window.init.microserviceSettings.length >= 1) {
+                        if (this.user_condition) {
+                            filters = this.setUserConditionValues(filters)
+
+                            delete  filters["user_condition"]
+                        }
+                    }
+                }
+
             }
+
 
             if (this.custom_condition) {
                 filters.custom_condition = this.custom_condition;
