@@ -9,8 +9,8 @@
         </div>
         <div class="form-content-inner">
             <div class="dan-auth">
-                <a href="#" class="auth-btn citizen">Иргэн</a>
-                <a href="#" class="auth-btn legal">Хуулийн этгээд</a>
+                <a href="/login" class="auth-btn citizen">Иргэн</a>
+                <a href="/login/company" class="auth-btn legal">Хуулийн этгээд</a>
             </div>
 
             <div class="or"><span>Имэйлээр нэвтрэх</span></div>
