@@ -5,12 +5,12 @@
             <div class='fb-control'>
                 <div class='fb-control-item'>
                     <label>{{ lang.Form_name }}</label>
-                    <Input v-model='formName' :placeholder='lang.Form_name' />
+                    <Input v-model='formName' :placeholder='lang.Form_name'/>
                 </div>
 
                 <div class='fb-control-item'>
                     <label>Дэд гарчиг</label>
-                    <Input v-model='dataform.formSubName' placeholder='Дэд гарчиг' />
+                    <Input v-model='dataform.formSubName' placeholder='Дэд гарчиг'/>
                 </div>
 
                 <div class='fb-control-item'>
@@ -38,7 +38,7 @@
                             @on-change='setBuilder'>
                         <Option v-for='item in tableList' :value='item' :key='item.index'>{{ item }}</Option>
                     </Select>
-                    <Input v-model='dataform.model' disabled v-if='editMode' />
+                    <Input v-model='dataform.model' disabled v-if='editMode'/>
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
@@ -66,6 +66,12 @@
                     </Checkbox>
                 </div>
 
+                <div class='fb-control-item' v-if='isModelSelected || editMode'>
+                    <Checkbox v-model='dataform.isWarnText'>
+                        <span>Санамж текст</span>
+                    </Checkbox>
+                </div>
+
                 <div class='divider' v-if='isModelSelected || editMode'></div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
@@ -86,7 +92,7 @@
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>{{ lang.Form_width }} /px/</label>
-                    <Input v-model='dataform.width' :placeholder='lang.Form_width' />
+                    <Input v-model='dataform.width' :placeholder='lang.Form_width'/>
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
@@ -96,12 +102,12 @@
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>Дутуу бөглөхөд харуулах алдаа</label>
-                    <Input v-model='dataform.formValidationCustomText' />
+                    <Input v-model='dataform.formValidationCustomText'/>
                 </div>
 
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>{{ lang.Save_button_word }}</label>
-                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word' />
+                    <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word'/>
                 </div>
             </div>
 
@@ -149,16 +155,17 @@
                                                     <Option value='main'>
                                                         {{ lang.basic_from }}
                                                     </Option>
-                                                    <Option v-for="f in dataform.schema.filter(s=>s.formType === 'SubForm')"
-                                                            :key='f.index'
-                                                            :value='f.model'>
+                                                    <Option
+                                                        v-for="f in dataform.schema.filter(s=>s.formType === 'SubForm')"
+                                                        :key='f.index'
+                                                        :value='f.model'>
                                                         {{ f.model }}
                                                     </Option>
                                                 </Select>
                                             </FormItem>
                                             <FormItem prop='template' :label='lang.formula_conditions'>
                                                 <Input type='text' v-model='formulaForm.template'
-                                                       :placeholder='lang.formula_conditions' />
+                                                       :placeholder='lang.formula_conditions'/>
                                                 <p class='formula-helper'>
                                                     {{ lang.formula }}: {a}+{b} | {{ lang.conditions }}: {a}>={b}, '{a}'
                                                     == 'test' ...
@@ -180,7 +187,8 @@
                                                         </Select>
                                                         <Select v-model='target.field'
                                                                 :placeholder='lang.field'
-                                                                v-for="(f, f_index) in dataform.schema.filter(ff=>ff.formType === 'SubForm' && ff.model === formulaForm.form && formulaForm.form !== 'main')" :key='f_index'>
+                                                                v-for="(f, f_index) in dataform.schema.filter(ff=>ff.formType === 'SubForm' && ff.model === formulaForm.form && formulaForm.form !== 'main')"
+                                                                :key='f_index'>
                                                             <Option v-for='(f_, f__index) in f.schema'
                                                                     :value='f_.model' :key='f__index'>{{
                                                                     f_.model
@@ -222,6 +230,7 @@
                     </div>
                 </TabPane>
 
+                <!-- Trigger tab -->
                 <TabPane :label='`${lang.trigger}`' icon='md-link'>
                     <div class='trigger-wrapper'>
                         <table>
@@ -230,7 +239,7 @@
                                     <label>{{ lang.controller_namespace }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.namespace' :placeholder='lang.namespace' />
+                                    <Input v-model='dataform.triggers.namespace' :placeholder='lang.namespace'/>
                                 </td>
                             </tr>
                             <tr>
@@ -239,7 +248,7 @@
                                 </td>
                                 <td>
                                     <Input v-model='dataform.triggers.insert.before'
-                                           :placeholder='lang.before_insert' />
+                                           :placeholder='lang.before_insert'/>
                                 </td>
                             </tr>
                             <tr>
@@ -247,7 +256,7 @@
                                     <label>{{ lang.after_insert }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.insert.after' :placeholder='lang.after_insert' />
+                                    <Input v-model='dataform.triggers.insert.after' :placeholder='lang.after_insert'/>
                                 </td>
                             </tr>
                             <tr>
@@ -256,7 +265,7 @@
                                 </td>
                                 <td>
                                     <Input v-model='dataform.triggers.update.before'
-                                           :placeholder='lang.before_update' />
+                                           :placeholder='lang.before_update'/>
                                 </td>
                             </tr>
                             <tr>
@@ -264,7 +273,7 @@
                                     <label>{{ lang.after_update }}</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.update.after' :placeholder='lang.after_update' />
+                                    <Input v-model='dataform.triggers.update.after' :placeholder='lang.after_update'/>
                                 </td>
                             </tr>
                             <tr>
@@ -272,7 +281,8 @@
                                     <label>И-мэйл илгээх үед</label>
                                 </td>
                                 <td>
-                                    <Input v-model='dataform.triggers.email' placeholder='Имэйл илгээх үед ажиллах триггер' />
+                                    <Input v-model='dataform.triggers.email'
+                                           placeholder='Имэйл илгээх үед ажиллах триггер'/>
                                 </td>
                             </tr>
                         </table>
@@ -295,18 +305,18 @@
                                         </FormItem>
                                         <FormItem label='Өнгө' prop='color'>
                                             <ColorPicker v-model='extraButtonForm.color' style='float: right'
-                                                         :alpha='false' />
+                                                         :alpha='false'/>
                                         </FormItem>
                                         <FormItem>
                                             <FormItem prop='title' label='Нэр'>
                                                 <Input type='text' v-model='extraButtonForm.title'
-                                                       placeholder='Нэр' />
+                                                       placeholder='Нэр'/>
                                             </FormItem>
                                         </FormItem>
                                         <FormItem>
                                             <FormItem prop='url' label='Холбоос'>
                                                 <Input type='text' v-model='extraButtonForm.url'
-                                                       placeholder='Холбоос' />
+                                                       placeholder='Холбоос'/>
                                             </FormItem>
                                         </FormItem>
 
@@ -316,7 +326,7 @@
                                     </Form>
 
 
-                                    <IconSelector @setIcon='setIcon' :iconSelector='iconSelector' />
+                                    <IconSelector @setIcon='setIcon' :iconSelector='iconSelector'/>
                                 </Col>
                                 <Col span='12' class="trigger-add-btn-table">
                                     <Table border size='small' :columns='extraButtonColumns'
@@ -330,7 +340,8 @@
                             <Row gutter='20'>
                                 <Col span='24'>
                                     <h4>Cache цэвэрлэх зам</h4>
-                                    <Input v-model='dataform.triggers.cache_clear_url' :placeholder='lang.cache_clear_url' />
+                                    <Input v-model='dataform.triggers.cache_clear_url'
+                                           :placeholder='lang.cache_clear_url'/>
                                 </Col>
                             </Row>
                         </div>
@@ -342,29 +353,29 @@
                         <div class='email-address'>
                             <label>To:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.to' :limit='limit'
-                                       validate='email' />
+                                       validate='email'/>
                         </div>
 
                         <div class='email-address'>
                             <label>CC:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.cc' :limit='limit'
-                                       validate='email' />
+                                       validate='email'/>
                         </div>
 
                         <div class='email-address'>
                             <label>BCC:</label>
                             <input-tag placeholder='Имэйл хаяг' v-model='dataform.email.bcc' :limit='limit'
-                                       validate='email' />
+                                       validate='email'/>
                         </div>
 
                         <div class='subject'>
                             <label>Гарчиг:</label>
                             <Input placeholder='Subject' v-model='dataform.email.subject' :limit='limit'
-                                   validate='email' />
+                                   validate='email'/>
                         </div>
                         <div class='subject'>
                             <label>Attach илгээх эсэх:</label>
-                            <Checkbox  v-model='dataform.email.has_attach'/>
+                            <Checkbox v-model='dataform.email.has_attach'/>
                         </div>
 
                         <div class='body'>
@@ -378,11 +389,19 @@
                 </TabPane>
 
                 <TabPane :label='lang.userInterface' icon='md-apps'>
+                    <div class="warn-build-wrap" v-if="dataform.isWarnText">
+                        <editor
+                            api-key="6tb1o5o4z4v2dhvr0ctybwoltlyqx4xx0emp7wp3datunsx8"
+                            v-model='dataform.warnText'
+                            :init="initEditorConfigWarn"
+                        />
+                    </div>
+
                     <form-moqup :mode='mode' :schema='dataform.schema' :ui='dataform.ui' :schemaID='schemaID'
                                 :identity='dataform.identity' :meta='{
                             labelPosition: dataform.labelPosition,
                             labelWidth: dataform.labelWidth
-                        }' :isDisabled='isDisabled' />
+                        }' :isDisabled='isDisabled'/>
                 </TabPane>
 
                 <TabPane v-if="dataform.formType === 'step'" label='Алхам тохиргоо' icon='md-menu'>
@@ -391,7 +410,7 @@
                             <h3>Алхмууд</h3>
                             <draggable v-model='dataform.step.list' :options="{group:'col', handle: '.drag-handler'}">
                                 <Step v-for='(f, index) in dataform.step.list' :key='index' :f='f' :edit='editMode'
-                                      :otherForms='otherForms' :remove-step='removeStep' />
+                                      :otherForms='otherForms' :remove-step='removeStep'/>
                             </draggable>
                             <div class='step-builder-body-footer'>
                                 <a href='javascript:void(0)' @click='addStep'>
@@ -416,7 +435,8 @@
 
                 <TabPane v-for="(f, index) in dataform.schema.filter(s=>s.formType === 'SubForm')" :key='index'
                          :label='tabLabel(f.model, f.name )'>
-                    <sub-form :f='f' :edit='editMode' :otherForms='otherForms' :otherGrids='otherGrids' :schemaList="schemaList"
+                    <sub-form :f='f' :edit='editMode' :otherForms='otherForms' :otherGrids='otherGrids'
+                              :schemaList="schemaList"
                               :projectID='projectID'></sub-form>
                 </TabPane>
 
@@ -437,9 +457,9 @@ import formItem from './FormItem'
 import subForm from './SubForm'
 import Step from './Step'
 import FormMoqup from './FormMoqup'
-import { idGenerator } from './utils/methods'
-import { getTableMeta } from './utils/helpers'
-import { getTableView } from '../../utils'
+import {idGenerator} from './utils/methods'
+import {getTableMeta} from './utils/helpers'
+import {getTableView} from '../../utils'
 import IconSelector from '../../components/IconSelector'
 import InputTag from 'vue-input-tag'
 import Editor from '@tinymce/tinymce-vue'
@@ -474,36 +494,82 @@ export default {
                     'undo redo | formatselect | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
                     bullist numlist outdent indent | responsivefilemanager | removeformat | help | newsbutton | productbutton | otherbutton',
-                external_filemanager_path:"/vendor/filemanager/",
-                filemanager_title:"Responsive Filemanager" ,
-                external_plugins: { "filemanager" : "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+                external_filemanager_path: "/vendor/filemanager/",
+                filemanager_title: "Responsive Filemanager",
+                external_plugins: {"filemanager": "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
                 setup: (editor) => {
-                    if(this.email_templates)
-                    editor.ui.registry.addMenuButton('newsbutton', {
-                        text: 'Бэлдсэн загвар',
-                        fetch: (callback) => {
-                            let local_email_templates=[];
-                            this.email_templates.forEach(item => {
-                                local_email_templates.push({
-                                    type: 'menuitem',
-                                    text: item.name,
-                                    onAction: function () {
-                                        editor.insertContent(item.content);
-                                    }
+                    if (this.email_templates)
+                        editor.ui.registry.addMenuButton('newsbutton', {
+                            text: 'Бэлдсэн загвар',
+                            fetch: (callback) => {
+                                let local_email_templates = [];
+                                this.email_templates.forEach(item => {
+                                    local_email_templates.push({
+                                        type: 'menuitem',
+                                        text: item.name,
+                                        onAction: function () {
+                                            editor.insertContent(item.content);
+                                        }
+                                    });
                                 });
-                            });
-                            let items = [
-                                {
-                                    type: 'nestedmenuitem',
-                                    text: 'И-мэйл загвар',
-                                    getSubmenuItems: function () {
-                                        return local_email_templates
+                                let items = [
+                                    {
+                                        type: 'nestedmenuitem',
+                                        text: 'И-мэйл загвар',
+                                        getSubmenuItems: function () {
+                                            return local_email_templates
+                                        }
                                     }
-                                }
-                            ];
-                            callback(items);
-                        }
-                    });
+                                ];
+                                callback(items);
+                            }
+                        });
+
+                }
+            },
+            initEditorConfigWarn: {
+                max_height: 1200,
+                min_height: 300,
+                images_upload_url: '/lambda/krud/upload-tinymce',
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount responsivefilemanager'
+                ],
+                toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | responsivefilemanager | removeformat | help | newsbutton | productbutton | otherbutton',
+                external_filemanager_path: "/vendor/filemanager/",
+                filemanager_title: "Responsive Filemanager",
+                external_plugins: {"filemanager": "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+                setup: (editor) => {
+                    if (this.email_templates)
+                        editor.ui.registry.addMenuButton('newsbutton', {
+                            text: 'Бэлдсэн загвар',
+                            fetch: (callback) => {
+                                let local_email_templates = [];
+                                this.email_templates.forEach(item => {
+                                    local_email_templates.push({
+                                        type: 'menuitem',
+                                        text: item.name,
+                                        onAction: function () {
+                                            editor.insertContent(item.content);
+                                        }
+                                    });
+                                });
+                                let items = [
+                                    {
+                                        type: 'nestedmenuitem',
+                                        text: 'И-мэйл загвар',
+                                        getSubmenuItems: function () {
+                                            return local_email_templates
+                                        }
+                                    }
+                                ];
+                                callback(items);
+                            }
+                        });
 
                 }
             },
@@ -517,7 +583,7 @@ export default {
             formName: null,
             editor: Editor,
             dataform: {
-                formType:'normal',
+                formType: 'normal',
                 formSubName: null,
                 model: null,
                 identity: null,
@@ -549,8 +615,8 @@ export default {
                         before: null,
                         after: null
                     },
-                    email:null,
-                    cache_clear_url:null
+                    email: null,
+                    cache_clear_url: null
                 },
                 extraButtons: [],
                 disableReset: false,
@@ -561,8 +627,10 @@ export default {
                     bcc: [],
                     subject: null,
                     body: null,
-                    has_attach:0
-                }
+                    has_attach: 0
+                },
+                isWarnText: false,
+                warnText: ''
             },
 
             //Formula data
@@ -647,7 +715,7 @@ export default {
                 'Date_generated_automatically', 'Label_location', 'Form_width', 'Save_button_word', 'Padding_spacing', 'save', 'model',
                 'displayName', 'hide', 'inactive', 'translation', 'basicSettings', 'formula', 'trigger', 'userInterface', '_subform', '_form'
                 , 'formula_conditions', 'field', 'basic_from', 'conditions', 'add_a_field', 'add', 'controller_namespace', 'namespace',
-                'before_insert', 'after_insert', 'before_update', 'after_update','cache_clear_url', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
+                'before_insert', 'after_insert', 'before_update', 'after_update', 'cache_clear_url', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
                 'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab']
 
             return labels.reduce((obj, key, i) => {
@@ -822,8 +890,8 @@ export default {
             }
         },
 
-        schemaList(){
-            return this.dataform.schema.map(s=>s.model);
+        schemaList() {
+            return this.dataform.schema.map(s => s.model);
         }
     },
 
@@ -1041,6 +1109,14 @@ export default {
                     subject: null,
                     body: null
                 })
+            }
+
+            if (typeof this.dataform.isWarnText == 'undefined') {
+                Vue.set(this.dataform, 'isWarnText', false)
+            }
+
+            if (typeof this.dataform.warnText == 'undefined') {
+                Vue.set(this.dataform, 'warnText', '')
             }
 
             if (typeof this.dataform.triggers == 'undefined') {
@@ -1336,7 +1412,7 @@ export default {
                 item => item.model !== model
             ));
 
-            if(model !== undefined){
+            if (model !== undefined) {
                 Vue.set(this.dataform.ui, "schema", this.removeSubFromUI(this.dataform.ui.schema, model));
             }
 
@@ -1400,7 +1476,7 @@ export default {
                 ? this.$props.src
                 : defualtURL
 
-            axios.post(submitUrl, data).then(({ data }) => {
+            axios.post(submitUrl, data).then(({data}) => {
                 if (data.status) {
                     if (this.editMode) {
                         this.$Notice.success({
