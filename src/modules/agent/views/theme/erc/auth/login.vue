@@ -9,7 +9,6 @@
         </div>
         <div class="form-content-inner">
             <div class="dan-auth">
-<!--                <a href="#" class="auth-btn citizen">Иргэн</a>-->
                 <a href="/login/company" class="auth-btn legal">Хуулийн этгээд</a>
             </div>
 

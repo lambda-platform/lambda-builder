@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width + '%' :'1024px']"
+            <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'1024px']"
                          @close="coleSidePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
                 <div :class="withCrudLog && editMode ? 'with-crud-log' : ''" style="height: 100%">
                     <dataform ref="form"
@@ -175,6 +175,11 @@ export default {
         },
         onReady(formOption) {
             this.form_width = formOption.width
+
+            if(!this.form_width.includes("px")){
+                this.form_width = this.form_width + '%';
+            }
+
         },
         coleSidePanel() {
             this.openSlidePanel = false;
