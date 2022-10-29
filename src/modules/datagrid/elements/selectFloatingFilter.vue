@@ -42,8 +42,6 @@ export default Vue.extend({
         //get user condition
         this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
 
-        console.log('select params: ', this.params);
-
         //get cascading options
         this.$watch(this.params.filterData, {
             handler: (value, oldValue) => {

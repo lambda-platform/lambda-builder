@@ -168,8 +168,8 @@ export default {
                 }
             }
         },
-        addFromUrl() {
 
+        addFromUrl() {
             if (window.init.microserviceSettings) {
                 let si = window.init.microserviceSettings.findIndex(set => set.project_id == this.meta.relation.addFromMicroservice);
 

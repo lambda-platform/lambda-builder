@@ -108,10 +108,10 @@
 
         &-body {
             background: #ffffff;
-            border: 1px solid rgba(132, 146, 189, .2);
-            border-radius: 5px;
-            box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
-            margin: 15px;
+            //border: 1px solid rgba(132, 146, 189, .2);
+            //border-radius: 5px;
+            //box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
+            //margin: 15px;
         }
     }
 }
@@ -257,7 +257,7 @@
 
     &-body {
         padding: 15px 20px 10px;
-        max-height: calc(100vh - 120px);
+        height: calc(100vh - 120px);
         overflow-y: auto;
 
         .fieldset {

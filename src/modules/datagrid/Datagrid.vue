@@ -1219,8 +1219,6 @@ export default {
         },
 
         filterData(page) {
-            console.log("on filter change", this.filterModel);
-
             this.changePage(page);
         },
 
