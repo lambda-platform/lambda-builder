@@ -1,8 +1,6 @@
 <template>
-    <FormItem :prop=rule>
+    <FormItem :label="label" :prop=rule>
         <div class="multi-upload" v-if="meta.file && meta.file.isMultiple == true">
-            <label>{{ label }}</label>
-
             <div class="multi-upload-list">
                 <div class="upload-list" v-for="item in uploadList" :key="item.index">
                     <template v-if="item.status == 'finished'">
