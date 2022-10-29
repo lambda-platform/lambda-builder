@@ -24,6 +24,10 @@ export const elements = [
         component:()=> import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox.vue'),
     },
     {
+        element: "CheckboxSmall",
+        component:()=> import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox-small.vue'),
+    },
+    {
         element: "Image",
         component:()=> import(/* webpackChunkName: "form-field-Image" */'./Image.vue'),
     },
@@ -197,6 +201,10 @@ export const elements = [
     {
         element: "TimeMask",
         component:()=> import(/* webpackChunkName: "form-field-TimeMask" */'./TimeMask.vue'),
+    },
+    {
+        element: "TextHidden",
+        component:()=> import(/* webpackChunkName: "form-field-TimeMask" */'./Text-hidden.vue'),
     },
 
 ];
