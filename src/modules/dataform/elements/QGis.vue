@@ -198,7 +198,7 @@ export default {
                 let lng = parseFloat(latlng[0]).toFixed(6);
 
                 this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(lng), parseFloat(lat)]));
-                this.map.getView().setZoom(14);
+                this.map.getView().setZoom(18);
 
                 if (this.parcelLayer != null) {
                     let view = this.map.getView();
@@ -345,7 +345,7 @@ export default {
                         }
                         let center = JSON.parse(data.center);
                         this.map.getView().setCenter(ol.proj.fromLonLat(center.coordinates));
-                        this.map.getView().setZoom(15);
+                        this.map.getView().setZoom(14);
                     }
                     this.isLoading = false;
                 }).catch(() => {
