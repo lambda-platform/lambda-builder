@@ -66,6 +66,7 @@
                     </Checkbox>
                 </div>
 
+
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <Checkbox v-model='dataform.isWarnText'>
                         <span>Санамж текст</span>
@@ -108,6 +109,12 @@
                 <div class='fb-control-item' v-if='isModelSelected || editMode'>
                     <label>{{ lang.Save_button_word }}</label>
                     <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word'/>
+                </div>
+
+                <div class='fb-control-item' v-if='isModelSelected || editMode'>
+                    <Checkbox v-model='dataform.use2ColumnLayout'>
+                        <span>2 багантай маягт</span>
+                    </Checkbox>
                 </div>
             </div>
 
@@ -398,7 +405,9 @@
                     </div>
 
                     <form-moqup :mode='mode' :schema='dataform.schema' :ui='dataform.ui' :schemaID='schemaID'
-                                :identity='dataform.identity' :meta='{
+                                :identity='dataform.identity'
+                                :use2ColumnLayout='dataform.use2ColumnLayout'
+                                :meta='{
                             labelPosition: dataform.labelPosition,
                             labelWidth: dataform.labelWidth
                         }' :isDisabled='isDisabled'/>
@@ -585,6 +594,7 @@ export default {
             dataform: {
                 formType: 'normal',
                 formSubName: null,
+                use2ColumnLayout: false,
                 model: null,
                 identity: null,
                 timestamp: false,
