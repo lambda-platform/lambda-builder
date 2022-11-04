@@ -61,10 +61,12 @@ $white: #ffffff;
         }
 
         .ivu-tabs-tabpane {
-            height: 100%;
-            .crud-config{
+            //height: 100%;
+
+            .crud-config {
                 height: 100%;
-                .crud-table{
+
+                .crud-table {
                     height: 100%;
                 }
             }
@@ -76,7 +78,7 @@ $white: #ffffff;
             border-left: solid 1px #dedede;
             border-right: solid 1px #dedede;
             border-bottom: solid 1px #dedede;
-            overflow-y:auto;
+            overflow-y: auto;
         }
     }
 
@@ -243,12 +245,11 @@ $white: #ffffff;
 }
 */
 
-.select-item{
+.select-item {
     //margin-bottom: 20px !important;
 }
 
 .multiselect {
-    height: 32px;
     min-height: 32px !important;
     font-size: 12px;
 }
@@ -263,9 +264,10 @@ $white: #ffffff;
 
 .multiselect__tags {
     min-height: 32px !important;
-//    padding: 0 50px 0 8px;
-//    border: 1px solid #dcdee2;
-    padding: 0 !important;
+    background: #fff;
+    //    padding: 0 50px 0 8px;
+    //    border: 1px solid #dcdee2;
+    padding: 0 6px !important;
 }
 
 .multiselect__tag {
@@ -393,7 +395,7 @@ $white: #ffffff;
 }
 
 .select-item {
-    .ivu-form-item-content{
+    .ivu-form-item-content {
         //line-height: 12px !important;
     }
 }

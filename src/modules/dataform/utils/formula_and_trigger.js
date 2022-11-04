@@ -23,7 +23,7 @@ export function doFormula(formulas, model, model_, schema_, rule_, subFormModelN
         let formula_index = formulas.findIndex(formula => formula.model == model)
         if (formula_index <= -1) {
             formulas.map(formula => {
-                if(formula.template.includes(model)){
+                if (formula.template.includes(model)) {
                     doFormula2(formula, model, model_, schema_, rule_, subFormModelName)
                 }
             });
@@ -32,6 +32,7 @@ export function doFormula(formulas, model, model_, schema_, rule_, subFormModelN
         }
     }
 }
+
 function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
 
     let use_formula = false;
@@ -42,36 +43,32 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
             if (formula['form'] == subFormModelName)
                 use_formula = true
         }
-    } else
+    } else {
         use_formula = true;
-
-
-    if (use_formula) {
-
-        let pre_formula = dataFromTemplate(formula.template, model_);
-
-
-        if (pre_formula) {
-            let calculated = evil(pre_formula);
-            formula.targets.map(target => {
-                let schema_index = getSchemaIndex(schema_, target.field);
-                if (schema_index >= 0) {
-                    if (target.prop == 'value') {
-                        model_[target.field] = calculated;
-                    } else {
-                        if (target.prop == 'hidden') {
-                            if (rule_) {
-                                if (rule_[target.field]) {
-                                    if (rule_[target.field].length > 0 && rule_[target.field][0].hasOwnProperty("required"))
-                                        rule_[target.field][0].required = calculated ? false : true;
+        if (use_formula) {
+            let pre_formula = dataFromTemplate(formula.template, model_);
+            if (pre_formula) {
+                let calculated = evil(pre_formula);
+                formula.targets.map(target => {
+                    let schema_index = getSchemaIndex(schema_, target.field);
+                    if (schema_index >= 0) {
+                        if (target.prop == 'value') {
+                            model_[target.field] = calculated;
+                        } else {
+                            if (target.prop == 'hidden') {
+                                if (rule_) {
+                                    if (rule_[target.field]) {
+                                        if (rule_[target.field].length > 0 && rule_[target.field][0].hasOwnProperty("required"))
+                                            rule_[target.field][0].required = calculated ? false : true;
+                                    }
                                 }
                             }
+                            // schema_[schema_index][target.prop] = calculated;
+                            Vue.set(schema_[schema_index], target.prop, calculated)
                         }
-                        // schema_[schema_index][target.prop] = calculated;
-                        Vue.set(schema_[schema_index], target.prop, calculated)
                     }
-                }
-            })
+                })
+            }
         }
     }
 }
@@ -85,9 +82,9 @@ export function doTrigger(model, val, model_, schema_, refs, Message, editMode) 
                 if (fieldTimeout) {
                     clearTimeout(fieldTimeout);
                 }
-                 fieldTimeout = setTimeout(() => {
+                fieldTimeout = setTimeout(() => {
                     callFieldTrigger(schema_[model_index]['trigger'], model_, schema_, refs, Message, editMode);
-                 }, schema_[model_index]['triggerTimeout'] != undefined && schema_[model_index]['triggerTimeout'] !== null && schema_[model_index]['triggerTimeout'] != ''  ? schema_[model_index]['triggerTimeout'] : 0);
+                }, schema_[model_index]['triggerTimeout'] != undefined && schema_[model_index]['triggerTimeout'] !== null && schema_[model_index]['triggerTimeout'] != '' ? schema_[model_index]['triggerTimeout'] : 0);
             }
         }
     }
@@ -125,8 +122,6 @@ function setValueProps(field, model_, schema_, refs, is_sub) {
             }
         }
     }
-
-
 }
 
 function callFieldTrigger(trigger_url, model_, schema_, refs, Message, editMode) {
@@ -134,7 +129,7 @@ function callFieldTrigger(trigger_url, model_, schema_, refs, Message, editMode)
 
     let services = trigger_url.split(",");
 
-    services.forEach(service=>{
+    services.forEach(service => {
         axios.post(service, {model: {...model_}, editMode: editMode})
             .then(({data}) => {
                 if (data['schema']) {
@@ -155,12 +150,12 @@ function callFieldTrigger(trigger_url, model_, schema_, refs, Message, editMode)
                     if (data['message']['type'] == 'success') {
                         Message.success({
                             duration: 3,
-                            desc:data['message']['message']
+                            desc: data['message']['message']
                         });
                     } else {
                         Message.error({
                             duration: 3,
-                            desc:data['message']['message']
+                            desc: data['message']['message']
                         });
                     }
                 }

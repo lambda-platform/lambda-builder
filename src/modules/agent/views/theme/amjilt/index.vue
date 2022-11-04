@@ -14,7 +14,7 @@
 
             <div class="header">
                 <div class="logo">
-                    <img src="/assets/app/images/logo.png" alt="logo"/>
+                    <img src="/assets/amjilt/images/logo.png" alt="logo"/>
                 </div>
 
                 <ul class="menu">

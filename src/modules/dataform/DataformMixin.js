@@ -279,7 +279,7 @@ export default {
             this.identity = formSchema.identity
             this.schema = formSchema.schema
             this.formType = formSchema.formType;
-            if(formSchema.step) {
+            if (formSchema.step) {
                 this.step = formSchema.step;
                 console.log(this.step);
             }
@@ -325,6 +325,7 @@ export default {
             this.setUserConditionValues(true)
             this.setCustomData()
             this.loadConfig = false
+
             if (this.$props.onReady) {
                 this.$props.onReady(formSchema, this.schema)
             }
@@ -961,8 +962,6 @@ export default {
                 if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect') {
                     if (item.relation.table) {
                         if (typeof selects[item.relation.table] === 'undefined') {
-
-
                             if (microserviceID !== undefined) {
                                 if (item.relation.microservice_id == microserviceID) {
                                     selects = this.getSelectItem(item, selects)
@@ -981,7 +980,6 @@ export default {
                 }
 
                 if (item.formType == 'SubForm') {
-
                     if (item.schema) {
                         let pre_selects = this.getSelects(item.schema, microserviceID)
                         if (pre_selects) {
@@ -1076,11 +1074,11 @@ export default {
             this.currentStep = stepNumber;
         },
 
-        onStepSuccess(){
+        onStepSuccess() {
 
         },
 
-        onStepError(){
+        onStepError() {
 
         }
     }

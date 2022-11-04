@@ -45,6 +45,9 @@
                                             <Checkbox v-model='row.sectionRenderByTab'>
                                                 <span>{{ lang.render_by_tab }}</span>
                                             </Checkbox>
+                                            <Checkbox v-model='row.use2ColumnLayout' v-if="use2ColumnLayout">
+                                                <span>2 дахь баганад харуулах</span>
+                                            </Checkbox>
 
                                             <span class='tool' @click='addSection(row.id, 1)'>
                                                 <Tooltip :content='lang.section_add'>
@@ -311,7 +314,7 @@ import { Container, Draggable } from 'vue-smooth-dnd'
 import { applyDrag } from './utils/helpers'
 
 export default {
-    props: ['schema', 'ui', 'isDisabled', 'meta', 'schemaID', 'identity'],
+    props: ['schema', 'ui', 'isDisabled', 'meta', 'schemaID', 'identity', 'use2ColumnLayout'],
     components: {
         Container,
         Draggable,
@@ -466,6 +469,7 @@ export default {
             let rowItem = {
                 type: 'row',
                 sectionRenderByTab: false,
+                use2ColumnLayout: true,
                 id: this.idGenerator('row'),
                 name: null,
                 children: []

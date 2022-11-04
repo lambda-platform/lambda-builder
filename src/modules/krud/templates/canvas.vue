@@ -138,13 +138,13 @@ export default {
     mixins: [mixins],
     data() {
         return {
-            form_width: 800,
+            form_width: `800px`,
             openSlidePanel: false,
             exportLoading: false
         };
     },
-    created(){
-       // console.log("HIHIHIH");
+    created() {
+        // console.log("HIHIHIH");
     },
     components: {
         "slide-panel": slidePanel,
@@ -175,11 +175,11 @@ export default {
         },
         onReady(formOption) {
             this.form_width = formOption.width
-
-            if(!this.form_width.includes("px")){
+            if (this.form_width.includes("%")) {
                 this.form_width = this.form_width + '%';
+            } else {
+                this.form_width = this.form_width + 'px';
             }
-
         },
         coleSidePanel() {
             this.openSlidePanel = false;
