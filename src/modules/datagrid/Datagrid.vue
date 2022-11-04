@@ -1012,18 +1012,17 @@ export default {
                         showOnlyIcon: item.showOnlyIcon
                     }
                 }
-
                 //Custom column item as plugin
                 if (isValid(item.gridType)) {
-                    if (window.init.data_grid_custom_elements) {
+                    if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
                         let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == item.gridType);
                         if (custom) {
-                            // colItem.cellRendererFramework = require(`datagrid_custom/${item.gridType}.vue`).default;
-                            // colItem.cellRendererParams = {
-                            //     customOptions: item.options,
-                            // }
-                            // colItem.suppressRowTransform = true;
-                            // colItem.cellClass = 'lambda-custom-element overflow-visible';
+                            colItem.cellRendererFramework = require(`datagrid_custom/${item.gridType}.vue`).default;
+                            colItem.cellRendererParams = {
+                                customOptions: item.options,
+                            }
+                            colItem.suppressRowTransform = true;
+                            colItem.cellClass = 'lambda-custom-element overflow-visible';
                         }
                     }
                 }
@@ -1148,7 +1147,7 @@ export default {
                         if (this.user_condition) {
                             filters = this.setUserConditionValues(filters)
 
-                            delete  filters["user_condition"]
+                            delete filters["user_condition"]
                         }
                     }
                 }
@@ -1709,8 +1708,8 @@ export default {
 
             //when enable server side filter
             if (!this.isClient) {
-                for(let key in this.filterModel){
-                    if(typeof this.filterModel[key] === 'object'){
+                for (let key in this.filterModel) {
+                    if (typeof this.filterModel[key] === 'object') {
                         delete this.filterModel[key];
                     }
                 }
