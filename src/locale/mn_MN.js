@@ -309,6 +309,7 @@ export default {
         "_color": "Өнгө"
     },
     "dataForm": {
+        "resetFrom": "Шинээр бөглөх",
         "save": "Хадгалах",
         "pleaseWait": "Түр хүлээнэ үү!",
         "fillInTheNewOne": "Шинээр бөглөх",
