@@ -264,6 +264,7 @@ export default {
     methods: {
         onGridReady(params) {
             this.gridApi = params.api;
+            this.gridColumnApi = params.columnApi;
             this.initGrid();
 
             setTimeout(() => {
@@ -1618,10 +1619,10 @@ export default {
         onSortChanged(event) {
             //when enable server side sort
             if (!this.isClient) {
-                let sortModel = event.api.getSortModel()[0];
-                if (typeof sortModel !== "undefined") {
-                    this.query.sort = sortModel.colId;
-                    this.query.order = sortModel.sort;
+                let column = this.gridColumnApi.getColumnState().filter(c => c.sort != null);
+                if (typeof column !== "undefined" && column.length > 0) {
+                    this.query.sort = column[0].colId;
+                    this.query.order = column[0].sort;
                     this.fetchData();
                 }
             }

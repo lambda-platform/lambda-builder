@@ -10,7 +10,6 @@
 
                 <div v-else class="crud-page-header-left">
                     <i v-if="$props.icon" :class="icon"></i>
-                    <i v-else class="ti-list-ol"></i>
                     <h3 v-if="$props.title">{{ $props.title.replace(/-/g, ' ') }}</h3>
                     <slot name="nav"></slot>
                 </div>
