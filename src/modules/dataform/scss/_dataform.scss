@@ -259,6 +259,7 @@
         padding: 15px 20px 10px;
         height: calc(100vh - 120px);
         overflow-y: auto;
+        overflow-x: hidden;
 
         .fieldset {
             padding: 10px 8px;
