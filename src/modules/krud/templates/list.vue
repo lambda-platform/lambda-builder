@@ -47,11 +47,12 @@
                               :hasSelection="typeof $props.hasSelection === undefined ? false : $props.hasSelection"
                               :onRowSelect="$props.onRowSelect"
                               :actions="$props.actions"
+                              :permissions="$props.permissions"
                               :user_condition="$props.user_condition? $props.user_condition :null"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
                               :dblClick="$props.dbClickAction"
-                              :liveData="$props.liveData">
-                    </datagrid>
+                              :liveData="$props.liveData"
+                    />
                 </div>
             </div>
         </div>
@@ -62,6 +63,9 @@
 import mixins from "./mixins";
 
 export default {
-    mixins: [mixins]
+    mixins: [mixins],
+    created() {
+        console.log('krud list', this.$props.permissions);
+    }
 };
 </script>

@@ -1514,7 +1514,6 @@ export default {
             if (this.permissions) {
                 if (this.permissions.u) {
                     if (this.gridActions.find(action => action == 'obl')) {
-
                         if (row.data[this.identity]) {
                             this.fnEdit(row.data[this.identity], row.data)
                         }
@@ -1577,6 +1576,8 @@ export default {
                 }
 
                 if (item == 'e' && this.permissions && this.permissions.u) {
+                    console.log('action e');
+
                     let menuItem = {
                         name: "Засах",
                         icon:
