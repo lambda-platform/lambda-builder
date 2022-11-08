@@ -138,13 +138,13 @@ export default {
     mixins: [mixins],
     data() {
         return {
-            form_width: `800px`,
+            form_width: '800px',
             openSlidePanel: false,
             exportLoading: false
         };
     },
     created() {
-        // console.log("HIHIHIH");
+
     },
     components: {
         "slide-panel": slidePanel,
@@ -174,11 +174,12 @@ export default {
             // this.openSlidePanel = false;
         },
         onReady(formOption) {
-            this.form_width = formOption.width
-            if (this.form_width.includes("%")) {
-                this.form_width = this.form_width + '%';
+            if (formOption.width.includes("%")) {
+                this.form_width = formOption.width;
             } else {
-                this.form_width = this.form_width + 'px';
+                if (!formOption.width.includes("px")) {
+                    this.form_width = formOption.width + 'px';
+                }
             }
         },
         coleSidePanel() {

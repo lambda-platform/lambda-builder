@@ -264,6 +264,7 @@ export default {
     methods: {
         onGridReady(params) {
             this.gridApi = params.api;
+            this.gridColumnApi = params.columnApi;
             this.initGrid();
 
             setTimeout(() => {
@@ -1138,22 +1139,16 @@ export default {
             }
 
             if (this.user_condition) {
-
-
                 filters.user_condition = this.user_condition;
-
                 if (window.init.microserviceSettings) {
                     if (window.init.microserviceSettings.length >= 1) {
                         if (this.user_condition) {
                             filters = this.setUserConditionValues(filters)
-
-                            delete filters["user_condition"]
+                            delete  filters["user_condition"]
                         }
                     }
                 }
-
             }
-
 
             if (this.custom_condition) {
                 filters.custom_condition = this.custom_condition;
@@ -1519,7 +1514,6 @@ export default {
             if (this.permissions) {
                 if (this.permissions.u) {
                     if (this.gridActions.find(action => action == 'obl')) {
-
                         if (row.data[this.identity]) {
                             this.fnEdit(row.data[this.identity], row.data)
                         }
@@ -1582,6 +1576,8 @@ export default {
                 }
 
                 if (item == 'e' && this.permissions && this.permissions.u) {
+                    console.log('action e');
+
                     let menuItem = {
                         name: "Засах",
                         icon:
@@ -1622,10 +1618,10 @@ export default {
         onSortChanged(event) {
             //when enable server side sort
             if (!this.isClient) {
-                let sortModel = event.api.getSortModel()[0];
-                if (typeof sortModel !== "undefined") {
-                    this.query.sort = sortModel.colId;
-                    this.query.order = sortModel.sort;
+                let column = this.gridColumnApi.getColumnState().filter(c => c.sort != null);
+                if (typeof column !== "undefined" && column.length > 0) {
+                    this.query.sort = column[0].colId;
+                    this.query.order = column[0].sort;
                     this.fetchData();
                 }
             }

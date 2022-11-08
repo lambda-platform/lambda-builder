@@ -10,7 +10,6 @@
 
                 <div v-else class="crud-page-header-left">
                     <i v-if="$props.icon" :class="icon"></i>
-                    <i v-else class="ti-list-ol"></i>
                     <h3 v-if="$props.title">{{ $props.title.replace(/-/g, ' ') }}</h3>
                     <slot name="nav"></slot>
                 </div>
@@ -47,11 +46,12 @@
                               :hasSelection="typeof $props.hasSelection === undefined ? false : $props.hasSelection"
                               :onRowSelect="$props.onRowSelect"
                               :actions="$props.actions"
+                              :permissions="$props.permissions"
                               :user_condition="$props.user_condition? $props.user_condition :null"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
                               :dblClick="$props.dbClickAction"
-                              :liveData="$props.liveData">
-                    </datagrid>
+                              :liveData="$props.liveData"
+                    />
                 </div>
             </div>
         </div>
@@ -62,6 +62,9 @@
 import mixins from "./mixins";
 
 export default {
-    mixins: [mixins]
+    mixins: [mixins],
+    created() {
+        console.log('krud list', this.$props.permissions);
+    }
 };
 </script>
