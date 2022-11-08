@@ -33,11 +33,7 @@
 
                 <div class='fb-control-item'>
                     <label>{{ lang.data_table }}</label>
-                    <Select v-if='!editMode' v-model='dataform.model' :placeholder='lang.selectTable' clearable
-                            filterable
-                            @on-change='setBuilder'>
-                        <Option v-for='item in tableList' :value='item' :key='item.index'>{{ item }}</Option>
-                    </Select>
+                    <multiselect v-if='!editMode' v-model='dataform.model' :placeholder='lang.selectTable' @select='setBuilder' :options="tableList"></multiselect>
                     <Input v-model='dataform.model' disabled v-if='editMode'/>
                 </div>
 
@@ -917,6 +913,7 @@ export default {
     },
 
     methods: {
+
         setIcon(icon) {
             this.extraButtonForm.icon = icon
             this.iconSelector = false
