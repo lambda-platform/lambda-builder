@@ -1,5 +1,5 @@
 <template>
-    <Row :class="`gb-table-row ${ expanded ? 'active' : ''}`" v-if="item.update">
+    <Row :class="`gb-table-row ${ expanded ? 'active' : ''}`" v-if="item.updateable">
         <Col span="3">
         <strong>{{ item.model }}</strong>
         </Col>
