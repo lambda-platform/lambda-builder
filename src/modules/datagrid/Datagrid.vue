@@ -134,8 +134,7 @@
 
         <GridRowUpdate v-if="template == 0 || template==2"
                        :permissions="permissions" :model="filterModel" :schema="schema" :url="url" :inFilter="false"
-                       :schemaID="schemaID"
-        />
+                       :schemaID="schemaID"/>
 
     </div>
 </template>
@@ -698,6 +697,7 @@ export default {
                     }
 
                     let filterColumn = this.schema.find(col => col.model == item.model);
+
                     switch (item.filter.type) {
                         case 'Number':
                             colItem.filter = "agNumberColumnFilter";
@@ -1145,7 +1145,7 @@ export default {
                     if (window.init.microserviceSettings.length >= 1) {
                         if (this.user_condition) {
                             filters = this.setUserConditionValues(filters)
-                            delete  filters["user_condition"]
+                            delete filters["user_condition"]
                         }
                     }
                 }
@@ -1667,7 +1667,6 @@ export default {
                 if ((endWith == false && startWith == false) || (endWith == true && startWith == true)) {
                     return f.includes(valueLowerCase);
                 }
-
                 return false;
             })
         },
@@ -1703,8 +1702,8 @@ export default {
 
             //when enable server side filter
             if (!this.isClient) {
-                for(let key in this.filterModel){
-                    if(typeof this.filterModel[key] === 'object'){
+                for (let key in this.filterModel) {
+                    if (typeof this.filterModel[key] === 'object') {
                         delete this.filterModel[key];
                     }
                 }

@@ -11,6 +11,7 @@ import {
 LicenseManager.prototype.validateLicense = () => {
 };
 
+Vue.prototype.bus = new Vue()
 const components = {
     'datagrid': Datagrid
 };

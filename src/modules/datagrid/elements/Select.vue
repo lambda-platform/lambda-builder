@@ -40,7 +40,6 @@
         </multiselect>
         <multiselect v-else
                      :multiple="true"
-
                      v-model="value"
                      :disabled="meta.disabled"
                      track-by="value"
