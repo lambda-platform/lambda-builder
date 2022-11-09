@@ -235,20 +235,15 @@
                             </li>
                             <li v-else>
                                 <label>{{ lang.table }}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        :disabled="!item.isFkey" @on-change="relationSchema">
-                                    <OptionGroup label="Table list">
-                                        <Option v-for="item in tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup label="View list">
-                                        <Option v-for="item in viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
+                                <multiselect
+                                    v-model='item.relation.table'
+                                    :placeholder='lang.selectTable'
+                                    :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
+                                    @select="relationSchema"
+                                    group-values="list" group-label="type" :group-select="true"
+
+                                ></multiselect>
+
                             </li>
                             <li>
                                 <label>{{ lang.Related_fields }}</label>

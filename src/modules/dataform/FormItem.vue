@@ -10,8 +10,9 @@
         </Col>
         <Col span="4">
             <Select v-model="item.formType" :placeholder="lang._type" clearable filterable :disabled="disabled"
+
                     @on-change="changeItemType">
-                <Option v-for="item in elementList" :value="item" :key="item.index">{{ item }}
+                <Option v-for="item in elementList" :value="item" :key="item.index"  :label="item" >{{ item }}
                 </Option>
             </Select>
         </Col>

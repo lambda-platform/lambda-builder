@@ -12,3 +12,4 @@ export const getTableView = (tableOrView) => {
 
     return list;
 }
+
