@@ -44,7 +44,7 @@
                                      v-if="preview != 'hidden'">
                             <Icon type="ios-eye"></Icon>
                         </router-link>&nbsp;
-                        <a href="javascript:void(0);" class="btn-preview" v-if="type == 'form' || type == 'grid'"
+                        <a href="javascript:void(0);" class="btn-preview" v-if="type == 'form' || type == 'grid' || type == 'datasource'"
                            @click="duplicate(item.id, type)">
                             <Icon type="md-copy"></Icon>
                         </a>
@@ -71,13 +71,13 @@
         >
             <label>{{ lang1.name }}</label>
             <Input v-model="duplicateData.name" :placeholder="lang1.name" style="width: 100%"/>
-            <label>{{ lang1.table }} (DB table)</label>
-            <Select v-if="type== 'form'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
+            <label v-if="type === 'form' || type === 'grid'">{{ lang1.table }} (DB table)</label>
+            <Select v-if="type === 'form'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
                     style="width: 100%"
                     filterable>
                 <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
             </Select>
-            <Select v-if="type== 'grid'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
+            <Select v-if="type === 'grid'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
                     filterable style="width: 100%">
                 <OptionGroup :label="lang.table_list">
                     <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
@@ -86,8 +86,8 @@
                     <Option v-for="item in viewList" :value="item" :key="item.index">{{ item }}</Option>
                 </OptionGroup>
             </Select>
-            <label v-if="type== 'grid'">{{ lang1.basicTable }} (DB table)</label>
-            <Select v-if="type== 'grid'" v-model="duplicateData.schema.mainTable" :placeholder="lang1.selectTable"
+            <label v-if="type === 'grid'">{{ lang1.basicTable }} (DB table)</label>
+            <Select v-if="type === 'grid'" v-model="duplicateData.schema.mainTable" :placeholder="lang1.selectTable"
                     clearable style="width: 100%" filterable>
                 <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
             </Select>
@@ -157,7 +157,7 @@ export default {
 
         doDuplicate() {
             let src = "/lambda/puzzle/schema/form"
-            if (this.type == "grid") {
+            if (this.type === "grid") {
                 src = "/lambda/puzzle/schema/grid";
 
                 this.duplicateData.schema.schema.forEach(col => {
@@ -166,7 +166,7 @@ export default {
             }
             if (this.$project) {
                 src = `/lambda/puzzle/project/${this.$project.id}/form`
-                if (this.type == "grid") {
+                if (this.type === "grid") {
                     src = `/lambda/puzzle/project/${this.$project.id}/grid`;
 
                     this.duplicateData.schema.schema.forEach(col => {
@@ -182,6 +182,9 @@ export default {
                 name: this.duplicateData.name,
                 schema: JSON.stringify(this.duplicateData.schema)
             };
+            if (this.type === "datasource") {
+                src = "/lambda/puzzle/schema/datasource"
+            }
             axios.post(src, data).then(({data}) => {
                 if (data.status) {
                     this.$Notice.success({

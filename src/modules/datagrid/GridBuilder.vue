@@ -11,6 +11,7 @@
                 <div class="gb-control-item">
                     <label>{{ lang.data_table }}</label>
                     <multiselect
+                        v-if="!editMode"
                         v-model='datagrid.model'
                         :placeholder='lang.selectTable'
                         :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"

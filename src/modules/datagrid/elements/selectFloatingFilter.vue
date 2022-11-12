@@ -1,5 +1,6 @@
 <template>
     <mSelect label="label"
+             v-if="params.column.model"
              v-model="selected"
              :options="options"
              :placeholder="lang.choosevalue"
@@ -42,31 +43,37 @@ export default Vue.extend({
         //get user condition
         this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
 
+        console.log("api: ", this.params.api.data);
+
         //get cascading options
         this.$watch(this.params.filterData, {
             handler: (value, oldValue) => {
-                console.log('I am called')
                 if (this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null) {
-                    console.log("cascade: ", this.params.column.filter.relation.parentFieldOfForm);
+                    console.log("cascade value: ", this.$parent.$parent.filterModel[this.params.column.filter.relation.parentFieldOfForm]);
 
-                    let temp_relation = JSON.parse(JSON.stringify(this.params.column.filter.relation));
+                    if (this.$parent.$parent.filterModel[this.params.column.filter.relation.parentFieldOfForm]) {
+                        let temp_relation = JSON.parse(JSON.stringify(this.params.column.filter.relation));
+                        console.log('tmp rel: ', temp_relation);
 
-                    if (temp_relation.parentFieldOfForm != null && temp_relation.parentFieldOfTable != null) {
-                        let condition = `${temp_relation.parentFieldOfTable}=${this.params.filterModel[temp_relation.parentFieldOfForm]}`;
-                        if (temp_relation.filter == "" || typeof temp_relation.filter === "undefined") {
-                            temp_relation.filter = condition;
-                        } else {
-                            temp_relation.filter = temp_relation.filter + " AND " + condition
+                        if (temp_relation.parentFieldOfForm != null && temp_relation.parentFieldOfTable != null) {
+                            let condition = `${temp_relation.parentFieldOfTable} = '${this.$parent.$parent.filterModel[this.params.column.filter.relation.parentFieldOfForm]}'`;
+                            if (temp_relation.filter === "" || typeof temp_relation.filter === "undefined") {
+                                temp_relation.filter = condition;
+                            } else {
+                                temp_relation.filter = temp_relation.filter + " AND " + condition
+                            }
+
+                            axios.post(dataUrl, temp_relation).then(({data}) => {
+                                this.options = [{'value': null, 'label': 'Бүгд'}];
+                                this.options = this.options.concat(data);
+                                this.loading = false;
+                            });
                         }
-                        axios.post(dataUrl, temp_relation).then(({data}) => {
-                            this.options = [{'value': null, 'label': 'Бүгд'}];
-                            this.options = this.options.concat(data);
-                            this.loading = false;
-                        });
                     }
                 }
             },
-            deep: true
+            deep: true,
+            immediate: true
         });
 
         if (!(this.params.column.filter.relation.parentFieldOfForm != null && this.params.column.filter.relation.parentFieldOfTable != null)) {
@@ -87,11 +94,10 @@ export default Vue.extend({
 
         valueChanged(v) {
             let val = 'value' in v ? v.value : v[0];
-            this.params.filterModel[this.params.column.model] = val;
             this.params.filterData(this.params.column.model, val);
         },
 
-        getOptions(){
+        getOptions() {
             // let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
             // //get user condition
             // this.params.column.filter.relation = getRelation(this.params.column.filter.relation);
@@ -101,12 +107,7 @@ export default Vue.extend({
             //     this.options = this.options.concat(data);
             //     this.loading = false;
             // });
-        },
-
-        onParentModelChanged(parentModel) {
-            console.log('I am working');
-            this.currentValue = !parentModel ? null : parentModel.filter
-        },
+        }
     }
 });
 </script>
