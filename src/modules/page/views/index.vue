@@ -167,8 +167,6 @@ export default {
         },
 
         can(menu) {
-            console.log(menu);
-            console.log(this.permissions[menu.id]);
             if (this.permissions[menu.id]) {
                 if (this.permissions[menu.id].show) {
                     return true
