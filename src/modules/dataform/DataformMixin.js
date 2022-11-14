@@ -14,6 +14,8 @@ export default {
         'onReady',
         'onSuccess',
         'onError',
+        'onClose',
+        'beforeSubmit',
         'permissions',
         'user_condition',
         'formCustomData',
@@ -512,6 +514,10 @@ export default {
             return i
         },
 
+        setDataManually(model, data) {
+            this.model[model] = data;
+        },
+
         getSchemaByModel(model) {
             let index = this.schema.findIndex(item => item.model == model)
             if (index >= 0)
@@ -570,6 +576,10 @@ export default {
             if (this.template === 'window') {
                 this.$router.push({path: this.$route.path, query: {window: 'list'}});
             }
+
+            if (this.onClose) {
+                this.onClose();
+            }
         },
 
         handleSubmit(name) {
@@ -580,7 +590,6 @@ export default {
                 } else {
                     this.postData()
                 }
-
             } else {
                 this.$refs[name].validate(valid => {
                     if (valid) {
@@ -601,6 +610,7 @@ export default {
                 })
             }
         },
+
         validateWithSubForm() {
             let subValid = true
             this.subFormValidations.forEach(sbValidation => {
@@ -630,6 +640,10 @@ export default {
         },
 
         postData() {
+            if (this.beforeSubmit) {
+                this.$props.beforeSubmit();
+            }
+
             if (this.isSubForm) {
                 this.$props.onSuccess(this.$data.model)
             } else {

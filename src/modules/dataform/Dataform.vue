@@ -49,7 +49,7 @@
                     <div v-if="template == 'window' || template == 'modal'" class="dataform-header-actions">
                         <div class="action-wrapper">
                             <Button :loading='asyncMode' @click="handleSubmit(meta.model +'-'+ schemaID)" class="save"
-                                    type="text">
+                                    type="success">
                             <span v-if='!asyncMode'>
                                 <i class="ti-save"></i>
                                 {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
