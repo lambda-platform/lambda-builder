@@ -36,6 +36,18 @@ export function doFormula(formulas, model, model_, schema_, rule_, subFormModelN
 function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
 
     let use_formula = false;
+
+    //old one i dont know just commented
+    // if (formula['form']) {
+    //     if (formula['form'] == 'main')
+    //         use_formula = true;
+    //     else if (subFormModelName) {
+    //         if (formula['form'] == subFormModelName)
+    //             use_formula = true
+    //     }
+    // } else {
+    //     use_formula = true;
+
     if (formula['form']) {
         if (formula['form'] == 'main')
             use_formula = true;
@@ -43,8 +55,8 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
             if (formula['form'] == subFormModelName)
                 use_formula = true
         }
-    } else {
-        use_formula = true;
+    }
+        //use_formula = true;
         if (use_formula) {
             let pre_formula = dataFromTemplate(formula.template, model_);
             if (pre_formula) {
@@ -70,7 +82,7 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
                 })
             }
         }
-    }
+
 }
 
 export function doTrigger(model, val, model_, schema_, refs, Message, editMode) {
