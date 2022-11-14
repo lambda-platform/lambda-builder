@@ -12,7 +12,7 @@
             <Select v-model="item.formType" :placeholder="lang._type" clearable filterable :disabled="disabled"
 
                     @on-change="changeItemType">
-                <Option v-for="item in elementList" :value="item" :key="item.index"  :label="item" >{{ item }}
+                <Option v-for="(item, index) in elementList" :value="item" :key="index" :label="item">{{ item }}
                 </Option>
             </Select>
         </Col>
@@ -33,7 +33,8 @@
             </a>
         </Col>
         <Col span="24" :class="`item-more-options ${ expanded ? 'active' : '' }`">
-            <expand-option v-if="expanded" :item="item" :edit="edit" :sub="sub" :schema="schema" :otherGrids="otherGrids" :projectID="projectID"></expand-option>
+            <expand-option v-if="expanded" :item="item" :edit="edit" :sub="sub" :schema="schema"
+                           :otherGrids="otherGrids" :projectID="projectID"></expand-option>
         </Col>
     </Row>
 </template>
@@ -43,9 +44,8 @@ import expandOption from "./ExpandOption";
 import {elementList} from "./elements";
 import {rules} from "./rule";
 
-export default
-{
-    props: ["item", "edit", "sub", "disabled", "schema" , "otherGrids", "projectID"],
+export default {
+    props: ["item", "edit", "sub", "disabled", "schema", "otherGrids", "projectID"],
     components: {
         "expand-option": expandOption
     },

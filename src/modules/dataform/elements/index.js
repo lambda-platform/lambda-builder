@@ -211,8 +211,8 @@ export const elements = [
         element: "Label",
         component: () => import(/* webpackChunkName: "form-field-Label" */'./Label.vue'),
     },
-
 ];
+
 export const elementList = elements.map(e => e.element)
 
 const Notfount = () => import(/* webpackChunkName: "form-field-not-fount" */'./NotFound.vue');

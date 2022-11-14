@@ -2,7 +2,7 @@ let ruleModel = null;
 let identityColumn = null;
 let identity = null;
 
-const isValid = (val) => {
+export const isValid = (val) => {
     if (typeof val !== undefined && val != null && val != "") {
         return true;
     }
