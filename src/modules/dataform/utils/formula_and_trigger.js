@@ -19,8 +19,6 @@ export function evil(fn) {
 
 export function doFormula(formulas, model, model_, schema_, rule_, subFormModelName) {
     //formula
-    console.log("do formula:")
-    console.log(formulas);
     if (formulas.length >= 1) {
         let formula_index = formulas.findIndex(formula => formula.model == model)
         if (formula_index <= -1) {
