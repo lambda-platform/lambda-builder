@@ -107,6 +107,17 @@
                             </li>
                         </ul>
 
+                        <div class="rule-control">
+                            <label>Нэмэлт Regex pattern</label>
+                            <Input v-model="item.custom_regex"/>
+                        </div>
+                        <ul class="rule-msg-list" v-if="item.custom_regex">
+                            <li >
+                                <label>Нэмэлт Regex анхааруулга</label>
+                                <span><Input v-model="item.custom_regex_msg" placeholder="Нэмэлт Regex анхааруулга"/></span>
+                            </li>
+                        </ul>
+
                         <div class="title" v-if="item.formType == 'Password'">
                             <h3>{{ lang.Password_settings }}</h3>
                         </div>
