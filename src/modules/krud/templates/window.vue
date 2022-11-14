@@ -9,9 +9,7 @@
 
                 <Button v-if="permissions ? permissions.c : true" type="success"
                         @click="openForm" shape="circle" size="small"
-                        icon="md-add">
-                    {{ lang._add }}
-                </Button>
+                        icon="md-add">{{ lang._add }}</Button>
             </portal>
 
             <portal to="header-right" v-if="withoutHeader">
