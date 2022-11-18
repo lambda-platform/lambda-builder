@@ -10,6 +10,7 @@
                     type="datetime" v-model="model.form[model.component]" @on-change="getDateValue"
                     placement="bottom-end" :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"
                     :disabled="meta && meta.disabled ? meta.disabled : false"
+                    format="yyyy-MM-dd HH:mm"
         ></DatePicker>
 
     </FormItem>
@@ -39,7 +40,7 @@ export default {
                     this.model.form[this.model.component]
                 );
             }else {
-                this.model.form[this.model.component] = value
+                this.model.form[this.model.component] = value;
             }
         },
         clearValue(value){
