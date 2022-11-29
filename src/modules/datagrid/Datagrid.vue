@@ -1028,15 +1028,15 @@ export default {
 
                 //Custom column item as plugin
                 if (isValid(item.gridType)) {
-                    if (window.init.data_grid_custom_elements) {
+                    if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
                         let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == item.gridType);
                         if (custom) {
-                            // colItem.cellRendererFramework = require(`datagrid_custom/${item.gridType}.vue`).default;
-                            // colItem.cellRendererParams = {
-                            //     customOptions: item.options,
-                            // }
-                            // colItem.suppressRowTransform = true;
-                            // colItem.cellClass = 'lambda-custom-element overflow-visible';
+                            colItem.cellRendererFramework = require(`datagrid_custom/${item.gridType}.vue`).default;
+                            colItem.cellRendererParams = {
+                                customOptions: item.options,
+                            }
+                            colItem.suppressRowTransform = true;
+                            colItem.cellClass = 'lambda-custom-element overflow-visible';
                         }
                     }
                 }

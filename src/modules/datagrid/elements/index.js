@@ -134,15 +134,15 @@ export const element = (type) => {
                 return elementList[elIndex].component;
             }
         } catch (e) {
-            // if (window.init.data_grid_custom_elements) {
-            //     let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == type);
-            //     if (custom.length>0 && custom) {
-            //         return require(`datagrid_custom/${type}.vue`).default;
-            //     } else
-            //         return elementList[0].component;
-            // } else {
-            //     throw e;
-            // }
+            if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
+                let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == type);
+                if (custom.length>0 && custom) {
+                    return require(`datagrid_custom/${type}.vue`).default;
+                } else
+                    return elementList[0].component;
+            } else {
+                throw e;
+            }
         }
     }
 }

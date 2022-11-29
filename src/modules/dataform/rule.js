@@ -31,6 +31,10 @@ export const rules = [{
         msg: 'Тоон утга оруулна уу!'
     },
     {
+        type: 'numeric',
+        msg: 'Тоон утга оруулна уу!'
+    },
+    {
         type: 'register',
         msg: 'Регистрийн дугаар!'
     },

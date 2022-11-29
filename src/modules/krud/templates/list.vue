@@ -63,8 +63,5 @@ import mixins from "./mixins";
 
 export default {
     mixins: [mixins],
-    created() {
-        console.log('krud list', this.$props.permissions);
-    }
 };
 </script>
