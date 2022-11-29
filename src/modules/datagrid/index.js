@@ -2,7 +2,8 @@
  * Created by n0m4dz on 2/6/17.
  */
 import "./bootstrap"
-const Datagrid = ()=> import(/* webpackChunkName: "Datagrid-el" */'./Datagrid.vue')
+
+const Datagrid = () => import(/* webpackChunkName: "Datagrid-el" */'./Datagrid.vue')
 import "ag-grid-enterprise";
 import {
     LicenseManager
@@ -18,7 +19,7 @@ const components = {
 
 const install = function (Vue) {
     if (install.installed) return;
-    install.installed=true;
+    install.installed = true;
     Object.keys(components).forEach(key => Vue.component(key, components[key]));
 };
 

@@ -166,6 +166,7 @@ import Html from "./elements/Html";
 import Custom from "./elements/Custom";
 import Link from "./elements/Link";
 import Select from "./elements/Select";
+import Button from "./elements/Button";
 
 //Editable elements
 import editableText from "./elements/editableText"
@@ -1012,6 +1013,17 @@ export default {
                         icon: item.icon,
                         showOnlyIcon: item.showOnlyIcon
                     }
+                }
+
+                if (isValid(item.gridType) && item.gridType == "Button") {
+                    colItem.cellRendererFramework = Button
+                    // colItem.cellRendererParams = {
+                    //     customOptions: item.options,
+                    //     link: item.link,
+                    //     linkTarget: item.linkTarget,
+                    //     icon: item.icon,
+                    //     showOnlyIcon: item.showOnlyIcon
+                    // }
                 }
 
                 //Custom column item as plugin

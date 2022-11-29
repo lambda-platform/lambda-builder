@@ -110,6 +110,10 @@ export const elementList = [
     {
         element: "RadioButtonFilter",
         component: () => import(/* webpackChunkName: "grid-RadioButtonFilter" */'./RadioButtonFilter.vue'),
+    },
+    {
+        element: "Button",
+        component: () => import(/* webpackChunkName: "grid-Button" */'./Button.vue'),
     }
 ]
 

@@ -190,7 +190,7 @@ if(window.init.firebase_config) {
 
 <style lang="scss">
 .ivu-notice {
-    top: auto !important;
+    top: auto;
     bottom: 30px;
 
     a {

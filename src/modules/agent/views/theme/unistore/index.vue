@@ -320,5 +320,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/unistore/style";
+@import "../../../scss/theme/unistore/style.scss";
 </style>
