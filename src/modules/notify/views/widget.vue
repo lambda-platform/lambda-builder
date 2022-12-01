@@ -58,15 +58,16 @@ export default {
     },
 
     mounted() {
-        console.log("Notify mounted");
-if(window.init.firebase_config) {
-    if (!firebase.apps.length) {
-        this.initFirebase();
-        this.getNotificationGrant();
-    }
-    this.getUnseenNotification();
-}
+        if (window.init.firebase_config) {
+            if (!firebase.apps.length) {
+                this.initFirebase();
+                this.getNotificationGrant();
+            }
+        }
+
+        this.getUnseenNotification();
     },
+
     computed: {
         lang() {
             const labels = ['notice', 'no_notice', 'view_all_notifications'];
@@ -76,16 +77,19 @@ if(window.init.firebase_config) {
             }, {});
         },
     },
+
+    beforeMount() {
+        if (this.selectedLang != "mn") {
+            loadLanguageAsync(this.selectedLang);
+        }
+    },
+
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
         switchLanguage(val) {
             this.selectedLang = val;
             loadLanguageAsync(val);
         },
+
         getNotificationGrant() {
             Notification.requestPermission().then((permission) => {
                 if (permission !== 'granted') {
@@ -93,6 +97,7 @@ if(window.init.firebase_config) {
                 }
             });
         },
+
         initFirebase() {
             var firebaseConfig = {
                 apiKey: window.init.firebase_config.apiKey,
@@ -131,6 +136,8 @@ if(window.init.firebase_config) {
         },
 
         getUnseenNotification() {
+            console.log('working notification');
+
             axios.get('/lambda/notify/new/' + this.$props.user).then(o => {
                 this.count = o.data.count;
                 this.notifications = o.data.notifications;
