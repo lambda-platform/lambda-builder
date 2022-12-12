@@ -255,11 +255,10 @@ $white: #ffffff;
 }
 
 .multiselect__placeholder {
-    //margin-bottom: 0;
-    //padding-top: 0;
-    //height: 30px;
-    //font-size: 12px;
-    //white-space: nowrap;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    height: 30px !important;
+    font-size: 12px;
 }
 
 .multiselect__tags {

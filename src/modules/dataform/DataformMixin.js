@@ -246,6 +246,7 @@ export default {
             try {
                 let response = await axios.get(configUrl)
                 let data = JSON.parse(response.data.data.schema)
+
                 data['form_id'] = response.data.data.id
                 data['form_name'] = response.data.data.name
                 return data
