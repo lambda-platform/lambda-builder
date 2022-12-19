@@ -1222,7 +1222,7 @@ export default {
 
         updateFilterModel(model, val) {
             this.filterModel[model] = val;
-            this.filterData(1);
+            this.filterData(this.query.currentPage);
         },
 
         filterData(page) {
