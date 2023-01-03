@@ -31,6 +31,11 @@
     import expandFilterOption from "./ExpandFilterOption";
     import {elementList} from "./elements";
 
+    let elements = window.init.data_grid_custom_elements ? [...elementList, ...window.init.data_grid_custom_elements.map(element => {
+        return element
+    })] : elementList;
+
+
     export default {
         props: ["item","schema", "edit", "relation"],
         computed: {
@@ -55,7 +60,7 @@
 
         data() {
             return {
-                elementList: elementList,
+                elementList: elements,
                 expanded: false
             };
         },

@@ -154,6 +154,14 @@
                                 <i-switch v-model="item.no_format" size="small"></i-switch>
                             </li>
                         </ul>
+                        <div class="title" v-if="item.formType == 'Date'">
+                            <h3>Өнөөдрийн огноо авах</h3>
+                        </div>
+                        <ul class="rule-msg-list" v-if="item.formType == 'Date'">
+                            <li>
+                                <i-switch v-model="item.autoFillCurrentDate" size="small"></i-switch>
+                            </li>
+                        </ul>
 
                     </Col>
                 </Row>
