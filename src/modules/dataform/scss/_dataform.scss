@@ -244,6 +244,10 @@
     overflow-y: auto;
     display: flex;
 
+    .single-mode{
+        width: 100%;
+    }
+
     &-header {
         padding: 15px 20px;
         border-bottom: solid 1px #f1f3f4;
