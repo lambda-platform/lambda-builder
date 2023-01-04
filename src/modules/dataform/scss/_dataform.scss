@@ -239,8 +239,10 @@
 
 .dataform {
     background: #ffffff;
-    height: 100vh;
+    height: 100%;
     position: relative;
+    overflow-y: auto;
+    display: flex;
 
     &-header {
         padding: 15px 20px;
@@ -257,9 +259,8 @@
 
     &-body {
         padding: 15px 20px 10px;
-        //height: calc(100vh - 120px);
-        overflow-y: auto;
         overflow-x: hidden;
+        flex: 1;
 
         .fieldset {
             padding: 10px 8px;
@@ -302,6 +303,7 @@
     }
 
     &-footer {
+        margin-top: auto;
         padding: 10px 20px 20px;
     }
 
