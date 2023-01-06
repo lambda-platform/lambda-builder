@@ -23,6 +23,7 @@ export default Vue.extend({
             item.schemaID = this.params.schemaID;
             return item;
         },
+
         getValues() {
             this.params.api.forEachLeafNode(node => {
                 this.options.push(node.data[this.params.column.model]);
