@@ -76,6 +76,11 @@ export default Vue.extend({
             }, {});
         },
     },
+    mounted()
+    {
+      console.log("this.params.methods");
+      console.log(this.params.methods);
+    },
     methods: {
         edit() {
             this.params.methods.edit(this.params.value, this.params.data)

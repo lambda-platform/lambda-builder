@@ -31,6 +31,7 @@ export default {
     ],
     data() {
         return {
+            isIos:!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform),
             formTitle: '',
             loadConfig: true,
             viewMode: false,

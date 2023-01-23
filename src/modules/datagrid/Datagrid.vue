@@ -166,6 +166,7 @@ import Html from "./elements/Html";
 import Custom from "./elements/Custom";
 import Link from "./elements/Link";
 import Select from "./elements/Select";
+import Button from "./elements/Button";
 
 //Editable elements
 import editableText from "./elements/editableText"
@@ -242,7 +243,7 @@ export default {
     },
 
     created() {
-        console.log('actions', this.actions);
+        console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
@@ -1013,6 +1014,18 @@ export default {
                         showOnlyIcon: item.showOnlyIcon
                     }
                 }
+
+                if (isValid(item.gridType) && item.gridType == "Button") {
+                    colItem.cellRendererFramework = Button
+                    // colItem.cellRendererParams = {
+                    //     customOptions: item.options,
+                    //     link: item.link,
+                    //     linkTarget: item.linkTarget,
+                    //     icon: item.icon,
+                    //     showOnlyIcon: item.showOnlyIcon
+                    // }
+                }
+
                 //Custom column item as plugin
                 if (isValid(item.gridType)) {
                     if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
@@ -1209,7 +1222,7 @@ export default {
 
         updateFilterModel(model, val) {
             this.filterModel[model] = val;
-            this.filterData(1);
+            this.filterData(this.query.currentPage);
         },
 
         filterData(page) {
