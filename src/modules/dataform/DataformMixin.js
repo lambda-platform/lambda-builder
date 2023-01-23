@@ -295,7 +295,6 @@ export default {
                 this.formValidationCustomText = formSchema.formValidationCustomText
             }
 
-
             if (formSchema.formula) {
                 this.formula = formSchema.formula
             }
@@ -309,9 +308,7 @@ export default {
                 this.withBackButton = formSchema.withBackButton
             }
 
-
             this.formTitle = formSchema.form_name
-
             this.meta = {
                 model: formSchema.model,
                 option: {
@@ -779,7 +776,6 @@ export default {
 
         },
         setCustomData() {
-            console.log(this.formCustomData);
             if (this.formCustomData) {
                 Object.keys(this.formCustomData).forEach(model => {
                     let index = this.schema.findIndex(item => item.model == model)
@@ -873,6 +869,10 @@ export default {
                     }
                 } else if (_.isArray(item.children)) {
                     this.setEditModel(item.children)
+                }
+
+                if (item.model && item.model == 'partner_register') {
+                    console.log('item: ', this.model[item.model]);
                 }
             })
         },

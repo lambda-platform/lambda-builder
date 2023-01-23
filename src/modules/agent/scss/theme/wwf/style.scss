@@ -96,6 +96,22 @@ body {
 
             .logo{
                 text-align: left;
+                display: flex;
+                img{
+                    margin-right: 20px;
+                }
+                &-txt{
+                    display: inline-flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    span{
+                        line-height: 24px;
+                        font-weight: 500;
+                        color: #222;
+                        font-size: 20px;
+                        text-shadow: 0px 1px 1px #222;
+                    }
+                }
             }
 
             .menu {
@@ -194,15 +210,16 @@ body {
             width: 100%;
             height: calc(100vh - 400px);
             flex: 1;
-            background-image: url('/assets/logistic/images/app-bg.png');
+            background-image: url('/assets/app/images/app-bg.png');
             background-size: 100% auto;
             background-repeat: no-repeat;
             background-position: center bottom;
             padding-top: 60px;
 
             .lottie {
-                height: 80%;
+                height: 60%;
                 margin-left: 10%;
+                margin-top: 10%;
                 @media (max-height: 1080px) {
                     height: 100%;
                 }
@@ -616,7 +633,7 @@ body {
 
     .copyright {
         padding: 20px;
-        font-size: 11px;
+        font-size: 12px;
         color: $color-primary;
         text-align: center;
         line-height: 13px;

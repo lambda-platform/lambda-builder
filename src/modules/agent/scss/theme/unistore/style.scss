@@ -786,7 +786,7 @@ body {
     span {
         background: #fff;
         z-index: 2;
-        font-size: 13px;
+        font-size: 15px;
         text-transform: uppercase;
         color: $color-primary;
     }
@@ -794,7 +794,7 @@ body {
     &:before {
         position: absolute;
         height: 1px;
-        width: 20%;
+        width: 30%;
         content: "";
         left: 0;
         top: 13px;
@@ -805,7 +805,7 @@ body {
     &:after {
         position: absolute;
         height: 1px;
-        width: 20%;
+        width: 30%;
         content: "";
         left: 80%;
         top: 13px;

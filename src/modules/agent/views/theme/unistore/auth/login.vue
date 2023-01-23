@@ -9,7 +9,7 @@
         </div>
         <div class="form-content-inner">
 
-            <div class="or"><span>Имэйлээр нэвтрэх</span></div>
+            <div class="or"><span>Нэвтрэх</span></div>
 
 <!--            <h2>{{ lang.loginTitle }}</h2>-->
             <p class="login-description">{{ lang.pleaseLogInUsingYourRegUnamePassword }}</p>

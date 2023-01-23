@@ -47,41 +47,32 @@
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/General/Bank.svg" />
-                                <span>Эрчим хүчний барилга байгууламж барих- эх үүсвэр</span>
+                                <inline-svg src="/assets/icons/duotone/General/Bank.svg"/>
+                                <span>Орлого, зарлагаа хамгийн хялбараар хянах боломж</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Interface/Doughnut.svg" />
-                                <span>Эрчим хүчний барилга байгууламж барих- сэргээгдэх эх үүсвэр</span>
+                                <inline-svg src="/assets/icons/duotone/Interface/Doughnut.svg"/>
+                                <span>Салбар болгоноор барааны нөөц болон илүүдлээ хянах</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Navigation/Route.svg" />
-                                <span>Эрчим хүчний барилга байгууламж барих- дамжуулах шугам, дэд станц</span>
+                                <inline-svg src="/assets/icons/duotone/Navigation/Route.svg"/>
+                                <span>Хэрэглэгчийн харааны нэгдсэн мэдээллийн бааз ашиглах</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg" />
-                                <span>Эрчим хүчний барилга байгууламж барих- Дулааны станц</span>
-                            </a>
-                        </div>
-                    </slide>
-
-                    <slide>
-                        <div class="footer-item">
-                            <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Electric/Highvoltage.svg" />
-                                <span>Цахилгаан үйлдвэрлэх</span>
+                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
+                                <span>Бараа бүтээгдэхүүнээ бөөний төвөөс шууд захиалж татах</span>
                             </a>
                         </div>
                     </slide>
@@ -89,8 +80,8 @@
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Devices/Battery-full.svg" />
-                                <span>Цахилгаан үйлдвэрлэх- сэргээгдэх эх үүсвэр</span>
+                                <inline-svg src="/assets/icons/duotone/Electric/Highvoltage.svg"/>
+                                <span>Бараа бүрт тусгай кодыг хялбар өгч бүртгэл хийх боломж</span>
                             </a>
                         </div>
                     </slide>
@@ -98,8 +89,8 @@
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Navigation/Up-down.svg" />
-                                <span>Цахилгаан дамжуулах</span>
+                                <inline-svg src="/assets/icons/duotone/Devices/Battery-full.svg"/>
+                                <span>ПОС, e-barimt шууд холбогдсон кассын систем</span>
                             </a>
                         </div>
                     </slide>

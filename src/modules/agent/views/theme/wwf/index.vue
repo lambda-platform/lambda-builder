@@ -10,7 +10,10 @@
             <div class="header">
                 <div class="logo">
                     <img src="/assets/app/images/logo.png" alt="logo" style="height: 55px"/>
-                    <span>Биосан <br> мэдээллийн систем</span>
+                    <div class="logo-txt">
+                        <span>Зэрлэг амьтан,</span>
+                        <span>ургамлын мониторинг</span>
+                    </div>
                 </div>
 
                 <ul class="menu">
@@ -29,7 +32,7 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="//assets/app/image/bg.json"/>
+                    <lottie-animation path="assets/app/images/bg.json"/>
                 </div>
             </div>
 

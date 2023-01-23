@@ -243,7 +243,7 @@ export default {
     },
 
     created() {
-        console.log('actions', this.actions);
+        console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
