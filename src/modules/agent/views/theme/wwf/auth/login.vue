@@ -5,13 +5,11 @@
             <span>{{ lambda.logoText }}</span>
         </div>
         <div class="logo" v-else>
-            <img src="/assets/unistore/images/login-header.png" alt="">
+            <img src="/assets/app/images/logo.png" alt="">
         </div>
         <div class="form-content-inner">
-
             <div class="or"><span>Нэвтрэх</span></div>
-
-<!--            <h2>{{ lang.loginTitle }}</h2>-->
+            <!--            <h2>{{ lang.loginTitle }}</h2>-->
             <p class="login-description">{{ lang.pleaseLogInUsingYourRegUnamePassword }}</p>
             <form v-on:submit.prevent="onSubmit" id="authForm" method="post" class="login-form">
                 <div class="form-element input">

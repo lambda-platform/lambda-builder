@@ -9,17 +9,13 @@
 
             <div class="header">
                 <div class="logo">
-                    <!--                    <img src="/assets/erc/images/logo.svg" alt="logo" style="height: 62px"/>-->
-                    <div class="title">
-                        <h2 style="max-width: 600px;">Optical</h2>
-                        <p>UniStore цахим систем</p>
-                    </div>
+                    <img src="/assets/web/images/logo.png" alt="logo" style="height: 55px"/>
                 </div>
 
                 <ul class="menu">
                     <li>
-                        <a href="javascript:void(0)" @click="showFaqModal"
-                        >{{ lang.frequentlyAskedQuestions }}</a>
+                        <a href="/" @click="showFaqModal"
+                        >Вэб сайт</a>
                     </li>
 
                     <li>
@@ -29,7 +25,7 @@
                     </li>
 
                     <li>
-                        <a href="http://erc.gov.mn/web/mn/contact" target="_blank">
+                        <a href="/contact" target="_blank">
                             {{ lang.toContaqt }}
                         </a>
                     </li>
@@ -37,18 +33,18 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="assets/unistore/ecommerce.json"/>
+                    <lottie-animation path="assets/web/bg2.json"/>
                 </div>
             </div>
 
             <div class="footer">
-                <h3>Та доорх зөвшөөрлүүдийг хүсэх боломжтой</h3>
+                <h3>Бусад системүүд</h3>
                 <hooper :settings="hooperSettings">
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/General/Bank.svg"/>
-                                <span>Орлого, зарлагаа хамгийн хялбараар хянах боломж</span>
+                                <span>CRC вэб</span>
                             </a>
                         </div>
                     </slide>
@@ -56,7 +52,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Interface/Doughnut.svg"/>
-                                <span>Салбар болгоноор барааны нөөц болон илүүдлээ хянах</span>
+                                <span>Зипкод</span>
                             </a>
                         </div>
                     </slide>
@@ -64,7 +60,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Navigation/Route.svg"/>
-                                <span>Хэрэглэгчийн харааны нэгдсэн мэдээллийн бааз ашиглах</span>
+                                <span>UPost</span>
                             </a>
                         </div>
                     </slide>
@@ -72,7 +68,15 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
-                                <span>Бараа бүтээгдэхүүнээ бөөний төвөөс шууд захиалж татах</span>
+                                <span>Ekids</span>
+                            </a>
+                        </div>
+                    </slide>
+                    <slide>
+                        <div class="footer-item">
+                            <a href="javascript:void(0)">
+                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
+                                <span>Black List</span>
                             </a>
                         </div>
                     </slide>
@@ -80,17 +84,8 @@
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Electric/Highvoltage.svg"/>
-                                <span>Бараа бүрт тусгай кодыг хялбар өгч бүртгэл хийх боломж</span>
-                            </a>
-                        </div>
-                    </slide>
-
-                    <slide>
-                        <div class="footer-item">
-                            <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Devices/Battery-full.svg"/>
-                                <span>ПОС, e-barimt шууд холбогдсон кассын систем</span>
+                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
+                                <span>Шилэн данс</span>
                             </a>
                         </div>
                     </slide>
@@ -186,7 +181,9 @@ Vue.use(iView);
 iView.locale(lang);
 Vue.use(vModal, {componentName: "v-modal"});
 
+
 export default {
+
     computed: {
         lang() {
             const labels = ['instructionsUse', 'frequentlyAskedQuestions', 'downloadAppHere', 'toContaqt', 'title', 'subtitle',];
@@ -311,5 +308,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/unistore/style.scss";
+@import "../../../scss/theme/ipasn/style";
 </style>

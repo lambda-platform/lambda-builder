@@ -52,6 +52,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/register/style";
+@import "../../../scss/theme/register/style.scss";
 </style>
 

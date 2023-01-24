@@ -49,8 +49,7 @@
                 <Step :title="lang.ready" :content="lang._success"></Step>
             </Steps>
         </div>
-
-        <dataform ref="form" :schemaID="46"
+        <dataform ref="form" :schemaID="46" class="microservice-config"
                   :do_render="true"
                   :editMode="true"
                   :onReady="onReady"
@@ -120,6 +119,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style  lang="scss">
+.microservice-config {
+    .dataform-body{
+        height: auto !important;
+    }
+}
 </style>

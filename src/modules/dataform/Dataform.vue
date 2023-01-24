@@ -125,6 +125,7 @@
                                             :relations='relations'
                                             :asyncMode='asyncMode'
                                             :editMode='editMode'
+                                            :tbl="meta.model"
                                         />
                                         <component
                                             :key='item.model'
@@ -144,6 +145,7 @@
                                             :getSchemaRelationByModel='getSchemaRelationByModel'
                                             :setSchemaByModel='setSchemaByModel'
                                             :relation_data='getRelation(item)'
+                                            :tbl="meta.model"
                                         />
                                         </span>
                                         </Col>
@@ -173,8 +175,9 @@
                                             :url='url'
                                             :relations='relations'
                                             :asyncMode='asyncMode'
-                                            :editMode='editMode'>
-                                        </component>
+                                            :editMode='editMode'
+                                            :tbl="meta.model"
+                                        />
                                         <component
                                             v-if="isShow(item.model) && item.formType != 'SubForm'"
                                             :do_render='do_render'
@@ -192,8 +195,9 @@
                                             :getSchemaByModel='getSchemaByModel'
                                             :getSchemaRelationByModel='getSchemaRelationByModel'
                                             :setSchemaByModel='setSchemaByModel'
-                                            :relation_data='getRelation(item)'>
-                                        </component>
+                                            :relation_data='getRelation(item)'
+                                            :tbl="meta.model"
+                                        />
                                         </span>
                                         </Col>
                                     </Row>
@@ -221,8 +225,9 @@
                                 :formula='formula'
                                 :schemaID='schemaID'
                                 :url='url'
-                                :editMode='editMode'>
-                            </component>
+                                :editMode='editMode'
+                                :tbl="meta.model"
+                            />
 
                             <component
                                 :key='item.model'
@@ -239,8 +244,9 @@
                                 :getSchemaByModel='getSchemaByModel'
                                 :getSchemaRelationByModel='getSchemaRelationByModel'
                                 :setSchemaByModel='setSchemaByModel'
-                                :relation_data='getRelation(item)'>
-                            </component>
+                                :relation_data='getRelation(item)'
+                                :tbl="meta.model"
+                            />
                             </span>
                             </Col>
                         </Row>

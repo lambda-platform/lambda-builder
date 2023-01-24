@@ -112,9 +112,10 @@
                             <Input v-model="item.custom_regex"/>
                         </div>
                         <ul class="rule-msg-list" v-if="item.custom_regex">
-                            <li >
+                            <li>
                                 <label>Нэмэлт Regex анхааруулга</label>
-                                <span><Input v-model="item.custom_regex_msg" placeholder="Нэмэлт Regex анхааруулга"/></span>
+                                <span><Input v-model="item.custom_regex_msg"
+                                             placeholder="Нэмэлт Regex анхааруулга"/></span>
                             </li>
                         </ul>
 
@@ -154,6 +155,14 @@
                                 <i-switch v-model="item.no_format" size="small"></i-switch>
                             </li>
                         </ul>
+                        <div class="title" v-if="item.formType == 'Date'">
+                            <h3>Өнөөдрийн огноо авах</h3>
+                        </div>
+                        <ul class="rule-msg-list" v-if="item.formType == 'Date'">
+                            <li>
+                                <i-switch v-model="item.autoFillCurrentDate" size="small"></i-switch>
+                            </li>
+                        </ul>
 
                     </Col>
                 </Row>
@@ -177,8 +186,7 @@
                         <div v-if="!item.isFkey" class="localSelectOptions">
                             <Form ref="option" :model="optionForm" :rules="optionRule" inline>
                                 <FormItem prop="value">
-                                    <Input type="text" v-model="optionForm.value" :placeholder="lang.value"
-                                    />
+                                    <Input type="text" v-model="optionForm.value" :placeholder="lang.value"/>
                                 </FormItem>
                                 <FormItem prop="model">
                                     <FormItem prop="label">
@@ -203,7 +211,8 @@
                                 </FormItem>
                             </Form>
 
-                            <Table v-if="item.options && item.options.length>0" border size="small" :columns="optionsColumns" :key="item.options.length"
+                            <Table v-if="item.options && item.options.length>0" border size="small"
+                                   :columns="optionsColumns" :key="item.options.length"
                                    :data="item.options ? item.options : []"
                                    height="250">
                             </Table>
@@ -795,7 +804,8 @@
                                         filterable
 
                                 >
-                                    <Option v-for="(item, iIndex) in sourceGridColumns.filter(c=>c!== null)" :key="iIndex"
+                                    <Option v-for="(item, iIndex) in sourceGridColumns.filter(c=>c!== null)"
+                                            :key="iIndex"
                                             :value="item.model">{{ item.model }}
                                     </Option>
                                 </Select>
@@ -806,7 +816,9 @@
                             :drop-placeholder="dropPlaceholderOptions"
                             @drop="onDropSub($event)">
                             <!--form element-->
-                            <Draggable v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns.filter(c=>c!== null)" :key="iIndex">
+                            <Draggable
+                                v-for="(item, iIndex) in item.GSOption.sourceGridTargetColumns.filter(c=>c!== null)"
+                                :key="iIndex">
                                 <Row>
                                     <Col span="10">
                                         {{ item.model }}
@@ -1173,7 +1185,7 @@ export default {
                 this.item.options = [];
             }
             this.$refs["option"].validate(valid => {
-                if(valid) {
+                if (valid) {
                     this.item.options.push({...this.optionForm});
                     this.optionForm = {
                         value: null,

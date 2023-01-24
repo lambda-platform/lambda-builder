@@ -1,4 +1,5 @@
-$color-primary: #3500E2;
+//$color-primary: #4036e9;
+$color-primary: #1F40AF;
 $color-hover-red: #04AFEE;
 $color-title: #282830;
 $color-text: #6A6B70;
@@ -93,6 +94,10 @@ body {
             padding: 60px 60px 0;
             height: 100px;
 
+            .logo{
+                text-align: left;
+            }
+
             .menu {
                 margin-left: auto;
                 display: flex;
@@ -174,8 +179,10 @@ body {
                 p {
                     color: $color-primary;
                     text-transform: uppercase;
-                    font-size: 12px;
+                    font-size: 10px;
+                    font-weight: 500;
                     letter-spacing: .5px;
+                    margin-top: -10px;
                 }
             }
         }
@@ -187,7 +194,7 @@ body {
             width: 100%;
             height: calc(100vh - 400px);
             flex: 1;
-            background-image: url('/assets/erc/images/app-bg.png');
+            background-image: url('/assets/logistic/images/app-bg.png');
             background-size: 100% auto;
             background-repeat: no-repeat;
             background-position: center bottom;
@@ -196,6 +203,9 @@ body {
             .lottie {
                 height: 80%;
                 margin-left: 10%;
+                @media (max-height: 1080px) {
+                    height: 100%;
+                }
             }
         }
 
@@ -225,7 +235,7 @@ body {
                     border-radius: 8px;
                     padding: 0 10px;
                     //background: lighten($color-primary, 20%);
-                    background-image: linear-gradient(to right top, $color-primary, lighten($color-primary, 10%), lighten($color-primary, 20%));
+                    background-image: linear-gradient(to right top, $color-primary, darken($color-primary, 3%), darken($color-primary, 6%));
 
                     svg {
                         fill: transparent;
@@ -240,8 +250,9 @@ body {
 
                     span {
                         color: #ffffff;
-                        font-size: 13px;
+                        font-size: 14px;
                         line-height: 18px;
+                        margin-top: 10px;
                     }
                 }
             }
@@ -287,6 +298,8 @@ body {
         .logo {
             text-align: left;
             margin-bottom: 60px;
+            display: flex;
+            justify-content: flex-start;
 
             img {
                 width: 100%;
@@ -786,7 +799,7 @@ body {
     span {
         background: #fff;
         z-index: 2;
-        font-size: 15px;
+        font-size: 13px;
         text-transform: uppercase;
         color: $color-primary;
     }
@@ -794,7 +807,7 @@ body {
     &:before {
         position: absolute;
         height: 1px;
-        width: 30%;
+        width: 20%;
         content: "";
         left: 0;
         top: 13px;
@@ -805,7 +818,7 @@ body {
     &:after {
         position: absolute;
         height: 1px;
-        width: 30%;
+        width: 20%;
         content: "";
         left: 80%;
         top: 13px;

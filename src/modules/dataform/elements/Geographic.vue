@@ -2,8 +2,6 @@
     <FormItem :label=label :prop=rule>
         <div class="geographic">
             <div id="geographic" :class="openSide ? 'open-side' : ''" style="height: 100%; width: 100%">
-
-
                 <div id="base-maps">
                     <ul>
                         <li v-for="(baseMap, index) in baseMaps" :key="index">
@@ -23,7 +21,6 @@
                 <h3>{{lang.graphicsManagement}}</h3>
                 <hr>
 
-
                 <RadioGroup v-model="geometryType" class="geometry_type" v-if="allowMultiGeometryTypes">
                     <Radio label="point" :disabled="current !== null">
 
@@ -38,9 +35,7 @@
                         <span>{{lang.polygon}}</span>
                     </Radio>
                 </RadioGroup>
-
                 <hr>
-
                 <table>
                     <thead>
                     <tr>

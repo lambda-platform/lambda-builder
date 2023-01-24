@@ -1,6 +1,6 @@
 <template>
     <FormItem :label=label :prop=rule>
-        <div class="qgis-map">
+        <div v-if="isShow" class="qgis-map">
             <Spin fix v-if="isLoading"></Spin>
             <Spin fix v-if="isLoadingLayer"></Spin>
             <div id="qgis" style="height: 350px; border-radius: 10px;"></div>
@@ -58,51 +58,11 @@
 <script>
 
 export default {
-    props: ["model", "rule", "label", "meta", "do_render", "editMode", "is_show"],
+    props: ["model", "rule", "label", "meta", "do_render", "editMode", "tbl"],
     components: {},
-
-    created() {
-        this.getAimag();
-    },
-
-    mounted() {
-        if (this.do_render) {
-            this.initMap();
-        }
-    },
-
-    computed: {
-        geoVal() {
-            return this.model.form[this.model.component]
-        }
-    },
-
-    watch: {
-        do_render(value, oldValue) {
-            if (value) {
-                if (!this.editMode) {
-                    this.initMap();
-                } else {
-                    if (!this.geoVal && !this.map) {
-                        this.initMap();
-                    }
-                }
-            } else {
-                this.destroy();
-            }
-        },
-
-        geoVal(value, oldValue) {
-            if (value) {
-                if (oldValue === null) {
-                    this.getGisData();
-                }
-            }
-        },
-    },
-
     data() {
         return {
+            isShow: false,
             map: null,
             parcelLayer: null,
             currentLayer: null,
@@ -139,6 +99,38 @@ export default {
             selectedAu: null,
             auCode: null
         };
+    },
+
+    created() {
+        this.getAimag();
+    },
+
+    computed: {
+        geoVal() {
+            return this.model.form[this.model.component]
+        }
+    },
+
+    watch: {
+        do_render(value, oldValue) {
+            if (value) {
+                this.isShow = true;
+                this.$nextTick(() => {
+                    this.initMap();
+                })
+            } else {
+                this.isShow = false;
+                this.destroy();
+            }
+        },
+
+        geoVal(value, oldValue) {
+            if (value) {
+                if (oldValue === null) {
+                    this.getGisData(1);
+                }
+            }
+        },
     },
 
     methods: {
@@ -183,9 +175,6 @@ export default {
             });
 
             this.drawLayer();
-            // if(this.editMode) {
-            //     this.getGisData();
-            // }
 
             this.map.on("click", (evt) => {
                 let latlng = ol.proj.transform(
@@ -211,25 +200,34 @@ export default {
                     });
 
                     if (url) {
+                        this.isLoadingLayer = true;
                         fetch(url)
                             .then(response => response.json())
                             .then(data => {
+                                this.isLoadingLayer = false;
                                 if (data != null && data.features.length > 0) {
                                     data.features.forEach(item => {
                                         if (item.properties) {
-                                            // if(item.geometry.type == 'Point'){
+                                            // if (item.geometry.type == 'Point') {
                                             //     this.drawSelectedPoint(item.geometry.coordinates);
                                             //     // console.log(item.geometry.coordinates);
-                                            // }else {
+                                            // } else {
                                             this.setFormField(item.properties);
                                             this.model.form[this.model.component] = item.properties[this.meta.qgisOptions.cAttr];
                                             this.geoVal = item.properties[this.meta.qgisOptions.cAttr];
-                                            this.getGisData(item.geometry.type);
                                             // }
+
+                                            if (Object.prototype.hasOwnProperty.call(item.properties, 'gid')) {
+                                                this.getGisData(0);
+                                            } else {
+                                                this.$Message.error('Gid тохируулаагүй байна!');
+                                            }
                                         }
                                     })
                                 }
-                            });
+                            }).catch(e => {
+                            this.isLoadingLayer = false;
+                        })
                     }
                 }
             });
@@ -330,10 +328,9 @@ export default {
             this.isLoadingLayer = false;
         },
 
-        getGisData() {
+        getGisData(isEdit) {
             this.isLoading = true;
-
-            axios.get(`/urban/gis/${this.meta.qgisOptions.cTable}/${this.meta.qgisOptions.cShapeField}/${this.meta.qgisOptions.cAttr}/${this.geoVal}`)
+            axios.get(`/urban/gis/${this.meta.qgisOptions.cTable}/${this.meta.qgisOptions.cShapeField}/${this.meta.qgisOptions.cAttr}/${this.geoVal}?tbl=${this.tbl}&edit=${isEdit}`)
                 .then(({data}) => {
                     if (data.status) {
                         this.map.removeLayer(this.selectedLayer);
@@ -345,7 +342,9 @@ export default {
                         }
                         let center = JSON.parse(data.center);
                         this.map.getView().setCenter(ol.proj.fromLonLat(center.coordinates));
-                        this.map.getView().setZoom(14);
+                        this.map.getView().setZoom(16);
+                    } else {
+                        this.$Message.error(data.msg);
                     }
                     this.isLoading = false;
                 }).catch(() => {
@@ -354,6 +353,8 @@ export default {
         },
 
         drawSelectedPoint(coords) {
+            console.log('I am point', coords);
+
             this.map.removeLayer(this.markerLayer);
             let markerGeometry = new ol.geom.Point(ol.proj.transform(coords, 'EPSG:4326', 'EPSG:3857'));
             let markerFeature = new ol.Feature({
@@ -379,8 +380,6 @@ export default {
                 source: vectorSource
             });
 
-            console.log("I am here", this.markerLayer);
-
             this.map.addLayer(this.markerLayer);
         },
 
@@ -396,8 +395,7 @@ export default {
                 }),
                 stroke: new ol.style.Stroke({
                     color: 'rgba(255,0,0, 1)',
-                    width: 2,
-                    lineDash: [.1, 5]
+                    width: 4
                 }),
             });
 
@@ -412,36 +410,56 @@ export default {
         },
 
         destroy() {
-            this.map.removeLayer(this.selectedLayer);
-            this.map.getView().setCenter(ol.proj.fromLonLat([106.831832, 47.8916288]));
-            this.map.getView().setZoom(12);
+            this.filterFrm = {
+                aimag_id: null,
+                sum_id: null,
+                bag_id: null,
+            }
+
+            // this.map.removeLayer(this.parcelLayer);
+            // this.map.removeLayer(this.selectedAu);
+            // this.map.removeLayer(this.selectedLayer);
+            // this.map.getView().setCenter(ol.proj.fromLonLat([106.831832, 47.8916288]));
+            // this.map.getView().setZoom(12);
+
+            // this.$destroy();
+            // this.$el.parentNode.removeChild(this.$el);
         },
 
         getAimag() {
             axios.get("/api/aimag").then(o => {
                 this.aimag = o.data;
-                this.getSum(this.filterFrm.aimag_id)
+                if (this.editMode) {
+                    this.getSum(this.filterFrm.aimag_id)
+                }
             });
         },
 
         getSum(val) {
-            this.soum = [];
-            this.filterFrm.sum_id = null;
+            console.log('a ID: ', val);
+            if (typeof val !== "undefined") {
+                console.log('I am here');
 
-            axios.get("/api/sum/" + val).then(o => {
-                this.soum = o.data;
-            });
+                this.soum = [];
+                this.filterFrm.aimag_id = val;
+                this.filterFrm.sum_id = null;
 
-            let currentAimag = this.aimag.find(item => item.code == val);
-            let center = JSON.parse(currentAimag.center)
-            this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
-            this.map.getView().setZoom(7);
-            this.drawPolygon(currentAimag.shape)
-            this.auCode = val;
-            this.drawLayer();
+                axios.get("/api/sum/" + val).then(o => {
+                    this.soum = o.data;
+                });
+
+                let currentAimag = this.aimag.find(item => item.code == val);
+                let center = JSON.parse(currentAimag.center)
+                this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
+                this.map.getView().setZoom(8);
+                this.drawPolygon(currentAimag.shape)
+                this.auCode = val;
+                this.drawLayer();
+            }
         },
 
         getBag(val) {
+            this.filterFrm.sum_id = val;
             this.bag = [];
             this.filterFrm.bag_id = null;
 
@@ -452,17 +470,18 @@ export default {
             let currentSoum = this.soum.find(item => item.code == val);
             let center = JSON.parse(currentSoum.center)
             this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
-            this.map.getView().setZoom(10);
+            this.map.getView().setZoom(9);
             this.drawPolygon(currentSoum.shape)
             this.auCode = val;
             this.drawLayer();
         },
 
         zoomToBag(val) {
+            this.filterFrm.bag_id = val;
             let currentBag = this.bag.find(item => item.code == val);
             let center = JSON.parse(currentBag.center)
             this.map.getView().setCenter(ol.proj.fromLonLat([parseFloat(center.coordinates[0]), parseFloat(center.coordinates[1])]));
-            this.map.getView().setZoom(12);
+            this.map.getView().setZoom(14);
             this.drawPolygon(currentBag.shape)
             this.auCode = val;
             this.drawLayer();

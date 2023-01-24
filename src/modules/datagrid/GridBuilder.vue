@@ -17,7 +17,6 @@
                         :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
                         @select="setBuilder"
                         group-values="list" group-label="type" :group-select="true"
-
                     ></multiselect>
                     <Input v-model="datagrid.model" disabled v-if="editMode"/>
                 </div>
@@ -27,7 +26,7 @@
                     <multiselect  v-model='datagrid.mainTable' :placeholder='lang.selectTable' :options="tableList"></multiselect>
                 </div>
 
-                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.idField }}</label>
                     <Select v-model="datagrid.identity" :placeholder="lang.idField" clearable>
                         <Option v-for="item in datagrid.schema" :value="item.model" :key="item.index">{{ item.model }}
@@ -35,7 +34,7 @@
                     </Select>
                 </div>
 
-                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item" v-if="(isModelSelected) ||  editMode">
                     <label>{{ lang.Sort_field }}</label>
                     <Select v-model="datagrid.sort" :placeholder="lang.Sort_field" clearable>
                         <Option v-for="item in datagrid.schema" :value="item.model" :key="item.index">
@@ -55,19 +54,19 @@
                     </RadioGroup>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="(isModelSelected) ||  editMode">
                     <label>{{ lang.destroyedCanBeRestored }}</label>
                     <i-switch v-model="datagrid.softDelete" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="(isModelSelected) ||  editMode">
                     <label>{{ lang.paging }}</label>
                     <InputNumber v-model="datagrid.paging" size="small" :max="9999999" :min="0"></InputNumber>
                 </div>
 
-                <div class="divider" v-if="(datagrid.mainTable && isModelSelected) ||  editMode"></div>
+                <div class="divider" v-if="isModelSelected ||  editMode"></div>
 
-                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.actions }}
                         <small> {{ lang.firstColumn }}
                             <i-switch v-model="datagrid.actionPosition" size="small"></i-switch>
@@ -98,32 +97,32 @@
                     </Select>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.performActionWithMouse }}</label>
                     <i-switch v-model="datagrid.isContextMenu" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.staticWidth }}</label>
                     <i-switch v-model="datagrid.staticWidth" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>100% {{ lang.width }}</label>
                     <i-switch v-model="datagrid.fullWidth" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.multipleLinesChooseFrom }}</label>
                     <i-switch v-model="datagrid.hasCheckbox" size="small"></i-switch>
                 </div>
-                <div class="gb-control-item r-flex" v-if="datagrid.hasCheckbox && ((datagrid.mainTable && isModelSelected) ||  editMode)">
+                <div class="gb-control-item r-flex" v-if="datagrid.hasCheckbox && (isModelSelected ||  editMode)">
                     <label>{{ lang.selectSameValues }}</label>
                     <i-switch v-model="datagrid.autoSelect" size="small"></i-switch>
                 </div>
 
                 <div class="gb-control-item r-flex"
-                     v-if="datagrid.hasCheckbox && datagrid.autoSelect && ((datagrid.mainTable && isModelSelected) ||  editMode)">
+                     v-if="datagrid.hasCheckbox && datagrid.autoSelect && (isModelSelected ||  editMode)">
                     <Select v-model="datagrid.autoSelectModel" :placeholder="lang.comparisonModel" clearable>
                         <Option v-for="item in datagrid.schema" :value="item.model" :key="item.index">
                             {{ item.model }}
@@ -131,30 +130,30 @@
                     </Select>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.numbered }}</label>
                     <i-switch v-model="datagrid.isNumbered" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.clientRender }}</label>
                     <i-switch v-model="datagrid.isClient" size="small"></i-switch>
                 </div>
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.pivotTool }}</label>
                     <i-switch v-model="datagrid.isPivot" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.saveSearch }}</label>
                     <i-switch v-model="datagrid.saveFilter" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.print }}</label>
                     <i-switch v-model="datagrid.isPrint" size="small"></i-switch>
                 </div>
-                <div class="gb-control-item" v-if="datagrid.isPrint && ((datagrid.mainTable && isModelSelected) ||  editMode)">
+                <div class="gb-control-item" v-if="datagrid.isPrint && (isModelSelected ||  editMode)">
                     <Select v-model="datagrid.printSize" :placeholder="lang.paperSize">
                         <Option value="A3">A3</Option>
                         <Option value="A3 landscape">A3 {{ lang.landScape }}</Option>
@@ -165,36 +164,36 @@
                     </Select>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.makeExcel }}</label>
                     <i-switch v-model="datagrid.isExcel" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.excelUpload }}</label>
                     <i-switch v-model="datagrid.isExcelUpload" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.reboot }}</label>
                     <i-switch v-model="datagrid.isRefresh" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.showFullText }}</label>
                     <i-switch v-model="datagrid.fullText" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.displayMenuColumn }}</label>
                     <i-switch v-model="datagrid.colMenu" size="small"></i-switch>
                 </div>
 
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.columnFilterButton }}</label>
                     <i-switch v-model="datagrid.colFilterButton" size="small"></i-switch>
                 </div>
-                <div class="gb-control-item r-flex" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>{{ lang.displayTableFrame }}</label>
                     <i-switch v-model="datagrid.showGrid" size="small"></i-switch>
                 </div>
@@ -492,7 +491,7 @@
                 <!-- Condition -->
                 <TabPane :label="lang.conditionTrigger" icon="md-contract">
                     <div class="gb-config">
-                        <query-builder v-if="fieldList && fieldList.length >= 0 && ((datagrid.mainTable && isModelSelected) ||  editMode)"
+                        <query-builder v-if="fieldList && fieldList.length >= 0 && (isModelSelected ||  editMode)"
                                        @change="setCondition" :query="datagrid.condition"
                                        :fields="fieldList"></query-builder>
                         <br>
@@ -587,7 +586,7 @@
                             </Col>
 
                             <Col :span="6">
-                                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                                     <label>
                                         {{ lang.editable_UpdateLink }}
                                         <small>http://google.com/{var}</small>
@@ -595,28 +594,28 @@
                                     </label>
                                 </div>
 
-                                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                                     <label>
                                         {{ lang.fixEntireLine }}
                                         <i-switch v-model="datagrid.editFullRow" size="small"></i-switch>
                                     </label>
                                 </div>
 
-                                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                                     <label>
                                         {{ lang.switchEditMode }} - {{ lang.withOneClick }}
                                         <i-switch v-model="datagrid.singleClickEdit" size="small"></i-switch>
                                     </label>
                                 </div>
 
-                                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                                     <label>
                                         {{ lang.highlightChanges }}
                                         <i-switch v-model="datagrid.flashChanges" size="small"></i-switch>
                                     </label>
                                 </div>
 
-                                <div class="gb-control-item" v-if="(datagrid.mainTable && isModelSelected) ||  editMode">
+                                <div class="gb-control-item" v-if="isModelSelected ||  editMode">
                                     <label>
                                         {{ lang.saveChangesBulk }}
                                         <i-switch v-model="datagrid.editableShouldSubmit" size="small"></i-switch>
@@ -1257,8 +1256,6 @@ export default {
         },
 
         async setBuilder(table) {
-
-
             this.fieldList = await getTableMeta(table);
             // console.log(this.fieldList);
             this.isModelSelected = true;

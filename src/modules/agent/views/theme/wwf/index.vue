@@ -9,19 +9,14 @@
 
             <div class="header">
                 <div class="logo">
-                    <!--                    <img src="/assets/erc/images/logo.svg" alt="logo" style="height: 62px"/>-->
-                    <div class="title">
-                        <h2 style="max-width: 600px;">Optical</h2>
-                        <p>UniStore цахим систем</p>
+                    <img src="/assets/app/images/logo.png" alt="logo" style="height: 55px"/>
+                    <div class="logo-txt">
+                        <span>Зэрлэг амьтан,</span>
+                        <span>ургамлын мониторинг</span>
                     </div>
                 </div>
 
                 <ul class="menu">
-                    <li>
-                        <a href="javascript:void(0)" @click="showFaqModal"
-                        >{{ lang.frequentlyAskedQuestions }}</a>
-                    </li>
-
                     <li>
                         <a href="javascript:void(0)" @click="showInstructModal">
                             {{ lang.instructionsUse }}
@@ -29,7 +24,7 @@
                     </li>
 
                     <li>
-                        <a href="http://erc.gov.mn/web/mn/contact" target="_blank">
+                        <a href="/contact" target="_blank">
                             {{ lang.toContaqt }}
                         </a>
                     </li>
@@ -37,60 +32,59 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="assets/unistore/ecommerce.json"/>
+                    <lottie-animation path="assets/app/images/bg.json"/>
                 </div>
             </div>
 
             <div class="footer">
-                <h3>Та доорх зөвшөөрлүүдийг хүсэх боломжтой</h3>
+                <h3>Бусад системүүд</h3>
                 <hooper :settings="hooperSettings">
                     <slide>
                         <div class="footer-item">
-                            <a href="javascript:void(0)">
+                            <a href="https://eic.mn/database1.php" target="_blank">
                                 <inline-svg src="/assets/icons/duotone/General/Bank.svg"/>
-                                <span>Орлого, зарлагаа хамгийн хялбараар хянах боломж</span>
+                                <span>Газар, түүний хөрс</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
-                            <a href="javascript:void(0)">
+                            <a href="https://eic.mn/database2.php" target="_blank">
                                 <inline-svg src="/assets/icons/duotone/Interface/Doughnut.svg"/>
-                                <span>Салбар болгоноор барааны нөөц болон илүүдлээ хянах</span>
+                                <span>Газрын хэвлий, ашигт малтмал</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
-                            <a href="javascript:void(0)">
+                            <a href="https://eic.mn/water/" target="_blank">
                                 <inline-svg src="/assets/icons/duotone/Navigation/Route.svg"/>
-                                <span>Хэрэглэгчийн харааны нэгдсэн мэдээллийн бааз ашиглах</span>
+                                <span>Ус, рашаан</span>
                             </a>
                         </div>
                     </slide>
                     <slide>
                         <div class="footer-item">
-                            <a href="javascript:void(0)">
+                            <a href="https://eic.mn/database4.php" target="_blank">
                                 <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
-                                <span>Бараа бүтээгдэхүүнээ бөөний төвөөс шууд захиалж татах</span>
+                                <span>Ой</span>
+                            </a>
+                        </div>
+                    </slide>
+                    <slide>
+                        <div class="footer-item">
+                            <a href="https://eic.mn/flora/" target="_blank">
+                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
+                                <span>Байгалийн ургамал</span>
                             </a>
                         </div>
                     </slide>
 
                     <slide>
                         <div class="footer-item">
-                            <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Electric/Highvoltage.svg"/>
-                                <span>Бараа бүрт тусгай кодыг хялбар өгч бүртгэл хийх боломж</span>
-                            </a>
-                        </div>
-                    </slide>
-
-                    <slide>
-                        <div class="footer-item">
-                            <a href="javascript:void(0)">
-                                <inline-svg src="/assets/icons/duotone/Devices/Battery-full.svg"/>
-                                <span>ПОС, e-barimt шууд холбогдсон кассын систем</span>
+                            <a href="https://eic.mn/fauna/" target="_blank">
+                                <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
+                                <span>Амьтан</span>
                             </a>
                         </div>
                     </slide>
@@ -115,8 +109,7 @@
             :reset="true"
             :draggable="false"
             height="90%"
-            width="70%"
-        >
+            width="70%">
             <div class="d-modal">
                 <div class="modal-header">
                     <h2 class="title">{{ lang.frequentlyAskedQuestions }}</h2>
@@ -186,7 +179,9 @@ Vue.use(iView);
 iView.locale(lang);
 Vue.use(vModal, {componentName: "v-modal"});
 
+
 export default {
+
     computed: {
         lang() {
             const labels = ['instructionsUse', 'frequentlyAskedQuestions', 'downloadAppHere', 'toContaqt', 'title', 'subtitle',];
@@ -311,5 +306,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../scss/theme/unistore/style.scss";
+@import "../../../scss/theme/wwf/style";
 </style>

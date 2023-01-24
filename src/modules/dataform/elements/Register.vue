@@ -88,15 +88,6 @@ export default {
             return this.model.form[this.model.component];
         }
     },
-    // mounted() {
-    //     let value = this.model.form[this.model.component];
-    //
-    //     let firstchar = value.charAt(0);
-    //     this.registerChar1 = {value: firstchar, label: firstchar};
-    //     let secondchar = value.charAt(1);
-    //     this.registerChar2 = {value: secondchar, label: secondchar};
-    //     this.registerNumber = value.substring(2, 10);
-    // },
     watch: {
         registerLocal(value, oldValue) {
             if (value) {
@@ -110,23 +101,46 @@ export default {
                 this.registerChar1= {value: 'А', label: 'А'};
                 this.registerChar2= {value: 'А', label: 'А'};
             }
-        }
-    },
-    methods: {
-        registerChanged() {
-            if(this.registerNumber && this.registerChar1.value && this.registerChar2.value){
-                let preFix = this.registerChar1.value + this.registerChar2.value;
-                let number = this.registerNumber.substring(0, 8);
-                let fillRD = preFix+number;
-                if(this.registerNumber.length > 8){
-                    this.registerNumber = number;
-                } else if(fillRD.length == 10){
-                    Vue.set(this.model.form, this.model.component, fillRD);
+        },
+        created() {
+            let value = this.model.form[this.model.component];
+            let firstchar = value.charAt(0);
+            this.registerChar1 = {value: firstchar, label: firstchar};
+            let secondchar = value.charAt(1);
+            this.registerChar2 = {value: secondchar, label: secondchar};
+            this.registerNumber = value.substring(2, 10);
+        },
+        watch: {
+            registerLocal(value, oldValue) {
+                if (value) {
+                    let firstchar = value.charAt(0);
+                    this.registerChar1 = {value: firstchar, label: firstchar};
+                    let secondchar = value.charAt(1);
+                    this.registerChar2 = {value: secondchar, label: secondchar};
+                    this.registerNumber = value.substring(2, 10);
+                }  else{
+                    this.registerNumber= null;
+                    this.registerChar1= {value: 'А', label: 'А'};
+                    this.registerChar2= {value: 'А', label: 'А'};
+                }
+            }
+        },
+        methods: {
+            registerChanged() {
+                if(this.registerNumber && this.registerChar1.value && this.registerChar2.value){
+                    let preFix = this.registerChar1.value + this.registerChar2.value;
+                    let number = this.registerNumber.substring(0, 8);
+                    let fillRD = preFix+number;
+                    if(this.registerNumber.length > 8){
+                        this.registerNumber = number;
+                    } else if(fillRD.length == 10){
+                        Vue.set(this.model.form, this.model.component, fillRD);
+                    } else {
+                        Vue.set(this.model.form, this.model.component, null);
+                    }
                 } else {
                     Vue.set(this.model.form, this.model.component, null);
                 }
-            } else {
-                Vue.set(this.model.form, this.model.component, null);
             }
         }
     }

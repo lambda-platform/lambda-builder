@@ -33,10 +33,18 @@
                 padding-top: 5px !important;
                 background: #ffffff;
             }
+
+            .ivu-input{
+                height: 20px;
+            }
         }
 
         .ag-floating-filter-input, .ag-filter-filter{
             height: 100% !important;
+        }
+
+        .ag-floating-filter-body .ag-input-wrapper .ag-input-field-input{
+            max-height: 20px;
         }
     }
 

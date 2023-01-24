@@ -1,11 +1,12 @@
-$color-primary: #3500E2;
+//$color-primary: #4036e9;
+$color-primary: #3C2A21;
 $color-hover-red: #04AFEE;
 $color-title: #282830;
 $color-text: #6A6B70;
 $color-input-text: #555555;
 $color-border: #acb0b7;
-$color-border-focus: #3500E2;
-$color-border-hover: #3500E2;
+$color-border-focus: $color-primary;
+$color-border-hover: $color-primary;
 $color-danger: #e74c3c;
 $color-success: #1abc9c;
 //$color-overlay: #460309;
@@ -93,6 +94,26 @@ body {
             padding: 60px 60px 0;
             height: 100px;
 
+            .logo{
+                text-align: left;
+                display: flex;
+                img{
+                    margin-right: 20px;
+                }
+                &-txt{
+                    display: inline-flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    span{
+                        line-height: 24px;
+                        font-weight: 500;
+                        color: #222;
+                        font-size: 20px;
+                        text-shadow: 0px 1px 1px #222;
+                    }
+                }
+            }
+
             .menu {
                 margin-left: auto;
                 display: flex;
@@ -174,8 +195,10 @@ body {
                 p {
                     color: $color-primary;
                     text-transform: uppercase;
-                    font-size: 12px;
+                    font-size: 10px;
+                    font-weight: 500;
                     letter-spacing: .5px;
+                    margin-top: -10px;
                 }
             }
         }
@@ -187,15 +210,19 @@ body {
             width: 100%;
             height: calc(100vh - 400px);
             flex: 1;
-            background-image: url('/assets/erc/images/app-bg.png');
+            background-image: url('/assets/app/images/app-bg.png');
             background-size: 100% auto;
             background-repeat: no-repeat;
             background-position: center bottom;
             padding-top: 60px;
 
             .lottie {
-                height: 80%;
+                height: 60%;
                 margin-left: 10%;
+                margin-top: 10%;
+                @media (max-height: 1080px) {
+                    height: 100%;
+                }
             }
         }
 
@@ -225,7 +252,7 @@ body {
                     border-radius: 8px;
                     padding: 0 10px;
                     //background: lighten($color-primary, 20%);
-                    background-image: linear-gradient(to right top, $color-primary, lighten($color-primary, 10%), lighten($color-primary, 20%));
+                    background-image: linear-gradient(to right top, $color-primary, lighten($color-primary, 8%), lighten($color-primary, 16%));
 
                     svg {
                         fill: transparent;
@@ -240,8 +267,9 @@ body {
 
                     span {
                         color: #ffffff;
-                        font-size: 13px;
+                        font-size: 14px;
                         line-height: 18px;
+                        margin-top: 10px;
                     }
                 }
             }
@@ -285,11 +313,14 @@ body {
         padding: 0;
 
         .logo {
-            text-align: left;
             margin-bottom: 60px;
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
 
             img {
-                width: 100%;
+                width: 120px;
             }
 
             &.with-text {
@@ -459,7 +490,8 @@ body {
                     margin: 14px 0;
                     height: 36px;
                     width: 100%;
-                    background-color: $color-primary;
+                    //background-color: $color-primary;
+                    background-image: linear-gradient(to right top, $color-primary, lighten($color-primary, 8%), lighten($color-primary, 16%));
                     border: none;
                     font-family: 'ToyotaType-Regular', sans-serif;
                     font-size: 13px;
@@ -601,7 +633,7 @@ body {
 
     .copyright {
         padding: 20px;
-        font-size: 11px;
+        font-size: 12px;
         color: $color-primary;
         text-align: center;
         line-height: 13px;
@@ -789,6 +821,7 @@ body {
         font-size: 15px;
         text-transform: uppercase;
         color: $color-primary;
+        font-weight: 500;
     }
 
     &:before {
