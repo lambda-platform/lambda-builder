@@ -88,15 +88,15 @@ export default {
             return this.model.form[this.model.component];
         }
     },
-    created() {
-        let value = this.model.form[this.model.component];
-
-        let firstchar = value.charAt(0);
-        this.registerChar1 = {value: firstchar, label: firstchar};
-        let secondchar = value.charAt(1);
-        this.registerChar2 = {value: secondchar, label: secondchar};
-        this.registerNumber = value.substring(2, 10);
-    },
+    // mounted() {
+    //     let value = this.model.form[this.model.component];
+    //
+    //     let firstchar = value.charAt(0);
+    //     this.registerChar1 = {value: firstchar, label: firstchar};
+    //     let secondchar = value.charAt(1);
+    //     this.registerChar2 = {value: secondchar, label: secondchar};
+    //     this.registerNumber = value.substring(2, 10);
+    // },
     watch: {
         registerLocal(value, oldValue) {
             if (value) {
