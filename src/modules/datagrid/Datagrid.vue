@@ -459,6 +459,10 @@ export default {
                 this.$parent.isExcelUpload = gridSchema.isExcelUpload;
             }
 
+            if (gridSchema.isGlobalSearch) {
+                this.$parent.isSearch = gridSchema.isGlobalSearch;
+            }
+
             if (gridSchema.excelUploadSample) {
                 this.$parent.excelUploadSample = gridSchema.excelUploadSample;
             }

@@ -31,6 +31,7 @@ export default {
             excelUploadCustomUrl: null,
             isRefresh: false,
             isSave: false,
+            isSearch: false,
             rowId: null,
             row: null,
             selectedData: []

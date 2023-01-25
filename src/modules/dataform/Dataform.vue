@@ -68,60 +68,6 @@
                     <Spin v-if='loadConfig' fix></Spin>
                     <div v-else>
                         <Row v-for='row in ui.schema' :key='row.index'>
-                            <!-- Section -->
-                            <Col v-for='col in row.children' v-if='isVisibleSection(col) && !row.sectionRenderByTab'
-                                 :key='col.index' :xs='col.span.xs'
-                                 :sm='col.span.sm' :md='col.span.md' :lg='col.span.lg'>
-                                <div :class="col.name != '' ? 'fieldset' : ''">
-                                    <legend v-if="col.name != ''">{{ col.name }}</legend>
-                                    <Row v-for='srow in col.children' :key='srow.index'>
-                                        <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
-                                             :sm='24' :md='scol.span.md' :lg='scol.span.lg'>
-                                            <Divider v-if='scol.name' orientation='left' class='form-divider'>{{
-                                                    scol.name
-                                                }}
-                                            </Divider>
-                                            <span v-for='item in scol.children' :key='item.index'>
-                                        <component
-                                            :key='item.model'
-                                            :ref="'sf'+item.model"
-                                            :url='url'
-                                            v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
-                                            :is='element(`subform/${item.subtype}`)'
-                                            :model='{form: model, component: item.model}'
-                                            :form='setMeta(item, true)'
-                                            :formula='formula'
-                                            :relations='relations'
-                                            :asyncMode='asyncMode'
-                                            :editMode='editMode'
-                                            :tbl="meta.model"
-                                        />
-                                        <component
-                                            :key='item.model'
-                                            v-if="isShow(item.model) && item.formType != 'SubForm'"
-                                            :do_render='do_render'
-                                            :asyncMode='asyncMode'
-                                            :editMode='editMode'
-                                            :is='element(item.formType)'
-                                            :model='{form: model, component: item.model}'
-                                            :disabled='item.disabled ? item.disabled : false'
-                                            :label='item.label ? item.label : `[${item.model}]`'
-                                            :rule='item.model'
-                                            :meta='setMeta(item)'
-                                            :identity='identity'
-                                            :url='url'
-                                            :getSchemaByModel='getSchemaByModel'
-                                            :getSchemaRelationByModel='getSchemaRelationByModel'
-                                            :setSchemaByModel='setSchemaByModel'
-                                            :relation_data='getRelation(item)'
-                                            :tbl="meta.model"
-                                        />
-                                        </span>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-
                             <!-- Tab -->
                             <Tabs :value='0' v-if='row.sectionRenderByTab'>
                                 <TabPane :label='col.name' :name='col.index' v-for='col in row.children'
@@ -173,50 +119,99 @@
                                 </TabPane>
                             </Tabs>
 
-                            <!-- Standart column -->
-                            <Col v-for='col in row.children' v-if="col.type == 'col'" :key='col.index' :xs='col.span.xs'
+                            <!-- Section && Standart column -->
+                            <Col v-for='col in row.children' v-if='isVisibleSection(col) && !row.sectionRenderByTab'
+                                 :key='col.index' :xs='col.span.xs'
                                  :sm='col.span.sm' :md='col.span.md' :lg='col.span.lg'>
-                                <Divider v-if='col.name' orientation='left' class='form-divider'>{{
-                                        col.name
-                                    }}
-                                </Divider>
-                                <span v-for='item in col.children' :key='item.index'>
-                            <component
-                                :key='item.model'
-                                :ref="'sf'+item.model"
-                                v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
-                                :is='element(`subform/${item.subtype}`)'
-                                :label='item.label ? item.label : `[${item.model}]`'
-                                :model='{form: model, component: item.model}'
-                                :form='setMeta(item, true)'
-                                :relations='relations'
-                                :asyncMode='asyncMode'
-                                :formula='formula'
-                                :schemaID='schemaID'
-                                :url='url'
-                                :editMode='editMode'
-                                :tbl="meta.model"
-                            />
 
-                            <component
-                                :key='item.model'
-                                v-if="isShow(item.model) && item.formType != 'SubForm'"
-                                :do_render='do_render'
-                                :editMode='editMode'
-                                :is='element(item.formType)'
-                                :disabled='item.disabled ? item.disabled : false'
-                                :model='{form: model, component: item.model}'
-                                :label='item.label ? item.label : `[${item.model}]`' :rule='item.model'
-                                :meta='setMeta(item)'
-                                :identity='identity'
-                                :asyncMode='asyncMode'
-                                :getSchemaByModel='getSchemaByModel'
-                                :getSchemaRelationByModel='getSchemaRelationByModel'
-                                :setSchemaByModel='setSchemaByModel'
-                                :relation_data='getRelation(item)'
-                                :tbl="meta.model"
-                            />
-                            </span>
+                                <!-- Section render-->
+                                <div v-if="col.type == 'section'" :class="col.name != '' ? 'fieldset' : ''">
+                                    <legend v-if="col.name != ''">{{ col.name }}</legend>
+                                    <Row v-for='srow in col.children' :key='srow.index'>
+                                        <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
+                                             :sm='24' :md='scol.span.md' :lg='scol.span.lg'>
+                                            <Divider v-if='scol.name' orientation='left' class='form-divider'>{{
+                                                    scol.name
+                                                }}
+                                            </Divider>
+                                            <span v-for='item in scol.children' :key='item.index'>
+                                        <component
+                                            :key='item.model'
+                                            :ref="'sf'+item.model"
+                                            :url='url'
+                                            v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
+                                            :is='element(`subform/${item.subtype}`)'
+                                            :model='{form: model, component: item.model}'
+                                            :form='setMeta(item, true)'
+                                            :formula='formula'
+                                            :relations='relations'
+                                            :asyncMode='asyncMode'
+                                            :editMode='editMode'
+                                            :tbl="meta.model"
+                                        />
+                                        <component
+                                            :key='item.model'
+                                            v-if="isShow(item.model) && item.formType != 'SubForm'"
+                                            :do_render='do_render'
+                                            :asyncMode='asyncMode'
+                                            :editMode='editMode'
+                                            :is='element(item.formType)'
+                                            :model='{form: model, component: item.model}'
+                                            :disabled='item.disabled ? item.disabled : false'
+                                            :label='item.label ? item.label : `[${item.model}]`'
+                                            :rule='item.model'
+                                            :meta='setMeta(item)'
+                                            :identity='identity'
+                                            :url='url'
+                                            :getSchemaByModel='getSchemaByModel'
+                                            :getSchemaRelationByModel='getSchemaRelationByModel'
+                                            :setSchemaByModel='setSchemaByModel'
+                                            :relation_data='getRelation(item)'
+                                            :tbl="meta.model"
+                                        />
+                                        </span>
+                                        </Col>
+                                    </Row>
+                                </div>
+
+                                <!-- Column render-->
+                                <div v-for='item in col.children' v-if="col.type == 'col'" :key='item.index'>
+                                    <component
+                                        :key='item.model'
+                                        :ref="'sf'+item.model"
+                                        v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
+                                        :is='element(`subform/${item.subtype}`)'
+                                        :label='item.label ? item.label : `[${item.model}]`'
+                                        :model='{form: model, component: item.model}'
+                                        :form='setMeta(item, true)'
+                                        :relations='relations'
+                                        :asyncMode='asyncMode'
+                                        :formula='formula'
+                                        :schemaID='schemaID'
+                                        :url='url'
+                                        :editMode='editMode'
+                                        :tbl="meta.model"
+                                    />
+
+                                    <component
+                                        :key='item.model'
+                                        v-if="isShow(item.model) && item.formType != 'SubForm'"
+                                        :do_render='do_render'
+                                        :editMode='editMode'
+                                        :is='element(item.formType)'
+                                        :disabled='item.disabled ? item.disabled : false'
+                                        :model='{form: model, component: item.model}'
+                                        :label='item.label ? item.label : `[${item.model}]`' :rule='item.model'
+                                        :meta='setMeta(item)'
+                                        :identity='identity'
+                                        :asyncMode='asyncMode'
+                                        :getSchemaByModel='getSchemaByModel'
+                                        :getSchemaRelationByModel='getSchemaRelationByModel'
+                                        :setSchemaByModel='setSchemaByModel'
+                                        :relation_data='getRelation(item)'
+                                        :tbl="meta.model"
+                                    />
+                                </div>
                             </Col>
                         </Row>
                     </div>
@@ -233,13 +228,14 @@
                         <i :class='extraButton.icon' :style='!editMode ? `` :`color:${extraButton.color}`'></i>
                         {{ extraButton.title }}
                     </Button>
+
                     <Button type='info' :loading='asyncMode' @click="handleSubmit(meta.model +'-'+ schemaID)">
-                    <span v-if='!asyncMode'>
-                        {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
-                    </span>
+                        <span v-if='!asyncMode'>
+                            {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
+                        </span>
                         <span v-else>
-                        {{ lang.pleaseWait }}
-                    </span>
+                            {{ lang.pleaseWait }}
+                        </span>
                     </Button>
 
                     <Button @click="handleReset(meta.model +'-'+ schemaID)" v-if='!editMode && !disableReset'

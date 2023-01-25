@@ -70,6 +70,7 @@
                                :excelUploadCustomUrl="excelUploadCustomUrl"
                                :isRefresh="isRefresh"
                                :isSave="isSave"
+                               :isSearch="isSearch"
                     />
                     <Button v-if="exportSelectedRows" @click="exportByPath" :disabled="selectedData.length < 1"
                             type="success" shape="circle" size="small">{{ exportLabel }}

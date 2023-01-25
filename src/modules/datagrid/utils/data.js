@@ -112,8 +112,6 @@ export const data = (vm) => {
 
 
 export const builderData = (vm) => {
-
-
     return {
         loading: true,
         scrollOptions: {
@@ -132,7 +130,7 @@ export const builderData = (vm) => {
             identity: null,
             actions: ["e", "d"],
             actionPosition: 0,
-            isContextMenu: false,
+            isContextMenu: true,
             staticWidth: false,
             fullWidth: true,
             hasCheckbox: false,
@@ -172,8 +170,10 @@ export const builderData = (vm) => {
             flashChanges: false,
             colMenu: false,
             colFilterButton: true,
-            showGrid: false,
-            saveFilter: false
+            showGrid: true,
+            saveFilter: false,
+            isExcel: true,
+            isGlobalSearch: true,
         },
 
         fieldList: [],

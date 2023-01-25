@@ -21,6 +21,7 @@
                                :isExcel="isExcel"
                                :isRefresh="isRefresh"
                                :isSave="isSave"
+                               :isSearch="isSearch"
                     />
                     <slot name="right"></slot>
                 </div>

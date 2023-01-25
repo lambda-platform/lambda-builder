@@ -158,6 +158,8 @@ export default {
                 } else {
                     return true
                 }
+            } else if (col.type == 'col') {
+                return col;
             } else {
                 return false
             }
@@ -954,10 +956,7 @@ export default {
                     }
                 }
 
-
                 item.relation.filterWithUser = undefined
-
-
             }
 
             if (item.relation.filter == '' || typeof item.relation.filter === 'undefined') {

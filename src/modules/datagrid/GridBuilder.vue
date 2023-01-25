@@ -23,7 +23,8 @@
 
                 <div class="gb-control-item">
                     <label>{{ lang.basicTable }}</label>
-                    <multiselect  v-model='datagrid.mainTable' :placeholder='lang.selectTable' :options="tableList"></multiselect>
+                    <multiselect v-model='datagrid.mainTable' :placeholder='lang.selectTable'
+                                 :options="tableList"></multiselect>
                 </div>
 
                 <div class="gb-control-item" v-if="isModelSelected ||  editMode">
@@ -110,6 +111,11 @@
                 <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
                     <label>100% {{ lang.width }}</label>
                     <i-switch v-model="datagrid.fullWidth" size="small"></i-switch>
+                </div>
+
+                <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
+                    <label>Глобал хайлт</label>
+                    <i-switch v-model="datagrid.isGlobalSearch" size="small"></i-switch>
                 </div>
 
                 <div class="gb-control-item r-flex" v-if="isModelSelected ||  editMode">
@@ -823,7 +829,6 @@ export default {
                 'editable_UpdateLink', 'fixEntireLine', 'switchEditMode', 'withOneClick', 'highlightChanges', 'saveChangesBulk', 'appearance', 'dataTable',
                 'filter', 'mini', 'simple', 'size', "controllerNameSpace", 'add', 'symbol', 'type', 'nickName', 'filtersettings', 'filtersAndSelectedLineSettings',
                 'sort', 'column', 'delete', 'actionsField', 'copy', 'doubleClicktoEdit', 'buttonEdit', 'firstColumn', 'actions', 'performActionWithMouse',
-
                 'renew', 'pleaseWaitForLoading', 'namespace', 'afterFetch', 'beforeFetch', 'makeExcel', 'numbered', 'basicTable', 'formInfoSavedSuccessfully',
                 'tableDataHasBeenSuccessfullyEdited', 'successfullySaved', 'anErrorOccurredWhileSaving',
                 'gbExcelImport', 'excelImportFieldName', 'excelImportFormTitle', 'excelUploadSampleFile', 'excelUploadRowtoStart', 'excelUploadCustomUrl', 'excelUploadCustomNamespace', 'excelUploadCustomTrigger',
@@ -1022,13 +1027,12 @@ export default {
                 });
             }
 
-
             if (typeof this.datagrid.filter == "undefined") {
                 Vue.set(this.datagrid, "filter", []);
             }
 
             if (typeof this.datagrid.isContextMenu == "undefined") {
-                Vue.set(this.datagrid, "isContextMenu", false);
+                Vue.set(this.datagrid, "isContextMenu", true);
             }
 
             if (typeof this.datagrid.fullWidth == "undefined") {
@@ -1052,25 +1056,33 @@ export default {
             }
 
             if (typeof this.datagrid.isExcel == "undefined") {
-                Vue.set(this.datagrid, "isExcel", false);
+                Vue.set(this.datagrid, "isExcel", true);
             }
 
             if (typeof this.datagrid.isExcelUpload == "undefined") {
                 Vue.set(this.datagrid, "isExcelUpload", false);
             }
 
+            if (typeof this.datagrid.isGlobalSearch == "undefined") {
+                Vue.set(this.datagrid, "isGlobalSearch", true);
+            }
+
             if (typeof this.datagrid.excelUploadSample == "undefined") {
                 Vue.set(this.datagrid, "excelUploadSample", null);
             }
+
             if (typeof this.datagrid.excelImportRowtoStart == "undefined") {
                 Vue.set(this.datagrid, "excelImportRowtoStart", null);
             }
+
             if (typeof this.datagrid.excelUploadCustomUrl == "undefined") {
                 Vue.set(this.datagrid, "excelUploadCustomUrl", null);
             }
+
             if (typeof this.datagrid.excelUploadCustomNamespace == "undefined") {
                 Vue.set(this.datagrid, "excelUploadCustomNamespace", null);
             }
+
             if (typeof this.datagrid.excelUploadCustomTrigger == "undefined") {
                 Vue.set(this.datagrid, "excelUploadCustomTrigger", null);
             }
@@ -1116,7 +1128,7 @@ export default {
                     afterFetch: '',
                     beforeDelete: '',
                     afterDelete: '',
-                    cacheClearUrl:''
+                    cacheClearUrl: ''
                 };
                 Vue.set(this.datagrid, "triggers", triggers);
             }
@@ -1154,7 +1166,7 @@ export default {
             }
 
             if (typeof this.datagrid.showGrid == "undefined") {
-                Vue.set(this.datagrid, "showGrid", false);
+                Vue.set(this.datagrid, "showGrid", true);
             }
 
             if (typeof this.datagrid.theme == "undefined") {
@@ -1199,9 +1211,11 @@ export default {
             if (typeof item.canExcelImport == "undefined") {
                 item.canExcelImport = false;
             }
+
             if (typeof item.excelImportFieldName == "undefined") {
                 item.excelImportFieldName = null;
             }
+
             if (typeof this.datagrid.isExcel == "undefined") {
                 Vue.set(this.datagrid, "isExcel", false);
             }
@@ -1269,7 +1283,6 @@ export default {
                 this.gridName = table;
             }
 
-
             this.datagrid = {
                 ...this.datagrid,
                 sort: null,
@@ -1297,7 +1310,7 @@ export default {
                 excelImportGridType: "Text",
                 width: 200,
                 hide: false,
-                sortable: false,
+                sortable: true,
                 printable: false,
                 pinned: false,
                 pinPosition: 'left',
@@ -1326,7 +1339,7 @@ export default {
                     parentFieldOfForm: "",
                     parentFieldOfTable: ""
                 },
-                filterable: false,
+                filterable: true,
                 filter: {
                     type: null,
                     param: null,
@@ -1348,7 +1361,7 @@ export default {
                     shouldUpdate: false,
                     shouldPost: false
                 },
-                searchable: false,
+                searchable: true,
                 hasTranslation: false,
                 canExcelImport: false,
                 excelImportFieldName: null,
