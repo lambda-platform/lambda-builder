@@ -375,6 +375,7 @@ export default {
         },
 
         setUiSchemaFormItem(items) {
+
             items.forEach(item => {
                 if (item.type == 'form') {
                     this.setModel(item.model, item.default, item.formType)

@@ -98,7 +98,7 @@ export const data = (vm) => {
             rowId: null,
             rowIndex: null
         },
-        frameworkComponents: null,
+        components: null,
         changedRowsData: [],
         colMenu: false,
         colFilterButton: true,
