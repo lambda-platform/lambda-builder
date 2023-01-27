@@ -42,7 +42,6 @@
 <script>
 import expandOption from "./ExpandOption";
 import {elementList} from "./elements";
-import {rules} from "./rule";
 
 export default {
     props: ["item", "edit", "sub", "disabled", "schema", "otherGrids", "projectID"],
@@ -83,7 +82,7 @@ export default {
         },
 
         changeItemType() {
-            if (this.item.formType == 'Geographic') {
+            if (this.item.formType === 'Geographic') {
                 if (!this.item.GeographicOption) {
                     this.item.GeographicOption = {
                         attributes: "",
@@ -106,8 +105,9 @@ export default {
             } else {
                 this.item.GeographicOption = undefined;
             }
-            if (this.item.formType == 'Image') {
-                if (this.item.file.isMultiple == undefined) {
+
+            if (this.item.formType === 'Image') {
+                if (this.item.file.isMultiple === undefined) {
                     this.item.file.isMultiple = false
                 }
             } else {
@@ -115,7 +115,8 @@ export default {
                     this.item.file.isMultiple = undefined;
                 }
             }
-            if (this.item.formType == 'Password') {
+
+            if (this.item.formType === 'Password') {
                 if (!this.item.passwordOption) {
                     this.item.passwordOption = {
                         generate: false,

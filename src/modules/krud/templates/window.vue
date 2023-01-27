@@ -25,6 +25,7 @@
                            :isExcelUpload="isExcelUpload"
                            :isRefresh="isRefresh"
                            :isSave="isSave"
+                           :isSearch="isSearch"
                 />
             </portal>
 

@@ -85,32 +85,33 @@ export default {
         },
     },
     methods: {
-
         onSubmit() {
             this.isSuccess = false;
             this.isError = false;
-            if (!this.loading) {
-                this.loading = true;
-                axios.post('/auth/login', this.credentials).then(({data}) => {
-                    setTimeout(() => {
-                        this.loading = false;
-                        if (data.status) {
-                            this.isSuccess = true;
-                            setTimeout(() => {
-                                window.location = data.path;
-                            }, 600)
-                        } else {
-                            this.isError = true;
-                        }
-                    }, 1000);
-                }).catch(e => {
-                    setTimeout(() => {
-                        this.loading = false;
+            this.loading = true;
+
+            axios.post('/auth/login', this.credentials).then(({data}) => {
+                console.log('working');
+                setTimeout(() => {
+                    this.loading = false;
+                    if (data.status) {
+                        this.isSuccess = true;
+                        setTimeout(() => {
+                            window.location = data.path;
+                        }, 600)
+                    } else {
                         this.isError = true;
-                    }, 1000);
-                })
-            }
-        },
+                    }
+                }, 1000);
+            }).catch(e => {
+                console.log(e);
+
+                setTimeout(() => {
+                    this.loading = false;
+                    this.isError = true;
+                }, 1000);
+            })
+        }
     }
 }
 </script>

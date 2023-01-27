@@ -55,36 +55,6 @@
                                 </Select>
                             </li>
                         </ul>
-
-                        <div class="title">
-                            <h3>{{ lang.Consolidation_formula }}</h3>
-                        </div>
-
-                        <ul>
-                            <li>
-                                <label>{{ lang.Whether_to_summarize }}</label>
-                                <i-switch v-model="item.hasEquation" size="small"></i-switch>
-                            </li>
-
-                            <li v-if="item.hasEquation">
-                                <label>{{ lang.Choose_a_formula }}</label>
-                                <Select v-model="item.equations" :placeholder="lang.Formula_type">
-                                    <Option v-for="equation in equations" :key="equation.index" :value="equation">
-                                        {{ equation }}
-                                    </Option>
-                                </Select>
-                            </li>
-                            <li v-if="item.hasEquation">
-                                <label>{{ lang.Take_the_word_before_merger }} /{{ lang.example }} {{ lang.total }}:,
-                                    {{ lang.number }}: {{ lang.ets }}/</label>
-                                <Input v-model="item.preStaticWord" :placeholder="lang.Symbol"/>
-                            </li>
-                            <li v-if="item.hasEquation">
-                                <label>{{ lang.get_sign_after_merger }} /{{ lang.example }} %, $, ₮
-                                    {{ lang.ets }}/</label>
-                                <Input v-model="item.prefix" :placeholder="lang.Symbol"/>
-                            </li>
-                        </ul>
                     </Col>
 
                     <!-- Rule set -->
@@ -164,6 +134,35 @@
                             </li>
                         </ul>
 
+                        <!-- Element formula -->
+                        <div class="title">
+                            <h3>{{ lang.Consolidation_formula }}</h3>
+                        </div>
+                        <ul>
+                            <li>
+                                <label>{{ lang.Whether_to_summarize }}</label>
+                                <i-switch v-model="item.hasEquation" size="small"></i-switch>
+                            </li>
+
+                            <li v-if="item.hasEquation">
+                                <label>{{ lang.Choose_a_formula }}</label>
+                                <Select v-model="item.equations" :placeholder="lang.Formula_type">
+                                    <Option v-for="equation in equations" :key="equation.index" :value="equation">
+                                        {{ equation }}
+                                    </Option>
+                                </Select>
+                            </li>
+                            <li v-if="item.hasEquation">
+                                <label>{{ lang.Take_the_word_before_merger }} /{{ lang.example }} {{ lang.total }}:,
+                                    {{ lang.number }}: {{ lang.ets }}/</label>
+                                <Input v-model="item.preStaticWord" :placeholder="lang.Symbol"/>
+                            </li>
+                            <li v-if="item.hasEquation">
+                                <label>{{ lang.get_sign_after_merger }} /{{ lang.example }} %, $, ₮
+                                    {{ lang.ets }}/</label>
+                                <Input v-model="item.prefix" :placeholder="lang.Symbol"/>
+                            </li>
+                        </ul>
                     </Col>
                 </Row>
             </TabPane>
@@ -341,8 +340,8 @@
                                           @on-change="callForms"></i-switch>
                             </h3>
                         </div>
-                        <ul v-if="item.relation.addAble">
 
+                        <ul v-if="item.relation.addAble">
                             <li v-if="microservices.length >= 1">
                                 <label>Microservice</label>
 
@@ -397,14 +396,13 @@
                         <div class="title" v-if="item.isFkey  && relSchema.length >= 1">
                             <h3>{{ lang.Link_terms }} ({{ lang.Get_customer }})</h3>
                         </div>
+
                         <div>
                             <Row>
                                 <Col span="10">
                                     <Select v-model="optionSelectFilterWithUser.userField" filterable
                                             :placeholder="lang.Custom_column">
-                                        <Option v-for="item in user_fields" :value="item" :key="item">
-                                            {{ item }}
-                                        </Option>
+                                        <Option v-for="item in user_fields" :value="item" :key="item">{{ item }}</Option>
                                     </Select>
                                 </Col>
                                 <Col span="10">
@@ -522,9 +520,8 @@
                                 <Select v-model="item.gridSearch.grid" :placeholder="lang.Value_table" clearable
                                         filterable
                                         :disabled="!item.isGridSearch" @on-change="searchGridSchema">
-                                    <Option v-for="item in this.gridList" :value="item.id" :key="item.index">{{
-                                            item.name
-                                        }}
+                                    <Option v-for="item in this.gridList" :value="item.id" :key="item.index">
+                                        {{ item.name }}
                                     </Option>
                                 </Select>
                             </li>
@@ -533,9 +530,8 @@
                                 <Select v-model="item.gridSearch.key" :placeholder="lang.Value_return_field" clearable
                                         filterable
                                         :disabled="!item.isGridSearch">
-                                    <Option v-for="item in searchSchema" :value="item.model" :key="item.index">{{
-                                            item.model
-                                        }}
+                                    <Option v-for="item in searchSchema" :value="item.model" :key="item.index">
+                                        {{ item.model }}
                                     </Option>
                                 </Select>
                             </li>
@@ -544,9 +540,8 @@
                                 <Select v-model="item.gridSearch.labels" :placeholder="lang.Visible_fields" clearable
                                         filterable
                                         multiple :disabled="!item.isGridSearch">
-                                    <Option v-for="item in searchSchema" :value="item.model" :key="item.index">{{
-                                            item.model
-                                        }}
+                                    <Option v-for="item in searchSchema" :value="item.model" :key="item.index">
+                                        {{ item.model }}
                                     </Option>
                                 </Select>
                             </li>
@@ -643,6 +638,7 @@
                                 </Input>
                             </div>
                         </Col>
+
                         <Col span="16">
                             <div v-if="item.GeographicOption.checkByArea">
                                 <h4>{{ lang.Search_field }} (GIS)</h4>
@@ -749,24 +745,16 @@
                         <Col span="12"><Input type="text" v-model="item.GSOption.sourceGridModalTitle"
                                               placeholder="Modal дээр харуулах нэр"/></Col>
                         <Col span="12">
-
-
                             <Select v-model="item.GSOption.sourceMicroserviceID" placeholder="Microservice" clearable
-                                    filterable
-                            >
+                                    filterable>
                                 <Option v-for="microservice in microservices" :value="microservice.microservice_id"
                                         :key="microservice.index">
                                     {{ microservice.microservice }}
                                 </Option>
                             </Select>
 
-
                             <Select v-model="item.GSOption.sourceGridID" placeholder="Өгөгдөл дуудаж хүснэгт" clearable
-
-                                    @on-change="setGridSource"
-                                    filterable
-
-                            >
+                                    @on-change="setGridSource" filterable>
                                 <Option v-for="item in otherGrids" :value="item.id" :key="item.id">{{
                                         item.name
                                     }}
@@ -782,8 +770,8 @@
                             <Input type="text" v-model="item.GSOption.sourceGridUserCondition"
                                    placeholder="Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл"/>
                         </Col>
-
                     </Row>
+
                     <Row>
                         <Col>
                             <label>Хайлтын дээр харуулах тайлбар</label>
@@ -801,12 +789,9 @@
                         <Row>
                             <Col>
                                 <Select v-model="item.GSOption.sourceGridValueField" placeholder="Grid талбар" clearable
-                                        filterable
-
-                                >
+                                        filterable>
                                     <Option v-for="(item, iIndex) in sourceGridColumns.filter(c=>c!== null)"
-                                            :key="iIndex"
-                                            :value="item.model">{{ item.model }}
+                                            :key="iIndex" :value="item.model">{{ item.model }}
                                     </Option>
                                 </Select>
                             </Col>
@@ -833,8 +818,6 @@
                                 </Row>
                             </Draggable>
                         </Container>
-
-
                     </div>
                 </div>
             </TabPane>
@@ -1263,25 +1246,28 @@ export default {
                     this.otherForms = data.data;
                 });
             }
-
         },
+
         addSelectUserFilter() {
             if (!this.$props.item.relation.filterWithUser) {
                 this.$props.item.relation.filterWithUser = [];
             }
-            this.$props.item.relation.filterWithUser.push({
-                userField: this.optionSelectFilterWithUser.userField,
-                tableField: this.optionSelectFilterWithUser.tableField,
-            });
+
+            this.$props.item.relation.filterWithUser.push(this.optionSelectFilterWithUser);
 
             this.optionSelectFilterWithUser = {
                 userField: null,
                 tableField: null,
             };
+
+            console.log(this.$props.item.relation.filterWithUser);
         },
+
         deleteSelectUserFilter(index) {
+            console.log(index);
             this.$props.item.relation.filterWithUser.splice(index, 1);
         },
+
         async setGridSource(val) {
             if (val) {
                 let defualtURL = `/lambda/puzzle/schema/grid/${val}`;

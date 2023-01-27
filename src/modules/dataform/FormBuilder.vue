@@ -33,7 +33,8 @@
 
                 <div class='fb-control-item'>
                     <label>{{ lang.data_table }}</label>
-                    <multiselect v-if='!editMode' v-model='dataform.model' :placeholder='lang.selectTable' @select='setBuilder' :options="tableList"></multiselect>
+                    <multiselect v-if='!editMode' v-model='dataform.model' :placeholder='lang.selectTable'
+                                 @select='setBuilder' :options="tableList"></multiselect>
                     <Input v-model='dataform.model' disabled v-if='editMode'/>
                 </div>
 

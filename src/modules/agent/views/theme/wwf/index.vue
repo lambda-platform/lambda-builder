@@ -90,7 +90,6 @@
                     </slide>
 
                     <hooper-pagination slot="hooper-addons"></hooper-pagination>
-                    <hooper-progress slot="hooper-addons"></hooper-progress>
                 </hooper>
             </div>
         </div>
@@ -172,7 +171,7 @@ import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue";
 import InlineSvg from 'vue-inline-svg';
 import {
     Hooper, Slide, Pagination as HooperPagination,
-    Navigation as HooperNavigation
+    Navigation as HooperNavigation,
 } from 'hooper';
 
 Vue.use(iView);
@@ -264,20 +263,8 @@ export default {
         // }, 1000);
     },
     created() {
-        this.getFaqs();
     },
     methods: {
-        getFaqs() {
-            this.isLoading = true;
-            axios.get("/api/loginContent").then(({data}) => {
-                this.faqs = data.faq;
-                this.help = data.help;
-                setTimeout(() => {
-                    this.isLoading = false;
-                }, 1000);
-            });
-        },
-
         showFaqModal(row) {
             this.isLoading = false;
             if (this.faqs.length == 0) {
