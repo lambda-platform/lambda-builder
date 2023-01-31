@@ -95,7 +95,7 @@ export default {
                         filebrowserUploadUrl : '/vendor/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
                         filebrowserImageBrowseUrl : '/vendor/filemanager/dialog.php?type=1&editor=ckeditor&fldr=',
                         readOnly:this.meta && this.meta.disabled ? this.meta.disabled : false,
-                        extraPlugins : 'video'
+                        extraPlugins : 'video,youtube,tweetabletext'
                     };
             }
         }
