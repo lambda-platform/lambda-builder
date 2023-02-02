@@ -287,7 +287,6 @@ export default {
             this.formType = formSchema.formType;
             if (formSchema.step) {
                 this.step = formSchema.step;
-                console.log(this.step);
             }
 
             this.ui = formSchema.ui
@@ -875,9 +874,9 @@ export default {
                     this.setEditModel(item.children)
                 }
 
-                if (item.model && item.model == 'partner_register') {
-                    console.log('item: ', this.model[item.model]);
-                }
+                // if (item.model && item.model == 'partner_register') {
+                //     console.log('item: ', this.model[item.model]);
+                // }
             })
         },
 
@@ -941,8 +940,6 @@ export default {
 
                     if (item.relation.filter == '' || typeof item.relation.filter === 'undefined') {
                         item.relation.filter = userConditions
-
-                        console.log(item.relation)
 
                         this.setSchemaByModel(item.model, 'relation', item.relation)
 

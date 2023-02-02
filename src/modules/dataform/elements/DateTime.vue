@@ -31,7 +31,6 @@ export default {
     },
     mounted() {
         this.clearValue(this.model.form[this.model.component]);
-        console.log("HI");
     },
     watch:{
         do_render(value, oldValue) {

@@ -38,7 +38,7 @@ export default Vue.extend({
             isCascade: false,
         }
     },
-    created() {
+    mounted() {
         let dataUrl = `/lambda/krud/${this.params.schemaID}/options`;
         //get user condition
         this.params.column.filter.relation = getRelation(this.params.column.filter.relation);

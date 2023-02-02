@@ -243,7 +243,7 @@ export default {
     },
 
     created() {
-        console.log('condition', this.$props.custom_condition);
+       // console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
@@ -743,7 +743,7 @@ export default {
                                     suppressAndOrCondition: true,
                                     selectAllOnMiniFilter: true,
                                     suppressFilterButton: true,
-                                    schemaID: this.schemaID,
+                                    schemaID: this.$props.schemaID,
                                     column: filterColumn,
                                     filterModel: this.filterModel,
                                     filterData: this.updateFilterModel
@@ -764,7 +764,7 @@ export default {
                                     suppressAndOrCondition: true,
                                     selectAllOnMiniFilter: true,
                                     suppressFilterButton: true,
-                                    schemaID: this.schemaID,
+                                    schemaID: this.$props.schemaID,
                                     column: filterColumn,
                                     filterModel: this.filterModel,
                                     filterData: this.updateFilterModel
@@ -780,7 +780,7 @@ export default {
                         case 'Set-Filter':
                             if (!this.isClient) {
                                 let t = this.schema.find(col => col.model == item.model);
-                                let dataUrl = `/lambda/krud/${this.schemaID}/options`;
+                                let dataUrl = `/lambda/krud/${this.$props.schemaID}/options`;
 
                                 colItem.filter = "agSetColumnFilter";
                                 colItem.filterParams = {
@@ -828,7 +828,7 @@ export default {
                                 };
 
                                 colItem.floatingFilterComponentParams = {
-                                    schemaID: this.schemaID,
+                                    schemaID: this.$props.schemaID,
                                     column: this.schema.find(col => col.model == item.model),
                                     width: item.width,
                                     isClient: this.isClient,
@@ -862,7 +862,7 @@ export default {
                                 };
 
                                 colItem.floatingFilterComponentParams = {
-                                    schemaID: this.schemaID,
+                                    schemaID: this.$props.schemaID,
                                     column: filterColumn,
                                     width: item.width,
                                     isClient: this.isClient,
@@ -1105,7 +1105,7 @@ export default {
 
         restoreFilter() {
             if (!this.isClient) {
-                let gridSavedFilter = JSON.parse(localStorage.getItem(`grid-${this.schemaID}`));
+                let gridSavedFilter = JSON.parse(localStorage.getItem(`grid-${this.$props.schemaID}`));
                 this.filterModel = {};
                 for (let key in gridSavedFilter) {
                     this.filterModel[key] = gridSavedFilter[key];
@@ -1114,7 +1114,7 @@ export default {
         },
 
         restoreFloatFilterValue() {
-            let gridSavedFilter = JSON.parse(localStorage.getItem(`grid-${this.schemaID}`));
+            let gridSavedFilter = JSON.parse(localStorage.getItem(`grid-${this.$props.schemaID}`));
             for (let key in gridSavedFilter) {
                 let filterComponent = this.gridApi.getFilterInstance(key);
                 filterComponent.setModel(gridSavedFilter[key]);
@@ -1122,7 +1122,7 @@ export default {
         },
 
         saveFilterState() {
-            localStorage.setItem(`grid-${this.schemaID}`, JSON.stringify(this.gridApi.getFilterModel()));
+            localStorage.setItem(`grid-${this.$props.schemaID}`, JSON.stringify(this.gridApi.getFilterModel()));
         },
 
         setUserConditionValues(filters) {
@@ -1379,7 +1379,7 @@ export default {
         remove(id, index) {
             this.delLoading = true;
             let baseUrl = this.$props.url ? this.$props.url : '';
-            axios.delete(this.page_id ? `${baseUrl}/lambda/krud/delete/${this.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.schemaID}/${id}`)
+            axios.delete(this.page_id ? `${baseUrl}/lambda/krud/delete/${this.$props.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.$props.schemaID}/${id}`)
                 .then(o => {
                     if (o.status) {
                         this.$Notice.success({
@@ -1418,7 +1418,7 @@ export default {
             this.searchModel = null;
             this.filterModel = {};
             this.gridApi.setFilterModel(null);
-            localStorage.removeItem(`grid-${this.schemaID}`);
+            localStorage.removeItem(`grid-${this.$props.schemaID}`);
             this.changePage(this.$route.query.dp >= 2 ? this.$route.query.dp : 1);
         },
 
@@ -1426,7 +1426,7 @@ export default {
             if (this.isClient) {
                 this.gridApi.exportDataAsExcel();
             } else {
-                let url = `/lambda/krud/excel/${this.schemaID}`;
+                let url = `/lambda/krud/excel/${this.$props.schemaID}`;
                 let filters = Object.keys(this.filterModel)
                     .filter(e => this.filterModel[e] !== null)
                     .reduce((o, e) => {
