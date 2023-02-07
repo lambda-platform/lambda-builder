@@ -1,15 +1,17 @@
-$color-primary: #3500E2;
+$color-primary: #343951;
 $color-hover-red: #04AFEE;
 $color-title: #282830;
 $color-text: #6A6B70;
 $color-input-text: #555555;
 $color-border: #acb0b7;
-$color-border-focus: #3500E2;
-$color-border-hover: #3500E2;
+$color-border-focus: #343951;
+$color-border-hover: #343951;
 $color-danger: #e74c3c;
 $color-success: #1abc9c;
 //$color-overlay: #460309;
 $color-overlay: #131314;
+$secondary: #FFA000;
+
 @import "~hooper/dist/hooper.css";
 
 * {
@@ -225,7 +227,7 @@ body {
                     border-radius: 8px;
                     padding: 0 10px;
                     //background: lighten($color-primary, 20%);
-                    background-image: linear-gradient(to right top, $color-primary, lighten($color-primary, 10%), lighten($color-primary, 20%));
+                    background-image: linear-gradient(to right top, $secondary, lighten($secondary, 10%), lighten($secondary, 20%));
 
                     svg {
                         fill: transparent;
@@ -234,14 +236,15 @@ body {
                         width: 40px;
                         path, rect{
                             fill: transparent;
-                            stroke: #fff;
+                            stroke: $color-primary;
                         }
                     }
 
                     span {
-                        color: #ffffff;
+                        color: $color-primary;
                         font-size: 13px;
                         line-height: 18px;
+                        font-weight: bold;
                     }
                 }
             }
@@ -285,11 +288,15 @@ body {
         padding: 0;
 
         .logo {
-            text-align: left;
+            text-align: center;
             margin-bottom: 60px;
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
 
             img {
-                width: 100%;
+                //width: 100%;
+                height: 80px;
             }
 
             &.with-text {

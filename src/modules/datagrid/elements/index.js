@@ -4,6 +4,10 @@ export const elementList = [
         component: () => import(/* webpackChunkName: "grid-Text" */'./Text.vue'),
     },
     {
+        element: "Select",
+        component: () => import(/* webpackChunkName: "grid-Select" */'./Select.vue'),
+    },
+    {
         element: "Number",
         component: () => import(/* webpackChunkName: "grid-Number" */'./Number.vue'),
     },
@@ -62,10 +66,6 @@ export const elementList = [
     {
         element: "Radio",
         component: () => import(/* webpackChunkName: "grid-Radio" */'./Radio.vue'),
-    },
-    {
-        element: "Select",
-        component: () => import(/* webpackChunkName: "grid-Select" */'./Select.vue'),
     },
     {
         element: "Set-Filter",

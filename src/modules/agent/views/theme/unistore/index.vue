@@ -11,8 +11,8 @@
                 <div class="logo">
                     <!--                    <img src="/assets/erc/images/logo.svg" alt="logo" style="height: 62px"/>-->
                     <div class="title">
-                        <h2 style="max-width: 600px;">Optical</h2>
-                        <p>UniStore цахим систем</p>
+                        <h2 style="max-width: 600px;">Unistore</h2>
+                        <p>Оптикын цахим систем</p>
                     </div>
                 </div>
 

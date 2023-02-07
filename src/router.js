@@ -170,6 +170,11 @@ let routes = [{
     },
 
     {
+        path: '/role-multi',
+        component: () => import(/* webpackChunkName: "role-index" */ './pages/role/views/multi.vue')
+    },
+
+    {
         path: '/role-kb-product',
         component: () => import(/* webpackChunkName: "role-index" */ './pages/role/views/kb-product.vue')
     },
