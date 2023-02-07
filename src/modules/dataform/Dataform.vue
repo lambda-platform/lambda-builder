@@ -62,7 +62,38 @@
                         <a href="javascript:void(0)" @click="closeForm" class="action-btn"><i class="ti-close"></i></a>
                     </div>
                 </div>
+                <div  class='dataform-footer'
+                      v-if='isIos && !viewMode && template !== "window" && template !== "modal"'>
+                    <Button @click='close' v-if='withBackButton' style='margin-right: 8px'>
+                        Буцах
+                    </Button>
+                    <Button v-for='extraButton in extraButtons' :key='extraButton.index' :disabled='!editMode'
+                            :to='createWithTemplate(extraButton.url)' target='_blank'
+                            :style='!editMode ? `margin-right: 8px;` : `margin-right: 8px; color:${extraButton.color}; border-color:${extraButton.color}`'>
+                        <i :class='extraButton.icon' :style='!editMode ? `` :`color:${extraButton.color}`'></i>
+                        {{ extraButton.title }}
+                    </Button>
+                    <Button type='info' :loading='asyncMode' @click="handleSubmit(meta.model +'-'+ schemaID)">
+                    <span v-if='!asyncMode'>
+                        {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
+                    </span>
+                        <span v-else>
+                        {{ lang.pleaseWait }}
+                    </span>
+                    </Button>
 
+                    <Button @click="handleReset(meta.model +'-'+ schemaID)" v-if='!editMode && !disableReset'
+                            style='margin-left: 8px'>
+                        {{ lang.resetFrom }}
+                    </Button>
+
+                    <span v-for='button in getFooterButtons()' class='extra-buttons'>
+                    <Button type='info' :loading='asyncMode' @click='setAndSend(button.model, option.value)'
+                            v-for='option in button.options' :key='button.inex'>
+                     {{ option.label }}
+                    </Button>
+                </span>
+                </div>
                 <div class='dataform-body'>
                     <!-- Tab Section -->
                     <Spin v-if='loadConfig' fix></Spin>
@@ -215,10 +246,11 @@
                             </Col>
                         </Row>
                     </div>
+                    <div style="height: 50px;" v-if="isIos"></div>
                 </div>
 
-                <div class='dataform-footer'
-                     v-if='!viewMode && template !== "window" && template !== "modal"'>
+                <div  class='dataform-footer'
+                     v-if='!isIos && !viewMode && template !== "window" && template !== "modal"'>
                     <Button @click='close' v-if='withBackButton' style='margin-right: 8px'>
                         Буцах
                     </Button>

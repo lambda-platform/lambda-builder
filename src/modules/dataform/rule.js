@@ -107,11 +107,20 @@ const mongolianMobileNumber = (rule, value, callback) => {
 
     var letterNumber = /^[0-9]{8}$/;
     if(value.toString().match(letterNumber)){
-
         callback();
     } else {
 
         callback(new Error('8 оронтой утасны дугаар оруулна уу!'));
+    }
+};
+
+const register = (rule, value, callback) => {
+    var cryllicLetter = /^[а-яөүёА-ЯӨҮЁ0-9!@#\$%\^\&*\s*)\(+=._-]+$/;
+    var letterNumber = /^[0-9]{8}$/;
+    if(value.toString().substring(0,2).match(cryllicLetter) && value.toString().substring(2,10).match(letterNumber)){
+        callback();
+    } else {
+        callback(new Error('Регистрээ зөв оруулна уу!'));
     }
 };
 
@@ -203,6 +212,11 @@ export const getRule = (rule, baseUrl) => {
                 validator: (rule, value, callback)=> check_current_password(rule, value, callback, baseUrl),
                 trigger: 'blur',
                 // message: rule.msg
+            }
+        case 'register':
+            return {
+                validator: register,
+                trigger: 'blur'
             }
         default:
             return null;

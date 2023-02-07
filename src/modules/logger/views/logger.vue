@@ -37,7 +37,7 @@
     import io from "socket.io-client";
     import {AgGridVue} from "ag-grid-vue";
     import {getDate} from "./utils/date";
-    let host = "https://mle.mn:4044";
+    let host = window.init.mongodb_log_host;
     const socket = io(host);
 
     export default {

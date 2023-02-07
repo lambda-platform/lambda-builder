@@ -31,6 +31,7 @@ export default {
     ],
     data() {
         return {
+            isIos:!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform),
             formTitle: '',
             loadConfig: true,
             viewMode: false,
@@ -286,7 +287,6 @@ export default {
             this.formType = formSchema.formType;
             if (formSchema.step) {
                 this.step = formSchema.step;
-                console.log(this.step);
             }
 
             this.ui = formSchema.ui
@@ -376,6 +376,7 @@ export default {
         },
 
         setUiSchemaFormItem(items) {
+
             items.forEach(item => {
                 if (item.type == 'form') {
                     this.setModel(item.model, item.default, item.formType)
@@ -873,9 +874,9 @@ export default {
                     this.setEditModel(item.children)
                 }
 
-                if (item.model && item.model == 'partner_register') {
-                    console.log('item: ', this.model[item.model]);
-                }
+                // if (item.model && item.model == 'partner_register') {
+                //     console.log('item: ', this.model[item.model]);
+                // }
             })
         },
 
@@ -939,8 +940,6 @@ export default {
 
                     if (item.relation.filter == '' || typeof item.relation.filter === 'undefined') {
                         item.relation.filter = userConditions
-
-                        console.log(item.relation)
 
                         this.setSchemaByModel(item.model, 'relation', item.relation)
 

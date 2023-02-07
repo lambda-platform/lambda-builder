@@ -381,7 +381,18 @@
                             <label>Attach илгээх эсэх:</label>
                             <Checkbox v-model='dataform.email.has_attach'/>
                         </div>
-
+                        <div class='subject'>
+                            <label>Custom trigger ажиллах эсэх:</label>
+                            <Checkbox v-model='dataform.email.has_custom_trigger'/>
+                        </div>
+                        <div class='subject'>
+                            <label>Custom trigger:</label>
+                            <Input placeholder='Trigger name' v-model='dataform.email.custom_trigger'/>
+                        </div>
+                        <div class='subject'>
+                            <label>Custom trigger function:</label>
+                            <Input placeholder='Trigger name' v-model='dataform.email.custom_trigger_function'/>
+                        </div>
                         <div class='body'>
                             <editor
                                 api-key="6tb1o5o4z4v2dhvr0ctybwoltlyqx4xx0emp7wp3datunsx8"
@@ -634,7 +645,10 @@ export default {
                     bcc: [],
                     subject: null,
                     body: null,
-                    has_attach: 0
+                    has_attach: 0,
+                    has_custom_trigger: 0,
+                    custom_trigger:null,
+                    custom_trigger_function:null,
                 },
                 isWarnText: false,
                 warnText: ''
