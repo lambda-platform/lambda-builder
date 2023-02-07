@@ -44,7 +44,7 @@
                     :singleClickEdit="singleClickEdit"
                     :editType="editType"
                     :stopEditingWhenCellsLoseFocus="true"
-                    :components="frameworkComponents"
+                    :frameworkComponents="frameworkComponents"
                     :enableCellChangeFlash="flashChanges"
                     :enableRangeSelection="true"
                     @grid-ready="onGridReady"
@@ -217,6 +217,7 @@ export default {
             }, {});
         },
     },
+
     components: {
         "ag-grid-vue": AgGridVue,
         "datafilter": DataFilter,
@@ -243,7 +244,7 @@ export default {
     },
 
     created() {
-       // console.log('condition', this.$props.custom_condition);
+        // console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
