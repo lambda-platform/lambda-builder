@@ -139,134 +139,23 @@ $white: #ffffff;
     }
 }
 
-/*
-.v-select {
-    .dropdown-toggle {
-        border-color: $vue-select-border;
-        background: #ffffff;
-        min-height: 32px;
-        padding-bottom: 3px;
-        transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-        .vs__selected-options {
-            width: calc(100% - 19px);
-            input {
-                font-size: 12px;
-                font-family: "Fira Sans", sans-serif;
-                padding: 0 4px;
-            }
-            input::-webkit-input-placeholder {
-                color: $placeholder-compact;
-            }
-            .selected-tag {
-                display: inline-block;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                padding: 1px 7px;
-                font-size: 12px;
-                color: #515a6e;
-                font-weight: 400 !important;
-            }
-        }
-        .vs__actions {
-            .clear {
-                display: none;
-            }
-
-            .open-indicator {
-                width: 10px;
-            }
-            .open-indicator:before {
-                border-width: 1px 1px 0px 0;
-                height: 7px;
-                width: 7px;
-            }
-        }
-    }
-    .dropdown-toggle:hover, .dropdown-toggle:active, .dropdown-toggle:focus {
-        border: solid 1px $primary-compact !important;
-    }
-    .dropdown-toggle:focus {
-        border-color: $primary-compact;
-        outline: 0;
-
-    }
-    .dropdown-menu {
-        max-height: 250px !important;
-        margin-top: 5px !important;
-        padding: 7px 0;
-        border-radius: 4px !important;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-        min-width: 160px;
-        width: 100%;
-        overflow-y: scroll;
-        border: none !important;
-        text-align: left;
-        list-style: none;
-        background: #fff;
-        li {
-            a {
-                color: $title-color-compact;
-                padding: 3px 6px;
-                //margin: 0;
-            }
-        }
-        .highlight {
-            a {
-                background-color: #f3f3f3;
-                color: $primary-compact;
-            }
-        }
-        .active {
-            > a {
-                background-color: $primary-compact;
-                color: $white;
-            }
-        }
-    }
-    .selected-tag {
-        color: $title-color-compact;
-        font-size: 11px;
-        font-weight: 500;
-    }
-}
-
-.v-select.open .dropdown-toggle {
-    border-color: $primary-compact;
-    border-radius: 4px !important;
-    border: solid 1px $primary-compact !important;
-    box-shadow: 0 0 0 2px rgba($primary-compact, .2);
-}
-*/
-
-.select-item {
-    //margin-bottom: 20px !important;
-}
-
 .multiselect {
-    min-height: 32px !important;
+    min-height: 32px;
     font-size: 12px;
 }
 
 .multiselect__placeholder {
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    height: 30px !important;
+    margin-bottom: 0;
+    padding-top: 0;
+    height: 30px;
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .multiselect__tags {
-    min-height: 32px !important;
-    background: #fff;
-    //    padding: 0 50px 0 8px;
-    //    border: 1px solid #dcdee2;
-    padding: 0 6px !important;
+    min-height: 32px;
+    padding: 0 50px 0 8px;
+    border: 1px solid #dcdee2;
 }
 
 .multiselect__tag {
@@ -290,8 +179,6 @@ $white: #ffffff;
     vertical-align: middle;
     line-height: unset;
     margin-bottom: 0;
-    align-items: center;
-    display: flex;
 }
 
 .multiselect__input, .multiselect__single {
@@ -300,7 +187,6 @@ $white: #ffffff;
     overflow: hidden;
     font-size: 12px;
     height: 30px;
-    line-height: 32px;
     background: transparent !important;
 }
 
@@ -344,47 +230,6 @@ $white: #ffffff;
     font-size: 12px;
 }
 
-
-.maygt-form {
-    .file-uploader {
-        border: dashed 1px #0C78E6;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        border-radius: 5px;
-
-        .file-upload-handler {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            cursor: pointer;
-
-            i {
-                font-size: 16px;
-                margin-right: 5px;
-            }
-
-        }
-
-        .file-control {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-top: dashed 1px #CCCCCC;
-
-            a {
-                margin: 0 10px;
-                cursor: pointer;
-
-                i {
-                    margin-right: 5px;
-                }
-            }
-        }
-    }
-}
-
 .hidden {
     display: none;
 }
@@ -393,9 +238,9 @@ $white: #ffffff;
     height: 400px !important;
 }
 
-.select-item {
-    .ivu-form-item-content {
-        //line-height: 12px !important;
-    }
-}
+//.select-item {
+//    .ivu-form-item-content {
+//        //line-height: 12px !important;
+//    }
+//}
 

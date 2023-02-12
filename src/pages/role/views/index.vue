@@ -16,12 +16,12 @@
                             <span>Олон цэс удирдах</span>
                         </router-link>
                     </li>
-<!--                    <li>-->
-<!--                        <router-link to="/role-kb-product">-->
-<!--                            <i class="ti-layout-grid2"></i>-->
-<!--                            <span>Бүтээгдэхүүн удирдах эрх</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
+                    <!--                    <li>-->
+                    <!--                        <router-link to="/role-kb-product">-->
+                    <!--                            <i class="ti-layout-grid2"></i>-->
+                    <!--                            <span>Бүтээгдэхүүн удирдах эрх</span>-->
+                    <!--                        </router-link>-->
+                    <!--                    </li>-->
                 </ul>
             </div>
         </paper-header>
@@ -127,9 +127,16 @@
 
                     <Modal v-model="showRoleForm" :title="lang.duties">
                         <Form ref="roleForm" :model="roleForm" :rules="ruleRole">
+                            <FormItem prop="type">
+                                <Select v-model="roleForm.type">
+                                    <Option v-for="item in types" :value="item.id" :key="item.id">{{
+                                            item.name
+                                        }}
+                                    </Option>
+                                </Select>
+                            </FormItem>
                             <FormItem prop="name">
                                 <Input type="text" v-model="roleForm.name" :placeholder="lang._name"/>
-
                             </FormItem>
                             <FormItem prop="display_name">
                                 <Input type="text" v-model="roleForm.display_name" :placeholder="lang.appearance_name"/>
@@ -153,7 +160,6 @@
                         </Form>
                         <footer slot="footer"></footer>
                     </Modal>
-
                 </div>
             </div>
         </section>
@@ -171,6 +177,7 @@ export default {
     name: "roles",
     data() {
         return {
+            types: [],
             roles: [],
             menus: [],
             cruds: [],
@@ -181,6 +188,7 @@ export default {
             showRoleForm: false,
             loadingForm: false,
             roleForm: {
+                type: null,
                 name: '',
                 display_name: '',
                 description: '',
@@ -208,338 +216,10 @@ export default {
 
         };
     },
-    methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
-        getUrlByMenu(menu, parentID, subParentID) {
-
-            if (menu) {
-                if (menu.link_to == "router-link") {
-
-                    return "#" + menu.url
-                } else {
-                    if (parentID && subParentID) {
-                        return "#/p/" + parentID + "/" + subParentID + "/" + menu.id;
-                    } else if (parentID && !subParentID) {
-                        return "#/p/" + parentID + "/" + menu.id;
-                    } else {
-                        return "#/p/" + menu.id;
-                    }
-
-                }
-            }
-
-        },
-        getMenuUrl(menu_id) {
-            let url = "#/p/" + menu_id;
-
-            if (this.selectedMenu) {
-
-                let menu_index = this.selectedMenu.items.findIndex(menu => menu.id == menu_id);
-
-                if (menu_index >= 0) {
-                    url = this.getUrlByMenu(this.selectedMenu.items[menu_index], undefined, undefined)
-                } else {
-                    this.selectedMenu.items.forEach(menu => {
-
-                        let sub_menu_index = menu.children.findIndex(sub_menu => sub_menu.id == menu_id);
-
-                        if (sub_menu_index >= 0) {
-                            url = this.getUrlByMenu(menu.children[sub_menu_index], menu.id);
-                        } else {
-                            menu.children.forEach(sub_menu => {
-                                let sub_child_menu_index = sub_menu.children.findIndex(sub_child_menu => sub_child_menu.id == menu_id);
-                                if (sub_child_menu_index >= 0) {
-                                    url = this.getUrlByMenu(sub_menu.children[menu_index], menu.id, sub_menu.id)
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-            return url
-
-        },
-        addRole() {
-            this.showRoleForm = true;
-        },
-        editRole(role) {
-
-            this.roleForm.name = role.name;
-            this.roleForm.display_name = role.display_name;
-            this.roleForm.description = role.description;
-
-            this.editID = role.id;
-            this.showRoleForm = true;
-        },
-        deleteRole(id) {
-            axios.delete(`/lambda/puzzle/roles/destroy/${id}`).then(res => {
 
 
-                this.$Message.success('Амжилттай устгагдлаа');
-                this.getData();
-
-
-            }).catch(err => {
-
-                this.loadingForm = false;
-                this.$Message.error('Уучлаарай алдаа гарлаа');
-            })
-        },
-
-        saveRoleForm() {
-            this.$refs.roleForm.validate((valid) => {
-                if (valid) {
-                    this.loadingForm = true;
-
-                    let saveUrl = this.editID ? `/lambda/puzzle/roles/store/${this.editID}` : '/lambda/puzzle/roles/create'
-                    axios.post(saveUrl, {...this.roleForm}).then(res => {
-                        this.getData();
-                        this.closeRole();
-                        this.$Message.success('Амжилттай хадаглагдлаа');
-                    }).catch(err => {
-                        this.loadingForm = false;
-                        this.$Message.error('Уучлаарай алдаа гарлаа');
-                    })
-                }
-            });
-        },
-        closeRole() {
-            this.showRoleForm = false;
-            this.editID = null;
-            this.loadingForm = false;
-            this.roleForm = {
-                name: '',
-                display_name: '',
-                description: '',
-            };
-            this.selectedMenu = null;
-            this.menuIndex = null;
-            this.selectedRole = null;
-        },
-
-        getData() {
-            this.loading = true;
-            let url = '/lambda/puzzle/roles-menus';
-            if (this.$project) {
-                url = `/lambda/puzzle/roles-menus/${this.$project.id}`;
-            }
-
-            axios.get(url).then(res => {
-                if (res.data.status) {
-                    this.roles = res.data.roles.map(role => {
-                        if (role.permissions != null && role.permissions != "") {
-                            try {
-                                role.permissions = JSON.parse(role.permissions);
-                            } catch (e) {
-                                console.log(e);
-                            }
-                        }
-                        return role;
-                    });
-                    this.cruds = res.data.cruds;
-                    this.menus = res.data.menus.map((menu, index) => {
-                        let items = JSON.parse(menu.schema);
-                        return {
-                            id: menu.id,
-                            menuIndex: index,
-                            title: menu.name,
-                            items: items
-                        }
-                    });
-
-                    this.loading = false;
-
-                }
-            })
-        },
-
-        selectMenu(index) {
-            this.selectedMenu = this.menus[index];
-            if (index >= 0)
-                this.initPermissions({});
-            else {
-
-                this.roles[this.selectedRole].permissions = {
-                    menu_id: null,
-                    default_menu: null,
-                    permissions: {},
-                    extra: {
-                        datasource: false,
-                        moqup: false,
-                        chart: false,
-                        userlist: false,
-                        excelupload: false,
-                        approve: false,
-                        hascustomcreatebtn: false,
-                    }
-                }
-            }
-
-        },
-        selectRole(index) {
-            this.selectedRole = index;
-            if (this.roles[this.selectedRole].permissions === null || this.roles[this.selectedRole].permissions == '') {
-
-                this.selectedMenu = null;
-                this.menuIndex = null;
-                this.extra = {
-                    datasource: false,
-                    moqup: false,
-                    chart: false
-
-                };
-
-                this.roles[this.selectedRole].permissions = {
-                    menu_id: null,
-                    default_menu: null,
-                    permissions: {},
-                    extra: {
-                        datasource: false,
-                        moqup: false,
-                        chart: false,
-                        userlist: false,
-                        excelupload: false,
-                        approve: false,
-                        hascustomcreatebtn: false,
-                    }
-                }
-
-            } else {
-                let menu_index = 0;
-                if (this.roles[this.selectedRole].permissions.menu_id) {
-                    menu_index = this.menus.findIndex(menu => menu.id == this.roles[this.selectedRole].permissions.menu_id);
-                } else {
-                    menu_index = this.menus.findIndex(menu => menu.id == 486);
-                    this.roles[this.selectedRole].permissions.menu_id = 486;
-                }
-
-                if (menu_index >= 0) {
-                    this.selectedMenu = null;
-                    setTimeout(() => {
-                        this.selectedMenu = JSON.parse(JSON.stringify(this.menus[menu_index]))
-
-                        this.menuIndex = menu_index;
-                        this.initPermissions(this.roles[this.selectedRole].permissions.permissions, this.roles[this.selectedRole].permissions.default_menu);
-                    }, 100);
-                }
-            }
-
-        },
-        changePermission(type, menu_item_id, value) {
-
-            // let changeIndex = this.roles[this.selectedRole].permissions.permissions.findIndex(permission=>permission.menu_id == menu_item_id);
-            //
-            // if(changeIndex >= 0){
-            //     this.roles[this.selectedRole].permissions.permissions[changeIndex][type] = value;
-            // }
-
-        },
-        initPermissions(permissions, default_menu) {
-
-            let role_permission = this.roles[this.selectedRole].permissions;
-            let extra = null;
-            if (!role_permission.hasOwnProperty('extra')) {
-                extra = {...this.extra};
-            } else {
-                extra = {...role_permission.extra}
-            }
-
-
-            this.roles[this.selectedRole].permissions = {
-                menu_id: this.selectedMenu.id,
-                default_menu: default_menu,
-                permissions: this.getPermissions(permissions ? permissions : {}, this.selectedMenu.items),
-                extra: extra
-            }
-
-        },
-        getPermissions(permissions, menuItems) {
-            let new_permissions = {};
-            menuItems.map(menu => {
-                if (permissions.hasOwnProperty(menu.id)) {
-                    new_permissions[menu.id] = {...permissions[menu.id]}
-                } else {
-                    if (menu.link_to == 'crud') {
-                        new_permissions[menu.id] = {
-                            menu_id: menu.id,
-                            c: false,
-                            r: false,
-                            u: false,
-                            d: false,
-                            show: false,
-                            title: this.getTitle(menu),
-                            gridEditConditionSQL: "",
-                            gridDeleteConditionSQL: "",
-                            gridDeleteConditionJS: "",
-                            gridEditConditionJS: "",
-                        }
-                    } else {
-                        new_permissions[menu.id] = {
-                            menu_id: menu.id,
-                            show: false,
-                            title: this.getTitle(menu)
-                        }
-                    }
-                }
-
-                if (menu.children.length >= 1) {
-                    let child_permistions = this.getPermissions(permissions, menu.children);
-                    new_permissions = {...new_permissions, ...child_permistions}
-                }
-
-            });
-
-
-            return new_permissions;
-
-        },
-        saveRole() {
-
-            if (this.roles[this.selectedRole].permissions) {
-                if (this.roles[this.selectedRole].permissions.default_menu && this.roles[this.selectedRole].permissions.menu_id) {
-                    axios.post(`/lambda/puzzle/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id=' + this.$project.id : '' : ''}`, {
-                        id: this.roles[this.selectedRole].id,
-                        permissions: this.roles[this.selectedRole].permissions,
-                        extra: {...this.extra},
-                    }).then(res => {
-                        this.$Message.success('Амжилттай хадаглагдлаа');
-                    }).catch(err => {
-                        this.$Message.error('Уучлаарай алдаа гарлаа');
-                    })
-                } else {
-                    this.$Message.error('Цэсүүд сонголт хийнэ үү');
-                }
-
-            } else {
-                this.$Message.error('Цэс сонгоно уу');
-            }
-
-        },
-        getTitle(item) {
-
-            if (item.link_to == 'crud') {
-                let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
-
-
-                if (crudIndex >= 0)
-                    return this.cruds[crudIndex].title
-                else
-                    return ''
-            } else
-                return item.title;
-        },
-
-    },
     mounted() {
+        this.getRoleTypes();
         this.getData();
     },
     watch: {
@@ -597,7 +277,325 @@ export default {
         //         return [];
         //     }
         // }
-    }
+    },
+
+    methods: {
+        beforeMount() {
+            if (this.selectedLang != "mn") {
+                loadLanguageAsync(this.selectedLang);
+            }
+        },
+
+        switchLanguage(val) {
+            this.selectedLang = val;
+            loadLanguageAsync(val);
+        },
+
+        getRoleTypes() {
+            axios.get(`/lambda/puzzle/roles/type`).then(({data}) => {
+                this.types = data;
+            })
+        },
+
+        getUrlByMenu(menu, parentID, subParentID) {
+            if (menu) {
+                if (menu.link_to == "router-link") {
+                    return "#" + menu.url
+                } else {
+                    if (parentID && subParentID) {
+                        return "#/p/" + parentID + "/" + subParentID + "/" + menu.id;
+                    } else if (parentID && !subParentID) {
+                        return "#/p/" + parentID + "/" + menu.id;
+                    } else {
+                        return "#/p/" + menu.id;
+                    }
+
+                }
+            }
+        },
+
+        getMenuUrl(menu_id) {
+            let url = "#/p/" + menu_id;
+            if (this.selectedMenu) {
+                let menu_index = this.selectedMenu.items.findIndex(menu => menu.id == menu_id);
+                if (menu_index >= 0) {
+                    url = this.getUrlByMenu(this.selectedMenu.items[menu_index], undefined, undefined)
+                } else {
+                    this.selectedMenu.items.forEach(menu => {
+
+                        let sub_menu_index = menu.children.findIndex(sub_menu => sub_menu.id == menu_id);
+
+                        if (sub_menu_index >= 0) {
+                            url = this.getUrlByMenu(menu.children[sub_menu_index], menu.id);
+                        } else {
+                            menu.children.forEach(sub_menu => {
+                                let sub_child_menu_index = sub_menu.children.findIndex(sub_child_menu => sub_child_menu.id == menu_id);
+                                if (sub_child_menu_index >= 0) {
+                                    url = this.getUrlByMenu(sub_menu.children[menu_index], menu.id, sub_menu.id)
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            return url
+
+        },
+        addRole() {
+            this.showRoleForm = true;
+        },
+        editRole(role) {
+            if(role.type){
+                this.roleForm.type = role.type;
+            }
+            this.roleForm.name = role.name;
+            this.roleForm.display_name = role.display_name;
+            this.roleForm.description = role.description;
+
+            this.editID = role.id;
+            this.showRoleForm = true;
+        },
+
+        deleteRole(id) {
+            axios.delete(`/lambda/puzzle/roles/destroy/${id}`).then(res => {
+                this.$Message.success('Амжилттай устгагдлаа');
+                this.getData();
+            }).catch(err => {
+                this.loadingForm = false;
+                this.$Message.error('Уучлаарай алдаа гарлаа');
+            })
+        },
+
+        saveRoleForm() {
+            this.$refs.roleForm.validate((valid) => {
+                if (valid) {
+                    this.loadingForm = true;
+                    let saveUrl = this.editID ? `/lambda/puzzle/roles/store/${this.editID}` : '/lambda/puzzle/roles/create'
+                    axios.post(saveUrl, {...this.roleForm}).then(res => {
+                        this.getData();
+                        this.closeRole();
+                        this.$Message.success('Амжилттай хадаглагдлаа');
+                    }).catch(err => {
+                        this.loadingForm = false;
+                        this.$Message.error('Уучлаарай алдаа гарлаа');
+                    })
+                }
+            });
+        },
+
+        closeRole() {
+            this.showRoleForm = false;
+            this.editID = null;
+            this.loadingForm = false;
+            this.roleForm = {
+                type: null,
+                name: '',
+                display_name: '',
+                description: '',
+            };
+            this.selectedMenu = null;
+            this.menuIndex = null;
+            this.selectedRole = null;
+        },
+
+        getData() {
+            this.loading = true;
+            let url = '/lambda/puzzle/roles-menus';
+            if (this.$project) {
+                url = `/lambda/puzzle/roles-menus/${this.$project.id}`;
+            }
+
+            axios.get(url).then(res => {
+                if (res.data.status) {
+                    this.roles = res.data.roles.map(role => {
+                        if (role.permissions != null && role.permissions != "") {
+                            try {
+                                role.permissions = JSON.parse(role.permissions);
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        }
+                        return role;
+                    });
+                    this.cruds = res.data.cruds;
+                    this.menus = res.data.menus.map((menu, index) => {
+                        let items = JSON.parse(menu.schema);
+                        return {
+                            id: menu.id,
+                            menuIndex: index,
+                            title: menu.name,
+                            items: items
+                        }
+                    });
+                    this.loading = false;
+                }
+            })
+        },
+
+        selectMenu(index) {
+            this.selectedMenu = this.menus[index];
+            if (index >= 0)
+                this.initPermissions({});
+            else {
+                this.roles[this.selectedRole].permissions = {
+                    menu_id: null,
+                    default_menu: null,
+                    permissions: {},
+                    extra: {
+                        datasource: false,
+                        moqup: false,
+                        chart: false,
+                        userlist: false,
+                        excelupload: false,
+                        approve: false,
+                        hascustomcreatebtn: false,
+                    }
+                }
+            }
+        },
+
+        selectRole(index) {
+            this.selectedRole = index;
+            if (this.roles[this.selectedRole].permissions === null || this.roles[this.selectedRole].permissions == '') {
+
+                this.selectedMenu = null;
+                this.menuIndex = null;
+                this.extra = {
+                    datasource: false,
+                    moqup: false,
+                    chart: false
+                };
+
+                this.roles[this.selectedRole].permissions = {
+                    menu_id: null,
+                    default_menu: null,
+                    permissions: {},
+                    extra: {
+                        datasource: false,
+                        moqup: false,
+                        chart: false,
+                        userlist: false,
+                        excelupload: false,
+                        approve: false,
+                        hascustomcreatebtn: false,
+                    }
+                }
+
+            } else {
+                let menu_index = 0;
+                if (this.roles[this.selectedRole].permissions.menu_id) {
+                    menu_index = this.menus.findIndex(menu => menu.id == this.roles[this.selectedRole].permissions.menu_id);
+                } else {
+                    menu_index = this.menus.findIndex(menu => menu.id == 486);
+                    this.roles[this.selectedRole].permissions.menu_id = 486;
+                }
+
+                if (menu_index >= 0) {
+                    this.selectedMenu = null;
+                    setTimeout(() => {
+                        this.selectedMenu = JSON.parse(JSON.stringify(this.menus[menu_index]))
+
+                        this.menuIndex = menu_index;
+                        this.initPermissions(this.roles[this.selectedRole].permissions.permissions, this.roles[this.selectedRole].permissions.default_menu);
+                    }, 100);
+                }
+            }
+        },
+
+        changePermission(type, menu_item_id, value) {
+            // let changeIndex = this.roles[this.selectedRole].permissions.permissions.findIndex(permission=>permission.menu_id == menu_item_id);
+            //
+            // if(changeIndex >= 0){
+            //     this.roles[this.selectedRole].permissions.permissions[changeIndex][type] = value;
+            // }
+        },
+
+        initPermissions(permissions, default_menu) {
+            let role_permission = this.roles[this.selectedRole].permissions;
+            let extra = null;
+            if (!role_permission.hasOwnProperty('extra')) {
+                extra = {...this.extra};
+            } else {
+                extra = {...role_permission.extra}
+            }
+
+            this.roles[this.selectedRole].permissions = {
+                menu_id: this.selectedMenu.id,
+                default_menu: default_menu,
+                permissions: this.getPermissions(permissions ? permissions : {}, this.selectedMenu.items),
+                extra: extra
+            }
+        },
+
+        getPermissions(permissions, menuItems) {
+            let new_permissions = {};
+            menuItems.map(menu => {
+                if (permissions.hasOwnProperty(menu.id)) {
+                    new_permissions[menu.id] = {...permissions[menu.id]}
+                } else {
+                    if (menu.link_to == 'crud') {
+                        new_permissions[menu.id] = {
+                            menu_id: menu.id,
+                            c: false,
+                            r: false,
+                            u: false,
+                            d: false,
+                            show: false,
+                            title: this.getTitle(menu),
+                            gridEditConditionSQL: "",
+                            gridDeleteConditionSQL: "",
+                            gridDeleteConditionJS: "",
+                            gridEditConditionJS: "",
+                        }
+                    } else {
+                        new_permissions[menu.id] = {
+                            menu_id: menu.id,
+                            show: false,
+                            title: this.getTitle(menu)
+                        }
+                    }
+                }
+
+                if (menu.children.length >= 1) {
+                    let child_permistions = this.getPermissions(permissions, menu.children);
+                    new_permissions = {...new_permissions, ...child_permistions}
+                }
+            });
+            return new_permissions;
+        },
+
+        saveRole() {
+            if (this.roles[this.selectedRole].permissions) {
+                if (this.roles[this.selectedRole].permissions.default_menu && this.roles[this.selectedRole].permissions.menu_id) {
+                    axios.post(`/lambda/puzzle/save-role?id=${this.roles[this.selectedRole].id}${this.$project ? this.$project.id ? '&project_id=' + this.$project.id : '' : ''}`, {
+                        id: this.roles[this.selectedRole].id,
+                        permissions: this.roles[this.selectedRole].permissions,
+                        extra: {...this.extra},
+                    }).then(res => {
+                        this.$Message.success('Амжилттай хадаглагдлаа');
+                    }).catch(err => {
+                        this.$Message.error('Уучлаарай алдаа гарлаа');
+                    })
+                } else {
+                    this.$Message.error('Цэсүүд сонголт хийнэ үү');
+                }
+
+            } else {
+                this.$Message.error('Цэс сонгоно уу');
+            }
+        },
+
+        getTitle(item) {
+            if (item.link_to == 'crud') {
+                let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
+                if (crudIndex >= 0)
+                    return this.cruds[crudIndex].title
+                else
+                    return ''
+            } else
+                return item.title;
+        },
+    },
 };
 </script>
 
