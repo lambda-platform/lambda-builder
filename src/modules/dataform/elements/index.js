@@ -211,6 +211,15 @@ export const elements = [
         element: "Label",
         component: () => import(/* webpackChunkName: "form-field-Label" */'./Label.vue'),
     },
+
+    {
+        element: "TextareaByte",
+        component: () => import(/* webpackChunkName: "form-field-Label" */'./Textarea.vue'),
+    },
+    {
+        element: "CKByte",
+        component: () => import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
+    },
 ];
 
 export const elementList = elements.map(e => e.element)
