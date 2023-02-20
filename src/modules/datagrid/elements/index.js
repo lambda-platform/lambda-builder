@@ -16,6 +16,10 @@ export const elementList = [
         component: () => import(/* webpackChunkName: "grid-Date" */'./Date.vue'),
     },
     {
+        element: "Datetime",
+        component: () => import(/* webpackChunkName: "grid-Date" */'./Date.vue'),
+    },
+    {
         element: "Image",
         component: () => import(/* webpackChunkName: "grid-Image" */'./Image.vue'),
     },
