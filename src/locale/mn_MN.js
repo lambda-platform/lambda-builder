@@ -443,6 +443,7 @@ export default {
         "Consolidation_forms_and_tables": "Маяг, хүснэгтийн нэгтгэл",
         "_link": "Холбоос",
         "iframe_page": "iframe хуудас",
+        "no_action_sub_top": "Үйлдэлгүй дэд цэс дээр харуулах",
         "No_action": "Үйлдэлгүй",
         "_division": "Хуваалт",
         "menuType": "Цэсний төрөл",
