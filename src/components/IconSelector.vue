@@ -48,8 +48,8 @@ export default {
     data() {
         let customIcons = [];
         if(window.init){
-            if(window.init.customIcons){
-                customIcons = window.init.customIcons;
+            if(window.init.custom_icons){
+                customIcons = window.init.custom_icons;
             }
         }
         return {
