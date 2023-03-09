@@ -46,9 +46,16 @@ export default {
         InlineSvg,
     },
     data() {
+        let customIcons = [];
+        if(window.init){
+            if(window.init.customIcons){
+                customIcons = window.init.customIcons;
+            }
+        }
         return {
             iconSearch: "",
             iconData: [
+                ...customIcons,
                 {
                     "svgs": [{
                         "name": "Brassiere.svg",
