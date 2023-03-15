@@ -4,7 +4,7 @@
 
 <script>
 import Vue from "vue";
-import {element} from "../elements";
+import {element} from "./index";
 
 export default Vue.extend({
 

@@ -536,7 +536,6 @@ export default {
         },
 
         setSchemaByModel(model, prop, value, subModel) {
-
             if (prop == 'value') {
                 Vue.set(this.$data.model, model, value)
             } else if (prop == 'sub-value') {

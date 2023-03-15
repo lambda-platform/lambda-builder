@@ -5,7 +5,8 @@
                 :placeholder="meta && meta.placeHolder ? meta.placeHolder : label"
                 filterable clearable
                 @on-clear="onClear">
-            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">{{ item.label }}
+            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">
+                {{ item.label }}
             </Option>
         </Select>
 
@@ -14,7 +15,8 @@
                 :placeholder="meta && meta.placeHolder ? meta.placeHolder : label"
                 filterable clearable multiple
                 @on-clear="onClear">
-            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">{{ item.label }}
+            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">
+                {{ item.label }}
             </Option>
         </Select>
     </FormItem>
@@ -52,7 +54,7 @@ export default {
                           return [];
                   }*/
             }
-        }
+        },
     },
 
     methods: {

@@ -86,8 +86,8 @@ export const localeText = {
 
     // standard menu
     copy: 'Хуулах',
-    copyWithHeaders: 'толгойн мэдээлэлтэй хамт хуулах',
-    ctrlC: 'ctrl+C',
+    copyWithHeaders: 'Идэвхижүүлсэн мөр багана хуулах',
+    ctrlC: 'Ctrl+C',
     paste: 'Буулгах',
-    ctrlV: 'ctrl+v'
+    ctrlV: 'Ctrl+v'
 }
