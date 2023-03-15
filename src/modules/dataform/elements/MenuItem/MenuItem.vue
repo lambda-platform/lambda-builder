@@ -35,6 +35,7 @@
                 <option value="iframe">{{ lang.iframe_page }}</option>
                 <option value="noAction">{{ lang.No_action }}</option>
                 <option value="divider">{{ lang._division }}</option>
+                <option value="noActionSubTop">{{ lang.no_action_sub_top }}</option>
             </select>
 
             <div class="ivu-input-wrapper ivu-input-wrapper-small ivu-input-type menu-cruds"
@@ -111,7 +112,7 @@ export default {
     computed: {
         lang() {
             const labels = ['Consolidation_forms_and_tables', '_link', 'iframe_page', 'name', 'menuType','connectionPath', 'target',
-            'self','blank','_new', 'No_action', '_division'];
+            'self','blank','_new', 'No_action', '_division', 'no_action_sub_top'];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;

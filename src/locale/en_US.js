@@ -441,6 +441,7 @@ export default {
         "Consolidation_forms_and_tables": "Consolidation of forms and tables",
         "_link": "Link",
         "iframe_page": "iframe page",
+        "no_action_sub_top": "No Action sub menus to top",
         "No_action": "No action",
         "_division": "Partition",
         "menuType": "Menu type",
