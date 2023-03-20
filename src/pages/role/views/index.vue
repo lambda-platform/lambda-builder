@@ -127,7 +127,7 @@
 
                     <Modal v-model="showRoleForm" :title="lang.duties">
                         <Form ref="roleForm" :model="roleForm" :rules="ruleRole">
-                            <FormItem prop="type" v-if="types && types.length >= 1">
+                            <FormItem prop="type">
                                 <Select v-model="roleForm.type">
                                     <Option v-for="item in types" :value="item.id" :key="item.id">{{
                                             item.name
