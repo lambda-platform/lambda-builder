@@ -9,6 +9,7 @@ import iView from 'iview';
 import locale from 'iview/dist/locale/mn-MN';
 import CircularCountDownTimer from "vue-circular-count-down-timer";
 import VueMask from 'v-mask'
+
 Vue.component('multiselect', Multiselect)
 
 // window.Vue = Vue;

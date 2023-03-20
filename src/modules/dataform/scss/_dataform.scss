@@ -1,6 +1,7 @@
 .window-template {
     .dataform {
         background: #EAEEF2;
+        border: solid 1px red;
         &-header {
             background: #ffffff;
             box-shadow: rgb(221 221 221) 0px 1px 6px;
@@ -232,7 +233,6 @@
     .dataform-body{
         box-shadow: none !important;
         border: none !important;
-
     }
 }
 

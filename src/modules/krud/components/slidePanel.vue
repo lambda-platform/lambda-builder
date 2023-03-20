@@ -300,6 +300,7 @@ section {
 
 .panel.default {
     background-color: #fff;
+    position: relative;
 }
 
 .action-close {

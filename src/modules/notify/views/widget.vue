@@ -137,7 +137,6 @@ export default {
 
         getUnseenNotification() {
             console.log('working notification');
-
             axios.get('/lambda/notify/new/' + this.$props.user).then(o => {
                 this.count = o.data.count;
                 this.notifications = o.data.notifications;
