@@ -72,7 +72,8 @@
                             <Col v-for='col in row.children' v-if='isVisibleSection(col) && !row.sectionRenderByTab'
                                  :key='col.index' :xs='col.span.xs'
                                  :sm='col.span.sm' :md='col.span.md' :lg='col.span.lg'>
-                                <div :class="col.name != '' ? 'fieldset' : ''">
+
+                                <div :class="col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''">
                                     <legend v-if="col.name != ''">{{ col.name }}</legend>
                                     <Row v-for='srow in col.children' :key='srow.index'>
                                         <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
