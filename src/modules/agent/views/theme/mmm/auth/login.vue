@@ -5,7 +5,7 @@
             <span>{{ lambda.logoText }}</span>
         </div>
         <div class="logo" v-else>
-            <img src="/assets/unistore/images/logo-black.svg" alt="">
+            <img src="/assets/mm/images/mm-logo-black.png" alt="">
         </div>
         <div class="form-content-inner">
 

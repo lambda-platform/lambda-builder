@@ -29,7 +29,7 @@
                     </li>
 
                     <li>
-                        <a href="http://erc.gov.mn/web/mn/contact" target="_blank">
+                        <a href="/contact" target="_blank">
                             {{ lang.toContaqt }}
                         </a>
                     </li>
@@ -37,18 +37,18 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="assets/unistore/ecommerce.json"/>
+                    <lottie-animation path="assets/mm/dashboard.json"/>
                 </div>
             </div>
 
             <div class="footer">
-                <h3>Та доорх зөвшөөрлүүдийг хүсэх боломжтой</h3>
+                <h3>Системийн боломжууд</h3>
                 <hooper :settings="hooperSettings">
                     <slide>
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/General/Bank.svg"/>
-                                <span>Орлого, зарлагаа хамгийн хялбараар хянах боломж</span>
+                                <span>Сошиал мониторинг</span>
                             </a>
                         </div>
                     </slide>
@@ -56,7 +56,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Interface/Doughnut.svg"/>
-                                <span>Салбар болгоноор барааны нөөц болон илүүдлээ хянах</span>
+                                <span>Вэб сайтын мэдээлэл хяналт</span>
                             </a>
                         </div>
                     </slide>
@@ -64,7 +64,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Navigation/Route.svg"/>
-                                <span>Хэрэглэгчийн харааны нэгдсэн мэдээллийн бааз ашиглах</span>
+                                <span>Хэвлэл мэдээллийн статитистик</span>
                             </a>
                         </div>
                     </slide>
@@ -72,7 +72,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Electric/Air-conditioning.svg"/>
-                                <span>Бараа бүтээгдэхүүнээ бөөний төвөөс шууд захиалж татах</span>
+                                <span>Бодит цагийн тайлан</span>
                             </a>
                         </div>
                     </slide>
@@ -81,7 +81,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Electric/Highvoltage.svg"/>
-                                <span>Бараа бүрт тусгай кодыг хялбар өгч бүртгэл хийх боломж</span>
+                                <span>Түлхүүр үгээр хянах</span>
                             </a>
                         </div>
                     </slide>
@@ -90,7 +90,7 @@
                         <div class="footer-item">
                             <a href="javascript:void(0)">
                                 <inline-svg src="/assets/icons/duotone/Devices/Battery-full.svg"/>
-                                <span>ПОС, e-barimt шууд холбогдсон кассын систем</span>
+                                <span>Эерэг сөрөг хандлага тооцоолох</span>
                             </a>
                         </div>
                     </slide>
