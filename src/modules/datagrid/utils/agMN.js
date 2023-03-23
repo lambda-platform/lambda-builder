@@ -25,20 +25,20 @@ export const localeText = {
     equals: 'Тэнцүү',
     notEqual: 'Тэнцүү биш',
     inRange: 'Хооронд',
-    lessThan: 'бага',
-    lessThanOrEqual: 'тэнцүү эсвэл бага',
-    greaterThan: 'их',
-    greaterThanOrEqual: 'тэнцүү эсвэл их',
+    lessThan: 'Бага',
+    lessThanOrEqual: 'Тэнцүү эсвэл бага',
+    greaterThan: 'Их',
+    greaterThanOrEqual: 'Тэнцүү эсвэл их',
 
     // for text filter
-    contains: 'агуулсан',
-    notContains: 'агуулаагүй',
+    contains: 'Агуулсан',
+    notContains: 'Агуулаагүй',
 
-    startsWith: 'эхэлсэн',
-    endsWith: 'төгссөн',
+    startsWith: 'Эхэлсэн',
+    endsWith: 'Төгссөн',
 
     // the header of the default group column
-    group: 'нэгтгэх',
+    group: 'Нэгтгэх',
 
     // tool panel
     columns: ' Талбарууд ',

@@ -1617,7 +1617,8 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'd' && this.permissions && this.permissions.d) {
+                // if (item == 'd' && this.permissions && this.permissions.d) {
+                if (item == 'd') {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
