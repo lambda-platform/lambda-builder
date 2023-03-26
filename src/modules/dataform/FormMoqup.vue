@@ -88,6 +88,7 @@
                                                         <div class='pz-col-control'>
                                                             <Input type='text' v-model='col.name' size='small'
                                                                    :placeholder='lang.Get_name'
+                                                                   autocomplete="off"
                                                                    class='pz-col-input' />
                                                             <div class='pz-col-control-items'>
                                                                 <Poptip placement='bottom-end' size='small'>
@@ -170,6 +171,7 @@
                                                                                 <Input type='text' v-model='scol.name'
                                                                                        size='small'
                                                                                        :placeholder='lang.Get_name'
+                                                                                       autocomplete="off"
                                                                                        class='pz-col-input' />
                                                                                 <div class='pz-col-control-items'>
                                                                                     <a href='javascript:void(0)'
@@ -220,7 +222,7 @@
                                                             <Input type='text' v-model='col.id' size='small'
                                                                    class='pz-col-input' />
                                                             <Input type='text' v-model='col.name' size='small'
-                                                                   class='pz-col-input' :placeholder='lang.Get_name' />
+                                                                   class='pz-col-input' :placeholder='lang.Get_name' autocomplete="off" />
 
                                                             <div class='pz-col-control-items'>
                                                         <span class='tool' @click='deleteFromSchema(col.id)'>

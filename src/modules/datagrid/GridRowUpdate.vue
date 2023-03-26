@@ -13,8 +13,7 @@
             </portal>
         </div>
 
-        <div class="dg-filter-widget" v-for="item in schema"
-             v-if="item.updateable && item.update && item.filter.type && permissions.u === true && inFilter">
+        <div class="dg-filter-widget" v-for="item in schema" v-if="item.updateable && item.update && item.filter.type && permissions.u === true && inFilter">
             <div class="dg-filter-widget-header">
                 <h3>{{ item.update.updateLabel }}</h3>
             </div>
