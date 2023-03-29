@@ -5,7 +5,7 @@
                 <slot name="user-control"></slot>
             </div>
 
-            <div slot="nav" >
+            <div slot="nav">
                 <ul>
                     <li v-if="type == 'profile'">
                         <router-link to="">

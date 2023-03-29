@@ -862,7 +862,9 @@ export default {
     "notify": {
         "notice": "Мэдэгдлүүд",
         "no_notice": "Одоогоор мэдэгдэл байхгүй байна!",
-        "view_all_notifications": "Бүх мэдэгдлийг харах"
+        "view_all_notifications": "Бүх мэдэгдлийг харах",
+        "total": "Нийт",
+        "clear_notification": "Бүгдийн үзсэн болгох"
     },
     "appAdmin": {
         "manual": "Гарын авлага",

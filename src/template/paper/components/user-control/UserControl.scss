@@ -177,7 +177,8 @@ $text-color: #001E35;
 
                                     .notif-content {
                                         display: flex;
-
+                                        justify-content: space-between;
+                                        align-items: center;
                                         a {
                                             flex: 1;
                                             color: #555555;

@@ -27,6 +27,9 @@
         border-collapse: collapse;
         border-spacing: 0;
         background: #ffffff;
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
 
         thead {
             background: #f1f2f3;

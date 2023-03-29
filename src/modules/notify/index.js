@@ -1,3 +1,5 @@
+import "./bootstrap";
+
 import notifList from "./views/notifList";
 import widget from "./views/widget";
 

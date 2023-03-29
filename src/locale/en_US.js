@@ -860,7 +860,9 @@ export default {
     "notify": {
         "notice": "Notices",
         "no_notice": "No announcements yet!",
-        "view_all_notifications": "View all notifications"
+        "view_all_notifications": "View all notifications",
+        "total": "Total",
+        "clear_notification": "Clear notification"
     },
     "appAdmin": {
         "manual": "Manual",
