@@ -37,7 +37,7 @@
             </div>
             <div class="content-body">
                 <div class="lottie">
-                    <lottie-animation path="/erc.bits.mn/assets/erc/login.json"/>
+                    <lottie-animation path="assets/erc/login.json"/>
                 </div>
             </div>
 
@@ -278,7 +278,6 @@ Vue.use(vModal, {componentName: "v-modal"});
 
 
 export default {
-
     computed: {
         lang() {
             const labels = ['instructionsUse', 'frequentlyAskedQuestions', 'downloadAppHere', 'toContaqt', 'title', 'subtitle',];

@@ -39,8 +39,7 @@ export default Vue.extend({
         },
 
         valueChanged(e) {
-            console.log('I am changed');
-
+            console.log('I am changed', e.target.value);
             if (this.params.isClient) {
                 this.params.filterData(this.params.column.model, e.target.value, 'contains');
             } else {

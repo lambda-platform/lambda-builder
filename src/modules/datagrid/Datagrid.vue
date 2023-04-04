@@ -825,7 +825,6 @@ export default {
                                     suppressRemoveEntries: false,
                                     suppressSelectAll: false,
                                     suppressMiniFilter: false,
-                                    // excelMode: 'windows'
                                 };
 
                                 colItem.floatingFilterComponentParams = {
@@ -840,10 +839,10 @@ export default {
 
                                 this.selectInputModels.push(item.model);
 
-                                setTimeout(()=>{
-                                    let instance = this.gridApi.getFilterInstance(item.model);
-                                    // instance.deselectAllFiltered();
-                                }, 100);
+                                // setTimeout(() => {
+                                //     let instance = this.gridApi.getFilterInstance(item.model);
+                                // instance.deselectAllFiltered();
+                                // }, 100);
                             }
                             break;
                         case 'Set-Filter-Date':
@@ -1672,25 +1671,24 @@ export default {
                 let startWith = false;
                 let endWith = false;
 
-                if (v.charAt(0) == '*') {
+                if (needle.charAt(0) == '*') {
                     startWith = true;
                 }
 
-                let lastFilterChar = v[v.length - 1];
+                let lastFilterChar = needle[needle.length - 1];
                 if (lastFilterChar == '*') {
                     endWith = true;
                 }
 
-                let f = v.toLowerCase().replace('*', '');
-                let valueLowerCase = needle.toString().toLowerCase();
+                let valueLowerCase = needle.toLowerCase().replaceAll('*', '');
+                let f = v.toString().toLowerCase();
 
                 if (startWith == true && endWith == false) {
-                    let index = valueLowerCase.lastIndexOf(f);
-                    return index >= 0 && index === (valueLowerCase.length - f.length);
+                    return f.endsWith(valueLowerCase);
                 }
 
                 if (endWith == true && startWith == false) {
-                    return valueLowerCase.indexOf(f) === 0;
+                    return f.startsWith(valueLowerCase);
                 }
 
                 if ((endWith == false && startWith == false) || (endWith == true && startWith == true)) {
@@ -1702,20 +1700,18 @@ export default {
 
         onClientFilter(model, val, type) {
             let filterComponent = this.gridApi.getFilterInstance(model);
-            // filterComponent.deselectAll();
-
             let filterColumnUniqueValues = this.getColumnValues(model);
             let filterValueAliases = this.manualAliasFilter(filterColumnUniqueValues, val);
 
-            // console.log("valeus: ", filterColumnUniqueValues);
+            filterComponent.setModel({values: filterValueAliases});
 
-            if(val === '' || val === null){
-                filterComponent.setModel({values: filterValueAliases});
-            }else {
-                filterValueAliases.forEach(filterSetVal => {
-                    filterComponent.setModel({values: [filterSetVal]});
-                });
-            }
+            // if (val === '' || val === null) {
+            //     filterComponent.setModel({values: filterValueAliases});
+            // } else {
+            //     filterValueAliases.forEach(filterSetVal => {
+            //         filterComponent.setModel({values: [filterSetVal]});
+            //     });
+            // }
 
             filterComponent.applyModel();
             this.gridApi.onFilterChanged();
@@ -1730,8 +1726,6 @@ export default {
         },
 
         onFilterChanged(event) {
-            console.log('working...');
-
             if (this.saveFilter) {
                 this.saveFilterState(event);
             }
@@ -1751,12 +1745,15 @@ export default {
                 this.filterData(1);
             } else {
                 let filters = event.api.getFilterModel();
+                console.log(filters);
+
                 for (let key in filters) {
                     if (Object.prototype.hasOwnProperty.call(filters, key)) {
-                        console.log(filters[key]);
+                        // console.log(filters[key]);
                         if (filters[key].filterType == "set" && this.selectInputModels.includes(key)) {
                             let instance = this.gridApi.getFilterInstance(key);
                             console.log("here", instance);
+
                             //             if (instance.isNothingSelected()) {
                             //                 console.log("I am here nothing");
                             //                 //     instance.selectEverything();
