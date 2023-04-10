@@ -4,7 +4,12 @@ import Vue from 'vue'
 Vue.use(Router)
 
 function load(component) {
-    return require(`./views/theme/${window.lambda.theme}/${component}`).default
+    let agentApp = require('agent/' + component).default;
+    if (typeof window.lambda.local_agent === undefined || window.lambda.local_agent === null || window.lambda.local_agent === '') {
+        agentApp = require(`./views/theme/${window.lambda.theme}/${component}`).default
+    }
+
+    return agentApp;
 }
 
 let routes = [
