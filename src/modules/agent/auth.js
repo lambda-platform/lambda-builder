@@ -2,7 +2,7 @@ import Vue from "vue";
 import {i18n} from '../../locale/index';
 import axios from "axios";
 import router from "./router";
-import agent from "agent/index";
+
 
 window.Vue = Vue;
 window.axios = axios;
@@ -15,15 +15,20 @@ window.axios.defaults.headers.common = {
 };
 Vue.config.productionTip = false;
 
-let agentApp = agent;
-if (typeof window.lambda.local_agent === undefined || window.lambda.local_agent === null || window.lambda.local_agent === '') {
-    agentApp = require(`./views/theme/${window.lambda.theme}/index`).default;
+function loadApp() {
+    if (typeof window.lambda.local_agent !== undefined && window.lambda.local_agent !== null && window.lambda.local_agent !== '' && window.lambda.local_agent !== undefined) {
+        try {
+            return require("agent/index.vue").default;
+        } catch (err) {
+            console.log('not local');
+        }
+    }
+    return require(`./views/theme/${window.lambda.theme}/index`).default;
 }
 
 new Vue({
     router,
     i18n,
-    render: h => h(agentApp)
+    render: h => h(loadApp())
 }).$mount('#app');
-
 
