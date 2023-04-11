@@ -57,11 +57,12 @@ export default {
         },
     },
 
+    created() {
+    },
+
     methods: {
         isShow(item) {
-            console.log('select item: ', item);
-            
-            if ((item.value || item.value === 0) && item.label) {
+            if (item.value != null && item.value != undefined && item.label) {
                 if (this.$props.meta.relation.parentFieldOfForm) {
                     if (this.$props.model.form[this.$props.meta.relation.parentFieldOfForm] == item.parent_value) {
                         return true;

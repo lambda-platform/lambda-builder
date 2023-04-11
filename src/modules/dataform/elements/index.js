@@ -151,7 +151,7 @@ export const elements = [
     },
     {
         element: "ISelect",
-        component: () => import(/* webpackChunkName: "form-field-ISelect" */'./ISelect.vue'),
+        component: () => import(/* webpackChunkName: "form-field-iSelect" */'./ISelect.vue'),
     },
     {
         element: "Search",
