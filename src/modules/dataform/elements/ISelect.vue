@@ -59,7 +59,9 @@ export default {
 
     methods: {
         isShow(item) {
-            if (item.value && item.label) {
+            console.log('select item: ', item);
+            
+            if ((item.value || item.value === 0) && item.label) {
                 if (this.$props.meta.relation.parentFieldOfForm) {
                     if (this.$props.model.form[this.$props.meta.relation.parentFieldOfForm] == item.parent_value) {
                         return true;
