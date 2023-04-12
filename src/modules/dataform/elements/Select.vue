@@ -127,6 +127,57 @@ export default {
             searchval: null
         }
     },
+
+    watch: {
+        do_render(value) {
+            if (value == null) {
+                this.value = null;
+                this.clearAble = false;
+                this.ignoreChange = false;
+                Vue.set(this.model.form, this.model.component, this.meta.default ? this.meta.default : undefined);
+            } else {
+                if (this.model.form[this.model.component] != null && this.model.form[this.model.component] != undefined) {
+                    let value = this.model.form[this.model.component];
+                    //If multiple
+                    if (this.meta.relation.multiple == true) {
+                        let selectedData = value.toString().split(',');
+                        this.value = this.options.filter(item => selectedData.includes(item.value.toString()));
+                    } else {
+                        let filtered = this.options.filter(item => item.value == value);
+                        this.value = filtered.length >= 1 ? filtered[0] : null;
+                    }
+                    this.clearAble = true;
+                }
+            }
+        },
+
+        value(val) {
+
+            if (val) {
+                //trigger ajillah uyd ugugdluu solihgui haav
+                //this.ignoreChange = true;
+                if (this.meta.relation.multiple == true) {
+                    Vue.set(this.model.form, this.model.component, val.map(vv => vv['value']).join(','));
+                } else {
+                    if (val['value'] === "" || val['value'] === null) {
+                        Vue.set(this.model.form, this.model.component, null);
+                    } else if (!isNaN(val['value'])) {
+                        Vue.set(this.model.form, this.model.component, val['value'] * 1);
+                    } else {
+                        Vue.set(this.model.form, this.model.component, val['value']);
+                    }
+                }
+                this.clearAble = true;
+            }
+        },
+    },
+
+    created() {
+        if (this.meta.relation.addAble && this.meta.relation.addFrom) {
+            this.addAble = true;
+        }
+    },
+
     methods: {
         isValid: isValid,
         filterOption(options) {
@@ -146,19 +197,20 @@ export default {
             }
             return [];
         },
+
         searchChange(val) {
             this.searchval = val;
         },
+
         initialValue(options) {
             if (!this.ignoreChange) {
-                if (this.model.form[this.model.component]) {
+                if (this.model.form[this.model.component] != null || this.model.form[this.model.component] != "" || this.model.form[this.model.component] != undefined) {
                     //If multiple
                     if (this.meta.relation.multiple == true) {
                         let selectedData = this.model.form[this.model.component].toString().split(',');
                         let filtered = options.filter(item => selectedData.includes(item.value.toString()));
                         if (filtered.length >= 1)
                             this.value = filtered
-
                     } else {
                         let filtered = options.filter(item => item.value == this.model.form[this.model.component]);
                         this.value = filtered.length >= 1 ? filtered[0] : null;
@@ -183,19 +235,23 @@ export default {
                 return ""
             }
         },
+
         showAddModal() {
             this.modal_show = true;
             // this.$modal.show(`add-modal-${this.model.component}`);
         },
+
         clearState() {
             this.value = null;
             this.clearAble = false;
             Vue.set(this.model.form, this.model.component, null);
         },
+
         closeModal() {
             this.modal_show = false;
             //  this.$modal.hide(`add-modal-${this.model.component}`);
         },
+
         //Form functions
         onSuccess(val) {
             let label = this.meta.relation.fields.map(field => val[field]);
@@ -216,6 +272,7 @@ export default {
         onError(val) {
 
         },
+
         showInfoModal() {
             if (this.model.form[this.model.component]) {
                 window.showInformationModal(`${this.meta.info_url}${this.model.form[this.model.component]}`, this.meta.placeHolder);
@@ -223,54 +280,6 @@ export default {
                 this.$Message.success(this.lang.dataNotFound);
             }
         }
-    },
-    watch: {
-        do_render(value) {
-            if (!value) {
-                this.value = null;
-                this.clearAble = false;
-                this.ignoreChange = false;
-                Vue.set(this.model.form, this.model.component, this.meta.default ? this.meta.default : undefined);
-            } else {
-                if (this.model.form[this.model.component]) {
-                    let value = this.model.form[this.model.component];
-                    //If multiple
-                    if (this.meta.relation.multiple == true) {
-                        let selectedData = value.toString().split(',');
-                        this.value = this.options.filter(item => selectedData.includes(item.value.toString()));
-                    } else {
-                        let filtered = this.options.filter(item => item.value == value);
-                        this.value = filtered.length >= 1 ? filtered[0] : null;
-                    }
-                    this.clearAble = true;
-                }
-            }
-        },
-        value(val) {
-            if (val) {
-                //trigger ajillah uyd ugugdluu solihgui haav
-                //this.ignoreChange = true;
-                if (this.meta.relation.multiple == true) {
-                    Vue.set(this.model.form, this.model.component, val.map(vv => vv['value']).join(','));
-                } else {
-                    if (val['value'] == "" || val['value'] === null) {
-                        Vue.set(this.model.form, this.model.component, null);
-                    } else if (!isNaN(val['value'])) {
-                        Vue.set(this.model.form, this.model.component, val['value'] * 1);
-                    } else {
-                        Vue.set(this.model.form, this.model.component, val['value']);
-                    }
-                }
-                this.clearAble = true;
-            }
-        },
-    },
-
-    created() {
-        if (this.meta.relation.addAble && this.meta.relation.addFrom) {
-            this.addAble = true;
-        }
-
     }
 };
 </script>

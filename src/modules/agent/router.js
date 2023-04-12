@@ -4,6 +4,14 @@ import Vue from 'vue'
 Vue.use(Router)
 
 function load(component) {
+    if (typeof window.lambda.local_agent !== undefined && window.lambda.local_agent !== null && window.lambda.local_agent !== '' && window.lambda.local_agent !== undefined) {
+        // return require(/* ignore */ `agent/${component}`).default;
+        try {
+            return require(`agent/${component}`).default
+        } catch (err) {
+            console.log('not local');
+        }
+    }
     return require(`./views/theme/${window.lambda.theme}/${component}`).default
 }
 
