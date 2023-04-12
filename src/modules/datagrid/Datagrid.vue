@@ -158,6 +158,7 @@ import GridActions from "./GridActions";
 
 //Grid elements
 import Image from "./elements/Image";
+import ImageBase64 from "./elements/ImageBase64";
 import File from "./elements/File";
 import Check from "./elements/Check";
 import Number from "./elements/Number";
@@ -960,6 +961,12 @@ export default {
                     colItem.cellRendererParams = {
                         baseUrl: this.$props.url
                     }
+                }
+
+                // Image column
+                if (isValid(item.gridType) && (item.gridType == "ImageBase64")) {
+                    colItem.cellRendererFramework = ImageBase64
+                    colItem.cellRendererParams = {}
                 }
 
                 //Date only column
