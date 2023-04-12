@@ -45,9 +45,6 @@
                                             <Checkbox v-model='row.sectionRenderByTab'>
                                                 <span>{{ lang.render_by_tab }}</span>
                                             </Checkbox>
-                                            <Checkbox v-model='row.use2ColumnLayout' v-if="use2ColumnLayout">
-                                                <span>2 дахь баганад харуулах</span>
-                                            </Checkbox>
 
                                             <span class='tool' @click='addSection(row.id, 1)'>
                                                 <Tooltip :content='lang.section_add'>

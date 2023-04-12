@@ -9,8 +9,8 @@
                 </div>
 
                 <div class='fb-control-item'>
-                    <label>Дэд гарчиг</label>
-                    <Input v-model='dataform.formSubName' placeholder='Дэд гарчиг'/>
+                    <label>{{ lang.Sub_name }}</label>
+                    <Input v-model='dataform.formSubName' :placeholder='lang.Sub_name'/>
                 </div>
 
                 <div class='fb-control-item'>
@@ -108,11 +108,7 @@
                     <Input v-model='dataform.save_btn_text' :placeholder='lang.Save_button_word'/>
                 </div>
 
-                <div class='fb-control-item' v-if='isModelSelected || editMode'>
-                    <Checkbox v-model='dataform.use2ColumnLayout'>
-                        <span>2 багантай маягт</span>
-                    </Checkbox>
-                </div>
+
             </div>
 
             <div class='fb-submit'>
@@ -737,7 +733,7 @@ export default {
                 'displayName', 'hide', 'inactive', 'translation', 'basicSettings', 'formula', 'trigger', 'userInterface', '_subform', '_form'
                 , 'formula_conditions', 'field', 'basic_from', 'conditions', 'add_a_field', 'add', 'controller_namespace', 'namespace',
                 'before_insert', 'after_insert', 'before_update', 'after_update', 'cache_clear_url', '_top', '_left', 'formInformationSavedSuccessfully', 'please_enter_formula',
-                'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab']
+                'pleaseDeleteSubDForm', 'before_insert', 'after_insert', 'before_update', 'after_update', '_top', '_left', '_delete', 'render_by_tab', 'Sub_name']
 
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i])
