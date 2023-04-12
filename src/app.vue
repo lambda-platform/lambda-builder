@@ -262,13 +262,7 @@ export default {
     },
     components: {},
 
-    mounted() {
-        console.log(this.selectedLang);
-        console.log(this.selectedLang);
-        console.log(this.selectedLang);
-        console.log(this.selectedLang);
-        console.log(this.selectedLang);
-        console.log(this.selectedLang);
+    beforeMount() {
         if (this.selectedLang !== "mn_MN") {
             loadLanguageAsync(this.selectedLang);
         }
