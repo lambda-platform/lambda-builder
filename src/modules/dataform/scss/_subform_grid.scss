@@ -23,13 +23,14 @@
     }
 
     table {
-        width: 100%;
+        width: 100% !important;
         border-collapse: collapse;
         border-spacing: 0;
         background: #ffffff;
-        display: block;
-        overflow-x: auto;
-        overflow-y: hidden;
+        border: 0 !important;
+        //display: block;
+        //overflow-x: auto;
+        //overflow-y: hidden;
 
         thead {
             background: #f1f2f3;
