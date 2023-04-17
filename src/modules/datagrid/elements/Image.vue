@@ -4,10 +4,7 @@
             <img v-for="item in images" :key="item.name" :src="`${baseUrl}${item.response}`" class="ag-grid-image-multi"/>
             <span class="image-plus" v-if="plusCount > 1">+{{ plusCount }}</span>
         </div>
-        <div v-else>
-            <img v-if="params.value == null" :src="`${baseUrl}/assets/lambda/images/no-image.png`" class="ag-grid-image"/>
-            <img v-else :src="`${baseUrl}${params.value}`" class="ag-grid-image"/>
-        </div>
+        <img v-else :src="`${baseUrl}${defaultImage}`" class="ag-grid-image"/>
     </div>
 </template>
 
@@ -18,30 +15,29 @@ export default Vue.extend({
         return {
             images: [],
             multiImage: false,
-            plusCount: 0
+            plusCount: 0,
+            defaultImage: null,
         };
     },
-        computed: {
-            baseUrl() {
-                try {
-                    let jsonData = JSON.parse(this.params.value);
-                    if (Array.isArray(jsonData)) {
-                        this.multiImage = true;
-                        if (jsonData.length <= 4) {
-                            this.images = jsonData;
-                        } else {
-                            this.images = jsonData.slice(0, 3);
-                            this.plusCount = jsonData.length - 3;
-                        }
+    computed: {
+        baseUrl() {
+            try {
+                let jsonData = JSON.parse(this.params.value);
+                if (Array.isArray(jsonData)) {
+                    this.multiImage = true;
+                    if (jsonData.length <= 4) {
+                        this.images = jsonData;
                     } else {
-                        this.multiImage = false;
+                        this.images = jsonData.slice(0, 3);
+                        this.plusCount = jsonData.length - 3;
                     }
-                } catch (e) {
-                    this.multiImage = false;
+                } else {
+                    this.defaultImage = this.params.value ? this.params.value : "/assets/lambda/images/no-image.png"
                 }
-                return this.params.baseUrl ? this.params.baseUrl : ""
+            } catch (e) {
             }
+            return this.params.baseUrl ? this.params.baseUrl : ""
         }
     }
-);
+});
 </script>
