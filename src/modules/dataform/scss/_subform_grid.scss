@@ -22,6 +22,12 @@
 
     }
 
+    .sub-form-grid {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
     table {
         width: 100% !important;
         border-collapse: collapse;
