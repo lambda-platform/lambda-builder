@@ -101,11 +101,11 @@ export default {
                 lat: this.marker
                     .getPosition()
                     .lat()
-                    .toFixed(7),
+                    .toFixed(10),
                 lng: this.marker
                     .getPosition()
                     .lng()
-                    .toFixed(7)
+                    .toFixed(10)
             };
 
             this.calcDistance(this.center.lat, this.center.lng);
