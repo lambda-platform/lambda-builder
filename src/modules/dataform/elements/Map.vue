@@ -117,13 +117,13 @@ export default {
         },
 
         updateLat(e) {
-            this.center.lat = parseFloat(e.target.value).toFixed(7);
+            this.center.lat = parseFloat(e.target.value).toFixed(10);
             let latlng = new google.maps.LatLng(this.center.lat, this.center.lng);
             this.marker.setPosition(latlng);
         },
 
         updateLng(e) {
-            this.center.lng = parseFloat(e.target.value).toFixed(7);
+            this.center.lng = parseFloat(e.target.value).toFixed(10);
             let latlng = new google.maps.LatLng(this.center.lat, this.center.lng);
             this.marker.setPosition(latlng);
         }
