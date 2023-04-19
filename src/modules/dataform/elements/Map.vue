@@ -6,7 +6,7 @@
                 <Input v-model="center.lng" :placeholder="lang.longitude"/>
 
             </div>
-            <span>{{ lang.fromCityCenter }}: {{ fromCityCenter }} км</span>
+            <span>Хотын төвөөс: {{ fromCityCenter }} км</span>
             <div class="lambda-map"></div>
         </FormItem>
     </div>
@@ -21,7 +21,8 @@ export default {
             map: null,
             center: {lat: 47.9197668, lng: 106.9183483},
             zoom: 11,
-            marker: null, fromCityCenter: 0
+            marker: null, fromCityCenter: 0,
+            isRender: false,
         };
     },
 
@@ -56,11 +57,11 @@ export default {
     },
 
     mounted() {
-        google.maps.event.addDomListener(window, 'load', this.initMap);
+        this.init();
     },
 
     methods: {
-        initMap() {
+        init() {
             this.map = new google.maps.Map(
                 this.$el.getElementsByClassName("lambda-map")[0],
                 {
@@ -82,7 +83,7 @@ export default {
             });
             this.marker.addListener("position_changed", this.moveEvent.bind(this));
         },
-        
+
         calcDistance(lat2, lon2) {
             let lat1 = 47.918540;
             let lon1 = 106.917658
