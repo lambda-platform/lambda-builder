@@ -28,6 +28,11 @@
         overflow-y: hidden;
     }
 
+    .sub-form-table-wrap{
+        width: 100%;
+        overflow-x: auto;
+    }
+
     table {
         width: 100% !important;
         border-collapse: collapse;

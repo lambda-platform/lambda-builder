@@ -56,7 +56,7 @@ export default {
     },
 
     mounted() {
-        this.init();
+        google.maps.event.addDomListener(window, 'load', this.initMap);
     },
 
     methods: {
@@ -82,11 +82,7 @@ export default {
             });
             this.marker.addListener("position_changed", this.moveEvent.bind(this));
         },
-
-        init() {
-            google.maps.event.addDomListener(window, 'load', initMap);
-        },
-
+        
         calcDistance(lat2, lon2) {
             let lat1 = 47.918540;
             let lon1 = 106.917658

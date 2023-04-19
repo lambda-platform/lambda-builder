@@ -119,7 +119,7 @@ export const elements = [
     },
     {
         element: "Map",
-        component: () => import(/* webpackChunkName: "form-field-Map" */'./Map.vue'),
+        component: () => import('./Map.vue'),
     },
 
     {

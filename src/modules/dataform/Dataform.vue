@@ -73,7 +73,8 @@
                                  :key='col.index' :xs='col.span.xs'
                                  :sm='col.span.sm' :md='col.span.md' :lg='col.span.lg'>
 
-                                <div :class="col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''">
+                                <div
+                                    :class="col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''">
                                     <legend v-if="col.name != ''">{{ col.name }}</legend>
                                     <Row v-for='srow in col.children' :key='srow.index'>
                                         <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
@@ -83,6 +84,7 @@
                                                 }}
                                             </Divider>
                                             <span v-for='item in scol.children' :key='item.index'>
+
                                         <component
                                             :key='item.model'
                                             :ref="'sf'+item.model"
@@ -96,25 +98,26 @@
                                             :asyncMode='asyncMode'
                                             :editMode='editMode'
                                         />
-                                        <component
-                                            :key='item.model'
-                                            v-if="isShow(item.model) && item.formType != 'SubForm'"
-                                            :do_render='do_render'
-                                            :asyncMode='asyncMode'
-                                            :editMode='editMode'
-                                            :is='element(item.formType)'
-                                            :model='{form: model, component: item.model}'
-                                            :disabled='item.disabled ? item.disabled : false'
-                                            :label='item.label ? item.label : `[${item.model}]`'
-                                            :rule='item.model'
-                                            :meta='setMeta(item)'
-                                            :identity='identity'
-                                            :url='url'
-                                            :getSchemaByModel='getSchemaByModel'
-                                            :getSchemaRelationByModel='getSchemaRelationByModel'
-                                            :setSchemaByModel='setSchemaByModel'
-                                            :relation_data='getRelation(item)'
-                                        />
+
+                                                <component
+                                                    :key='item.model'
+                                                    v-if="isShow(item.model) && item.formType != 'SubForm'"
+                                                    :do_render='do_render'
+                                                    :asyncMode='asyncMode'
+                                                    :editMode='editMode'
+                                                    :is='element(item.formType)'
+                                                    :model='{form: model, component: item.model}'
+                                                    :disabled='item.disabled ? item.disabled : false'
+                                                    :label='item.label ? item.label : `[${item.model}]`'
+                                                    :rule='item.model'
+                                                    :meta='setMeta(item)'
+                                                    :identity='identity'
+                                                    :url='url'
+                                                    :getSchemaByModel='getSchemaByModel'
+                                                    :getSchemaRelationByModel='getSchemaRelationByModel'
+                                                    :setSchemaByModel='setSchemaByModel'
+                                                    :relation_data='getRelation(item)'
+                                                />
                                         </span>
                                         </Col>
                                     </Row>
