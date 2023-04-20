@@ -1,15 +1,18 @@
 <template>
     <div>
         <div v-if="multiImage" class="multi-images">
-            <img v-for="item in images" :key="item.name" :src="`${baseUrl}${item.response}`" class="ag-grid-image-multi"/>
+            <img v-for="item in images" :key="item.name" :src="`${baseUrl}${item.response}`"
+                 class="ag-grid-image-multi"/>
             <span class="image-plus" v-if="plusCount > 1">+{{ plusCount }}</span>
         </div>
-        <img v-else :src="`${baseUrl}${defaultImage}`" class="ag-grid-image"/>
+        <img v-else :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`"
+        class="ag-grid-image"/>
     </div>
 </template>
 
 <script>
 import Vue from "vue";
+
 export default Vue.extend({
     data() {
         return {
@@ -31,8 +34,6 @@ export default Vue.extend({
                         this.images = jsonData.slice(0, 3);
                         this.plusCount = jsonData.length - 3;
                     }
-                } else {
-                    this.defaultImage = this.params.value ? this.params.value : "/assets/lambda/images/no-image.png"
                 }
             } catch (e) {
             }
