@@ -10,17 +10,19 @@
              class="ag-grid-image"/>
 
         <Modal v-model="isZoom" class="grid-zoom-image-modal">
-
             <div slot="close">
                 <a href="javascript:void(0)" class="grid-image-close-btn" @click="isZoom = false;"><i class="ti-close"></i></a>
             </div>
             <p slot="header"></p>
             <div class="grid-zoom-image">
-                <a v-if="multiImage && havePrev" href="javascript:void(0)" class="grid-image-prev-btn" @click="isPrev"><i class="ti-angle-left"></i></a>
-                <img v-if="!multiImage" :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`" />
-                <img v-else :src="`${baseUrl}${this.popUpImage}`" />
-                <a v-if="multiImage && haveNext" href="javascript:void(0)" class="grid-image-next-btn" @click="isNext"><i class="ti-angle-right"></i></a>
-            </div><div slot="footer"></div>
+                <div v-if="multiImage">
+                    <a v-if="havePrev" href="javascript:void(0)" class="grid-image-prev-btn" @click="isPrev"><i class="ti-angle-left"></i></a>
+                    <a v-if="haveNext" href="javascript:void(0)" class="grid-image-next-btn" @click="isNext"><i class="ti-angle-right"></i></a>
+                    <img :src="`${baseUrl}${this.popUpImage}`" />
+                </div>
+                <img v-else :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`" />
+            </div>
+            <div slot="footer"></div>
         </Modal>
     </div>
 </template>
