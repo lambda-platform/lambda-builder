@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="image-box">
         <div v-if="multiImage" class="multi-images">
-            <img v-for="item in images" :key="item.name" :src="`${baseUrl}${item.response}`"
-                 class="ag-grid-image-multi"/>
-            <span class="image-plus" v-if="plusCount > 1">+{{ plusCount }}</span>
+            <img v-for="item in images" :key="item.name" :src="`${baseUrl}${item.response}`" class="ag-grid-image-multi zoom"/>
+            <span class="image-plus zoom" v-if="plusCount > 1">+{{ plusCount }}</span>
         </div>
-        <img v-else :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`"
-        class="ag-grid-image"/>
+        <div v-else>
+            <img :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`" class="ag-grid-image zoom"/>
+        </div>
     </div>
 </template>
 
@@ -42,3 +42,19 @@ export default Vue.extend({
     }
 });
 </script>
+<style>
+.image-box{
+    height: 60px;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.zoom {
+    transition: transform .2s;
+}
+
+.zoom:hover {
+    transform: scale(1.5);
+}
+</style>
