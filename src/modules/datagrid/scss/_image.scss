@@ -1,0 +1,48 @@
+.grid-zoom-image-modal {
+    max-width: 80%;
+
+    .ivu-modal-content {
+        background: transparent;
+        box-shadow: none !important;
+    }
+
+    .ivu-modal-header, .ivu-modal-footer {
+        border: none !important;
+    }
+
+    .ivu-modal-close{
+        top: 28px;
+        right: -15px;
+    }
+}
+
+.grid-zoom-image {
+    img {
+        width: 100%;
+    }
+}
+
+.grid-image-close-btn {
+    border: solid 1px #fff;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    top: 20px;
+    transition: all .25s;
+
+    i {
+        transition: all .25s;
+        color: #fff;
+    }
+
+    &:hover {
+        border-color: gold;
+
+        i {
+            color: gold;
+        }
+    }
+}

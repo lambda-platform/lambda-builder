@@ -6,7 +6,19 @@
             <span class="image-plus" v-if="plusCount > 1">+{{ plusCount }}</span>
         </div>
         <img v-else :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`"
-        class="ag-grid-image"/>
+             @click="isZoom = true"
+             class="ag-grid-image"/>
+
+        <Modal v-model="isZoom" class="grid-zoom-image-modal">
+            <div slot="close">
+                <a href="javascript:void(0)" class="grid-image-close-btn" @click="isZoom = false;"><i class="ti-close"></i></a>
+            </div>
+            <p slot="header"></p>
+            <div class="grid-zoom-image">
+                <img :src="`${baseUrl}${this.params.value ? this.params.value : '/assets/lambda/images/no-image.png'}`" />
+            </div>
+            <div slot="footer"></div>
+        </Modal>
     </div>
 </template>
 
@@ -20,6 +32,7 @@ export default Vue.extend({
             multiImage: false,
             plusCount: 0,
             defaultImage: null,
+            isZoom: false
         };
     },
     computed: {
