@@ -51,10 +51,10 @@ export default Vue.extend({
                 let jsonData = JSON.parse(this.params.value);
                 if (Array.isArray(jsonData)) {
                     this.multiImage = true;
+                    this.allImages = jsonData;
                     if (jsonData.length <= 4) {
                         this.images = jsonData;
                     } else {
-                        this.allImages = jsonData;
                         this.images = jsonData.slice(0, 3);
                         this.plusCount = jsonData.length - 3;
                     }
