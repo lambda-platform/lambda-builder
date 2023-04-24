@@ -416,6 +416,7 @@ img.ag-grid-image {
 .multi-images {
     display: flex;
     align-items: center;
+
     img.ag-grid-image-multi {
         height: 90%;
         max-height: 40px;
@@ -427,9 +428,11 @@ img.ag-grid-image {
         object-fit: cover;
         aspect-ratio: 1 / 1;
     }
+
     img.ag-grid-image-multi:first-child {
         margin-left: 0px;
     }
+
     .image-plus {
         border: 1px solid #ddd;
         padding: 12px;
@@ -439,6 +442,7 @@ img.ag-grid-image {
         border-radius: 4px;
         margin-left: -10px;
     }
+
     .image-plus:hover {
         margin-right: 10px;
     }
@@ -707,7 +711,16 @@ img.ag-grid-image {
         border-bottom: 0 !important;
         border-top: solid 1px #dedede !important;
     }
-    .ag-floating-filter-input{
+
+    .ag-floating-filter-input {
         overflow: hidden !important;
+    }
+}
+
+.fb-workspace {
+    .ivu-tabs-content {
+        .ivu-tabs-tabpane {
+            height: 100%;
+        }
     }
 }
