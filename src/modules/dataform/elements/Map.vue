@@ -6,7 +6,7 @@
                 <Input v-model="center.lng" :placeholder="lang.longitude"/>
 
             </div>
-            <span>{{ lang.fromCityCenter }}: {{ fromCityCenter }} км</span>
+            <span>Хотын төвөөс: {{ fromCityCenter }} км</span>
             <div class="lambda-map"></div>
         </FormItem>
     </div>
@@ -21,7 +21,8 @@ export default {
             map: null,
             center: {lat: 47.9197668, lng: 106.9183483},
             zoom: 11,
-            marker: null, fromCityCenter: 0
+            marker: null, fromCityCenter: 0,
+            isRender: false,
         };
     },
 
@@ -60,7 +61,7 @@ export default {
     },
 
     methods: {
-        initMap() {
+        init() {
             this.map = new google.maps.Map(
                 this.$el.getElementsByClassName("lambda-map")[0],
                 {
@@ -83,10 +84,6 @@ export default {
             this.marker.addListener("position_changed", this.moveEvent.bind(this));
         },
 
-        init() {
-            google.maps.event.addDomListener(window, 'load', initMap);
-        },
-
         calcDistance(lat2, lon2) {
             let lat1 = 47.918540;
             let lon1 = 106.917658
@@ -104,11 +101,11 @@ export default {
                 lat: this.marker
                     .getPosition()
                     .lat()
-                    .toFixed(7),
+                    .toFixed(10),
                 lng: this.marker
                     .getPosition()
                     .lng()
-                    .toFixed(7)
+                    .toFixed(10)
             };
 
             this.calcDistance(this.center.lat, this.center.lng);
@@ -120,13 +117,13 @@ export default {
         },
 
         updateLat(e) {
-            this.center.lat = parseFloat(e.target.value).toFixed(7);
+            this.center.lat = parseFloat(e.target.value).toFixed(10);
             let latlng = new google.maps.LatLng(this.center.lat, this.center.lng);
             this.marker.setPosition(latlng);
         },
 
         updateLng(e) {
-            this.center.lng = parseFloat(e.target.value).toFixed(7);
+            this.center.lng = parseFloat(e.target.value).toFixed(10);
             let latlng = new google.maps.LatLng(this.center.lat, this.center.lng);
             this.marker.setPosition(latlng);
         }

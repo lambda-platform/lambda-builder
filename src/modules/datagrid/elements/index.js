@@ -21,7 +21,11 @@ export const elementList = [
     },
     {
         element: "Image",
-        component: () => import(/* webpackChunkName: "grid-Image" */'./Image.vue'),
+        component: () => import(/* webpackChunkName: "grid-Image-Item" */'./Image.vue'),
+    },
+    {
+        element: "ImageBase64",
+        component: () => import(/* webpackChunkName: "grid-Image-Base64" */'./ImageBase64.vue'),
     },
     {
         element: "File",

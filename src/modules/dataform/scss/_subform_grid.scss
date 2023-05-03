@@ -22,14 +22,26 @@
 
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-        background: #ffffff;
+    .sub-form-grid {
         display: block;
         overflow-x: auto;
         overflow-y: hidden;
+    }
+
+    .sub-form-table-wrap{
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100% !important;
+        border-collapse: collapse;
+        border-spacing: 0;
+        background: #ffffff;
+        border: 0 !important;
+        //display: block;
+        //overflow-x: auto;
+        //overflow-y: hidden;
 
         thead {
             background: #f1f2f3;

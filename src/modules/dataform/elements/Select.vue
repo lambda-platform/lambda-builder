@@ -73,8 +73,7 @@
             width="800"
             height="70%"
             v-model="modal_show"
-            v-if="addAble"
-        >
+            v-if="addAble">
             <section class="add-modal" v-if="modal_show">
                 <div class="add-body">
                     <dataform ref="form" :schemaID="meta.relation.addFrom"
@@ -152,7 +151,6 @@ export default {
         },
 
         value(val) {
-
             if (val) {
                 //trigger ajillah uyd ugugdluu solihgui haav
                 //this.ignoreChange = true;
@@ -206,7 +204,7 @@ export default {
             if (!this.ignoreChange) {
                 if (this.model.form[this.model.component] != null || this.model.form[this.model.component] != "" || this.model.form[this.model.component] != undefined) {
                     //If multiple
-                    if (this.meta.relation.multiple == true) {
+                    if (this.meta.relation.multiple == true && this.model.form[this.model.component] != null) {
                         let selectedData = this.model.form[this.model.component].toString().split(',');
                         let filtered = options.filter(item => selectedData.includes(item.value.toString()));
                         if (filtered.length >= 1)
