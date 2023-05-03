@@ -644,7 +644,7 @@
                                         <Col :xs="24" :sm="24" :md="12" :lg="12">
                                             <FormItem prop="template" :label="lang.excelUploadSampleFile">
                                                 <div class="file-uploader">
-                                                    <Upload action="/lambda/krud/upload"
+                                                    <Upload :action="`${$projectSettings ? $projectSettings.production_url: ''}/lambda/krud/upload`"
                                                             v-model="datagrid.excelUploadSample"
                                                             :on-success="success"
                                                             size="small">
@@ -653,10 +653,10 @@
                                                         </div>
                                                     </Upload>
                                                     <div v-if="datagrid.excelUploadSample != null" class="file-control">
-                                                        <a :href="datagrid.excelUploadSample" target="_blank" download>
+                                                        <a :href="`${$projectSettings ? $projectSettings.production_url: ''}${datagrid.excelUploadSample}`" target="_blank" download>
                                                             <i
                                                                 class="ti-download"></i>{{ lang.download }}</a>
-                                                        <a :href="datagrid.excelUploadSample" target="_blank"> <i
+                                                        <a :href="`${$projectSettings ? $projectSettings.production_url: ''}${datagrid.excelUploadSample}`" target="_blank"> <i
                                                             class="ti-eye"></i>{{ lang.view }}</a>
                                                     </div>
                                                 </div>
