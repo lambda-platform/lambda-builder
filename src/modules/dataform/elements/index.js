@@ -228,11 +228,9 @@ const Notfount = () => import(/* webpackChunkName: "form-field-not-fount" */'./N
 const CustomElement = () => import(/* webpackChunkName: "form-field-CustomElement" */'./CustomElement.vue');
 
 const requireCustomElement = (type) => {
-
     if (window.init.data_form_custom_elements) {
         let custom = window.init.data_form_custom_elements.find(custom_element => custom_element.element == type);
         if (custom) {
-
             try {
                 return require(`dataform_custom/${type}.vue`).default;
             } catch (exception_var) {
