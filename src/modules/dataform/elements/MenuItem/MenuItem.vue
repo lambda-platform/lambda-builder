@@ -9,8 +9,7 @@
         :data-r="data.r"
         :data-u="data.u"
         :data-d="data.d"
-        class="menu-tree-item"
-    >
+        class="menu-tree-item">
         <div class="clickable sortDiv">
             <div class="menu-icon">
                 <!--        <div class="ivu-input-inner-container" style=""><i-->
@@ -25,7 +24,6 @@
                     <inline-svg :src="data.svg" v-else-if="data.svg"></inline-svg>
                     <span v-else></span>
                 </button>
-
             </div>
 
             <select :placeholder="lang.menuType" class="menu_types ivu-input ivu-input-small" v-model="data.link_to">
@@ -66,7 +64,8 @@
                  v-if="data.link_to != 'crud'">
                 <div class="ivu-input-inner-container" style="">
                     <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
-                    <input v-model="data.title" autocomplete="off" spellcheck="false" type="text" :placeholder="lang.name" class="ivu-input ivu-input-small">
+                    <input v-model="data.title" autocomplete="off" spellcheck="false" type="text"
+                           :placeholder="lang.name" class="ivu-input ivu-input-small">
                 </div>
 
             </div>
@@ -83,7 +82,8 @@
                 <button type="button" class="ivu-btn ivu-btn-default ivu-btn-circle ivu-btn-icon-only" @click="addItem">
                     <i class="ivu-icon ivu-icon-md-add"></i>
                 </button>
-                <button type="button" class="ivu-btn ivu-btn-default ivu-btn-circle ivu-btn-icon-only" @click="deleteChild">
+                <button type="button" class="ivu-btn ivu-btn-default ivu-btn-circle ivu-btn-icon-only"
+                        @click="deleteChild">
                     <i class="ivu-icon ivu-icon-md-remove"></i></button>
             </div>
         </div>
@@ -104,6 +104,7 @@
 
 <script>
 import InlineSvg from 'vue-inline-svg';
+
 export default {
     props: ["data", "cruds", "menuIndex", "meta"],
     components: {
@@ -111,14 +112,14 @@ export default {
     },
     computed: {
         lang() {
-            const labels = ['Consolidation_forms_and_tables', '_link', 'iframe_page', 'name', 'menuType','connectionPath', 'target',
-            'self','blank','_new', 'No_action', '_division', 'no_action_sub_top'];
+            const labels = ['Consolidation_forms_and_tables', '_link', 'iframe_page', 'name', 'menuType', 'connectionPath', 'target',
+                'self', 'blank', '_new', 'No_action', '_division', 'no_action_sub_top'];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;
             }, {});
         },
-        myValue(){
+        myValue() {
             return this.data.url
         }
 
@@ -159,7 +160,7 @@ export default {
         deleteChild() {
             this.$emit("deleteChild", this.menuIndex);
         },
-        setInput(){
+        setInput() {
             let crud_index = this.$crudList.findIndex(crud => crud.value === this.data.url);
             if (crud_index >= 0) {
                 this.url = this.$crudList[crud_index].label
@@ -176,9 +177,9 @@ export default {
             this.setInput();
         }
     },
-    watch:{
-        myValue(){
-           this.setInput();
+    watch: {
+        myValue() {
+            this.setInput();
         }
     }
 

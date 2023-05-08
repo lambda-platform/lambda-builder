@@ -4,6 +4,10 @@
 
             <div style="text-align:center">
                 <Input :placeholder="lang.search" v-model="iconSearch"/>
+                <br>
+                <Form>
+                    <Input placeholder="Айкон класс нэр" @on-change="setIconClass"/>
+                </Form>
                 <section class="icons-list">
                     <div class="pagewidth">
                         <div class="icon-section" v-for="iconGroup in filteredIcons" :key="iconGroup.index">
@@ -2999,7 +3003,11 @@ export default {
     },
     methods: {
         setIcon(icon, svg) {
-            this.$emit("setIcon", icon, svg);
+            this.$emit("setIcon", icon, svg, false);
+        },
+
+        setIconClass(e) {
+            this.$emit("setIcon", e.target.value, false, true);
         }
     },
     computed: {

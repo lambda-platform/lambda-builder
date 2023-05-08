@@ -1,43 +1,59 @@
 <template>
     <ul>
         <li v-for="(item, index) in menu" v-if="can(item)" :key="index">
-            <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link'">
+            <Tooltip v-if="hasTooltip" :content="getTitle(item)" placement="right">
+                <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link'">
+                    <i v-if="item.icon" :class="item.icon"></i>
+                </router-link>
+            </Tooltip>
+            <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link' && !hasTooltip">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
             </router-link>
 
-            <router-link :to="item.url" v-if="item.link_to == 'router-link'">
+            <Tooltip v-if="hasTooltip" :content="getTitle(item)" placement="right">
+                <router-link :to="item.url" v-if="item.link_to == 'router-link'">
+                    <i v-if="item.icon" :class="item.icon"></i>
+                </router-link>
+            </Tooltip>
+            <router-link :to="item.url" v-if="item.link_to == 'router-link' && !hasTooltip">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
             </router-link>
 
-            <a :href="item.url" v-if="item.link_to == 'link'" target="_blank">
+            <Tooltip v-if="hasTooltip" :content="getTitle(item)" placement="right">
+                <a :href="item.url" v-if="item.link_to == 'link'" target="_blank">
+                    <i v-if="item.icon" :class="item.icon"></i>
+                </a>
+            </Tooltip>
+            <a href="item.url" v-if="item.link_to == 'link' && !hasTooltip" target="_blank">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
             </a>
 
-<!--            <a :href="item.url" v-if="item.link_to == 'wrap'" class="lambda-nav-more">-->
-<!--                <i v-if="item.icon" :class="item.icon"></i>-->
-<!--                <span v-html="getTitle(item)"></span>-->
-<!--                <ul>-->
-<!--                    <li v-for="(item, index) in menu_to_more" :key="index" v-if="can(item)">-->
-<!--                        <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link'">-->
-<!--                            <i v-if="item.icon" :class="item.icon"></i>-->
-<!--                            <span v-html="getTitle(item)"></span>-->
-<!--                        </router-link>-->
 
-<!--                        <router-link :to="item.url" v-if="item.link_to == 'router-link'">-->
-<!--                            <i v-if="item.icon" :class="item.icon"></i>-->
-<!--                            <span v-html="getTitle(item)"></span>-->
-<!--                        </router-link>-->
+            <!--            <a :href="item.url" v-if="item.link_to == 'wrap'" class="lambda-nav-more">-->
+            <!--                <i v-if="item.icon" :class="item.icon"></i>-->
+            <!--                <span v-html="getTitle(item)"></span>-->
+            <!--                <ul>-->
+            <!--                    <li v-for="(item, index) in menu_to_more" :key="index" v-if="can(item)">-->
+            <!--                        <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link'">-->
+            <!--                            <i v-if="item.icon" :class="item.icon"></i>-->
+            <!--                            <span v-html="getTitle(item)"></span>-->
+            <!--                        </router-link>-->
 
-<!--                        <a :href="item.url" v-if="item.link_to == 'link'" target="_blank">-->
-<!--                            <i v-if="item.icon" :class="item.icon"></i>-->
-<!--                            <span v-html="getTitle(item)"></span>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </a>-->
+            <!--                        <router-link :to="item.url" v-if="item.link_to == 'router-link'">-->
+            <!--                            <i v-if="item.icon" :class="item.icon"></i>-->
+            <!--                            <span v-html="getTitle(item)"></span>-->
+            <!--                        </router-link>-->
+
+            <!--                        <a :href="item.url" v-if="item.link_to == 'link'" target="_blank">-->
+            <!--                            <i v-if="item.icon" :class="item.icon"></i>-->
+            <!--                            <span v-html="getTitle(item)"></span>-->
+            <!--                        </a>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </a>-->
         </li>
     </ul>
 </template>
@@ -45,6 +61,7 @@
 <script>
 
 export default {
+    props: ['hasTooltip'],
     data() {
         return {
             menu: window.init.menu,
@@ -53,7 +70,7 @@ export default {
             extra: window.init.permissions.extra,
         };
     },
-    created(){
+    created() {
     },
     methods: {
         can(menu) {
