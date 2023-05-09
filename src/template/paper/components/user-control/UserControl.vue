@@ -20,24 +20,25 @@
                             <small>{{ $user.org_id ? $user.org_id : lang.loggedIn }}</small>
                         </div>
                         <ul>
-                            <li>
-                                <router-link to="/module/profile">
-                                    <Icon type="ios-contact-outline"/>
-                                    <span>{{lang.personalInfo}}</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/module/password">
-                                    <Icon type="ios-key-outline"/>
-                                    <span>{{lang.changePass}}</span>
-                                </router-link>
-                            </li>
-                            <li v-if="$user.role==1 || $user.role==29">
-                                <a href="/lambda/puzzle" target="_blank">
-                                    <Icon type="ios-settings-outline"/>
-                                    <span>{{lang.superAdminManagement}}</span>
-                                </a>
-                            </li>
+<!--                            FOR KB PURPOSE-->
+<!--                            <li>-->
+<!--                                <router-link to="/module/profile">-->
+<!--                                    <Icon type="ios-contact-outline"/>-->
+<!--                                    <span>{{lang.personalInfo}}</span>-->
+<!--                                </router-link>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <router-link to="/module/password">-->
+<!--                                    <Icon type="ios-key-outline"/>-->
+<!--                                    <span>{{lang.changePass}}</span>-->
+<!--                                </router-link>-->
+<!--                            </li>-->
+<!--                            <li v-if="$user.role==1 || $user.role==29">-->
+<!--                                <a href="/lambda/puzzle" target="_blank">-->
+<!--                                    <Icon type="ios-settings-outline"/>-->
+<!--                                    <span>{{lang.superAdminManagement}}</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
                             <li>
                                 <a @click="logoutModal = true">
                                     <Icon type="ios-log-out"/>

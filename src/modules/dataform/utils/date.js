@@ -23,11 +23,11 @@ export function toTime(time) {
 }
 
 export function toDateTime(datetime) {
-    return Moment(datetime, 'YYYY-MM-DD HH:mm:ss')
+    return Moment(datetime, 'YYYY-MM-DD HH:mm:ss').tz('Asia/Ulaanbaatar')
 }
 
 export function now() {
-    return Moment().format("YYYY-MM-DD HH:mm:ss")
+    return Moment().tz('Asia/Ulaanbaatar').format("YYYY-MM-DD HH:mm:ss")
 }
 
 export function getDateTime(date) {

@@ -620,7 +620,6 @@ export default {
                         actionsVisibility: this.$props.actionvisibility,
                     }
                 };
-
                 if (this.permissions) {
                     if (this.permissions.r || this.permissions.u || this.permissions.d) {
                         if (this.actionPosition == 0) {

@@ -1,8 +1,10 @@
 <template>
-    <FormItem :label=label :prop=rule>
-<!--        <DatePicker v-if="model.form[model.component] === null && meta.disabled" :value="now"-->
+    <FormItem :label=label :prop=rule :key="model.form[model.component]">
+<!--        <DatePicker v-if="model.form[model.component] === null" :value="now"-->
 <!--                    type="datetime" v-model="now"-->
-<!--                    placement="bottom-end" :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"-->
+<!--                    @on-change="getDateValueNow"-->
+<!--                    placement="bottom-end"-->
+<!--                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"-->
 <!--                    :disabled="meta && meta.disabled ? meta.disabled : false"-->
 <!--                    format="yyyy-MM-dd HH:mm"-->
 <!--        ></DatePicker>-->
@@ -10,12 +12,10 @@
         <DatePicker
                     type="datetime" v-model="model.form[model.component]"
                     @on-change="getDateValue"
-                    :key="model.form[model.component]"
                     placement="bottom-end"
                     :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"
                     :disabled="meta && meta.disabled ? meta.disabled : false"
                     format="yyyy-MM-dd HH:mm"></DatePicker>
-
     </FormItem>
 </template>
 

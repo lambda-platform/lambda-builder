@@ -60,61 +60,62 @@
                 <!--                        <span>Алхамт процесс</span>-->
                 <!--                    </router-link>-->
                 <!--                </li>-->
-                <li class="divider"></li>
-                <li class="sub-title">
-                    <span>{{ lang.data_processor }}</span>
-                </li>
+<!--                <li class="divider"></li>-->
+<!--                <li class="sub-title">-->
+<!--                    <span>{{ lang.data_processor }}</span>-->
+<!--                </li>-->
 
-                <li>
-                    <router-link to="/datasource">
-                        <i class="ti-server"></i>
-                        <span>{{ lang.data_settings }}</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/chart">
-                        <i class="ti-pie-chart"></i>
-                        <span>{{ lang._chart }}</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/moqup">
-                        <i class="ti-layout"></i>
-                        <span>{{ lang.original_preparation }}</span>
-                    </router-link>
-                </li>
-                <li v-if="!isMicroservice">
-                    <router-link to="/report">
-                        <i class="ti-layout-accordion-list"></i>
-                        <span>{{ lang._report }}</span>
-                    </router-link>
-                </li>
-                <li v-if="!isMicroservice">
-                    <router-link to="/analytic">
-                        <i class="ti-bar-chart"></i>
-                        <span>{{ lang.analysis }}</span>
-                    </router-link>
-                </li>
+<!--                <li>-->
+<!--                    <router-link to="/datasource">-->
+<!--                        <i class="ti-server"></i>-->
+<!--                        <span>{{ lang.data_settings }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <router-link to="/chart">-->
+<!--                        <i class="ti-pie-chart"></i>-->
+<!--                        <span>{{ lang._chart }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <router-link to="/moqup">-->
+<!--                        <i class="ti-layout"></i>-->
+<!--                        <span>{{ lang.original_preparation }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+<!--                <li v-if="!isMicroservice">-->
+<!--                    <router-link to="/report">-->
+<!--                        <i class="ti-layout-accordion-list"></i>-->
+<!--                        <span>{{ lang._report }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+<!--                <li v-if="!isMicroservice">-->
+<!--                    <router-link to="/analytic">-->
+<!--                        <i class="ti-bar-chart"></i>-->
+<!--                        <span>{{ lang.analysis }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
 
-                <li>
-                    <router-link to="/notification">
-                        <i class="ti-bell"></i>
-                        <span>{{ lang.target_statement }}</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/graphql">
-                        <img src="/assets/lambda/images/graphql.svg" width="21">&nbsp;
-                        <span>{{ lang.graphql_management }}</span>
-                    </router-link>
-                </li>
+<!--                <li>-->
+<!--                    <router-link to="/notification">-->
+<!--                        <i class="ti-bell"></i>-->
+<!--                        <span>{{ lang.target_statement }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <router-link to="/graphql">-->
+<!--                        <img src="/assets/lambda/images/graphql.svg" width="21">&nbsp;-->
+<!--                        <span>{{ lang.graphql_management }}</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
 
-                <li>
-                    <router-link to="/visual-builder">
-                        <i class="ti-panel"></i>
-                        <span>Вэб хуудас</span>
-                    </router-link>
-                </li>
+<!--                <li>-->
+<!--                    <router-link to="/visual-builder">-->
+<!--                        <i class="ti-panel"></i>-->
+<!--                        <span>Вэб хуудас</span>-->
+<!--                    </router-link>-->
+<!--                </li>-->
+
                 <li class="divider" v-if="accessAdminModule"></li>
                 <li class="sub-title" v-if="accessAdminModule">
                     <span>{{ lang.usersAndUserGroups }}</span>

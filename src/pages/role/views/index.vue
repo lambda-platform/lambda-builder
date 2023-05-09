@@ -10,18 +10,18 @@
                             <span>{{ lang.manage_access_rights }}</span>
                         </router-link>
                     </li>
-                    <li>
-                        <router-link to="/role-multi">
-                            <i class="ti-user"></i>
-                            <span>Олон цэс удирдах</span>
-                        </router-link>
-                    </li>
 <!--                    <li>-->
-<!--                        <router-link to="/role-kb-product">-->
-<!--                            <i class="ti-layout-grid2"></i>-->
-<!--                            <span>Бүтээгдэхүүн удирдах эрх</span>-->
+<!--                        <router-link to="/role-multi">-->
+<!--                            <i class="ti-user"></i>-->
+<!--                            <span>Олон цэс удирдах</span>-->
 <!--                        </router-link>-->
 <!--                    </li>-->
+                    <li>
+                        <router-link to="/role-kb-product">
+                            <i class="ti-layout-grid2"></i>
+                            <span>Бүтээгдэхүүн удирдах эрх</span>
+                        </router-link>
+                    </li>
                 </ul>
             </div>
         </paper-header>

@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="crud-page-body">
+            <div class="crud-page-body" style="overflow-y: auto">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
                 </div>

@@ -4,7 +4,7 @@
             <nav slot="v-nav" v-show="showSub && menuMode != 'nested'">
                 <div class="card sub-nav-list">
                     <h3 class="card-header">{{ pageTitle }}</h3>
-                    <ul class="card-body">
+                    <ul class="card-body crud-menu-container">
                         <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)">
                            <span v-if="item.children.length <= 0">
                             <router-link :to="`/p/${$route.params.menu_id}/${item.id}`"

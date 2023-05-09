@@ -17,7 +17,7 @@
             <div class="menu-control">
                 <span>&nbsp;</span>
                 <span>
-                    <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].e">E</Checkbox>
+                    <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].e">E {{permissions[data.id].e}}</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].c">C</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].r">R</Checkbox>
                     <Checkbox :disabled="!permissions[data.id].show" v-model="permissions[data.id].u">U</Checkbox>
