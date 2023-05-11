@@ -6,7 +6,7 @@
 
 <script>
 import Vue from "vue";
-import {element} from "../elements";
+import {element} from "./index";
 
 export default Vue.extend({
     data() {
@@ -19,6 +19,7 @@ export default Vue.extend({
 
     methods: {
         element: element,
+
         setMeta(item) {
             item.schemaID = this.params.schemaID;
             return item;
@@ -38,6 +39,7 @@ export default Vue.extend({
         },
 
         valueChanged(e) {
+            console.log('I am changed', e.target.value);
             if (this.params.isClient) {
                 this.params.filterData(this.params.column.model, e.target.value, 'contains');
             } else {

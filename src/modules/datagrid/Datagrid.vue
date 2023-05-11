@@ -158,6 +158,7 @@ import GridActions from "./GridActions";
 
 //Grid elements
 import Image from "./elements/Image";
+import ImageBase64 from "./elements/ImageBase64";
 import File from "./elements/File";
 import Check from "./elements/Check";
 import Number from "./elements/Number";
@@ -822,9 +823,8 @@ export default {
                                     selectAllOnMiniFilter: false,
                                     suppressSyncValuesAfterDataChange: false,
                                     suppressRemoveEntries: false,
-                                    suppressSelectAll: true,
+                                    suppressSelectAll: false,
                                     suppressMiniFilter: false,
-                                    excelMode: 'windows'
                                 };
 
                                 colItem.floatingFilterComponentParams = {
@@ -839,9 +839,9 @@ export default {
 
                                 this.selectInputModels.push(item.model);
 
-                                // setTimeout(()=>{
+                                // setTimeout(() => {
                                 //     let instance = this.gridApi.getFilterInstance(item.model);
-                                //     // instance.selectNothing();
+                                // instance.deselectAllFiltered();
                                 // }, 100);
                             }
                             break;
@@ -857,8 +857,9 @@ export default {
                                     selectAllOnMiniFilter: false,
                                     suppressSyncValuesAfterDataChange: false,
                                     suppressRemoveEntries: false,
-                                    suppressSelectAll: true,
+                                    suppressSelectAll: false,
                                     suppressMiniFilter: true,
+                                    // excelMode: 'windows'
                                 };
 
                                 colItem.floatingFilterComponentParams = {
@@ -961,10 +962,25 @@ export default {
                     }
                 }
 
+                // Image column
+                if (isValid(item.gridType) && (item.gridType == "ImageBase64")) {
+                    colItem.cellRendererFramework = ImageBase64
+                    colItem.cellRendererParams = {}
+                }
+
                 //Date only column
                 if (isValid(item.gridType) && item.gridType == "Date") {
                     colItem.valueFormatter = (data) => {
                         let val = moment(data.value).format('YYYY-MM-DD');
+                        if (val == 'Invalid date') {
+                            return '';
+                        }
+                        return val;
+                    };
+                }
+                if (isValid(item.gridType) && item.gridType == "Datetime") {
+                    colItem.valueFormatter = (data) => {
+                        let val = moment(data.value).format('YYYY-MM-DD  HH:mm:ss');
                         if (val == 'Invalid date') {
                             return '';
                         }
@@ -1211,7 +1227,7 @@ export default {
 
                     this.selectInputModels.forEach(filterModel => {
                         let instance = this.gridApi.getFilterInstance(filterModel);
-                        instance.selectNothing();
+                        // instance.selectNothing();
                     });
                 }, 100);
 
@@ -1606,7 +1622,8 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'd' && this.permissions && this.permissions.d) {
+                // if (item == 'd' && this.permissions && this.permissions.d) {
+                if (item == 'd') {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
@@ -1624,10 +1641,11 @@ export default {
             if (this.permissions && (this.permissions.u || this.permissions.d)) {
                 actions.push('separator')
             }
-            actions.push('copy')
+
+            // actions.push('copy')
             actions.push('copyWithHeaders')
             actions.push('chartRange')
-            actions.push('excelExport')
+            // actions.push('excelExport')
 
             return actions;
         },
@@ -1659,25 +1677,24 @@ export default {
                 let startWith = false;
                 let endWith = false;
 
-                if (v.charAt(0) == '*') {
+                if (needle.charAt(0) == '*') {
                     startWith = true;
                 }
 
-                let lastFilterChar = v[v.length - 1];
+                let lastFilterChar = needle[needle.length - 1];
                 if (lastFilterChar == '*') {
                     endWith = true;
                 }
 
-                let f = v.toLowerCase().replace('*', '');
-                let valueLowerCase = needle.toString().toLowerCase();
+                let valueLowerCase = needle.toLowerCase().replaceAll('*', '');
+                let f = v.toString().toLowerCase();
 
                 if (startWith == true && endWith == false) {
-                    let index = valueLowerCase.lastIndexOf(f);
-                    return index >= 0 && index === (valueLowerCase.length - f.length);
+                    return f.endsWith(valueLowerCase);
                 }
 
                 if (endWith == true && startWith == false) {
-                    return valueLowerCase.indexOf(f) === 0;
+                    return f.startsWith(valueLowerCase);
                 }
 
                 if ((endWith == false && startWith == false) || (endWith == true && startWith == true)) {
@@ -1688,20 +1705,23 @@ export default {
         },
 
         onClientFilter(model, val, type) {
-            console.log("working here", type);
-
             let filterComponent = this.gridApi.getFilterInstance(model);
-            // filterComponent.selectNothing();
-
             let filterColumnUniqueValues = this.getColumnValues(model);
             let filterValueAliases = this.manualAliasFilter(filterColumnUniqueValues, val);
-            filterValueAliases.forEach(filterSetVal => {
-                filterComponent.selectValue(filterSetVal);
-            });
+
+            filterComponent.setModel({values: filterValueAliases});
+
+            // if (val === '' || val === null) {
+            //     filterComponent.setModel({values: filterValueAliases});
+            // } else {
+            //     filterValueAliases.forEach(filterSetVal => {
+            //         filterComponent.setModel({values: [filterSetVal]});
+            //     });
+            // }
 
             filterComponent.applyModel();
             this.gridApi.onFilterChanged();
-            filterComponent.selectNothing();
+            // filterComponent.deselectAll();
         },
 
         onFilterModified(event) {
@@ -1731,18 +1751,21 @@ export default {
                 this.filterData(1);
             } else {
                 let filters = event.api.getFilterModel();
+                console.log(filters);
+
                 for (let key in filters) {
                     if (Object.prototype.hasOwnProperty.call(filters, key)) {
-                        console.log(filters[key]);
+                        // console.log(filters[key]);
                         if (filters[key].filterType == "set" && this.selectInputModels.includes(key)) {
                             let instance = this.gridApi.getFilterInstance(key);
-                            // console.log("here");
+                            console.log("here", instance);
+
                             //             if (instance.isNothingSelected()) {
                             //                 console.log("I am here nothing");
                             //                 //     instance.selectEverything();
                             //                 //     // this.gridApi.onFilterChanged();
                             //             }
-                            instance.selectNothing();
+                            // instance.resetFilterValues();
                         }
                     }
                 }

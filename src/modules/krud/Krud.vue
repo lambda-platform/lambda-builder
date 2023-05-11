@@ -31,6 +31,7 @@
 <script>
 const templates = {
     canvas: () => import(/* webpackChunkName: "krud-canvas" */'./templates/canvas.vue'),
+    "canvas-aside": () => import(/* webpackChunkName: "krud-canvas" */'./templates/canvas-aside.vue'),
     drawer: () => import(/* webpackChunkName: "krud-canvas" */'./templates/drawer.vue'),
     create: () => import(/* webpackChunkName: "krud-create" */'./templates/create.vue'),
     edit: () => import(/* webpackChunkName: "krud-create" */'./templates/edit.vue'),

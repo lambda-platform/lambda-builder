@@ -139,16 +139,21 @@ export default {
     },
 
     methods: {
-        setIcon(icon, isSVG) {
+        setIcon(icon, isSVG, isClass) {
+            if (isClass) {
+                Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
+                return false;
+            }
+
             if (this.iconMenuIndex.length >= 2) {
                 let itemIndex = this.iconMenuIndex[0];
                 this.iconMenuIndex.splice(0, 1);
                 this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG);
             } else {
-                if(isSVG){
+                if (isSVG) {
                     Vue.set(this.items[this.iconMenuIndex[0]], "svg", icon);
                     Vue.set(this.items[this.iconMenuIndex[0]], "icon", null);
-                } else{
+                } else {
                     Vue.set(this.items[this.iconMenuIndex[0]], "svg", null);
                     Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
                 }
@@ -167,10 +172,10 @@ export default {
                 item.children[itemIndex] = this.setIconFind(item.children[itemIndex], childIndexs, icon, isSVG);
             } else {
 
-                if(isSVG){
+                if (isSVG) {
                     Vue.set(item.children[childIndexs[0]], "svg", icon);
                     Vue.set(item.children[childIndexs[0]], "icon", null);
-                } else{
+                } else {
                     Vue.set(item.children[childIndexs[0]], "svg", null);
                     Vue.set(item.children[childIndexs[0]], "icon", icon);
                 }

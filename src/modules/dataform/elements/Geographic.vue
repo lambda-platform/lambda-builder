@@ -7,7 +7,7 @@
                         <li v-for="(baseMap, index) in baseMaps" :key="index">
                             <a href="javascript:;" @click="changeBaseMap(index)"
                                :class="index == currentBaseMap ? 'active' : ''">
-                                {{baseMap.title}}
+                                {{ baseMap.title }}
                             </a>
                         </li>
                     </ul>
@@ -16,15 +16,13 @@
             <div id="side_bar" :class="openSide ? 'open' : ''">
                 <Button @click="openSide = !openSide" :icon="openSide ? 'ios-arrow-forward' : 'ios-arrow-back'"
                         :class="openSide ? 'side-toggle show' : 'side-toggle'"></Button>
-
-
-                <h3>{{lang.graphicsManagement}}</h3>
+                <h3>{{ lang.graphicsManagement }}</h3>
                 <hr>
 
                 <RadioGroup v-model="geometryType" class="geometry_type" v-if="allowMultiGeometryTypes">
                     <Radio label="point" :disabled="current !== null">
 
-                        <span>{{lang.point}}</span>
+                        <span>{{ lang.point }}</span>
                     </Radio>
                     <Radio label="line" :disabled="current !== null">
 
@@ -32,15 +30,15 @@
                     </Radio>
                     <Radio label="polygon" :disabled="current !== null">
 
-                        <span>{{lang.polygon}}</span>
+                        <span>{{ lang.polygon }}</span>
                     </Radio>
                 </RadioGroup>
                 <hr>
                 <table>
                     <thead>
                     <tr>
-                        <th>{{lang.longitude}}</th>
-                        <th>{{lang.latitude}}</th>
+                        <th>{{ lang.longitude }}</th>
+                        <th>{{ lang.latitude }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -64,8 +62,8 @@
                     </tbody>
                 </table>
 
-                <Button type="success" @click="saveGraphic" v-if="points.length >= 1">{{lang.save}}</Button>
-                <Button type="warning" @click="cancelGraphic" v-if="points.length >= 1">{{lang.cancel}}</Button>
+                <Button type="success" @click="saveGraphic" v-if="points.length >= 1">{{ lang.save }}</Button>
+                <Button type="warning" @click="cancelGraphic" v-if="points.length >= 1">{{ lang.cancel }}</Button>
 
 
                 <!--<Button type="success" @click="getData">Get data</Button>-->
@@ -110,7 +108,7 @@ export default {
     props: ["model", "rule", "label", "meta", "do_render", "editMode", "is_show"],
     computed: {
         lang() {
-            const labels = ['save', 'cancel', 'longitude', 'latitude', 'graphicsManagement', 'polygon', 'point', 'noSiteFound',  'theSiteHasNotBeenSelected',
+            const labels = ['save', 'cancel', 'longitude', 'latitude', 'graphicsManagement', 'polygon', 'point', 'noSiteFound', 'theSiteHasNotBeenSelected',
 
             ];
             return labels.reduce((obj, key, i) => {
@@ -518,7 +516,7 @@ export default {
         initMap() {
             console.log("MAP INITING")
             var container = L.DomUtil.get('geographic');
-            if(container != null){
+            if (container != null) {
                 container._leaflet_id = null;
             }
             this.map = L.map('geographic').setView([this.center.lat, this.center.lng], this.zoom);
@@ -553,12 +551,9 @@ export default {
             });
 
 
-
-
             this.map.addControl(this.draw);
 
             L.control.scale().addTo(this.map);
-
 
 
             this.setElement();
@@ -567,7 +562,7 @@ export default {
                 let type = e.layerType,
                     layer = e.layer;
 
-                if(this.meta && this.meta.disabled){
+                if (this.meta && this.meta.disabled) {
                     alert(this.lang.thereZNoRightChangeInformation);
                 } else {
                     this.createFeature(layer);
@@ -577,20 +572,19 @@ export default {
             });
 
             this.map.on(L.Draw.Event.DELETED, (e) => {
-                if(this.meta && this.meta.disabled){
+                if (this.meta && this.meta.disabled) {
                     alert(this.lang.thereZNoRightChangeInformation);
                 } else {
                     this.cancelGraphic();
                 }
             });
             this.map.on(L.Draw.Event.EDITED, (e) => {
-                if(this.meta && this.meta.disabled){
+                if (this.meta && this.meta.disabled) {
                     alert(this.lang.thereZNoRightChangeInformation);
                 } else {
                     this.cancelGraphic();
                 }
             });
-
 
 
             if (this.formValueField && this.checkByArea) {
@@ -600,7 +594,7 @@ export default {
                 }
             }
         },
-        setElement(){
+        setElement() {
             if (this.model.form[this.model.component]) {
 
 
@@ -632,7 +626,7 @@ export default {
             this.map.addLayer(this.layer);
         },
         geometrySelectEvent(e) {
-            if(this.meta && this.meta.disabled){
+            if (this.meta && this.meta.disabled) {
 
             } else {
                 this.current = e.target;
@@ -828,11 +822,11 @@ export default {
         geo_data(value, oldValue) {
 
 
-            if(value && !oldValue){
+            if (value && !oldValue) {
                 this.setElement();
             }
-            if((!value && !oldValue && this.editMode)){
-               // this.setElement();
+            if ((!value && !oldValue && this.editMode)) {
+                // this.setElement();
                 this.initMap();
             }
 
@@ -842,18 +836,14 @@ export default {
             if (value) {
                 if (!this.editMode) {
                     this.initMap();
-                } else{
-                    if(this.geo_data === null){
+                } else {
+                    if (this.geo_data === null) {
                         this.initMap();
                     }
                 }
 
-
             } else {
-
                 this.destroy();
-
-
             }
         },
         options() {

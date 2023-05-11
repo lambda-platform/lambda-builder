@@ -295,9 +295,9 @@ table.preview-table {
 
 .ag-set-filter-item{
     height: 24px !important;
-    .ag-filter-checkbox{
-        display: none;
-    }
+    //.ag-filter-checkbox, .ag-checkbox-input-wrapper{
+    //    display: none;
+    //}
     .ag-filter-value{
         display: block;
         width: 100%;

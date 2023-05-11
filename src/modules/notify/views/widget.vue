@@ -9,7 +9,8 @@
             <div class="header-notification-info">
                 <h3>{{ lang.notice }}</h3>
             </div>
-            <ul v-if="notifications.length > 0" v-slimscroll="scrollOptions">
+<!--            <ul v-if="notifications.length > 0" v-slimscroll="scrollOptions">-->
+            <ul v-if="notifications.length > 0">
                 <li v-for="(notif, index) in notifications" :class="notif.seen ? 'seen' : ''">
                     <a class="notif-item" href="javascript:void(0)" @click="setSeen(notif.id, notif.link)">
                         <h4 class="notif-title">{{ notif.title }} | {{ notif.body }}</h4>
@@ -137,17 +138,13 @@ export default {
 
         getUnseenNotification() {
             console.log('working notification');
-
             axios.get('/lambda/notify/new/' + this.$props.user).then(o => {
                 this.count = o.data.count;
                 this.notifications = o.data.notifications;
             });
         },
         getAllNotification() {
-            axios.get('/lambda/notify/all/' + this.$props.user).then(o => {
-                this.count = 0;
-                this.notifications = o.data.notifications;
-            });
+            this.$router.push({path: '/module/notify'});
         },
 
         setSeen(id, link) {
@@ -158,7 +155,7 @@ export default {
                     if (currentNotif) {
                         currentNotif.seen = true;
                     }
-                    this.$router.push(link)
+                    this.$router.push({path: link, hash: 'had'});
                 }
             });
         },

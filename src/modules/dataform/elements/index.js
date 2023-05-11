@@ -119,7 +119,7 @@ export const elements = [
     },
     {
         element: "Map",
-        component: () => import(/* webpackChunkName: "form-field-Map" */'./Map.vue'),
+        component: () => import('./Map.vue'),
     },
 
     {
@@ -151,7 +151,7 @@ export const elements = [
     },
     {
         element: "ISelect",
-        component: () => import(/* webpackChunkName: "form-field-ISelect" */'./ISelect.vue'),
+        component: () => import(/* webpackChunkName: "form-field-iSelect" */'./ISelect.vue'),
     },
     {
         element: "Search",
@@ -211,6 +211,15 @@ export const elements = [
         element: "Label",
         component: () => import(/* webpackChunkName: "form-field-Label" */'./Label.vue'),
     },
+
+    {
+        element: "TextareaByte",
+        component: () => import(/* webpackChunkName: "form-field-Label" */'./Textarea.vue'),
+    },
+    {
+        element: "CKByte",
+        component: () => import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
+    },
 ];
 
 export const elementList = elements.map(e => e.element)
@@ -219,11 +228,9 @@ const Notfount = () => import(/* webpackChunkName: "form-field-not-fount" */'./N
 const CustomElement = () => import(/* webpackChunkName: "form-field-CustomElement" */'./CustomElement.vue');
 
 const requireCustomElement = (type) => {
-
     if (window.init.data_form_custom_elements) {
         let custom = window.init.data_form_custom_elements.find(custom_element => custom_element.element == type);
         if (custom) {
-
             try {
                 return require(`dataform_custom/${type}.vue`).default;
             } catch (exception_var) {

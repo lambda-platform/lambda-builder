@@ -398,6 +398,7 @@ export default {
         "Success_message": "Амжилттай мессеж",
         "Error_message": "Алдааны мессеж",
         "Form_name": "Формын нэр",
+        "Sub_name": "Дэд гарчиг",
         "Form_type": "Формын төрөл",
         "Simple_form": "Энгийн форм",
         "Step_by_step_form": "Алхамтай форм",
@@ -443,6 +444,7 @@ export default {
         "Consolidation_forms_and_tables": "Маяг, хүснэгтийн нэгтгэл",
         "_link": "Холбоос",
         "iframe_page": "iframe хуудас",
+        "no_action_sub_top": "Үйлдэлгүй дэд цэс дээр харуулах",
         "No_action": "Үйлдэлгүй",
         "_division": "Хуваалт",
         "menuType": "Цэсний төрөл",
@@ -818,6 +820,7 @@ export default {
         "_form": "Маягт",
         "table": "Хүснэгт",
         "form_and_table_consolidation": "Маягт, хүснэгт нэгтгэл",
+        "web_page": "Вэб хуудас",
         "data_processor": "МЭДЭЭЛЭЛ БОЛОВСРУУЛАГЧ",
         "data_settings": "Өгөгдлийн тохиргоо",
         "_chart": "График",
@@ -861,7 +864,9 @@ export default {
     "notify": {
         "notice": "Мэдэгдлүүд",
         "no_notice": "Одоогоор мэдэгдэл байхгүй байна!",
-        "view_all_notifications": "Бүх мэдэгдлийг харах"
+        "view_all_notifications": "Бүх мэдэгдлийг харах",
+        "total": "Нийт",
+        "clear_notification": "Бүгдийн үзсэн болгох"
     },
     "appAdmin": {
         "manual": "Гарын авлага",

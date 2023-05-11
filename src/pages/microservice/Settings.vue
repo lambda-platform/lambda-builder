@@ -123,6 +123,10 @@ export default {
 .microservice-config {
     .dataform-body{
         height: auto !important;
+        flex: unset !important;
+    }
+    .dataform-footer{
+        margin-top: 0  !important;
     }
 }
 </style>

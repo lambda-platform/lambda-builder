@@ -2,7 +2,7 @@
     <section class="page page-preview">
         <div class="pz-form-preview">
             <dataform ref="form" v-if="$project" :projectID="$project.id" :schemaID="$route.params.id" :editMode="false" :onSuccess="onSuccess" :onError="onError"></dataform>
-            <dataform ref="form" v-else :projectID="$project.id" :schemaID="$route.params.id" :editMode="false" :onSuccess="onSuccess" :onError="onError"></dataform>
+            <dataform ref="form" v-else  :schemaID="$route.params.id" :editMode="false" :onSuccess="onSuccess" :onError="onError"></dataform>
         </div>
     </section>
 </template>

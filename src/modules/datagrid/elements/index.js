@@ -16,8 +16,16 @@ export const elementList = [
         component: () => import(/* webpackChunkName: "grid-Date" */'./Date.vue'),
     },
     {
+        element: "Datetime",
+        component: () => import(/* webpackChunkName: "grid-Date" */'./Date.vue'),
+    },
+    {
         element: "Image",
-        component: () => import(/* webpackChunkName: "grid-Image" */'./Image.vue'),
+        component: () => import(/* webpackChunkName: "grid-Image-Item" */'./Image.vue'),
+    },
+    {
+        element: "ImageBase64",
+        component: () => import(/* webpackChunkName: "grid-Image-Base64" */'./ImageBase64.vue'),
     },
     {
         element: "File",
@@ -25,7 +33,7 @@ export const elementList = [
     },
     {
         element: "Checkbox",
-        component:()=> import(/* webpackChunkName: "grid-Checkbox" */'./Check.vue'),
+        component: () => import(/* webpackChunkName: "grid-Checkbox" */'./Check.vue'),
     },
     {
         element: "ColorPicker",
@@ -57,7 +65,7 @@ export const elementList = [
     },
     {
         element: "InputNumber",
-        component:()=> import(/* webpackChunkName: "grid-InputNumber" */'./Number.vue'),
+        component: () => import(/* webpackChunkName: "grid-InputNumber" */'./Number.vue'),
     },
     {
         element: "Link",
@@ -69,7 +77,7 @@ export const elementList = [
     },
     {
         element: "Set-Filter",
-        component:()=> import(/* webpackChunkName: "grid-Text" */'./SetFilter.vue'),
+        component: () => import(/* webpackChunkName: "grid-Text" */'./SetFilter.vue'),
     },
     {
         element: "Selectable-Input",
@@ -89,7 +97,7 @@ export const elementList = [
     // },
     {
         element: "SVG",
-        component:()=> import(/* webpackChunkName: "grid-Text" */'./Image.vue'),
+        component: () => import(/* webpackChunkName: "grid-Text" */'./Image.vue'),
     },
     // {
     //     element: "Switch",
@@ -126,7 +134,6 @@ export const elementList = [
 
 
 export const element = (type) => {
-
     if (type !== null && typeof type !== "undefined") {
         try {
             const elIndex = elementList.findIndex(el => el.element == type);
@@ -136,7 +143,7 @@ export const element = (type) => {
         } catch (e) {
             if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
                 let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == type);
-                if (custom.length>0 && custom) {
+                if (custom.length > 0 && custom) {
                     return require(`datagrid_custom/${type}.vue`).default;
                 } else
                     return elementList[0].component;

@@ -43,7 +43,6 @@
             :disabled="meta && meta.disabled ? meta.disabled : false">
             <Button type="dashed">
                 <img class="preview-img" v-if="this.model.form[this.model.component] != null"
-
                      :src="`${url ? url : ''}${model.form[model.component]}`"
                      alt="image">
                 <div>

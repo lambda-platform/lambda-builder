@@ -5,74 +5,78 @@
             <Button shape="circle" type="success" size="small" @click="add" icon="md-add"
                     class="sub-form-add-btn"></Button>
         </div>
-        <table class="sub-form-grid" border="1" v-if="form.min_height ? true: this.listData.length >= 1">
-            <thead>
-            <tr>
-                <th class="row-number" v-if="form.showRowNumber">ДД</th>
-                <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
-                    :key="item.index">
-                    <div class="th-title">
-                        {{ item.label }} <i class="ti-exchange-vertical"/></div>
-                </th>
-                <th class="action">...</th>
-            </tr>
-            </thead>
+        <div class="sub-form-table-wrap">
+            <table class="sub-form-grid" border="1" v-if="form.min_height ? true: this.listData.length >= 1">
+                <thead>
+                <tr>
+                    <th class="row-number" v-if="form.showRowNumber">ДД</th>
+                    <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
+                        :key="item.index">
+                        <div class="th-title">
+                            {{ item.label }} <i class="ti-exchange-vertical"/></div>
+                    </th>
+                    <th class="action">...</th>
+                </tr>
+                </thead>
 
-            <tbody>
+                <tbody>
 
-            <grid-form v-for="(item, index) in listData"
-                       :key="index"
-                       :f="item.form"
-                       :model="item.model"
-                       :editMode="editMode"
-                       :relations="relations"
-                       :formula="formula"
-                       :schema="form.schema"
-            >
-                <template slot="action">
-                    <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit" v-if="!form.disableEdit">
-                        <Icon type="md-create"/>
-                    </a>
-                    <a href="javscript:void(0)" @click="()=>remove(index)" v-if="!form.disableDelete">
-                        <Icon type="ios-trash"/>
-                    </a>
-                </template>
-                <template slot="rowNumber" v-if="form.showRowNumber">
-                    <span>{{ index + 1 }}</span>
-                </template>
-            </grid-form>
-            </tbody>
-            <tfoot v-if="hasEq">
-            <tr>
-                <td v-for="(item, index) in equationData" :key="index">
-                    <span v-if="item.preStaticWord!=null && item.preStaticWord!=''"> {{ item.preStaticWord }} </span>
-                    <span v-if="item.hasEquation">{{ item.data.toLocaleString() }}</span>
-                    <span v-if="item.prefix!=null && item.prefix!=''"> {{ item.prefix }}</span>
-                </td>
-                <td>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
+                <grid-form v-for="(item, index) in listData"
+                           :key="index"
+                           :f="item.form"
+                           :model="item.model"
+                           :editMode="editMode"
+                           :relations="relations"
+                           :formula="formula"
+                           :schema="form.schema"
+                >
+                    <template slot="action">
+                        <a href="javscript:void(0)" @click="()=>edit(index)" class="sub-edit" v-if="!form.disableEdit">
+                            <Icon type="md-create"/>
+                        </a>
+                        <a href="javscript:void(0)" @click="()=>remove(index)" v-if="!form.disableDelete">
+                            <Icon type="ios-trash"/>
+                        </a>
+                    </template>
+                    <template slot="rowNumber" v-if="form.showRowNumber">
+                        <span>{{ index + 1 }}</span>
+                    </template>
+                </grid-form>
+                </tbody>
+                <tfoot v-if="hasEq">
+                <tr>
+                    <td v-for="(item, index) in equationData" :key="index">
+                        <span v-if="item.preStaticWord!=null && item.preStaticWord!=''"> {{
+                                item.preStaticWord
+                            }} </span>
+                        <span v-if="item.hasEquation">{{ item.data.toLocaleString() }}</span>
+                        <span v-if="item.prefix!=null && item.prefix!=''"> {{ item.prefix }}</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
         <a class="sub-grid-add" href="javascript:void(0)" @click="add" v-if="form.min_height">
             <Icon type="plus"></Icon>
             {{ lang.save }}
         </a>
 
-<!--        <paper-modal-->
-<!--            :name="`form-modal-${form.formId}`"-->
-<!--            class="form-modal"-->
-<!--            :min-width="200"-->
-<!--            :min-height="100"-->
-<!--            :pivot-y="0.5"-->
-<!--            :adaptive="true"-->
-<!--            :reset="true"-->
-<!--            :draggable="true"-->
-<!--            :resizable="true"-->
-<!--            draggable=".form-tool"-->
-<!--            width="800"-->
-<!--            height="70%"-->
-<!--        >-->
+        <!--        <paper-modal-->
+        <!--            :name="`form-modal-${form.formId}`"-->
+        <!--            class="form-modal"-->
+        <!--            :min-width="200"-->
+        <!--            :min-height="100"-->
+        <!--            :pivot-y="0.5"-->
+        <!--            :adaptive="true"-->
+        <!--            :reset="true"-->
+        <!--            :draggable="true"-->
+        <!--            :resizable="true"-->
+        <!--            draggable=".form-tool"-->
+        <!--            width="800"-->
+        <!--            height="70%"-->
+        <!--        >-->
         <Modal
             :min-width="200"
             :min-height="100"
@@ -97,7 +101,7 @@
                 </div>
             </section>
         </Modal>
-<!--        </paper-modal>-->
+        <!--        </paper-modal>-->
 
         <paper-modal
             :name="`grid-modal-${form.sourceGridID}`"
@@ -128,7 +132,7 @@
 
                     <div v-if="form.sourceGridTitle && form.sourceGridDescription" class="source-grid-description">
                         <h3>
-                            {{form.sourceGridTitle}}
+                            {{ form.sourceGridTitle }}
                         </h3>
                         <p v-html="form.sourceGridDescription">
 
@@ -149,10 +153,14 @@
                       }"
                     />
                     <div class="add-from-pre-source">
-                        <Button shape="circle" type="primary" size="small" @click="addByFrom" :disabled="preSource.length >= 1" icon="md-add"
-                                class="sub-form-add-btn">Шинээр бүртгэх</Button>
-                        <Button shape="circle" type="success" size="small" @click="addFromPreSource" :disabled="preSource.length == 0" icon="md-add"
-                                class="sub-form-add-btn">Сонгох</Button>
+                        <Button shape="circle" type="primary" size="small" @click="addByFrom"
+                                :disabled="preSource.length >= 1" icon="md-add"
+                                class="sub-form-add-btn">Шинээр бүртгэх
+                        </Button>
+                        <Button shape="circle" type="success" size="small" @click="addFromPreSource"
+                                :disabled="preSource.length == 0" icon="md-add"
+                                class="sub-form-add-btn">Сонгох
+                        </Button>
                     </div>
                 </div>
             </section>
@@ -164,6 +172,7 @@
 import {element} from "../index";
 import GridForm from "./GridForm";
 import subFormMix from "./subFormMix";
+
 const DataForm = () => import(/* webpackChunkName: "Dataform-el" */'../../Dataform');
 export default {
     props: ["form", "model", "editMode", "relations", "formula", "url"],
@@ -180,13 +189,13 @@ export default {
 
     },
     computed: {
-            lang() {
-                const labels = ['pleaseCompleteFirstLine', ];
-                return labels.reduce((obj, key, i) => {
-                    obj[key] = this.$t('dataForm.' + labels[i]);
-                    return obj;
-                }, {});
-            },
+        lang() {
+            const labels = ['pleaseCompleteFirstLine',];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataForm.' + labels[i]);
+                return obj;
+            }, {});
+        },
 
         subStyle() {
             if (this.form.min_height) {
@@ -199,7 +208,7 @@ export default {
             }
         },
         Lang() {
-            const labels = [ 'add',];
+            const labels = ['add',];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;
@@ -429,14 +438,14 @@ export default {
             this.listData.push(listItem);
         },
         add() {
-            if(this.form.addFromGrid && this.form.sourceGridID){
+            if (this.form.addFromGrid && this.form.sourceGridID) {
                 this.showAddSourceModal();
             } else {
 
                 this.addByFrom();
             }
         },
-        addByFrom(){
+        addByFrom() {
             this.closeSourceModal();
             this.editIndex = -1;
             this.showAddModal()

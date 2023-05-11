@@ -112,7 +112,7 @@
 <!--                <li>-->
 <!--                    <router-link to="/visual-builder">-->
 <!--                        <i class="ti-panel"></i>-->
-<!--                        <span>Вэб хуудас</span>-->
+<!--                        <span>{{ lang.web_page }}</span>-->
 <!--                    </router-link>-->
 <!--                </li>-->
 
@@ -207,6 +207,7 @@ export default {
                 'menu_settings',
                 'logOut',
                 'cancel',
+                'web_page',
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('puzzle.' + labels[i]);
@@ -261,21 +262,20 @@ export default {
         };
     },
     components: {},
-    mounted() {
 
+    beforeMount() {
+        if (this.selectedLang !== "mn_MN") {
+            loadLanguageAsync(this.selectedLang);
+        }
     },
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn_MN") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
+
         switchLanguage(val) {
             this.selectedLang = val;
             loadLanguageAsync(val);
         },
         logout() {
-            axios.post("/auth/logout", {}).then(o => {
+            axios.post("/auth/logout", {}).then(() => {
                 window.location = "/auth/login";
             });
         },

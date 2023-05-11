@@ -130,7 +130,7 @@ export const builderData = (vm) => {
             identity: null,
             actions: ["e", "d"],
             actionPosition: 0,
-            isContextMenu: true,
+            isContextMenu: false,
             staticWidth: false,
             fullWidth: true,
             hasCheckbox: false,

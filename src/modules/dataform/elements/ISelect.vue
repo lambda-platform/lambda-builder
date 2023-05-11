@@ -5,7 +5,8 @@
                 :placeholder="meta && meta.placeHolder ? meta.placeHolder : label"
                 filterable clearable
                 @on-clear="onClear">
-            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">{{ item.label }}
+            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">
+                {{ item.label }}
             </Option>
         </Select>
 
@@ -14,7 +15,8 @@
                 :placeholder="meta && meta.placeHolder ? meta.placeHolder : label"
                 filterable clearable multiple
                 @on-clear="onClear">
-            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">{{ item.label }}
+            <Option v-for="item in options" :key=item.index :value="item.value" v-if="isShow(item)">
+                {{ item.label }}
             </Option>
         </Select>
     </FormItem>
@@ -52,12 +54,15 @@ export default {
                           return [];
                   }*/
             }
-        }
+        },
+    },
+
+    created() {
     },
 
     methods: {
         isShow(item) {
-            if (item.value && item.label) {
+            if (item.value != null && item.value != undefined && item.label) {
                 if (this.$props.meta.relation.parentFieldOfForm) {
                     if (this.$props.model.form[this.$props.meta.relation.parentFieldOfForm] == item.parent_value) {
                         return true;

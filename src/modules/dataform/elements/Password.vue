@@ -7,6 +7,7 @@
         </FormItem>
         <FormItem :label="lang._pass" :prop=rule>
             <Input :type="passwordGenerated ? 'text': 'password'" v-model="model.form[model.component]"
+                   autocomplete="off"
                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label">
                 <Tooltip slot="append"
                          :content="lang.Create_a_password"

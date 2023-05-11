@@ -410,6 +410,45 @@ img.ag-grid-image {
     height: 90%;
     max-height: 40px;
     border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 3px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
+.multi-images {
+    display: flex;
+    align-items: center;
+
+    img.ag-grid-image-multi {
+        height: 90%;
+        max-height: 40px;
+        border-radius: 4px;
+        margin-left: -8px;
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 3px;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+    }
+
+    img.ag-grid-image-multi:first-child {
+        margin-left: 0px;
+    }
+
+    .image-plus {
+        border: 1px solid #ddd;
+        padding: 12px;
+        width: 40px;
+        text-align: center;
+        background: #c3c3c3b5;
+        border-radius: 4px;
+        margin-left: -10px;
+        &:hover {
+            margin-right: 10px;
+            margin-left: -8px;
+        }
+    }
 }
 
 /* This CSS is to not apply the border for the column having 'no-border' class */
@@ -675,7 +714,16 @@ img.ag-grid-image {
         border-bottom: 0 !important;
         border-top: solid 1px #dedede !important;
     }
-    .ag-floating-filter-input{
+
+    .ag-floating-filter-input {
         overflow: hidden !important;
+    }
+}
+
+.fb-workspace {
+    .ivu-tabs-content {
+        .ivu-tabs-tabpane {
+            height: 100%;
+        }
     }
 }
