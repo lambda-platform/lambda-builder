@@ -5,23 +5,30 @@
                 <div class="card sub-nav-list">
                     <h3 class="card-header">{{ pageTitle }}</h3>
                     <ul class="card-body">
-                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)">
+                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)" :class="item.link_to == 'divider' ? 'nav-divider': ''">
                            <span v-if="item.children.length <= 0">
-                            <router-link :to="`/p/${$route.params.menu_id}/${item.id}`"
-                                         v-if="item.link_to != 'link' && item.link_to != 'router-link'">
-                                <!-- <Badge count="3"></Badge> -->
-                                <i v-if="item.icon" :class="item.icon"></i>
-                                <span v-html="getTitle(item)"></span>
-                            </router-link>
-                            <router-link :to="item.url" v-else-if="item.link_to == 'router-link'">
-                                <i v-if="item.icon" :class="item.icon"></i>
-                                <span v-html="getTitle(item)"></span>
-                            </router-link>
-                            <a :href="item.url" v-else-if="item.link_to == 'link'" :target="item.target">
-                                <i v-if="item.icon" :class="item.icon"></i>
-                                <span v-html="getTitle(item)"></span>
-                            </a>
+                                <router-link :to="`/p/${$route.params.menu_id}/${item.id}`"
+                                             v-if="item.link_to != 'link' && item.link_to != 'router-link' && item.link_to != 'divider'">
+                                    <!-- <Badge count="3"></Badge> -->
+                                    <i v-if="item.icon" :class="item.icon"></i>
+                                    <span v-html="getTitle(item)"></span>
+                                </router-link>
+
+                                <router-link :to="item.url" v-else-if="item.link_to == 'router-link'">
+                                    <i v-if="item.icon" :class="item.icon"></i>
+                                    <span v-html="getTitle(item)"></span>
+                                </router-link>
+
+                                <a :href="item.url" v-else-if="item.link_to == 'link'" :target="item.target">
+                                    <i v-if="item.icon" :class="item.icon"></i>
+                                    <span v-html="getTitle(item)"></span>
+                                </a>
+
+                               <div class="nav-divider-item" v-else-if="item.link_to == 'divider'">
+                                    <span v-html="getTitle(item)"></span>
+                                </div>
                            </span>
+
                             <Collapse simple v-if="showNestedMenu  && item.children.length >= 1" v-model="subMenuId">
                                 <Panel :name="item.id" :key="index">
                                     <span v-html="getTitle(item)"></span>
@@ -63,6 +70,10 @@
             <portal to="header-left" v-if="pageType == 'iframe' && property.withoutHeader">
                 <h3>{{ iframeTitle }}</h3>
             </portal>
+
+            <div v-if="pageType == 'router-link'">
+                <h1>here</h1>
+            </div>
         </div>
     </section>
 </template>
@@ -74,7 +85,6 @@ export default {
     computed: {
         menuMode() {
             let menuModeSaved = localStorage.getItem('menuMode');
-
             if (menuModeSaved) {
                 return menuModeSaved
             } else {
@@ -127,7 +137,6 @@ export default {
         checkSub() {
             let menuIndex = this.menu.findIndex(menu => menu.id == this.$route.params.menu_id);
             if (menuIndex >= 0) {
-
                 if (this.menu[menuIndex].children.length >= 1) {
                     this.menu[menuIndex].children.forEach((sub, subIndex) => {
                         if (sub.children.length >= 1) {
@@ -159,7 +168,6 @@ export default {
 
         getShowAbleChild(children) {
             let showIndex = children.findIndex(child => this.can(child));
-
             if (showIndex >= 0) {
                 return children[showIndex]
             } else
@@ -231,14 +239,13 @@ export default {
                             if (user_condition) {
                                 this.property.user_condition = user_condition;
                             }
-
                         }
                         break;
                     case 'link':
                         window.location = this.menu[parentIndex]['url'];
                         break;
                     case 'router-link':
-                        console.log(this.menu[parentIndex]['url']);
+                        console.log('I am router link', this.menu[parentIndex]);
                         this.$router.push(this.menu[parentIndex]['url']);
                         break;
                     case 'iframe':
