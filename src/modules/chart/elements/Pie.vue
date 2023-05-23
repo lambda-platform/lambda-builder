@@ -42,8 +42,18 @@ export default {
                 }
             }
         },
+        sourceUrl() {
+
+            if(window.init.projectSettings){
+
+                // return window.init.projectSettings.dev_url;
+                return window.init.projectSettings.production_url;
+            } else {
+                return ""
+            }
+        },
         dataCaller(filter) {
-            let url = '/ve/get-data-pie';
+            let url = this.sourceUrl()+'/ve/get-data-pie';
             if(this.projectDomain){
                 url = this.projectDomain+url;
             }
@@ -68,9 +78,11 @@ export default {
             var dom = this.$el;
             var wrapper = dom.parentElement;
             dom.style.height = wrapper.offsetHeight + 'px';
-            // console.log(wrapper.offsetWidth);
-            // var myChart = window.echarts.init(dom, 'light');
-            var myChart = window.echarts.init(dom, 'shine');
+
+            var myChart = window.echarts.init(dom, null, {
+                renderer: 'canvas',
+                useDirtyRect: false
+            });
             this.instance = myChart;
 
             let series = [];
@@ -81,15 +93,21 @@ export default {
             let title_field = this.title[0].name;
 
             this.elementData.map(sdata => {
-                totalValue = totalValue + sdata[value_field];
-                seriesData.push({
-                    value: sdata[value_field],
-                    name: sdata[title_field]
-                });
+
+                if(sdata[title_field] !== null && sdata[value_field] !== null){
+                    totalValue = totalValue + sdata[value_field];
+                    seriesData.push({
+                        value: sdata[value_field],
+                        name: sdata[title_field]
+                    });
+                }
+
             });
 
 
+
             if (this.type == 'PieChart') {
+
 
                 series.push({
                     name: this.chart_title,
@@ -110,6 +128,7 @@ export default {
                         normal: {
                             formatter: col => {
                                 var length = 25;
+
                                 var trimmedString = col.name.length > length ?
                                     col.name.substring(0, length - 3) + "..." :
                                     col.name;
@@ -190,17 +209,10 @@ export default {
                 });
             }
 
-            let titles = this.elementData.map(data_ => data_[title_field]);
+            let titles = this.elementData.filter(data_ => data_[title_field] !== null).map(data_ => data_[title_field]);
 
-            myChart.setOption({
-                theme: "shine",
-                name: !this.hideTitle ? {
-                    text: this.chart_title,
-                    textStyle: {
-                        fontFamily: 'Arial',
-                        fontWeight: "normal"
-                    }
-                } : undefined,
+            let options = {
+
                 title: !this.hideTitle ? {
                     text: this.chart_title,
                     textStyle: {
@@ -215,7 +227,7 @@ export default {
                         },
                     }
                 },
-                tooltip: this.type == 'TreeMapChart' ? {
+                tooltip: this.type === 'TreeMapChart' ? {
                     trigger: 'item',
                     formatter: (e) => {
                         let percent = Math.round(e.data.value / (totalValue / 100) * 100) / 100;
@@ -239,7 +251,10 @@ export default {
                 series: series,
 
 
-            });
+            }
+            console.log(options)
+            console.log(options)
+            myChart.setOption(options);
 
             // myChart.on('click', function (event) {
             //     console.log(event)
@@ -258,6 +273,8 @@ export default {
                     this.$emit("unFilter");
                 }
             });
+
+            window.addEventListener('resize', myChart.resize);
 
             // myChart.on('legendselectchanged', function (event) {
             //     console.log(event)
@@ -299,6 +316,7 @@ export default {
 
 
             if (this.type == 'PieChart') {
+
 
                 series.push({
                     name: this.chart_title,

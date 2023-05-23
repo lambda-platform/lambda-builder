@@ -40,8 +40,18 @@ export default {
             }
 
         },
+        sourceUrl() {
+
+            if(window.init.projectSettings){
+
+                // return window.init.projectSettings.dev_url;
+                return window.init.projectSettings.production_url;
+            } else {
+                return ""
+            }
+        },
         dataCaller(filter) {
-            let url = '/ve/get-data-count';
+            let url = this.sourceUrl()+'/ve/get-data-count';
             if(this.projectDomain){
                 url = this.projectDomain+url;
             }

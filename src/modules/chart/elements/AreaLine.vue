@@ -9,9 +9,19 @@ export default {
     props: ["axis", "lines", "type", "chart_title", "hideTitle", "filters", "hideZoom", "chartTitle", "chartData", "xData", "isRest",  "minH", "chartColor", "projectDomain", "limit", "order"],
     methods: {
         getSeries() {},
+        sourceUrl() {
+
+            if(window.init.projectSettings){
+
+                // return window.init.projectSettings.dev_url;
+                return window.init.projectSettings.production_url;
+            } else {
+                return ""
+            }
+        },
         callData() {
             if (this.axis.length >= 1 && this.lines.length >= 1) {
-                let url = '/ve/get-data';
+                let url = this.sourceUrl()+'/ve/get-data';
                 if(this.projectDomain){
                     url = this.projectDomain+url;
                 }
