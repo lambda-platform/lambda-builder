@@ -38,6 +38,7 @@
 
         },
         methods: {
+
             onCreate() {
                 this.$router.push("/chart");
             },

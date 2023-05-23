@@ -16,10 +16,20 @@ export default {
     },
 
     computed: {
+        sourceUrl() {
+
+            if(window.init.projectSettings){
+
+
+                return window.init.projectSettings.production_url;
+            } else {
+                return ""
+            }
+        },
         src: function () {
 
             if(this.$project){
-                return `${window.lambda.domain}/lambda/puzzle/schema-public/chart/${this.$route.params.id}`
+                return `${this.sourceUrl}/lambda/puzzle/schema-public/chart/${this.$route.params.id}`
             }
             return `/lambda/puzzle/schema/chart/${this.$route.params.id}`
 

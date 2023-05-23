@@ -710,7 +710,9 @@
                                     <grid-item-excel-import v-for="item in datagrid.schema" :key="item.index"
                                                             :item="item"
                                                             :meta="{width: datagrid.staticWidth}"
-                                                            :edit="editMode"></grid-item-excel-import>
+                                                            :edit="editMode">
+
+                                    </grid-item-excel-import>
                                 </draggable>
                             </div>
                         </div>

@@ -7,7 +7,6 @@
                         <div class="title">
                             <h3>{{lang.dataLink}} </h3>
                         </div>
-
                         <ul>
                             <li>
                                 <label>{{lang.table}}</label>
@@ -64,7 +63,6 @@
                             </li>
                         </ul>
                     </Col>
-
                     <Col :xs="24" :sm="24" :md="12" :lg="8" class="rel-col">
                         <div class="title">
                             <h3>{{lang.Link_terms}} </h3>
