@@ -1,28 +1,138 @@
 <template>
     <FormItem :label=label :prop=rule>
         <div class="ivu-input-wrapper ivu-input-type form-item-register">
-            <multiselect
-                v-model="registerChar1"
-                :disabled="meta && meta.disabled ? meta.disabled : false"
-                :options="options"
-                @input="registerChanged"
-                track-by="value"
-                :searchable="true"
-                :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"
-                label="label"
-                class="select-char first-char">
-            </multiselect>
-            <multiselect
-                v-model="registerChar2"
-                :disabled="meta && meta.disabled ? meta.disabled : false"
-                :options="options"
-                @input="registerChanged"
-                track-by="value"
-                :searchable="true"
-                :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"
-                label="label"
-                class="select-char second-char">
-            </multiselect>
+            <!--            <multiselect-->
+            <!--                v-model="registerChar1"-->
+            <!--                :disabled="meta && meta.disabled ? meta.disabled : false"-->
+            <!--                :options="options"-->
+            <!--                @input="registerChanged"-->
+            <!--                track-by="value"-->
+            <!--                :searchable="true"-->
+            <!--                :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"-->
+            <!--                label="label"-->
+            <!--                class="select-char first-char">-->
+            <!--            </multiselect>-->
+            <!--            <multiselect-->
+            <!--                v-model="registerChar2"-->
+            <!--                :disabled="meta && meta.disabled ? meta.disabled : false"-->
+            <!--                :options="options"-->
+            <!--                @input="registerChanged"-->
+            <!--                track-by="value"-->
+            <!--                :searchable="true"-->
+            <!--                :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"-->
+            <!--                label="label"-->
+            <!--                class="select-char second-char">-->
+            <!--            </multiselect>-->
+            <Poptip placement="bottom" v-model="visibleChar1">
+                <Button>
+                    {{ registerChar1.label }}
+                </Button>
+                <div class="letters" slot="content">
+                    <table>
+                        <tr>
+                            <td @click="setChar1('A')">А</td>
+                            <td @click="setChar1('Б')">Б</td>
+                            <td @click="setChar1('В')">В</td>
+                            <td @click="setChar1('Г')">Г</td>
+                            <td @click="setChar1('Д')">Д</td>
+                            <td @click="setChar1('Е')">Е</td>
+                            <td @click="setChar1('Ё')">Ё</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar1('Ж')">Ж</td>
+                            <td @click="setChar1('З')">З</td>
+                            <td @click="setChar1('И')">И</td>
+                            <td @click="setChar1('Й')">Й</td>
+                            <td @click="setChar1('К')">К</td>
+                            <td @click="setChar1('Л')">Л</td>
+                            <td @click="setChar1('М')">М</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar1('Н')">Н</td>
+                            <td @click="setChar1('О')">О</td>
+                            <td @click="setChar1('Ө')">Ө</td>
+                            <td @click="setChar1('П')">П</td>
+                            <td @click="setChar1('Р')">Р</td>
+                            <td @click="setChar1('С')">С</td>
+                            <td @click="setChar1('Т')">Т</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar1('У')">У</td>
+                            <td @click="setChar1('Ү')">Ү</td>
+                            <td @click="setChar1('Ф')">Ф</td>
+                            <td @click="setChar1('Х')">Х</td>
+                            <td @click="setChar1('Ц')">Ц</td>
+                            <td @click="setChar1('Ч')">Ч</td>
+                            <td @click="setChar1('Ш')">Ш</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar1('Щ')">Щ</td>
+                            <td @click="setChar1('Ъ')">Ъ</td>
+                            <td @click="setChar1('Ы')">Ы</td>
+                            <td @click="setChar1('Ь')">Ь</td>
+                            <td @click="setChar1('Э')">Э</td>
+                            <td @click="setChar1('Ю')">Ю</td>
+                            <td @click="setChar1('Я')">Я</td>
+                        </tr>
+                    </table>
+                </div>
+            </Poptip>
+
+            <Poptip placement="bottom" v-model="visibleChar2">
+                <Button class="no-border-radius">
+                    {{ registerChar2.label }}
+                </Button>
+                <div class="letters" slot="content">
+                    <table>
+                        <tr>
+                            <td @click="setChar2('A')">А</td>
+                            <td @click="setChar2('Б')">Б</td>
+                            <td @click="setChar2('В')">В</td>
+                            <td @click="setChar2('Г')">Г</td>
+                            <td @click="setChar2('Д')">Д</td>
+                            <td @click="setChar2('Е')">Е</td>
+                            <td @click="setChar2('Ё')">Ё</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar2('Ж')">Ж</td>
+                            <td @click="setChar2('З')">З</td>
+                            <td @click="setChar2('И')">И</td>
+                            <td @click="setChar2('Й')">Й</td>
+                            <td @click="setChar2('К')">К</td>
+                            <td @click="setChar2('Л')">Л</td>
+                            <td @click="setChar2('М')">М</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar2('Н')">Н</td>
+                            <td @click="setChar2('О')">О</td>
+                            <td @click="setChar2('Ө')">Ө</td>
+                            <td @click="setChar2('П')">П</td>
+                            <td @click="setChar2('Р')">Р</td>
+                            <td @click="setChar2('С')">С</td>
+                            <td @click="setChar2('Т')">Т</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar2('У')">У</td>
+                            <td @click="setChar2('Ү')">Ү</td>
+                            <td @click="setChar2('Ф')">Ф</td>
+                            <td @click="setChar2('Х')">Х</td>
+                            <td @click="setChar2('Ц')">Ц</td>
+                            <td @click="setChar2('Ч')">Ч</td>
+                            <td @click="setChar2('Ш')">Ш</td>
+                        </tr>
+                        <tr>
+                            <td @click="setChar2('Щ')">Щ</td>
+                            <td @click="setChar2('Ъ')">Ъ</td>
+                            <td @click="setChar2('Ы')">Ы</td>
+                            <td @click="setChar2('Ь')">Ь</td>
+                            <td @click="setChar2('Э')">Э</td>
+                            <td @click="setChar2('Ю')">Ю</td>
+                            <td @click="setChar2('Я')">Я</td>
+                        </tr>
+                    </table>
+                </div>
+            </Poptip>
+
 
             <input class="ivu-input"
                    :disabled="meta && meta.disabled ? meta.disabled : false"
@@ -42,6 +152,8 @@ export default {
     data() {
         return {
             registerNumber: null,
+            visibleChar1: false,
+            visibleChar2: false,
             registerChar1: {value: 'А', label: 'А'},
             registerChar2: {value: 'А', label: 'А'},
             options: [
@@ -128,7 +240,21 @@ export default {
             } else {
                 Vue.set(this.model.form, this.model.component, null);
             }
-        }
+        },
+
+        setChar1(val) {
+            this.registerChar1.value = val;
+            this.registerChar1.label = val;
+            this.visibleChar1 = false;
+            this.registerChanged();
+        },
+
+        setChar2(val) {
+            this.registerChar2.value = val;
+            this.registerChar2.label = val;
+            this.visibleChar2 = false;
+            this.registerChanged();
+        },
     }
 }
 ;
