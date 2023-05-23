@@ -4,9 +4,9 @@
             <div slot="brand">
                 <div class="logo">
                     <a href="/console" v-if="isMicroservice">
-                        <img src="/assets/lambda/images/logo.svg" alt="Lambda Platform">
+                        <img src="/assets/lambda/images/kb-logo.svg" alt="Lambda Platform">
                     </a>
-                    <img v-else src="/assets/lambda/images/logo.svg" alt="Puzzle Visual Builder">
+                    <img v-else src="/assets/lambda/images/kb-logo.svg" alt="Puzzle Visual Builder">
 
                     <div class="language-switcher">
                         <Select size="small" v-if="has_language && languages.length >= 2" v-model="selectedLang"
