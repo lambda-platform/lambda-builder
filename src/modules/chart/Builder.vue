@@ -78,7 +78,7 @@ export default {
     created() {
         this.init();
     },
-    mounted() {},
+
     data() {
         return {
             loading: true

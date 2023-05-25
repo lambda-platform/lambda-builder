@@ -15,9 +15,19 @@ export default {
         getSeries() {
 
         },
+        sourceUrl() {
+
+            if(window.init.projectSettings){
+
+                // return window.init.projectSettings.dev_url;
+                return window.init.projectSettings.production_url;
+            } else {
+                return ""
+            }
+        },
         callData() {
             if (this.values.length >= 1) {
-                axios.post('/ve/get-data-pie', {values: this.values}).then(response => {
+                axios.post(this.sourceUrl()+'/ve/get-data-pie', {values: this.values}).then(response => {
                     this.elementData = response.data;
                     this.initChart();
                 }).catch(error => {

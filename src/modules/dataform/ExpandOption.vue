@@ -189,8 +189,7 @@
                                 </FormItem>
                                 <FormItem prop="model">
                                     <FormItem prop="label">
-                                        <Input type="text" v-model="optionForm.label" :placeholder="lang.visible_word"
-                                        />
+                                        <Input type="text" v-model="optionForm.label" :placeholder="lang.visible_word"/>
                                     </FormItem>
                                 </FormItem>
                                 <FormItem prop="model">
@@ -402,7 +401,10 @@
                                 <Col span="10">
                                     <Select v-model="optionSelectFilterWithUser.userField" filterable
                                             :placeholder="lang.Custom_column">
-                                        <Option v-for="item in user_fields" :value="item" :key="item">{{ item }}</Option>
+                                        <Option v-for="item in user_fields" :value="item" :key="item">{{
+                                                item
+                                            }}
+                                        </Option>
                                     </Select>
                                 </Col>
                                 <Col span="10">

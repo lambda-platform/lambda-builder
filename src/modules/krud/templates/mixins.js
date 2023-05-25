@@ -29,7 +29,7 @@ export default {
             isExcelUpload: false,
             excelUploadSample:null,
             excelUploadCustomUrl: null,
-            isRefresh: false,
+            isRefresh: true,
             isSave: false,
             isSearch: false,
             rowId: null,
