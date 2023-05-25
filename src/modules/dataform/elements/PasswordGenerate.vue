@@ -2,6 +2,7 @@
 
     <FormItem :label=label :prop=rule>
         <Input type="text" v-model="model.form[model.component]"
+               autocomplete="new-password"
                :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label">
             <Tooltip slot="append" :content="lang.Create_a_password" placement="left">
                 <Button @click="generatePass()" icon="ios-key-outline"></Button>

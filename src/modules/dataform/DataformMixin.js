@@ -31,7 +31,7 @@ export default {
     ],
     data() {
         return {
-            isIos:!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform),
+            isIos: !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform),
             formTitle: '',
             loadConfig: true,
             viewMode: false,
@@ -893,6 +893,8 @@ export default {
         },
 
         getOptionsByRelations(baseUrl, relations) {
+            // console.log("get options: ", relations);
+
             if (Object.keys(relations).length >= 1) {
                 axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, {relations: relations})
                     .then(({data}) => {
@@ -906,9 +908,9 @@ export default {
 
         getOptionsData(schema) {
             this.relations = this.getSelects(schema, undefined)
+
             if (window.init.microserviceSettings) {
                 if (window.init.microserviceSettings.length >= 1) {
-
                     window.init.microserviceSettings.forEach(microserviceSetting => {
                         let relations = this.getSelects(schema, microserviceSetting.project_id)
                         this.getOptionsByRelations(microserviceSetting.production_url, relations)
@@ -922,14 +924,11 @@ export default {
 
         },
         getSelectItem(item, selects) {
-
             if (item.relation.filterWithUser) {
                 if (!!item.relation.filterWithUser && item.relation.filterWithUser.constructor === Array) {
                     let userConditions = ''
                     item.relation.filterWithUser.forEach(userFilter => {
-
                         let condition = `${userFilter['tableField']} = '${window.init.user[userFilter['userField']]}'`
-
                         if (userConditions == '') {
                             userConditions = condition
                         } else {
@@ -939,11 +938,10 @@ export default {
 
                     if (item.relation.filter == '' || typeof item.relation.filter === 'undefined') {
                         item.relation.filter = userConditions
-
                         this.setSchemaByModel(item.model, 'relation', item.relation)
-
                     } else {
-                        item.relation.filter = `(${item.relation.filter}) OR (${userConditions})`
+                        // item.relation.filter = `(${item.relation.filter}) OR (${userConditions})`
+                        item.relation.filter = `(${item.relation.filter}) AND (${userConditions})`
                     }
                 } else {
                     let condition = `${item.relation.filterWithUser['tableField']} = '${window.init.user[item.relation.filterWithUser['userField']]}'`
@@ -981,7 +979,6 @@ export default {
                             } else {
                                 selects = this.getSelectItem(item, selects)
                             }
-
                         }
                     }
                 }
@@ -998,9 +995,10 @@ export default {
                             selects = {...selects, ...pre_selects}
                         }
                     }
-
                 }
             })
+            console.log('selects: ', selects);
+
             return selects
         },
 
