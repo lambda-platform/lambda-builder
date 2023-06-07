@@ -160,7 +160,7 @@ export default {
                     return true
                 }
             } else if (col.type == 'col') {
-                return col;
+                return false;
             } else {
                 return false
             }
