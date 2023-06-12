@@ -4,18 +4,15 @@
 
 
             <label>{{ lang.data_table }}</label>
-                    <Select  v-model="table_" :placeholder="lang.selectTable" clearable   @on-change="selectTable">
-                        <OptionGroup label="Table list">
-                            <Option v-for="item in tableList" :value="item" :key="item.index">
-                                {{ item }}
-                            </Option>
-                        </OptionGroup>
-                        <OptionGroup label="View list">
-                            <Option v-for="item in viewList" :value="item" :key="item.index">
-                                {{ item }}
-                            </Option>
-                        </OptionGroup>
-                    </Select>
+
+            <multiselect
+
+                v-model='table_'
+                :placeholder='lang.selectTable'
+                :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
+                @select="selectTable"
+                group-values="list" group-label="type" :group-select="true"
+            ></multiselect>
             <div class="source-fields">
                 <draggable v-model="fields" :options="{group:{name:'element', pull:'clone', put:false}, sort: false }">
                     <Button v-for="(field, index_) in fields" :key="index_" class="data-element" @click="selected_field = field">
@@ -146,6 +143,7 @@
 import draggable from "vuedraggable";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import {getTableView} from "../../../utils/index";
 
 export default {
     methods: {
@@ -202,9 +200,7 @@ export default {
     },
     data() {
         return {
-            tableList:window.init.dbSchema.tableList,
             tableMeta:window.init.dbSchema.tableMeta,
-            viewList:window.init.dbSchema.viewList,
             table_: "",
             selected_field: {}
         };
@@ -219,6 +215,12 @@ export default {
         draggable
     },
     computed: {
+        tableList() {
+            return getTableView("table")
+        },
+        viewList() {
+            return getTableView("view")
+        },
         ...mapGetters({
             table: "table",
             fields: "fields"

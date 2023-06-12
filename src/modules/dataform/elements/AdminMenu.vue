@@ -142,13 +142,19 @@ export default {
         setIcon(icon, isSVG, isClass) {
             if (isClass) {
                 Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
+                if (this.iconMenuIndex.length >= 2) {
+                    let itemIndex = this.iconMenuIndex[0];
+                    this.iconMenuIndex.splice(0, 1);
+                    this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG, isClass);
+                }
+
                 return false;
             }
 
             if (this.iconMenuIndex.length >= 2) {
                 let itemIndex = this.iconMenuIndex[0];
                 this.iconMenuIndex.splice(0, 1);
-                this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG);
+                this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG, isClass);
             } else {
                 if (isSVG) {
                     Vue.set(this.items[this.iconMenuIndex[0]], "svg", icon);
@@ -165,13 +171,17 @@ export default {
         },
 
 
-        setIconFind(item, childIndexs, icon, isSVG) {
+        setIconFind(item, childIndexs, icon, isSVG, isClass) {
+            if (isClass) {
+                Vue.set(item.children[childIndexs[0]], "icon", icon);
+                return item;
+            }
+
             if (childIndexs.length >= 2) {
                 let itemIndex = childIndexs[0];
                 childIndexs.splice(0, 1);
                 item.children[itemIndex] = this.setIconFind(item.children[itemIndex], childIndexs, icon, isSVG);
             } else {
-
                 if (isSVG) {
                     Vue.set(item.children[childIndexs[0]], "svg", icon);
                     Vue.set(item.children[childIndexs[0]], "icon", null);
@@ -179,8 +189,6 @@ export default {
                     Vue.set(item.children[childIndexs[0]], "svg", null);
                     Vue.set(item.children[childIndexs[0]], "icon", icon);
                 }
-
-
                 this.iconSelector = false;
                 this.iconMenuIndex = null;
                 this.iconSearch = "";

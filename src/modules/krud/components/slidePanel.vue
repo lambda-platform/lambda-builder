@@ -309,6 +309,7 @@ section {
     right: 12px;
     cursor: pointer;
     font-size: 24px;
+    z-index: 10;
 }
 
 .action-extra.default {

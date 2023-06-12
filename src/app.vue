@@ -265,7 +265,12 @@ export default {
 
     beforeMount() {
         if (this.selectedLang !== "mn_MN") {
-            loadLanguageAsync(this.selectedLang);
+            if(this.selectedLang === "mn_MN" || this.selectedLang === "en_US"){
+                loadLanguageAsync(this.selectedLang);
+            } else {
+                loadLanguageAsync("mn_MN");
+            }
+
         }
     },
     methods: {

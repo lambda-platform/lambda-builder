@@ -3,11 +3,12 @@
         <FormItem :label="lang.currentPassword" prop='current_password'
                   v-if="meta.passwordOption.edit_with_old_password">
             <Input type="password" v-model="model.form['current_password']"
+                   autocomplete="new-password"
                    :placeholder="lang.currentPassword"/>
         </FormItem>
         <FormItem :label="lang._pass" :prop=rule>
             <Input :type="passwordGenerated ? 'text': 'password'" v-model="model.form[model.component]"
-                   autocomplete="off"
+                   autocomplete="new-password"
                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label">
                 <Tooltip slot="append"
                          :content="lang.Create_a_password"

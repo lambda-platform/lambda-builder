@@ -1,5 +1,5 @@
 <template>
-    <section class="offcanvas-template-aside">
+    <section class="canvas-aside">
         <div class="crud-page">
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">

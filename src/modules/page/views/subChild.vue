@@ -11,6 +11,7 @@
 
             <user-control slot="right"></user-control>
         </krud>
+
         <div class="material" v-if="pageType == 'iframe'">
             <section class="offcanvas-template">
                 <div class="crud-page">
@@ -60,8 +61,8 @@ export default {
                     r: false,
                     u: false,
                     d: false,
-                    gridDeleteConditionJS:"",
-                    gridEditConditionJS:"",
+                    gridDeleteConditionJS: "",
+                    gridEditConditionJS: "",
                 },
             },
             iframeUrl: '',
@@ -97,7 +98,7 @@ export default {
                                 this.property.projects_id = this.cruds[crudIndex].projects_id;
                                 this.property.edit_id = this.cruds[crudIndex].edit_id;
                                 this.property.template = this.cruds[crudIndex].template;
-                                if(this.cruds[crudIndex].actions){
+                                if (this.cruds[crudIndex].actions) {
                                     this.property.actions = JSON.parse(this.cruds[crudIndex].actions);
                                 }
                                 this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;

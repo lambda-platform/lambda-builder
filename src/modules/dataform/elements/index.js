@@ -147,7 +147,7 @@ export const elements = [
     },
     {
         element: "Register",
-        component: () => import(/* webpackChunkName: "form-field-Register" */'./Register.vue'),
+        component: () => import('./Register.vue'),
     },
     {
         element: "ISelect",
