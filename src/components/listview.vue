@@ -32,7 +32,8 @@
             </div>
         </div>
 
-        <Row v-else :gutter="16" class="pz-list" v-slimscroll="{height:'100vh-30',size:7,alwaysVisible: true,wheelStep:7,color:'#2C3A47'}">
+        <Row v-else :gutter="16" class="pz-list"
+             v-slimscroll="{height:'100vh-30',size:7,alwaysVisible: true,wheelStep:7,color:'#2C3A47'}">
             <Col :xs="24" :sm="12" :md="8" :lg="6" v-for="item in filteredList" :key="item.index">
                 <div class="pz-list-item">
                     <div class="pz-list-item-body">
@@ -40,11 +41,19 @@
                         <small>{{ item.created_at }}</small>
                     </div>
                     <div class="pz-list-item-control">
+
+                        <a href="javascript:void(0);" class="btn-preview"
+                           style="margin-right: 5px; font-size: 10px"
+                           v-if="type == 'form' || type == 'grid' || type == 'datasource'">
+                            {{ item.id }}
+                        </a>
+
                         <router-link :to="`${prefix ? prefix : ''}/${type}/preview/${item.id}`" class="btn-preview"
                                      v-if="preview != 'hidden'">
                             <Icon type="ios-eye"></Icon>
                         </router-link>&nbsp;
-                        <a href="javascript:void(0);" class="btn-preview" v-if="type == 'form' || type == 'grid' || type == 'datasource'"
+                        <a href="javascript:void(0);" class="btn-preview"
+                           v-if="type == 'form' || type == 'grid' || type == 'datasource'"
                            @click="duplicate(item.id, type)">
                             <Icon type="md-copy"></Icon>
                         </a>
@@ -72,12 +81,14 @@
             <label>{{ lang1.name }}</label>
             <Input v-model="duplicateData.name" :placeholder="lang1.name" style="width: 100%"/>
             <label v-if="type === 'form' || type === 'grid'">{{ lang1.table }} (DB table)</label>
-            <Select v-if="type === 'form'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
+            <Select v-if="type === 'form'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable"
+                    clearable
                     style="width: 100%"
                     filterable>
                 <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
             </Select>
-            <Select v-if="type === 'grid'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable" clearable
+            <Select v-if="type === 'grid'" v-model="duplicateData.schema.model" :placeholder="lang1.selectTable"
+                    clearable
                     filterable style="width: 100%">
                 <OptionGroup :label="lang.table_list">
                     <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}</Option>
@@ -151,7 +162,10 @@ export default {
         getData() {
             axios.get(this.$props.src).then(({data}) => {
                 this.loading = false;
-                this.filteredList = this.listData = data.data;
+                this.listData = data.data.sort((s1, s2) => {
+                    return s2.id - s1.id;
+                });
+                this.filteredList = this.listData.map(o => ({...o}));
             });
         },
 
@@ -242,15 +256,17 @@ export default {
             let vm = this;
             let q = $event.target.value;
             if (q != "") {
-                vm.filteredList = vm.listData.filter(
-                    item =>
-                        item.name
+                let filtered = vm.listData.filter(
+                    (f) => {
+                        f.name
                             .toString()
                             .toLowerCase()
                             .indexOf(q.toLowerCase()) >= 0
+                    }
                 );
+                vm.filteredList = filtered.map(o => ({...o}));
             } else {
-                vm.filteredList = vm.listData;
+                vm.filteredList = vm.listData.map(o => ({...o}));
             }
         }
     }
