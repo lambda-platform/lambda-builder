@@ -159,9 +159,11 @@ export default {
                 } else {
                     return true
                 }
-            } else if (col.type == 'col') {
-                return col;
-            } else {
+            }
+            // else if (col.type == 'col') {
+            //     return col;
+            // }
+            else {
                 return false
             }
         },
