@@ -75,7 +75,8 @@
 
                                 <div
                                     :class="col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''">
-                                    <legend v-if="col.name != ''">{{ col.name }}
+                                    <legend>
+                                        <div class="fieldset-title">{{ col.name }}</div>
                                     <Row v-for='srow in col.children' :key='srow.index'>
                                         <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
                                              :sm='24' :md='scol.span.md' :lg='scol.span.lg'>

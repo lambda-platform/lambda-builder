@@ -255,18 +255,14 @@ export default {
         filterList($event) {
             let vm = this;
             let q = $event.target.value;
+            console.log(q);
             if (q != "") {
                 let filtered = vm.listData.filter(
-                    (f) => {
-                        f.name
-                            .toString()
-                            .toLowerCase()
-                            .indexOf(q.toLowerCase()) >= 0
-                    }
+                    f => f.name.toLowerCase().includes(q.toLowerCase())
                 );
-                vm.filteredList = filtered.map(o => ({...o}));
+                vm.filteredList = filtered;
             } else {
-                vm.filteredList = vm.listData.map(o => ({...o}));
+                vm.filteredList = vm.listData;
             }
         }
     }

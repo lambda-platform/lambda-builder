@@ -578,10 +578,10 @@ export default {
                 (gridSchema.actions.length > 0 ||
                     (this.$props.actions && this.$props.actions.length > 0))
             ) {
-                let width = gridSchema.actions.length * 50;
+                let width = gridSchema.actions.length * 100;
 
                 if (this.$props.actions) {
-                    width += this.$props.actions.length * 50;
+                    width += this.$props.actions.length * 100;
                 }
 
                 if (this.header != null) {
@@ -601,6 +601,7 @@ export default {
                 let actions = {
                     headerName: "...",
                     width: width,
+                    resizable: false,
                     field: this.identity ? this.identity : 'id',
                     suppressMenu: true,
                     sortable: false,
@@ -1751,8 +1752,6 @@ export default {
                 this.filterData(1);
             } else {
                 let filters = event.api.getFilterModel();
-                console.log(filters);
-
                 for (let key in filters) {
                     if (Object.prototype.hasOwnProperty.call(filters, key)) {
                         // console.log(filters[key]);
