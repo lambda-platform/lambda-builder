@@ -279,11 +279,17 @@
             legend {
                 width:100%;
                 margin-top: -20px;
-                background-color: white;
+                //background-color: white;
                 padding: 0 10px;
                 font-size: 12px;
                 font-weight: 600;
                 margin-bottom: 10px;
+                .fieldset-title{
+                    background: white;
+                    width: fit-content;
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
             }
         }
 

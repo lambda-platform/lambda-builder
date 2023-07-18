@@ -733,7 +733,7 @@ export default {
             setIdentity(this.identity, null)
             this.schema.forEach(item => {
                 if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.model}`] != 'undefined') {
-                    console.log(this.$refs[`sf${item.model}`]);
+                   // console.log(this.$refs[`sf${item.model}`]);
                     this.$refs[`sf${item.model}`][0].reset()
                 }
                 //if (item.default != null && !this.editMode) {
@@ -998,7 +998,7 @@ export default {
                     }
                 }
             })
-            console.log('selects: ', selects);
+           // console.log('selects: ', selects);
 
             return selects
         },
