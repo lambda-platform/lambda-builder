@@ -63,14 +63,16 @@
             </div>
 
             <div class="dg-footer">
-                <div class="dg-info">
+                <slot name="dg-footer-start"></slot>
+                <div class="dg-info" v-if="!hideInfo">
                     {{ lang.total }} : {{ info.total }}
                     <span v-if="aggregations.forumlaResult != ''">| {{ aggregations.forumlaResult }}</span>
                 </div>
-
+                <slot name="dg-footer-mid"></slot>
                 <Page v-if="!this.isClient" size="small" :current="query.currentPage"
                       :page-size="query.paginate"
-                      :total="info.total" @on-change="changePage"></Page>
+                      :total="info.total" @on-change="changePage" />
+                <slot name="dg-footer-end"></slot>
             </div>
         </div>
 
@@ -202,7 +204,8 @@ export default {
         "page_id",
         "actionvisibility",
         "gridSelector",
-        "url"
+        "url",
+        "hideInfo",
     ],
     computed: {
         // ...mapGetters({

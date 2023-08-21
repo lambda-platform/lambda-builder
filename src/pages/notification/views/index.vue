@@ -1,13 +1,13 @@
 <template>
     <section class="page">
-        <krud class="material" v-if="!showConfigError" :template="property.template" :property="property" >
+        <krud class="material" v-if="!showConfigError" :template="property.template" :property="property">
             <template slot="nav">
                 <slot name="nav"></slot>
             </template>
             <user-control slot="right"></user-control>
         </krud>
         <div style="padding: 50px" v-else>
-            <Alert type="warning" >lambda.json дээр firebase-н тохиргоог хийгээгүй байна !!!</Alert>
+            <Alert type="warning">lambda.json дээр firebase-н тохиргоог хийгээгүй байна !!!</Alert>
         </div>
     </section>
 </template>
@@ -27,16 +27,14 @@ export default {
             //     form: 'notification_target_form',
             //     actions: ''
             // },
-            showConfigError:true
+            showConfigError: false
         };
     },
-    methods: {
-
-    },
+    methods: {},
     beforeMount() {
-       if(window.lambda.notify.firebaseConfig.apiKey && window.lambda.notify.firebaseConfig.appId){
-           this.showConfigError = false;
-       }
+        if (window.lambda.notify.firebaseConfig.apiKey && window.lambda.notify.firebaseConfig.appId) {
+            this.showConfigError = true;
+        }
     },
     computed: {
         lang() {
@@ -46,11 +44,11 @@ export default {
                 return obj;
             }, {});
         },
+
         property() {
-            return{
+            return {
                 template: "canvas",
                 title: this.lang.target_statement,
-                //title: this._title,
                 grid: 'notification_target_grid',
                 form: 'notification_target_form',
                 actions: ''
