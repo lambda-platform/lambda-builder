@@ -29,7 +29,7 @@
                     <i v-if="item.icon" :class="item.icon"></i>
                 </a>
             </Tooltip>
-            <a href="item.url" v-if="item.link_to == 'link' && !hasTooltip" target="_blank">
+            <a :href="item.url" v-if="item.link_to == 'link' && !hasTooltip" :target="item.target">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
             </a>
