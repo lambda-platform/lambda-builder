@@ -13,7 +13,6 @@
 
         <div class="excel-import-body">
             <div class="excel-import-btns">
-
                 <Upload action="/lambda/krud/upload"
                         v-model="excelForm.excelFile"
                         :on-success="success"
@@ -24,11 +23,12 @@
                         <span>Файл оруулах</span>
                     </div>
                 </Upload>
-
-                <Button icon="i-icon ti-printer" type="default"
-                        @click="excelImport">Хадгалах
+                &nbsp;
+                <Button icon="i-icon ti-upload" type="success" ghost
+                        @click="excelImport">Илгээх
                 </Button>
             </div>
+
             <div class="excel_upload_loading notif" v-if="isLoading" style="padding:20px">
                 Ачаалж байна түр хүлээнэ үү ...
             </div>
@@ -39,17 +39,23 @@
     justify-content: center;
     text-transform: uppercase;
     padding:20px;
-    color: #ccc;">
-                    Эксел файлаа оруулаад өгөгдөл хадгалах товчийг дарна уу
+    text-align: center;
+    color: #ababab;">
+                    Эксел файлаа оруулаад өгөгдөл хадгалах товчийг дарна уу <br/>
+                    /Дэмжих өргөтгөл .xlxs, .odt, .csv/
                 </div>
                 <div v-else-if="summary==1" class="notif" style="height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
     color: #149755;">
-                    Амжилттай хадгалагдлаа, Хүснэгтээ дахин ачаалж мэдээллээ шалгана уу
-
+                    <div>
+                        Амжилттай хадгалагдлаа, Хүснэгтээ дахин ачаалж мэдээллээ шалгана уу
+                    </div>
+                    <br />
+                    <div v-if="msg != null">{{ msg }}</div>
                 </div>
                 <div v-else style="padding: 20px">
                     <div>
@@ -58,7 +64,7 @@
                     <div style="border-top:1px dotted #eee; padding: 20px; overflow-y: auto">
                         <ul>
                             <li v-for="sum in summary" :key="sum">
-                                {{ sum.row }} - {{ sum.error }}
+                                {{ sum.row }}-р мөр: {{ sum.error }}
                             </li>
                         </ul>
                     </div>
@@ -81,7 +87,8 @@ export default {
                 excelFile: null,
                 schemaID: this.schemaID
             },
-            summary: null
+            summary: null,
+            msg: null
         }
     },
 
@@ -98,11 +105,9 @@ export default {
         excelImport() {
             this.isLoading = true;
             axios.post('/lambda/krud/import-excel', this.excelForm).then(res => {
-                console.log("excelImport:");
-                console.log(res.data);
-
                 if (res.data.status) {
                     this.summary = 1;
+                    this.msg = res.data.data;
                 } else {
                     this.summary = res.data.data;
                 }

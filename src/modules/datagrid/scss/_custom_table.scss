@@ -125,8 +125,9 @@
             background: #f3f4f5;
         }
 
+
         .ag-body-viewport {
-            overflow-x: hidden;
+            overflow-x: hidden !important;
             //.ag-pinned-left-cols-container, .ag-pinned-right-cols-container {
             //    display: none !important;
             //    height: 0 !important;
@@ -140,6 +141,7 @@
                 overflow-x: hidden !important;
                 height: 100% !important;
                 //border: solid 1px red;
+                width: calc(100% + 10px) !important;
 
                 .ag-center-cols-container {
                     overflow-x: hidden;
@@ -202,4 +204,9 @@
 
 .dg-html {
     width: 100%;
+}
+
+.ag-center-cols-viewport{
+    width: calc(100% + 8px) !important;
+    border-bottom: solid 1px #dedede !important;
 }
