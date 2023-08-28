@@ -176,6 +176,7 @@
                                                       :label='lang.field + (index+1)'>
                                                 <Row :gutter='8' :label='80'>
                                                     <Col span='10'>
+                                                        <div style="display: flex; flex-direction: column; align-items: center">
                                                         <Select v-model='target.field'
                                                                 :placeholder='lang.field'
                                                                 v-if="formulaForm.form == 'main'">
@@ -185,6 +186,13 @@
                                                                 }}
                                                             </Option>
                                                         </Select>
+                                                            <span  v-if="formulaForm.form == 'main'">
+                                                        or </span>
+                                                        <Input type='text' v-model='target.section'
+                                                               v-if="formulaForm.form == 'main'"
+                                                               placeholder='Section Id'/>
+                                                        </div>
+                                                        <div style="display: flex; flex-direction: column; align-items: center;">
                                                         <Select v-model='target.field'
                                                                 :placeholder='lang.field'
                                                                 v-for="(f, f_index) in dataform.schema.filter(ff=>ff.formType === 'SubForm' && ff.model === formulaForm.form && formulaForm.form !== 'main')"
@@ -195,6 +203,7 @@
                                                                 }}
                                                             </Option>
                                                         </Select>
+                                                        </div>
                                                     </Col>
 
                                                     <Col span='10'>
@@ -927,7 +936,7 @@ export default {
 
     watch: {
         reCallDataAw() {
-            console.log('watch ajilj bn')
+
             //this.data();
         }
     },
@@ -998,6 +1007,7 @@ export default {
         addFormulaTarget() {
             this.formulaForm.targets.push({
                 field: '',
+                section:'',
                 prop: ''
             })
         },

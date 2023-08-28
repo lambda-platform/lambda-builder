@@ -225,7 +225,8 @@ export default {
         afterChange(model, val, oldValue) {
             doTrigger(model, val, this.model, this.schema, this.$refs, this.$Notice, this.editMode)
             if (this.do_render) {
-                if (val != oldValue) {
+                if (val != oldValue)
+                {
                     doFormula(this.formula, model, this.model, this.schema, this.rule, false)
                 }
             }
@@ -289,7 +290,7 @@ export default {
                 this.step = formSchema.step;
             }
 
-            this.ui = formSchema.ui
+            this.ui = formSchema.ui;
             if (formSchema.save_btn_text) {
                 this.save_btn_text = formSchema.save_btn_text
             }

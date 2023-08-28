@@ -11,19 +11,19 @@
                     <div class='view-port-switcher'>
                         <a href='javascript:void(0)' :class="`${mode.type} ${mode.type == 'xs' ? 'active' :''}`"
                            @click="setMode('xs', langMoqup.phone)">
-                            <Icon type='md-phone-portrait' />
+                            <Icon type='md-phone-portrait'/>
                         </a>
                         <a href='javascript:void(0)' :class="`${mode.type} ${mode.type == 'sm' ? 'active' :''}`"
                            @click="setMode('sm', langMoqup.tablet)">
-                            <Icon type='md-tablet-portrait' />
+                            <Icon type='md-tablet-portrait'/>
                         </a>
                         <a href='javascript:void(0)' :class="`${mode.type} ${mode.type == 'md' ? 'active' :''}`"
                            @click="setMode('md', langMoqup.computer)">
-                            <Icon type='md-laptop' />
+                            <Icon type='md-laptop'/>
                         </a>
                         <a href='javascript:void(0)' :class="`${mode.type} ${mode.type == 'lg' ? 'active' :''}`"
                            @click="setMode('lg', langMoqup.bigComputer)">
-                            <Icon type='md-browsers' />
+                            <Icon type='md-browsers'/>
                         </a>
                     </div>
                 </div>
@@ -48,23 +48,23 @@
 
                                             <span class='tool' @click='addSection(row.id, 1)'>
                                                 <Tooltip :content='lang.section_add'>
-                                                    <Icon type='md-menu' />
+                                                    <Icon type='md-menu'/>
                                                 </Tooltip>
                                             </span>
                                             <span class='tool' @click='addCol(row.id)'>
                                                 <Tooltip :content='lang.add_column'>
-                                                    <Icon type='md-add' />
+                                                    <Icon type='md-add'/>
                                                 </Tooltip>
                                             </span>
 
                                             <span class='tool' @click='deleteFromSchema(row.id)'>
                                                 <Tooltip :content='lang._delete'>
-                                                    <Icon type='md-close' />
+                                                    <Icon type='md-close'/>
                                                 </Tooltip>
                                             </span>
                                             <span class='row-drag-handler tool'>
                                                 <Tooltip :content='lang._move'>
-                                                    <Icon type='md-move' />
+                                                    <Icon type='md-move'/>
                                                 </Tooltip>
                                             </span>
                                         </div>
@@ -83,10 +83,20 @@
                                                      v-if="col.type == 'section'">
                                                     <div class='pz-col easing'>
                                                         <div class='pz-col-control'>
+                                                            <Input type='text' v-model='col.id' size='small'
+                                                                   placeholder='Section Id'
+                                                                   autocomplete="off"
+                                                                   disabled
+                                                                   class='pz-col-input'/>
                                                             <Input type='text' v-model='col.name' size='small'
                                                                    :placeholder='lang.Get_name'
                                                                    autocomplete="off"
-                                                                   class='pz-col-input' />
+                                                                   class='pz-col-input'/>
+                                                            <Checkbox class='pz-col-input'
+                                                                      v-model="col.visibleModelValue">Нуух
+                                                            </Checkbox>
+
+
                                                             <div class='pz-col-control-items'>
                                                                 <Poptip placement='bottom-end' size='small'>
                                                                     <!-- <a href="javascript:void(0)" @click="addSectionCol(srow.id)"> -->
@@ -94,7 +104,7 @@
                                                                   <Badge :count='col.visibleUserRoles.length'
                                                                          v-if='col.visibleUserRoles'
                                                                          class-name='badge-user-roles'></Badge>
-                                                                                <Icon type='md-person-add' />
+                                                                                <Icon type='md-person-add'/>
                                                                             </span>
                                                                     <div class='auto-col' slot='content'>
                                                                         <Select v-model='col.visibleUserRoles' multiple
@@ -108,13 +118,13 @@
                                                                     </div>
                                                                 </Poptip>
                                                                 <span class='tool' @click='addRow(col.id)'>
-                                                                    <Icon type='md-add' />
+                                                                    <Icon type='md-add'/>
                                                                 </span>
                                                                 <span class='tool' @click='deleteFromSchema(col.id)'>
-                                                                    <Icon type='md-close' />
+                                                                    <Icon type='md-close'/>
                                                                 </span>
                                                                 <span class='scol-drag-handler tool'>
-                                                                    <Icon type='md-move' />
+                                                                    <Icon type='md-move'/>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -132,7 +142,7 @@
                                                                         <Poptip placement='left' size='small'>
                                                                             <!-- <a href="javascript:void(0)" @click="addSectionCol(srow.id)"> -->
                                                                             <span class='tool'>
-                                                                                <Icon type='md-menu' />
+                                                                                <Icon type='md-menu'/>
                                                                             </span>
                                                                             <div class='auto-col' slot='content'>
                                                                                 <a v-for='options in colOptions'
@@ -149,11 +159,11 @@
 
                                                                         <span class='tool'
                                                                               @click='deleteFromSchema(srow.id)'>
-                                                                            <Icon type='md-close' />
+                                                                            <Icon type='md-close'/>
                                                                         </span>
 
                                                                         <span class='srow-drag-handler tool'>
-                                                                            <Icon type='md-move' />
+                                                                            <Icon type='md-move'/>
                                                                         </span>
                                                                     </div>
                                                                     <Col v-for='(scol, scol_index) in srow.children'
@@ -164,16 +174,16 @@
                                                                             <div class='pz-col-control'>
                                                                                 <Input type='text' v-model='scol.id'
                                                                                        size='small'
-                                                                                       class='pz-col-input' />
+                                                                                       class='pz-col-input'/>
                                                                                 <Input type='text' v-model='scol.name'
                                                                                        size='small'
                                                                                        :placeholder='lang.Get_name'
                                                                                        autocomplete="off"
-                                                                                       class='pz-col-input' />
+                                                                                       class='pz-col-input'/>
                                                                                 <div class='pz-col-control-items'>
                                                                                     <a href='javascript:void(0)'
                                                                                        @click='deleteFromSchema(scol.id)'>
-                                                                                        <Icon type='md-close' />
+                                                                                        <Icon type='md-close'/>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -213,20 +223,22 @@
                                                     </div>
                                                 </Col>
                                                 <!--  Standart column -->
-                                                <Col :span='col.span[mode.type]'     class="drag-able-column" v-if="col.type == 'col'">
+                                                <Col :span='col.span[mode.type]' class="drag-able-column"
+                                                     v-if="col.type == 'col'">
                                                     <div class='pz-col easing'>
                                                         <div class='pz-col-control'>
                                                             <Input type='text' v-model='col.id' size='small'
-                                                                   class='pz-col-input' />
+                                                                   class='pz-col-input'/>
                                                             <Input type='text' v-model='col.name' size='small'
-                                                                   class='pz-col-input' :placeholder='lang.Get_name' autocomplete="off" />
+                                                                   class='pz-col-input' :placeholder='lang.Get_name'
+                                                                   autocomplete="off"/>
 
                                                             <div class='pz-col-control-items'>
                                                         <span class='tool' @click='deleteFromSchema(col.id)'>
-                                                            <Icon type='md-close' />
+                                                            <Icon type='md-close'/>
                                                         </span>
                                                                 <span class='scol-drag-handler tool'>
-                                                            <Icon type='md-move' />
+                                                            <Icon type='md-move'/>
                                                         </span>
                                                             </div>
                                                         </div>
@@ -306,11 +318,11 @@
     </div>
 </template>
 <script>
-import { element } from './elements'
+import {element} from './elements'
 import Grid from './elements/subform/Grid.vue'
-import { idGenerator } from './utils/methods'
-import { Container, Draggable } from 'vue-smooth-dnd'
-import { applyDrag } from './utils/helpers'
+import {idGenerator} from './utils/methods'
+import {Container, Draggable} from 'vue-smooth-dnd'
+import {applyDrag} from './utils/helpers'
 
 export default {
     props: ['schema', 'ui', 'isDisabled', 'meta', 'schemaID', 'identity', 'use2ColumnLayout'],
@@ -360,8 +372,7 @@ export default {
         }
     },
     mounted() {
-        // console.log('Форм угсрах');
-        //  console.log(this.$props.schema);
+
     },
     computed: {
         lang() {
@@ -505,6 +516,7 @@ export default {
         addSection(parentId, type) {
             let rowItem = {
                 type: 'row',
+                visibleModelValue: 0,
                 id: this.idGenerator('row'),
                 children: [],
                 visibleUserRoles: []
@@ -532,6 +544,7 @@ export default {
             cols.forEach(item => {
                 let colItem = {
                     type: 'col',
+                    visibleModelValue: 0,
                     id: this.idGenerator('col'),
                     span: {
                         xs: item,
@@ -568,7 +581,7 @@ export default {
         handleResize(e, id) {
             this.currentDom = e.target.parentElement
             this.findElId = id
-            console.log(this.findElId)
+
             e.target.parentElement.classList.remove('easing')
             window.addEventListener('mousemove', this.resize, {
                 passive: true
@@ -608,7 +621,7 @@ export default {
                         currentWidth >= colStandartW - 40 &&
                         currentWidth <= colStandartW + 40
                     ) {
-                        console.log(vm.findElId)
+
                         let el = this.findInTree(vm.findElId, vm.ui.schema)
                         el.span[vm.$data.mode.type] = i * 2
                         parent.style.width = '100%'

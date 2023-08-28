@@ -36,7 +36,6 @@ export function doFormula(formulas, model, model_, schema_, rule_, subFormModelN
 function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
 
     let use_formula = false;
-
     //old one i dont know just commented
     // if (formula['form']) {
     //     if (formula['form'] == 'main')
@@ -62,21 +61,33 @@ function doFormula2(formula, model, model_, schema_, rule_, subFormModelName) {
             if (pre_formula) {
                 let calculated = evil(pre_formula);
                 formula.targets.map(target => {
-                    let schema_index = getSchemaIndex(schema_, target.field);
-                    if (schema_index >= 0) {
-                        if (target.prop == 'value') {
-                            model_[target.field] = calculated;
-                        } else {
-                            if (target.prop == 'hidden') {
-                                if (rule_) {
-                                    if (rule_[target.field]) {
-                                        if (rule_[target.field].length > 0 && rule_[target.field][0].hasOwnProperty("required"))
-                                            rule_[target.field][0].required = calculated ? false : true;
+                    //for filed
+                    if(target.field) {
+                        let schema_index = getSchemaIndex(schema_, target.field);
+                        if (schema_index >= 0) {
+                            if (target.prop == 'value') {
+                                model_[target.field] = calculated;
+                            } else {
+                                if (target.prop == 'hidden') {
+                                    if (rule_) {
+                                        if (rule_[target.field]) {
+                                            if (rule_[target.field].length > 0 && rule_[target.field][0].hasOwnProperty("required"))
+                                                rule_[target.field][0].required = calculated ? false : true;
+                                        }
                                     }
                                 }
+                                // schema_[schema_index][target.prop] = calculated;
+                                Vue.set(schema_[schema_index], target.prop, calculated)
                             }
-                            // schema_[schema_index][target.prop] = calculated;
-                            Vue.set(schema_[schema_index], target.prop, calculated)
+                        }
+                    }
+                    //for section
+                    if(target.section) {
+                        let element = document.getElementById(target.section);
+                        element.classList.remove("lbd-dataform-section-hide");
+                        if (target.prop == 'hidden' && calculated) {
+                            let element = document.getElementById(target.section);
+                            element.classList.add("lbd-dataform-section-hide");
                         }
                     }
                 })

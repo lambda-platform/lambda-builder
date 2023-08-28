@@ -73,10 +73,10 @@
                                  :key='col.index' :xs='col.span.xs'
                                  :sm='col.span.sm' :md='col.span.md' :lg='col.span.lg'>
 
-                                <div
-                                    :class="col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''">
+                                <div :id='col.id'
+                                    :class="`${col.visibleModelValue? 'lbd-dataform-section-hide':''} ${col.name !== '' && col.name !== null && col.name !== undefined ? 'fieldset' : ''}`">
                                     <legend>
-                                        <div class="fieldset-title">{{ col.name }}</div>
+                                        <div class="fieldset-title"> {{ col.name }}</div>
                                     <Row v-for='srow in col.children' :key='srow.index'>
                                         <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
                                              :sm='24' :md='scol.span.md' :lg='scol.span.lg'>
@@ -235,7 +235,7 @@
                     </Button>
                     <Button type='info' :loading='asyncMode' @click="handleSubmit(meta.model +'-'+ schemaID)">
                     <span v-if='!asyncMode'>
-                        {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
+                        {{ save_btn_text != '' ? save_btn_text : lang.save }}
                     </span>
                         <span v-else>
                         {{ lang.pleaseWait }}
