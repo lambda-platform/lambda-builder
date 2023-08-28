@@ -41,7 +41,7 @@ export const elementList = [
     },
     {
         element: "Custom",
-        component: () => import(/* webpackChunkName: "grid-Custom" */'./Custom.vue'),
+        component: () => import('./Custom.vue'),
     },
     {
         element: "DateRange",
