@@ -218,6 +218,33 @@ let routes = [{
             },
         ]
     },
+
+    {
+        path: '/locale',
+        component: () => import('./pages/locale/index.vue'),
+        children: [
+            {
+                path: '',
+                redirect: '/locale/language'
+            },
+            {
+                name: 'process.list',
+                path: 'language',
+                component: () => import('./pages/locale/language.vue'),
+            },
+            {
+                name: 'process.list',
+                path: 'group',
+                component: () => import('./pages/locale/group.vue'),
+            },
+            {
+                name: 'process.list',
+                path: 'translation',
+                component: () => import('./pages/locale/translation.vue'),
+            },
+        ]
+    },
+
     {
         path: '/config',
         component: () => import(/* webpackChunkName: "project-index" */ './pages/microservice/Settings.vue')

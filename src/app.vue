@@ -138,6 +138,15 @@
                     </router-link>
                 </li>
                 <li class="divider"></li>
+                <li class="sub-title">
+                    <span>ХЭЛНИЙ ТОХИРГОО</span>
+                </li>
+                <li v-if="accessAdminModule">
+                    <router-link to="/locale">
+                        <i class="ti-text"></i>
+                        <span>Хэлний тохиргоо</span>
+                    </router-link>
+                </li>
             </ul>
             <div slot="aside-bottom">
                 <ul>
