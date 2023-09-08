@@ -5,7 +5,8 @@
                 <div class="card sub-nav-list">
                     <h3 class="card-header">{{ pageTitle }}</h3>
                     <ul class="card-body">
-                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)" :class="item.link_to == 'divider' ? 'nav-divider': ''">
+                        <li v-for="(item, index) in subMenu" :key="index" v-if="can(item)"
+                            :class="item.link_to == 'divider' ? 'nav-divider': ''">
                            <span v-if="item.children.length <= 0">
                                 <router-link :to="`/p/${$route.params.menu_id}/${item.id}`"
                                              v-if="item.link_to != 'link' && item.link_to != 'router-link' && item.link_to != 'divider'">
@@ -127,6 +128,7 @@ export default {
             showSub: false,
             menu: window.init.menu,
             cruds: window.init.cruds,
+            lambda: window.lambda,
             permissions: window.init.permissions.permissions,
             pageTitle: '',
             subMenuId: '0',
@@ -189,12 +191,20 @@ export default {
         getTitle(item) {
             if (item.link_to == 'crud') {
                 let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
-                if (crudIndex >= 0)
+                if (crudIndex >= 0) {
+                    if (lambda.has_language) {
+                        return item.key ? this.$t(item.key) : this.cruds[crudIndex].title;
+                    }
                     return this.cruds[crudIndex].title;
-                else
+                } else {
                     return ''
-            } else
+                }
+            } else {
+                if (lambda.has_language) {
+                    return item.key ? this.$t(item.key) : item.title
+                }
                 return item.title;
+            }
         },
 
         getPage() {

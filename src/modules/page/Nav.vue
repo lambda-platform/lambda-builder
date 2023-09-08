@@ -7,7 +7,8 @@
                     <i v-if="item.icon" :class="item.icon"></i>
                 </router-link>
             </Tooltip>
-            <router-link :to="`/p/${item.id}`" v-if="item.link_to != 'link' && item.link_to != 'router-link' && !hasTooltip">
+            <router-link :to="`/p/${item.id}`"
+                         v-if="item.link_to != 'link' && item.link_to != 'router-link' && !hasTooltip">
                 <i v-if="item.icon" :class="item.icon"></i>
                 <span v-html="getTitle(item)"></span>
             </router-link>
@@ -47,6 +48,7 @@ export default {
             cruds: window.init.cruds,
             permissions: window.init.permissions.permissions,
             extra: window.init.permissions.extra,
+            lambda: window.lambda
         };
     },
     created() {
@@ -63,14 +65,23 @@ export default {
         },
 
         getTitle(item) {
-            if (item.link_to == 'crud') {
-                let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
-                if (crudIndex >= 0)
-                    return this.cruds[crudIndex].title
-                else
+            if (item.link_to === 'crud') {
+                let crudIndex = this.cruds.findIndex(crud => crud.id === item.url);
+                if (crudIndex >= 0) {
+                    if (lambda.has_language) {
+                        return item.key ? this.$t(item.key) : this.cruds[crudIndex].title;
+                    }
+                    return this.cruds[crudIndex].title;
+                } else {
                     return ''
-            } else
-                return item.title;
+                }
+            } else {
+                if (lambda.has_language) {
+                    return item.key ? this.$t(item.key) : item.title
+                }
+
+                return item.key ? item.key : item.title
+            }
         },
     }
 };

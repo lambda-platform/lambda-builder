@@ -38,9 +38,13 @@
 
             <div class="ivu-input-wrapper ivu-input-wrapper-small ivu-input-type menu-cruds"
                  v-if="data.link_to == 'crud'">
-                <div class="ivu-input-inner-container" style="">
+                <div class="ivu-input-inner-container" style="display: flex;">
+                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false" type="text"
+                           placeholder="Орчуулгын түлхүүр" class="ivu-input ivu-input-small">
+
                     <input list="cruds" name="cruds" type="text" autocomplete="off" v-model="url" @change="setCrud"
                            :placeholder="lang.name" class="ivu-input ivu-input-small">
+
                     <div class="" v-show="url != null" @click="url = null">
                         <i class="ivu-icon ivu-icon-ios-close-circle ivu-select-arrow data-clear-icon"></i>
                     </div>
@@ -62,12 +66,15 @@
 
             <div class="ivu-input-wrapper ivu-input-wrapper-small ivu-input-type menu-cruds"
                  v-if="data.link_to != 'crud'">
-                <div class="ivu-input-inner-container" style="">
+                <div class="ivu-input-inner-container" style="display: flex">
                     <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
-                    <input v-model="data.title" autocomplete="off" spellcheck="false" type="text"
+
+                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false" type="text"
+                           placeholder="Орчуулгын түлхүүр" class="ivu-input ivu-input-small">
+
+                    <input v-else v-model="data.title" autocomplete="off" spellcheck="false" type="text"
                            :placeholder="lang.name" class="ivu-input ivu-input-small">
                 </div>
-
             </div>
 
             <select size="small" filterable :placeholder="lang.target" v-if="data.link_to == 'link'"
@@ -169,7 +176,8 @@ export default {
     },
     data() {
         return {
-            url: null
+            url: null,
+            lambda: window.lambda
         }
     },
     mounted() {

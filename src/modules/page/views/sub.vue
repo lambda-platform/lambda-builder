@@ -52,6 +52,7 @@ export default {
             pageType: '',
             menu: window.init.menu,
             cruds: window.init.cruds,
+            lambda: window.lambda,
             permissions: window.init.permissions.permissions,
             property: {
                 withCrudLog: window.init.withCrudLog,
@@ -175,14 +176,23 @@ export default {
 
         getTitle(item) {
             if (item.link_to == 'crud') {
+                console.log("crud working here");
+                console.log(item);
+
                 let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
                 if (crudIndex >= 0) {
-                    return this.cruds[crudIndex].title;
+                    if (lambda.has_language) {
+                        return item.key ? this.$t(item.key) : this.cruds[crudIndex].title;
+                    }
+                    // return this.cruds[crudIndex].title;
                 } else {
                     return ''
                 }
             } else {
-                return item.title;
+                if (lambda.has_language) {
+                    return item.key ? this.$t(item.key) : item.title
+                }
+                return item.key ? item.key : item.title
             }
         },
 
