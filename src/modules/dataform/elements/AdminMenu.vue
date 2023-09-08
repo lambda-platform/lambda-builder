@@ -141,13 +141,16 @@ export default {
     methods: {
         setIcon(icon, isSVG, isClass) {
             if (isClass) {
-                Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
+                console.log(isClass, icon, this.iconMenuIndex);
+
                 if (this.iconMenuIndex.length >= 2) {
+                    console.log('I am here');
                     let itemIndex = this.iconMenuIndex[0];
                     this.iconMenuIndex.splice(0, 1);
                     this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG, isClass);
+                } else {
+                    Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
                 }
-
                 return false;
             }
 
@@ -173,6 +176,8 @@ export default {
 
         setIconFind(item, childIndexs, icon, isSVG, isClass) {
             if (isClass) {
+                console.log(childIndexs);
+
                 Vue.set(item.children[childIndexs[0]], "icon", icon);
                 return item;
             }

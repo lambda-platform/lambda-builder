@@ -25,7 +25,10 @@ export const setI18nLanguage = (lang) => {
 }
 
 export const loadLanguageAsync = (lang) => {
+    console.log('I am called', lang);
+
     localStorage.setItem("lang", lang);
+
     // If the same language
     if (i18n.locale === lang) {
         return Promise.resolve(setI18nLanguage(lang))

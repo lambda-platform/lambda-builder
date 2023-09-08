@@ -107,8 +107,6 @@
 </template>
 
 <script>
-import {loadLanguageAsync} from "../locale/index";
-
 export default {
     props: ["title", "type", "src", "preview", "prefix"],
     data() {
@@ -148,17 +146,6 @@ export default {
         },
     },
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
-
         getData() {
             axios.get(this.$props.src).then(({data}) => {
                 this.loading = false;

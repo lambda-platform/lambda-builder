@@ -78,8 +78,7 @@ export default Vue.extend({
     },
     mounted()
     {
-      console.log("this.params.methods");
-      console.log(this.params.methods);
+
     },
     methods: {
         edit() {

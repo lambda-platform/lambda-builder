@@ -40,7 +40,6 @@
 <script>
 import * as firebase from 'firebase/app';
 import '@firebase/messaging';
-import {loadLanguageAsync} from "../../../locale";
 
 // import io from 'socket.io-client';
 // const socket = io.connect(window.config.socketServer, {
@@ -79,18 +78,7 @@ export default {
         },
     },
 
-    beforeMount() {
-        if (this.selectedLang != "mn") {
-            loadLanguageAsync(this.selectedLang);
-        }
-    },
-
     methods: {
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
-
         getNotificationGrant() {
             Notification.requestPermission().then((permission) => {
                 if (permission !== 'granted') {

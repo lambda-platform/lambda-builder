@@ -8,6 +8,7 @@
                 <Form>
                     <Input placeholder="Айкон класс нэр" @on-change="setIconClass"/>
                 </Form>
+
                 <section class="icons-list">
                     <div class="pagewidth">
                         <div class="icon-section" v-for="iconGroup in filteredIcons" :key="iconGroup.index">

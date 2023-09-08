@@ -22,7 +22,6 @@ let routes = [
     {path: '/password-reset', component: load("auth/password/password_reset.vue")},
 ];
 
-
 export default new Router({
     mode: 'history', //hash,
     base: '/auth/',

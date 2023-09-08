@@ -3,20 +3,22 @@
  */
 import Vue from "vue";
 import axios from 'axios';
-import {i18n} from './locale/index';
+import {i18n} from '../../builder/src/locale/index';
 import router from './router'
 import App from './app.vue';
 import {
     store
 } from './store/store'
+
 window.axios = axios;
 
-if(window.init) {
+if (window.init) {
     Vue.prototype.$init = window.init
-    if(window.init.user){
+    if (window.init.user) {
         Vue.prototype.$user = window.init.user;
     }
-    if(window.init.project){
+
+    if (window.init.project) {
         Vue.prototype.$project = window.init.project;
         Vue.prototype.$projectSettings = window.init.projectSettings;
     }
