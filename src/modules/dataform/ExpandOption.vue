@@ -28,9 +28,14 @@
                             </li>
 
                             <li>
-                                <label>{{ lang.Placeholder }}</label>
+                                <label>Placeholder</label>
                                 <Input v-model="item.placeHolder"
                                        :placeholder="item.placeHolder == '' ? item.label : item.placeHolder"/>
+                            </li>
+
+                            <li>
+                                <label>Placeholder - Орчуулгын түлхүүр</label>
+                                <Input v-model="item.trKeyPlaceholder" placeholder="Орчуулгын түлхүүр"/>
                             </li>
 
                             <li>

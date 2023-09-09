@@ -378,7 +378,6 @@ export default {
         },
 
         setUiSchemaFormItem(items) {
-
             items.forEach(item => {
                 if (item.type == 'form') {
                     this.setModel(item.model, item.default, item.formType)
@@ -506,6 +505,12 @@ export default {
             })
         },
 
+        setPlaceholderLabel(item) {
+            if (window.lambda && window.lambda.has_language && item.trKeyPlaceholder != null && item.trKeyPlaceholder !== '') {
+                item.placeHolder = this.$t(item.trKeyPlaceholder);
+            }
+        },
+
         setMeta(item, subForm) {
             let s_index = this.schema.findIndex(schema => schema.model == item.model)
             let i = s_index >= 0 ? this.schema[s_index] : item
@@ -514,6 +519,7 @@ export default {
                 delete i['extra']
                 i.schemaID = this.$props.schemaID
             }
+            this.setPlaceholderLabel(i);
             return i
         },
 

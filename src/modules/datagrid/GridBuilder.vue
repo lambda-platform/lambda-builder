@@ -255,27 +255,14 @@
                                     {{ lang.model }}
                                 </Col>
                                 <Col span="3">{{ lang.nickName }}</Col>
+                                <Col span="3"> {{ lang.translation }}</Col>
                                 <Col span="3"> {{ lang.type }}</Col>
                                 <Col span="2" class="center"> {{ lang.width }}</Col>
-                                <Col span="1" class="center"> {{ lang.hide }}</Col>
+                                <Col span="2" class="center"> {{ lang.hide }}</Col>
                                 <Col span="2" class="center"> {{ lang.sort }}</Col>
-                                <Col span="1" class="center"> {{ lang.court }}</Col>
-                                <Col span="2" class="center"> {{ lang.searchResults }}</Col>
-                                <Col span="2" class="center"> {{ lang.translation }}</Col>
-                                <Col span="2" class="center"> {{ lang.tobePublished }}</Col>
-                                <Col span="1" class="center">
-                                    <Tooltip :content="lang.updateSelectedLineData">
-                                        {{ lang.renew }}
-                                    </Tooltip>
-                                </Col>
-
-                                <Col span="1" class="center">
-                                    <Tooltip :content="lang.whenEnteringDataFromExcelFile">
-                                        {{ lang.excel }}
-                                    </Tooltip>
-                                </Col>
-
-                                <Col span="1" class="center">...</Col>
+                                <Col span="2" class="center"> {{ lang.court }}</Col>
+                                <Col span="2" class="center">Хайлт</Col>
+                                <Col span="2" class="center">...</Col>
                             </Row>
 
                             <!-- Schema fields -->
@@ -835,7 +822,6 @@ export default {
                 'tableDataHasBeenSuccessfullyEdited', 'successfullySaved', 'anErrorOccurredWhileSaving',
                 'gbExcelImport', 'excelImportFieldName', 'excelImportFormTitle', 'excelUploadSampleFile', 'excelUploadRowtoStart', 'excelUploadCustomUrl', 'excelUploadCustomNamespace', 'excelUploadCustomTrigger',
                 'cacheClearTriggerLabel', 'theme'
-
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataGrid.' + labels[i]);
@@ -863,7 +849,6 @@ export default {
     data() {
         return builderData(this);
     },
-
 
     created() {
         this.init();
@@ -994,6 +979,7 @@ export default {
                 "options": []
             });
         },
+
         deleteVirtualColumn(index) {
             this.datagrid.schema.splice(index, 1);
         },
@@ -1015,7 +1001,6 @@ export default {
                     return item;
                 }
             });
-
 
             //Sync added DB field
             if (dbSchema) {
@@ -1191,6 +1176,10 @@ export default {
 
             if (typeof item.printable == "undefined") {
                 item.printable = false
+            }
+
+            if (typeof item.trKey == "undefined") {
+                item.trKey = null
             }
 
             if (typeof item.pinned == "undefined") {

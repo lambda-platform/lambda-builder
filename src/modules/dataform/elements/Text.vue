@@ -11,6 +11,9 @@
 <script>
 export default {
     props: ["model", "rule", "label", "meta"],
+    created() {
+        console.log(this.meta);
+    }
 
 };
 </script>

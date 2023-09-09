@@ -4,47 +4,69 @@
         <Tabs :animated="false" size="small" class="expand-tab">
             <TabPane :label="lang.basicSettings">
                 <Row type="flex">
-                    <Col :xs="12" class="rel-col">
+                    <Col :span="6" class="rel-col">
                         <ul>
                             <li v-if="item.gridType == 'Link'">
-                                <label>{{lang.linkSettings}} |
+                                <label>{{ lang.linkSettings }} |
                                     <small>http://google.com/{id}/{model}</small>
                                 </label>
                                 <Input v-model="item.link" :placeholder="lang.insertList"/>
                             </li>
                             <li v-if="item.gridType == 'Link'">
-                                <label>{{lang.linkIcon}}</label>
+                                <label>{{ lang.linkIcon }}</label>
                                 <Input v-model="item.icon" :placeholder="lang.linkIcon"/>
                             </li>
                             <li v-if="item.gridType == 'Link'">
-                              <label>{{lang.showOnlyIcon}}</label>
-                              <i-switch v-model="item.showOnlyIcon" size="small"></i-switch>
+                                <label>{{ lang.showOnlyIcon }}</label>
+                                <i-switch v-model="item.showOnlyIcon" size="small"></i-switch>
                             </li>
                             <li>
-                              <label>{{lang.pinColumn}}</label>
-                              <i-switch v-model="item.pinned" size="small"></i-switch>
+                                <label>{{ lang.pinColumn }}</label>
+                                <i-switch v-model="item.pinned" size="small"></i-switch>
                             </li>
                             <li v-if="item.gridType == 'Link'">
-                                <label>{{lang.linkType}}</label>
+                                <label>{{ lang.linkType }}</label>
                                 <Select v-model="item.linkTarget" :placeholder="lang.linkType" :width="250">
                                     <Option v-for="item in linkTargets" :value="item" :key="item">{{ item }}</Option>
                                 </Select>
                             </li>
 
                             <li>
-                                <label>{{lang.pinColumn}}</label>
+                                <label>{{ lang.pinColumn }}</label>
                                 <i-switch v-model="item.pinned" size="small"></i-switch>
                             </li>
                             <li v-if="item.pinned">
-                                <label>{{lang.pinPosition}}</label>
+                                <label>{{ lang.pinPosition }}</label>
                                 <RadioGroup v-model="item.pinPosition">
                                     <Radio label="left">
-                                        <span>{{lang.onLeft}}</span>
+                                        <span>{{ lang.onLeft }}</span>
                                     </Radio>
                                     <Radio label="right">
-                                        <span>{{lang.onRight}}</span>
+                                        <span>{{ lang.onRight }}</span>
                                     </Radio>
                                 </RadioGroup>
+                            </li>
+                        </ul>
+                    </Col>
+                    <Col :span="6" class="rel-col">
+                        <ul>
+                            <li>
+                                <label>Хэвлэх эсэх</label>
+                                <i-switch v-model="item.printable" size="small"></i-switch>
+                            </li>
+
+                            <li>
+                                <label>
+                                    Мөрийн мэдээлэл шинэчлэх /inline form/
+                                </label>
+                                <i-switch v-model="item.updateable" size="small"></i-switch>
+                            </li>
+
+                            <li>
+                                <label>
+                                    Эксэлээс дата авна
+                                </label>
+                                <i-switch v-model="item.excel" size="small"></i-switch>
                             </li>
                         </ul>
                     </Col>
@@ -98,7 +120,7 @@
                                     <Input type="text" v-model="customEl.form.image" :placeholder="lang.image"/>
                                 </FormItem>
                                 <FormItem>
-                                    <Button type="primary" @click="addCustomEl">{{lang.add}}</Button>
+                                    <Button type="primary" @click="addCustomEl">{{ lang.add }}</Button>
                                 </FormItem>
                             </Form>
 
@@ -113,28 +135,31 @@
             <TabPane :label="lang.data_settings">
                 <Row type="flex">
 
-                    <Col :xs="24" :sm="24" :md="12" :lg="12" class="rel-col" >
+                    <Col :xs="24" :sm="24" :md="12" :lg="12" class="rel-col">
                         <div class="title">
-                            <h3>{{lang.dataLink}} </h3>
+                            <h3>{{ lang.dataLink }} </h3>
                         </div>
 
                         <ul>
                             <li v-if="item.virtualColumn">
                                 <label>Холболтын талбар</label>
-                                <Select v-model="item.relation.connection_field" placeholder="Холболтын талбар" clearable filterable>
+                                <Select v-model="item.relation.connection_field" placeholder="Холболтын талбар"
+                                        clearable filterable>
                                     <Option v-for="field in fieldList" :value="field.model" :key="field.index">{{
-                                            field.model }}
+                                            field.model
+                                        }}
                                     </Option>
                                 </Select>
                             </li>
                             <li v-if="microservices.length >= 1">
-                                <label >Microservice</label>
+                                <label>Microservice</label>
 
 
                                 <Select v-model="item.relation.microservice_id" placeholder="Microservice" clearable
                                         filterable
                                 >
-                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id" :key="microservice.index">
+                                    <Option v-for="microservice in microservices" :value="microservice.microservice_id"
+                                            :key="microservice.index">
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
@@ -142,12 +167,16 @@
                                 <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
                                         filterable
                                         @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
+                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
+                                                 :key="microservice.index">
                                         <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
                                             {{ item }}
                                         </Option>
                                     </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`" v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"  :key="microservice.index">
+                                    <OptionGroup :label="`${microservice.microservice}: View list`"
+                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
+                                                 :key="microservice.index">
                                         <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
                                             {{ item }}
                                         </Option>
@@ -155,8 +184,9 @@
                                 </Select>
                             </li>
                             <li v-else>
-                                <label>{{lang.table}}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable filterable
+                                <label>{{ lang.table }}</label>
+                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
+                                        filterable
                                         @on-change="relationSchema">
                                     <OptionGroup :label="lang.tableList">
                                         <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}
@@ -169,19 +199,22 @@
                                 </Select>
                             </li>
                             <li>
-                                <label>{{lang.Related_fields}}</label>
-                                <Select v-model="item.relation.key" :placeholder="lang.Related_fields" clearable filterable>
+                                <label>{{ lang.Related_fields }}</label>
+                                <Select v-model="item.relation.key" :placeholder="lang.Related_fields" clearable
+                                        filterable>
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
-                                        item.model }}
+                                            item.model
+                                        }}
                                     </Option>
                                 </Select>
                             </li>
                             <li>
-                                <label>{{lang.Visible_fields}}</label>
+                                <label>{{ lang.Visible_fields }}</label>
                                 <Select v-model="item.relation.fields" :placeholder="lang.Select_fields" clearable
                                         filterable>
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
-                                        item.model }}
+                                            item.model
+                                        }}
                                     </Option>
                                 </Select>
                             </li>
@@ -190,7 +223,8 @@
                                 <Select v-model="item.relation.sortField" :placeholder="lang.Select_field" clearable
                                         filterable>
                                     <Option v-for="item in relSchema" :value="item.model" :key="item.index">{{
-                                        item.model }}
+                                            item.model
+                                        }}
                                     </Option>
                                 </Select>
                             </li>
@@ -212,7 +246,7 @@
 
                     <Col :xs="24" :sm="24" :md="12" :lg="8" class="rel-col">
                         <div class="title">
-                            <h3>{{lang.Link_terms}} </h3>
+                            <h3>{{ lang.Link_terms }} </h3>
 
 
                         </div>
@@ -229,121 +263,77 @@
 </template>
 
 <script>
-    import {elementList} from "./elements";
-    import ColorPicker from "./elements/ColorPicker";
-    import {getTableMeta} from "./utils/helpers";
-    import {getTableView} from "../../utils/index";
+import {elementList} from "./elements";
+import ColorPicker from "./elements/ColorPicker";
+import {getTableMeta} from "./utils/helpers";
+import {getTableView} from "../../utils/index";
+import Label from "../dataform/elements/Label";
 
-    export default {
-        components: {ColorPicker},
-        props: ["item", "edit", "fieldList"],
-        computed: {
-            // ...mapGetters({
-            //     user: "user"
-            // }),
-            lang(){
-                const labels = [ "linkSettings", "insertList", "linkIcon", "showOnlyIcon", "pinColumn", "linkType", "pinPosition", "onLeftonLeft",
-                    "onRight", "radioSettings", "additionalSettings", "comparativeValuecomparativeValue", "values", "visible_word",  "icon", "colorCode",
-                    "dataLink", "Select_fields", "Select_field", "Related_fields", "tableList", "viewList", "Visible_fields", "Sort_field", "Link_terms",
-                    'plseEnterValue', 'data_settings', 'basicSettings', 'table'
-                ];
-                return labels.reduce((obj, key, i) => {
-                    obj[key] = this.$t('dataGrid.' + labels[i]);
-                    return obj;
-                }, {});
-            },
-            // tableList(){
-            //     return getTableView("table")
-            // },
-            // viewList(){
-            //     return getTableView("view")
-            // }
+export default {
+    components: {Label, ColorPicker},
+    props: ["item", "edit", "fieldList"],
+    computed: {
+        // ...mapGetters({
+        //     user: "user"
+        // }),
+        lang() {
+            const labels = ["linkSettings", "insertList", "linkIcon", "showOnlyIcon", "pinColumn", "linkType", "pinPosition", "onLeftonLeft",
+                "onRight", "radioSettings", "additionalSettings", "comparativeValuecomparativeValue", "values", "visible_word", "icon", "colorCode",
+                "dataLink", "Select_fields", "Select_field", "Related_fields", "tableList", "viewList", "Visible_fields", "Sort_field", "Link_terms",
+                'plseEnterValue', 'data_settings', 'basicSettings', 'table'
+            ];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('dataGrid.' + labels[i]);
+                return obj;
+            }, {});
         },
-        data() {
-            return {
-                expanded: false,
-                tableList: window.init.dbSchema.tableList,
-                microservices: window.init.microservices ? window.init.microservices : [],
-                viewList: window.init.dbSchema.viewList,
+        // tableList(){
+        //     return getTableView("table")
+        // },
+        // viewList(){
+        //     return getTableView("view")
+        // }
+    },
+    data() {
+        return {
+            expanded: false,
+            tableList: window.init.dbSchema.tableList,
+            microservices: window.init.microservices ? window.init.microservices : [],
+            viewList: window.init.dbSchema.viewList,
 
-                elementList: elementList,
-                relSchema: [],
-                customEl: {
-                    form: {
-                        compareVal: null,
-                        label: null,
-                        color: '#666666',
-                        icon: null,
-                        image: null
-                    },
-                    rule: {
-                        compareVal: [{required: true, message: this.$t('dataGrid.plseEnterValue'), trigger: "blur"}]
-                    },
-                    columns: [
-                        {
-                            title: 'Утга',
-                            key: "compareVal",
-                        },
-                        {
-                            title: 'Харагдах үг',
-                            key: "label",
-                        },
-                        {
-                            title: 'Өнгө',
-                            key: "color",
-                        },
-                        {
-                            title: 'Айкон',
-                            key: "icon",
-                        },
-                        {
-                            title: 'Зураг',
-                            key: "image",
-                        },
-                        {
-                            title: "Устгах",
-                            key: "action",
-                            width: 100,
-                            align: "center",
-                            render: (h, params) => {
-                                return h("div", [
-                                    h(
-                                        "Button",
-                                        {
-                                            props: {
-                                                type: "error",
-                                                size: "small"
-                                            },
-                                            on: {
-                                                click: () => {
-                                                    this.removeOption(params.index);
-                                                }
-                                            }
-                                        },
-                                        "Устгах"
-                                    )
-                                ]);
-                            }
-                        }
-                    ]
+            elementList: elementList,
+            relSchema: [],
+            customEl: {
+                form: {
+                    compareVal: null,
+                    label: null,
+                    color: '#666666',
+                    icon: null,
+                    image: null
                 },
-
-                optionForm: {
-                    value: null,
-                    label: null
+                rule: {
+                    compareVal: [{required: true, message: this.$t('dataGrid.plseEnterValue'), trigger: "blur"}]
                 },
-                optionRule: {
-                    value: [{required: true, message: "Утга оруулна уу", trigger: "blur"}],
-                    label: [{required: true, message: "Харагдах үгээ оруулна уу", trigger: "blur"}]
-                },
-                optionsColumns: [
+                columns: [
                     {
                         title: 'Утга',
-                        key: "value"
+                        key: "compareVal",
                     },
                     {
                         title: 'Харагдах үг',
-                        key: "label"
+                        key: "label",
+                    },
+                    {
+                        title: 'Өнгө',
+                        key: "color",
+                    },
+                    {
+                        title: 'Айкон',
+                        key: "icon",
+                    },
+                    {
+                        title: 'Зураг',
+                        key: "image",
                     },
                     {
                         title: "Устгах",
@@ -370,63 +360,108 @@
                             ]);
                         }
                     }
-                ],
+                ]
+            },
 
-                linkTargets: ['_blank', '_new', '_self', '_top'],
-            };
-        },
-        created() {
-            if (this.item.relation.table !== null) {
-                this.relationSchema(this.item.relation.table);
-            }
-        },
-        methods: {
-            async relationSchema(val) {
-                if(window.init.projectSettings){
-                    if(window.init.projectSettings.project_id === this.item.relation.microservice_id){
-                        this.item.relation.self = true;
-                    } else {
-                        this.item.relation.self = false;
+            optionForm: {
+                value: null,
+                label: null
+            },
+            optionRule: {
+                value: [{required: true, message: "Утга оруулна уу", trigger: "blur"}],
+                label: [{required: true, message: "Харагдах үгээ оруулна уу", trigger: "blur"}]
+            },
+            optionsColumns: [
+                {
+                    title: 'Утга',
+                    key: "value"
+                },
+                {
+                    title: 'Харагдах үг',
+                    key: "label"
+                },
+                {
+                    title: "Устгах",
+                    key: "action",
+                    width: 100,
+                    align: "center",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.removeOption(params.index);
+                                        }
+                                    }
+                                },
+                                "Устгах"
+                            )
+                        ]);
                     }
-                } else {
-                    this.item.relation.self = true;
                 }
+            ],
 
-              this.relSchema = await getTableMeta(val);
-            },
-
-            //Filter event
-            changeItemFilter(query) {
-                if (query) {
-                    this.$props.item.relation.filter = query.sql;
-                } else {
-                    this.$props.item.relation.filter = undefined;
-                }
-            },
-
-            addOption() {
-                this.$refs["optionFrm"].validate(valid => {
-                    if (valid) {
-                        this.item.options.push({...this.optionForm});
-                        this.optionForm = {value: null, label: null};
-                    }
-                });
-            },
-
-            addCustomEl() {
-                this.$refs["customFrm"].validate(valid => {
-                    if (valid) {
-                        this.item.options.push({...this.customEl.form});
-                        this.$refs["customFrm"].resetFields();
-                    }
-                });
-            },
-
-            removeOption(index) {
-                this.item.options.splice(index, 1);
-            }
+            linkTargets: ['_blank', '_new', '_self', '_top'],
+        };
+    },
+    created() {
+        if (this.item.relation.table !== null) {
+            this.relationSchema(this.item.relation.table);
         }
-    };
+    },
+    methods: {
+        async relationSchema(val) {
+            if (window.init.projectSettings) {
+                if (window.init.projectSettings.project_id === this.item.relation.microservice_id) {
+                    this.item.relation.self = true;
+                } else {
+                    this.item.relation.self = false;
+                }
+            } else {
+                this.item.relation.self = true;
+            }
+
+            this.relSchema = await getTableMeta(val);
+        },
+
+        //Filter event
+        changeItemFilter(query) {
+            if (query) {
+                this.$props.item.relation.filter = query.sql;
+            } else {
+                this.$props.item.relation.filter = undefined;
+            }
+        },
+
+        addOption() {
+            this.$refs["optionFrm"].validate(valid => {
+                if (valid) {
+                    this.item.options.push({...this.optionForm});
+                    this.optionForm = {value: null, label: null};
+                }
+            });
+        },
+
+        addCustomEl() {
+            this.$refs["customFrm"].validate(valid => {
+                if (valid) {
+                    this.item.options.push({...this.customEl.form});
+                    this.$refs["customFrm"].resetFields();
+                }
+            });
+        },
+
+        removeOption(index) {
+            this.item.options.splice(index, 1);
+        }
+    }
+};
 </script>
 
 

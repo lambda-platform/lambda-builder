@@ -276,11 +276,16 @@ export default {
     components: {
         StepForm
     },
-    data() {
-        return {
-            hasLang: window.lambda.has_language || false
+
+    computed: {
+        hasLang() {
+            if (window.lambda && window.lambda.has_language) {
+                return window.lambda.has_language;
+            }
+            return false;
         }
     },
+
     methods: {
         getLabel(item) {
             if (this.hasLang && item.trKey != null && item.trKey !== '') {

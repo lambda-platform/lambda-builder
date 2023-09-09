@@ -71,7 +71,7 @@
                 <slot name="dg-footer-mid"></slot>
                 <Page v-if="!this.isClient" size="small" :current="query.currentPage"
                       :page-size="query.paginate"
-                      :total="info.total" @on-change="changePage" />
+                      :total="info.total" @on-change="changePage"/>
                 <slot name="dg-footer-end"></slot>
             </div>
         </div>
@@ -137,7 +137,6 @@
         <GridRowUpdate v-if="template == 0 || template==2"
                        :permissions="permissions" :model="filterModel" :schema="schema" :url="url" :inFilter="false"
                        :schemaID="schemaID"/>
-
     </div>
 </template>
 
@@ -220,6 +219,13 @@ export default {
                 return obj;
             }, {});
         },
+
+        hasLang() {
+            if (window.lambda && window.lambda.has_language) {
+                return window.lambda.has_language;
+            }
+            return false;
+        }
     },
 
     components: {
@@ -319,7 +325,6 @@ export default {
             } else {
                 gridSchema = await this.initFromServerData(baseUrl, customSchemaId);
             }
-
 
             this.model = gridSchema.model;
             this.template = gridSchema.template;
@@ -550,6 +555,7 @@ export default {
                         }
                     });
                 });
+
                 this.$data.init = true;
 
                 if (gridSchema.hasCheckbox) {
@@ -650,6 +656,14 @@ export default {
             this.fetchData();
         },
 
+        getLabel(item) {
+            if (this.hasLang && item.trKey != null && item.trKey !== '') {
+                return this.$t(item.trKey);
+            }
+
+            return item.label ? item.label : `[${item.model}]`
+        },
+
         setColumn(item) {
             //set post models -- hidden could be posted
             if (isValid(item.editable) && (isValid(item.editable) && item.editable.shouldPost)) {
@@ -659,7 +673,7 @@ export default {
             //if not hidden the set properties
             if (!item.hide) {
                 let colItem = {
-                    headerName: item.label === "" ? item.model : item.label,
+                    headerName: this.getLabel(item),
                     field: item.model,
                     suppressNavigable: true,
                     cellClass: 'no-border',
