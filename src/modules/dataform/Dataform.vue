@@ -105,7 +105,7 @@
                                                     :is='element(item.formType)'
                                                     :model='{form: model, component: item.model}'
                                                     :disabled='item.disabled ? item.disabled : false'
-                                                    :label='item.label ? item.label : `[${item.model}]`'
+                                                    :label='getLabel(item)'
                                                     :rule='item.model'
                                                     :meta='setMeta(item)'
                                                     :identity='identity'
@@ -155,7 +155,7 @@
                                             :key="model"
                                             :url='url'
                                             :disabled='item.disabled ? item.disabled : false'
-                                            :label='item.label ? item.label : `[${item.model}]`'
+                                            :label='getLabel(item)'
                                             :rule='item.model'
                                             :meta='setMeta(item)'
                                             :identity='identity'
@@ -182,7 +182,7 @@
                                         :ref="'sf'+item.model"
                                         v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                         :is='element(`subform/${item.subtype}`)'
-                                        :label='item.label ? item.label : `[${item.model}]`'
+                                        :label='getLabel(item)'
                                         :model='{form: model, component: item.model}'
                                         :form='setMeta(item, true)'
                                         :relations='relations'
@@ -201,7 +201,8 @@
                                         :is='element(item.formType)'
                                         :disabled='item.disabled ? item.disabled : false'
                                         :model='{form: model, component: item.model}'
-                                        :label='item.label ? item.label : `[${item.model}]`' :rule='item.model'
+                                        :label='getLabel(item)'
+                                        :rule='item.model'
                                         :meta='setMeta(item)'
                                         :identity='identity'
                                         :asyncMode='asyncMode'
@@ -274,6 +275,20 @@ export default {
     mixins: [mixins],
     components: {
         StepForm
+    },
+    data() {
+        return {
+            hasLang: window.lambda.has_language || false
+        }
+    },
+    methods: {
+        getLabel(item) {
+            if (this.hasLang && item.trKey != null && item.trKey !== '') {
+                return this.$t(item.trKey);
+            }
+
+            return item.label ? item.label : `[${item.model}]`
+        }
     }
 }
 </script>
