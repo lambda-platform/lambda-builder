@@ -17,8 +17,8 @@ export default {
             property: {
                 template: "canvas",
                 title: 'Орчуулгын бүлэг',
-                grid: '359',
-                form: '360',
+                grid: '459',
+                form: '460',
                 gridSelector: false,
                 permissions: {
                     c: true,
