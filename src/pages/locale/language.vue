@@ -17,8 +17,8 @@ export default {
             property: {
                 template: "canvas",
                 title: 'Хэл',
-                grid: '457',
-                form: '458',
+                grid: '357',
+                form: '358',
                 gridSelector: false,
                 permissions: {
                     c: true,
