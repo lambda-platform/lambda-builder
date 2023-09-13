@@ -20,7 +20,7 @@
             <div class="translation-page-body">
                 <div class="c-group" v-for="c in translation" :key="c.id">
                     <div class="c-group-header">
-                        <h3>{{ c.title }}</h3>
+                        <h3>{{ c.title }} - {{ c.code }}</h3>
                     </div>
                     <div class="c-group-body">
                         <table class="t-table">

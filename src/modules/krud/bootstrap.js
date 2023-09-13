@@ -5,4 +5,3 @@ Vue.use(PortalVue)
 Vue.prototype.$bus = new Vue({})
 window.Vue = Vue;
 Vue.config.productionTip = false;
-

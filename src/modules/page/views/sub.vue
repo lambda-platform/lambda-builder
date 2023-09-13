@@ -95,6 +95,7 @@ export default {
                         if (crudIndex >= 0) {
                             this.property.page_id = page.id;
                             this.property.title = this.cruds[crudIndex].title;
+                            this.property.trKey = this.cruds[crudIndex].tr_key ? this.cruds[crudIndex].tr_key : null;
                             this.property.main_tab_title = this.cruds[crudIndex].main_tab_title;
                             this.property.grid = this.cruds[crudIndex].grid;
                             this.property.form = this.cruds[crudIndex].form;

@@ -1,6 +1,10 @@
 <template>
-    <component ref="krud" :is="renderTemplate(property.template)" :schema="property.form" :id="property.edit_id"
-               v-bind="property">
+    <component ref="krud"
+               :is="renderTemplate(property.template)"
+               :schema="property.form"
+               :id="property.edit_id"
+               v-bind="properties">
+
         <template slot="left">
             <slot name="left"></slot>
         </template>
@@ -31,16 +35,16 @@
 <script>
 const templates = {
     canvas: () => import(/* webpackChunkName: "krud-canvas" */'./templates/canvas.vue'),
-    "canvas-aside": () => import(/* webpackChunkName: "krud-canvas" */'./templates/canvas-aside.vue'),
-    drawer: () => import(/* webpackChunkName: "krud-canvas" */'./templates/drawer.vue'),
+    "canvas-aside": () => import(/* webpackChunkName: "krud-canvas-aside" */'./templates/canvas-aside.vue'),
+    drawer: () => import(/* webpackChunkName: "krud-drawer" */'./templates/drawer.vue'),
     create: () => import(/* webpackChunkName: "krud-create" */'./templates/create.vue'),
-    edit: () => import(/* webpackChunkName: "krud-create" */'./templates/edit.vue'),
-    list: () => import(/* webpackChunkName: "krud-create" */'./templates/list.vue'),
-    empty: () => import(/* webpackChunkName: "krud-create" */'./templates/empty.vue'),
-    emptyWithSideMenu: () => import(/* webpackChunkName: "krud-create" */'./templates/empty-with-sidemenu.vue'),
+    edit: () => import(/* webpackChunkName: "krud-edit" */'./templates/edit.vue'),
+    list: () => import(/* webpackChunkName: "krud-list" */'./templates/list.vue'),
+    empty: () => import(/* webpackChunkName: "krud-empty" */'./templates/empty.vue'),
+    emptyWithSideMenu: () => import(/* webpackChunkName: "krud-sidemenu-empty" */'./templates/empty-with-sidemenu.vue'),
     default: () => import(/* webpackChunkName: "krud-default" */'./templates/default.vue'),
     spa: () => import(/* webpackChunkName: "krud-spa" */'./templates/spa.vue'),
-    modal: () => import(/* webpackChunkName: "krud-window" */'./templates/krud-modal.vue'),
+    modal: () => import(/* webpackChunkName: "krud-modal" */'./templates/krud-modal.vue'),
     window: () => import(/* webpackChunkName: "krud-window" */'./templates/window.vue'),
     withSubCruds: () => import(/* webpackChunkName: "krud-withSubCruds" */'./templates/withSubCruds.vue'),
     progressList: () => import(/* webpackChunkName: "krud-progress-list" */'./templates/progress-list.vue'),
@@ -48,6 +52,19 @@ const templates = {
 
 export default {
     props: ["property"],
+
+    data(){
+        return {
+            properties: this.property,
+            lambda: window.lambda
+        }
+    },
+    created() {
+        if(this.lambda.has_language) {
+            this.properties.title = this.property.trKey ?  this.$t(this.property.trKey) : this.property.title
+        }
+    },
+
     methods: {
         renderTemplate(template) {
             if (templates.hasOwnProperty(template)) {
@@ -57,7 +74,7 @@ export default {
             }
         },
 
-        callWindowForm(){
+        callWindowForm() {
             this.renderTemplate('windowForm')
         }
     }

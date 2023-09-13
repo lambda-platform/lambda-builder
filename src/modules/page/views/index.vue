@@ -219,6 +219,7 @@ export default {
                             // this.property. = 'canvas'
                             this.property.page_id = page.id;
                             this.property.title = this.cruds[crudIndex].title;
+                            this.property.trKey = this.cruds[crudIndex].tr_key ? this.cruds[crudIndex].tr_key : null;
                             // this.property.withoutHeader = this.withoutHeader;
                             this.property.projects_id = this.cruds[crudIndex].projects_id;
                             this.property.grid = this.cruds[crudIndex].grid;
