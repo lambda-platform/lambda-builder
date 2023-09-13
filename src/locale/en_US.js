@@ -141,7 +141,17 @@ export default {
         "instructionsUse": "Instructions for use",
         "hayg": "Mongolia, Ulaanbaatar, Sukhbaatar district, 9th khoroo, Ikh toiruu 54, Computer Mall, 8th floor, room 8002",
         "plseResUrPassUsingUrRegisteredEmail": "Please reset your password using your registered email address?",
-        "downloadAppHere": "Download the app here"
+        "downloadAppHere": "Download the app here",
+
+        "learningManagementSystem": "Learning Management System",
+        "amjilt": "Amjilt",
+        "system_features": "System features",
+        "ebs": "EBS",
+        "web_site_data_monitoring": "Web site data monitoring",
+        "training_data_statistics": "Training data statistics",
+        "schedule_report": "Schedule report",
+        "track_by_keyword": "Track by keyword",
+        "to_calculate_the_program_choice_of_teachers_and_students": "To calculate the program choice of teachers and students",
     },
     "agent_wizard": {
         "confirm_registration_information": "Confirm registration information",
@@ -951,5 +961,16 @@ export default {
         "download_file": "Download as an Excel file",
         "excelUpload": "Import data from Excel file"
     },
+    // "custom": {
+    //     "learningManagementSystem": "Learning Management System",
+    //     "amjilt": "Amjilt",
+    //     "system_features": "System features",
+    //     "ebs": "EBS",
+    //     "web_site_data_monitoring": "Web site data monitoring",
+    //     "training_data_statistics": "Training data statistics",
+    //     "schedule_report": "Schedule report",
+    //     "track_by_keyword": "Track by keyword",
+    //     "to_calculate_the_program_choice_of_teachers_and_students": "To calculate the program choice of teachers and students",
+    // },
     i: {...iviewLocale.i}
 }
