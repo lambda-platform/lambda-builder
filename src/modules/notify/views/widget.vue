@@ -182,8 +182,8 @@ export default {
 
 <style lang="scss">
 .ivu-notice {
-    top: auto;
-    bottom: 30px;
+    //top: auto;
+    //bottom: 30px;
 
     a {
         color: #565656;
