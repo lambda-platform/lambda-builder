@@ -3,6 +3,7 @@
         :data-link_to="data.link_to"
         :data-url="data.url"
         :data-title="data.title"
+        :data-key="data.key"
         :data-icon="data.icon"
         :data-svg="data.svg"
         :data-c="data.c"
@@ -39,7 +40,8 @@
             <div class="ivu-input-wrapper ivu-input-wrapper-small ivu-input-type menu-cruds"
                  v-if="data.link_to == 'crud'">
                 <div class="ivu-input-inner-container" style="display: flex;">
-                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false" type="text"
+                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false"
+                           type="text"
                            placeholder="Орчуулгын түлхүүр" class="ivu-input ivu-input-small">
 
                     <input list="cruds" name="cruds" type="text" autocomplete="off" v-model="url" @change="setCrud"
@@ -69,7 +71,8 @@
                 <div class="ivu-input-inner-container" style="display: flex">
                     <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
 
-                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false" type="text"
+                    <input v-if="lambda.has_language" v-model="data.key" autocomplete="off" spellcheck="false"
+                           type="text"
                            placeholder="Орчуулгын түлхүүр" class="ivu-input ivu-input-small">
 
                     <input v-else v-model="data.title" autocomplete="off" spellcheck="false" type="text"
@@ -135,17 +138,20 @@ export default {
         showIconModal() {
             this.$emit('showIconSelector', this.menuIndex)
         },
+
         getIndex(index) {
             let pre_myIndex = [index];
             let myIndex = this.menuIndex.concat(pre_myIndex);
             return myIndex;
         },
+
         setCrud() {
             let crud_index = this.$crudList.findIndex(crud => crud.label === this.url);
             if (crud_index >= 0) {
                 this.data.url = this.$crudList[crud_index].value;
             }
         },
+
         element() {
             return require(`./MenuItem`).default;
         },
@@ -153,6 +159,7 @@ export default {
         addChildEmit(menuIndex) {
             this.$emit("addChild", menuIndex);
         },
+
         showIconChild(menuIndex) {
             this.$emit("showIconSelector", menuIndex);
         },
@@ -164,9 +171,11 @@ export default {
         addItem() {
             this.$emit("addChild", this.menuIndex);
         },
+
         deleteChild() {
             this.$emit("deleteChild", this.menuIndex);
         },
+
         setInput() {
             let crud_index = this.$crudList.findIndex(crud => crud.value === this.data.url);
             if (crud_index >= 0) {

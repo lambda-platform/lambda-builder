@@ -1006,6 +1006,7 @@
                 link_to:li.data( 'link_to' ) ? li.data( 'link_to' ) : null,
                 url:li.data( 'url' ) ? li.data( 'url' ) : null,
                 title:li.data( 'title' ) ? li.data( 'title' ) : null,
+                key:li.data( 'key' ) ? li.data( 'key' ) : null,
                 icon:li.data( 'icon' ) ? li.data( 'icon' ) : null,
                 svg:li.data( 'svg' ) ? li.data( 'svg' ) : null,
                 // c:li.data( 'c' ),

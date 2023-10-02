@@ -3,7 +3,6 @@ import VueI18n from 'vue-i18n'
 import mn_MN from "./mn_MN";
 import en_US from "./en_US";
 
-
 const messages = {
     mn_MN,
     en_US,
@@ -25,8 +24,6 @@ export const setI18nLanguage = (lang) => {
 }
 
 export const loadLanguageAsync = (lang) => {
-    console.log('I am called', lang);
-
     localStorage.setItem("lang", lang);
 
     // If the same language
@@ -44,10 +41,8 @@ export const loadLanguageAsync = (lang) => {
         loadedLanguages.push(lang)
         return setI18nLanguage(lang)
     } else {
-
         return import(/* webpackChunkName: "[request]" */ `./${lang}`).then(
             messages => {
-
                 i18n.setLocaleMessage(lang, messages.default)
                 loadedLanguages.push(lang)
                 return setI18nLanguage(lang)
