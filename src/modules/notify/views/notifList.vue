@@ -1,8 +1,6 @@
 <template>
     <section class="page noti">
-
         <paper-header class="mini">
-
             <div class="krud-header-right" slot="right">
                 <!--                <slot name="left">-->
                 <!--                    <div class="header-date-filter no-border">-->
@@ -51,71 +49,74 @@
             </div>
         </paper-header>
 
-        <section class="page-agent-form">
-            <Card dis-hover>
-                <template #title>
-                    <i class="ti-bell"></i>
-                    {{ lang.notice }}
-                </template>
-                <template #extra>
-                    <Button size="small" type="primary" :disabled="count == 0" @click.prevent="seenAll">
-                        <!--                        {{ lang.clear_notification}}-->
-                        Бүгдийг харсан болгох
-                    </Button>
-                    <!--                    <a href="#" >-->
-                    <!--                        <Icon type="ios-loop-strong"></Icon>-->
-                    <!--&lt;!&ndash;                        {{ lang.clear_notification}}&ndash;&gt;-->
-                    <!--                        Бүгдийг харсан болгох-->
-                    <!--                    </a>-->
-                </template>
+        <div class="crud-page-body">
+            <section class="page-agent-form">
+                <Card dis-hover>
+                    <template #title>
+                        <i class="ti-bell"></i>
+                        {{ lang.notice }}
+                    </template>
+                    <template #extra>
+                        <Button size="small" type="primary" :disabled="count == 0" @click.prevent="seenAll">
+                            <!--                        {{ lang.clear_notification}}-->
+                            Бүгдийг харсан болгох
+                        </Button>
+                        <!--                    <a href="#" >-->
+                        <!--                        <Icon type="ios-loop-strong"></Icon>-->
+                        <!--&lt;!&ndash;                        {{ lang.clear_notification}}&ndash;&gt;-->
+                        <!--                        Бүгдийг харсан болгох-->
+                        <!--                    </a>-->
+                    </template>
 
-                <div v-if="this.loading">
-                    <div class="noti-body load">
-                        <Spin fix>Ачааллаж байна...</Spin>
+                    <div v-if="this.loading">
+                        <div class="noti-body load">
+                            <Spin fix>Ачааллаж байна...</Spin>
+                        </div>
                     </div>
-                </div>
-                <div v-else>
-                    <div class="noti-body" v-if="notifications.length > 0">
-                        <a v-for="(notif, index) in notifications" class="notif-item" href="javascript:void(0)"
-                           @click="setSeen(notif.id, notif.link)">
-                            <Card :key="index" :class="notif.seen ? '' : 'not_seen'">
-                                <div class="notif-content">
-                                    <h4 class="notif-title">{{ notif.title }}</h4>
-                                    <Tag v-if="notif.seen">Харсан</Tag>
-                                    <Tag v-else color="primary" closable @on-close="seen(notif.id)">Шинэ</Tag>
-                                </div>
-                                <div class="notif-footer-content">
-                                    <a href="javascript:void(0)">
-                                        <i class="ti-user"></i>
-                                        {{ notif.first_name != null ? notif.first_name : notif.login }}
-                                    </a>
-                                    <span class="charec"> | </span>
-                                    <span>
+                    <div v-else>
+                        <div class="noti-body" v-if="notifications.length > 0">
+                            <a v-for="(notif, index) in notifications" class="notif-item" href="javascript:void(0)"
+                               @click="setSeen(notif.id, notif.link)">
+                                <Card :key="index" :class="notif.seen ? '' : 'not_seen'">
+                                    <div class="notif-content">
+                                        <h4 class="notif-title">{{ notif.title }}</h4>
+                                        <Tag v-if="notif.seen">Харсан</Tag>
+                                        <Tag v-else color="primary" closable @on-close="seen(notif.id)">Шинэ</Tag>
+                                    </div>
+                                    <div class="notif-footer-content">
+                                        <a href="javascript:void(0)">
+                                            <i class="ti-user"></i>
+                                            {{ notif.first_name != null ? notif.first_name : notif.login }}
+                                        </a>
+                                        <span class="charec"> | </span>
+                                        <span>
                                     <i class="ti-time"></i> {{ notif.created_at }}
                                 </span>
+                                    </div>
+                                </Card>
+                            </a>
+                            <div class="noti-footer">
+                                <div class="noti-info">
+                                    <!--                            {{ lang.total }} : {{ info.total }}-->
+                                    Нийт : {{ info.total }}
                                 </div>
-                            </Card>
-                        </a>
-                    </div>
-                    <div class="noti-body els" v-else>
-                        <p>
-                            {{ lang.no_notice }}
-                        </p>
-                    </div>
-                    <div class="noti-footer">
-                        <div class="noti-info">
-                            <!--                            {{ lang.total }} : {{ info.total }}-->
-                            Нийт : {{ info.total }}
+
+                                <Page size="small"
+                                      :total="info.total"
+                                      :current="info.currentPage"
+                                      @on-change="changePage"></Page>
+                            </div>
+                        </div>
+                        <div class="noti-body els" v-else>
+                            <p>
+                                {{ lang.no_notice }}
+                            </p>
                         </div>
 
-                        <Page size="small"
-                              :total="info.total"
-                              :current="info.currentPage"
-                              @on-change="changePage"></Page>
                     </div>
-                </div>
-            </Card>
-        </section>
+                </Card>
+            </section>
+        </div>
     </section>
 </template>
 
