@@ -15,7 +15,7 @@
                     </Select>
                 </div>
 
-                <div class='fb-control-sub-item' v-if="f.subtype === 'Form'">
+                <div class='fb-control-sub-item' v-if="f.subtype === 'Form' || f.subtype === 'FormKb'">
                     <Select v-model='f.formId' :placeholder='lang._subform' clearable
                             filterable
                             @on-change='setBuilder'>
@@ -25,7 +25,7 @@
                     </Select>
                 </div>
 
-                <div class='fb-control-sub-item' v-if="f.subtype !== 'Form'">
+                <div class='fb-control-sub-item' v-if="f.subtype !== 'Form' && f.subtype !== 'FormKb'">
                     <Select v-model='f.model' :placeholder='lang.selectTable' clearable @on-change='setBuilder'
                             :disabled='isEdit'>
                         <Option v-for='item in tableList' :value='item' :key='item.index'>
@@ -318,6 +318,10 @@ export default {
                     value: 'Form'
                 },
                 {
+                    label: 'Форм Хаанбанк',
+                    value: 'FormKb'
+                },
+                {
                     label: 'Баазын хүснэгт',
                     value: 'Grid'
                 }
@@ -462,7 +466,7 @@ export default {
                     })
                 } else {
 
-                    if (this.f.subtype === 'Form') {
+                    if (this.f.subtype === 'Form' || this.f.subtype === 'FormKb') {
 
                         this.f.formId = val
 

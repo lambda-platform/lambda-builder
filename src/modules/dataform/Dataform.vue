@@ -88,7 +88,7 @@
 
                                         <component
                                             :key='item.model'
-                                            :ref="'sf'+item.model"
+                                            :ref="`sf${item.subtype=='FormKb'?'-kb-':''}${item.model}`"
                                             :url='url'
                                             v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                             :is='element(`subform/${item.subtype}`)'
@@ -139,7 +139,7 @@
                                             </Divider>
                                             <span v-for='item in scol.children' :key='item.index'>
                                         <component
-                                            :ref="'sf'+item.model"
+                                            :ref="`sf${item.subtype=='FormKb'?'-kb-':''}${item.model}`"
                                             v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                             :is='element(`subform/${item.subtype}`)'
                                             :model='{form: model, component: item.model}'
@@ -185,7 +185,7 @@
                                 <span v-for='item in col.children' :key='item.index'>
                             <component
                                 :key='item.model'
-                                :ref="'sf'+item.model"
+                                :ref="`sf${item.subtype=='FormKb'?'-kb-':''}${item.model}`"
                                 v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                 :is='element(`subform/${item.subtype}`)'
                                 :label='item.label ? item.label : `[${item.model}]`'

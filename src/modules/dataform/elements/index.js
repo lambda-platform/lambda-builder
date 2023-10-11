@@ -56,6 +56,10 @@ export const elements = [
         component: () => import(/* webpackChunkName: "form-field-sub-form" */'./subform/Form.vue'),
     },
     {
+        element: "subform/FormKb",
+        component: () => import(/* webpackChunkName: "form-field-sub-form" */'./subform/FormKb.vue'),
+    },
+    {
         element: "ImageDrag",
         component: () => import(/* webpackChunkName: "form-field-ImageDrag" */'./ImageDrag.vue'),
     },

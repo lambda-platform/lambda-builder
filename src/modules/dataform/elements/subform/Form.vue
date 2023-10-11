@@ -280,7 +280,6 @@ export default {
             hasEq: false,
             modal_show: false,
             editIndex: -1,
-
         };
     },
     methods: {

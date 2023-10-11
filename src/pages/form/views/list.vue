@@ -1,7 +1,6 @@
 <template>
     <div>
-        <list-view v-if="$project" :src="`/lambda/puzzle/project/${$project.id}/form`" :title="lang._form" type="form" :data="listData" ></list-view>
-        <list-view v-else src="/lambda/puzzle/schema/form" :title="lang._form" type="form" :data="listData" ></list-view>
+        <list-view src="/lambda/puzzle/schema/form" :title="lang._form" type="form"></list-view>
     </div>
 </template>
 
@@ -17,7 +16,6 @@ export default {
         };
     },
     methods: {
-
     },
     computed: {
         lang() {

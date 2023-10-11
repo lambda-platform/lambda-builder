@@ -1,7 +1,7 @@
 <template>
     <div class="subform-grid" :style="subStyle">
         <h3 style="display: none">{{ rowLength }}</h3>
-        <div class="subform-header" v-if="!form.min_height && !form.disableCreate">
+        <div class="subform-header">
             {{ form.name }}
             <Button shape="circle" type="success" size="small" @click="add" icon="md-add"
                     class="sub-form-add-btn"></Button>

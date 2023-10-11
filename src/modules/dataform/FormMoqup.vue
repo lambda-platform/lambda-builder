@@ -300,6 +300,7 @@
                                @drop='onDropMain($event)'>
                         <!--form element-->
                         <Draggable v-for='(item, index) in schema' :key='index'>
+                            {{item.formType}}   {{item.subtype}}
                             <component
                                 v-if="item.formType != null && item.formType != 'SubForm' && !item.hidden && item.model != identity"
                                 :do_render='true'

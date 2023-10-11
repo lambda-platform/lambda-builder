@@ -1,7 +1,6 @@
 <template>
     <div>
-        <list-view v-if="$project" :src="`/lambda/puzzle/project/${$project.id}/grid`" :title="lang.table" type="grid" :data="listData"></list-view>
-        <list-view v-else src="/lambda/puzzle/schema/grid" :title="lang.table" type="grid" :data="listData"></list-view>
+        <list-view src="/lambda/puzzle/schema/grid" :title="lang.table" type="grid"></list-view>
     </div>
 </template>
 

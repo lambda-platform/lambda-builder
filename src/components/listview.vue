@@ -256,9 +256,10 @@ export default {
             let vm = this;
             let q = $event.target.value;
             console.log(q);
+            console.log(vm.listData);
             if (q != "") {
                 let filtered = vm.listData.filter(
-                    f => f.name.toLowerCase().includes(q.toLowerCase())
+                    f => f.name?f.name.toLowerCase().includes(q.toLowerCase()):false
                 );
                 vm.filteredList = filtered;
             } else {

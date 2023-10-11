@@ -243,8 +243,13 @@ export default {
                 }
                 return false
             }
-            return true;
 
+            if(this.lambda_access_permission && this.user.role!=this.lambda_access_permission)
+            {
+                return false;
+            }
+
+            return true;
         }
     },
     data() {
@@ -257,6 +262,7 @@ export default {
             app_logo: app_logo,
             app_text: app_text,
             languages: window.lambda.languages,
+            lambda_access_permission: window.lambda.lambda_access_permission?window.lambda.lambda_access_permission:null,
             has_language: window.lambda.has_language,
             selectedLang: localStorage.getItem("lang") == null ? window.lambda.default_language : localStorage.getItem("lang"),
         };

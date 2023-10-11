@@ -55,6 +55,10 @@ export const rules = [{
         msg: 'Давхацсан утга оруулсан байна!'
     },
     {
+        type: 'uniqueKbProductSlug',
+        msg: 'Давхацсан слаг оруулсан байна!'
+    },
+    {
         type: 'lambda-account',
         msg: 'Давхацсан утга оруулсан байна!'
     }
@@ -63,6 +67,21 @@ export const rules = [{
 const unique = (rule, value, callback, baseUrl) => {
     axios.post(`${baseUrl}/lambda/krud/unique`, {
         table: ruleModel,
+        identityColumn: identityColumn,
+        identity: identity,
+        field: rule.field,
+        val: value
+    }).then(o => {
+        if (o.data.status) {
+            callback();
+        } else {
+            callback(new Error(o.data.msg));
+        }
+    })
+};
+const uniqueKb = (rule, value, callback, baseUrl) => {
+    axios.post(`${baseUrl}/lambda/krud/unique`, {
+        table: 'public.product_main',
         identityColumn: identityColumn,
         identity: identity,
         field: rule.field,
@@ -186,6 +205,12 @@ export const getRule = (rule, baseUrl) => {
         case 'unique':
             return {
                 validator: (rule, value, callback)=> unique(rule, value, callback, baseUrl),
+                trigger: 'blur',
+                // message: rule.msg
+            }
+        case 'uniqueKbProductSlug':
+            return {
+                validator: (rule, value, callback)=> uniqueKb(rule, value, callback, baseUrl),
                 trigger: 'blur',
                 // message: rule.msg
             }

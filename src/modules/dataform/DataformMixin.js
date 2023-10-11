@@ -64,6 +64,7 @@ export default {
             },
             currentStep: 0,
             step: {},
+            isKbForm: this.schemaID==325?1:0,
         }
     },
 
@@ -105,6 +106,7 @@ export default {
 
     watch: {
         src(val, oldValue) {
+            console.log('src changing')
             this.initForm()
         },
 
@@ -160,8 +162,8 @@ export default {
                     return true
                 }
             }
-            // else if (col.type == 'col') {
-            //     return col;
+                // else if (col.type == 'col') {
+                //     return col;
             // }
             else {
                 return false
@@ -227,8 +229,7 @@ export default {
         afterChange(model, val, oldValue) {
             doTrigger(model, val, this.model, this.schema, this.$refs, this.$Notice, this.editMode)
             if (this.do_render) {
-                if (val != oldValue)
-                {
+                if (val != oldValue) {
                     doFormula(this.formula, model, this.model, this.schema, this.rule, false)
                 }
             }
@@ -349,12 +350,13 @@ export default {
                         if (item.fillByUserField !== null && item.fillByUserField !== '' && item.fillByUserField !== undefined) {
                             this.setModel(item.model, window.init.user[item.fillByUserField], item.formType)
                         }
-                        if (this.isValid(item.param)) {
-                            if (item.param in this.$route.params) {
-                                let param = this.$route.params[item.param]
-                                if (param != 'null') {
-                                    Vue.set(this.$data.model, item.model, param)
-                                }
+                    }
+                    //hidden luu oruulsan bsan paramaas hidden hamaagui utgaa avnaa
+                    if (this.isValid(item.param)) {
+                        if (item.param in this.$route.params) {
+                            let param = this.$route.params[item.param]
+                            if (param != 'null') {
+                                Vue.set(this.$data.model, item.model, param)
                             }
                         }
                     }
@@ -543,8 +545,11 @@ export default {
                 Vue.set(this.$data.model, model, value)
             } else if (prop == 'sub-value') {
                 Vue.set(this.$data.model, model, value)
+                console.log('prop');
+                console.log(prop);
                 this.subFormFillData(model)
             } else {
+                console.log('prop -else');
                 let index = this.schema.findIndex(item => item.model == model)
 
                 if (index >= 0) {
@@ -584,7 +589,49 @@ export default {
                 this.onClose();
             }
         },
+        handleResetKb() {
+            this.handleReset[this.meta.model + '-' + this.schemaID]
+        },
+        handleSubmitKb(parentData,lang_id) {
+            this.setIdentityManual();
+            console.log(this.identity);
+            console.log("parentData:");
+            console.log(parentData);
+             if(!this.$data.model['title']) {
+                 this.$data.model['title'] = parentData['title'];
+             }
+            this.$data.model['slug'] = parentData['slug'];
+            this.$data.model['is_special'] = parentData['is_special'];
+            this.$data.model['order_id'] = parentData['order_id'];
+            this.$data.model['is_show_menu'] = parentData['is_show_menu'];
+            this.$data.model['lang_id'] = lang_id;
 
+            if (_.isEmpty(this.$data.rule)) {
+                if (this.subFormValidations.length >= 1) {
+                    this.validateWithSubForm()
+                } else {
+                    this.postData()
+                }
+            } else {
+                this.$refs[this.meta.model + '-' + this.schemaID].validate(valid => {
+                    if (valid) {
+                        if (this.subFormValidations.length >= 1) {
+                            this.validateWithSubForm()
+                        } else {
+                            this.postData()
+                        }
+                    } else {
+                        //auh дээр хэрэглэгдэж байгаа шүү
+                        this.$Notice.error({
+                            title: this.lang.informationIsIncomplete,
+                            desc: this.formValidationCustomText != '' ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
+                            , duration: 0
+                        })
+
+                    }
+                })
+            }
+        },
         handleSubmit(name) {
             this.setIdentityManual()
             if (_.isEmpty(this.$data.rule)) {
@@ -650,7 +697,24 @@ export default {
             if (this.isSubForm) {
                 this.$props.onSuccess(this.$data.model)
             } else {
-                this.asyncMode = true
+                if (this.isKbForm) {
+                    console.log('this.isKbForm:');
+                    console.log(this.isKbForm);
+
+                    if (this.$refs[`sf-kb-public.product`]) {
+                        if (this.$refs[`sf-kb-public.product`].length >= 1) {
+                            const clonedObject = { ...this.$data.model};
+                            this.$refs[`sf-kb-public.product`][0].$refs['kbmnform'].handleSubmitKb(clonedObject,2);
+                            this.$refs[`sf-kb-public.product`][0].$refs['kbenform'].handleSubmitKb(clonedObject,1);
+                        }
+                    }
+                }
+                this.asyncMode = true;
+                if (!this.editMode) {
+                   delete this.$data.model[this.identity];
+                }
+                console.log("this.submitUrl:");
+                console.log(this.submitUrl);
                 axios.post(this.submitUrl, this.$data.model)
                     .then(({data}) => {
                         if (data.status) {
@@ -717,8 +781,6 @@ export default {
                                 duration: 3,
                                 desc: e
                             })
-
-
                         }
 
                         this.asyncMode = false
@@ -726,7 +788,7 @@ export default {
                             this.$props.onError()
                         }
 
-                    })
+                    });
             }
         },
 
@@ -817,6 +879,28 @@ export default {
                     })
             }
         },
+        editModelBySlug(slug, lang) {
+           return axios.post(`${this.baseUrl}/lambda/krud/${this.$props.schemaID}/edit-slug/${slug}/${lang}`)
+                .then(({data}) => {
+                    if (data.status) {
+                        this.dataID = data.data.id;
+                        setIdentity(this.identity, data.data.id);
+                        this.model = {...this.model, ...data.data}
+                        if (this.ui && this.ui.hasOwnProperty('schema')) {
+                            this.setEditModel(this.ui.schema)
+                        }
+                        this.setUserConditionValues(false)
+                        this.setCustomData();
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    }
+                }).catch(error => {
+                   console.log(error.response.data.error);
+                   return 0;
+               })
+        },
 
         setHiddenValues(values) {
             values.map(item => {
@@ -824,6 +908,19 @@ export default {
             })
         },
 
+        subFormFillDataKB(subModel) {
+            console.log('KB SUB FORM');
+            console.log(subModel);
+            console.log(this.model.slug);
+            console.log(this.model.id);
+            if (this.$refs[`sf-kb-${subModel}`]) {
+                if (this.$refs[`sf-kb-${subModel}`].length >= 1) {
+                    if (this.model.slug) {
+                        this.$refs[`sf-kb-${subModel}`][0].editBySlug(this.model.slug);
+                    }
+                }
+            }
+        },
         subFormFillData(subModel) {
             if (this.$refs[`sf${subModel}`]) {
                 if (this.$refs[`sf${subModel}`].length >= 1) {
@@ -842,10 +939,14 @@ export default {
 
         setEditModel(items) {
             items.forEach(item => {
-                if (item.type == 'form' || item.type == 'Form' || item.formType == 'SubForm') {
+                if (item.type == 'form' || item.type == 'Form' || item.type == 'FormKb' || item.formType == 'SubForm') {
                     switch (item.formType) {
                         case 'SubForm':
-                            this.subFormFillData(item.model)
+                            if (item.type == 'FormKb') {
+                                this.subFormFillDataKB(item.model);
+                            } else {
+                                this.subFormFillData(item.model);
+                            }
                             break
                         case 'Switch':
                             if (this.model[item.model] == 1 || this.model[item.model] == 'true') {

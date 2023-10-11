@@ -1,7 +1,7 @@
 <template>
     <div class="user-control">
         <ul>
-            <li class="paper-notification">
+            <li class="paper-notification" v-if="!hideNotif">
                 <notif-widget :user="$user.id"/>
             </li>
 
@@ -20,7 +20,6 @@
                             <small>{{ $user.org_id ? $user.org_id : lang.loggedIn }}</small>
                         </div>
                         <ul>
-<!--                            FOR KB PURPOSE-->
 <!--                            <li>-->
 <!--                                <router-link to="/module/profile">-->
 <!--                                    <Icon type="ios-contact-outline"/>-->
@@ -32,12 +31,6 @@
 <!--                                    <Icon type="ios-key-outline"/>-->
 <!--                                    <span>{{lang.changePass}}</span>-->
 <!--                                </router-link>-->
-<!--                            </li>-->
-<!--                            <li v-if="$user.role==1 || $user.role==29">-->
-<!--                                <a href="/lambda/puzzle" target="_blank">-->
-<!--                                    <Icon type="ios-settings-outline"/>-->
-<!--                                    <span>{{lang.superAdminManagement}}</span>-->
-<!--                                </a>-->
 <!--                            </li>-->
                             <li>
                                 <a @click="logoutModal = true">
@@ -80,6 +73,7 @@ import {mapGetters} from "vuex";
 
 export default {
     name: "UserControl",
+    props:['hideNotif'],
     computed: {
         ...mapGetters({
             user: "user",
