@@ -1,7 +1,7 @@
 <template>
     <section class="canvas-aside">
         <div class="crud-page">
-            <div class="crud-page-body">
+            <div class="crud-page-body" style="padding: 10px 10px 10px 10px !important">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
                 </div>

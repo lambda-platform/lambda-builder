@@ -1,8 +1,15 @@
 <template>
     <div class="user-control">
         <ul>
-            <li class="paper-notification">
-                <notif-widget :user="$user.id"/>
+            <!--            <li class="paper-notification">-->
+            <!--                <notif-widget :user="$user.id"/>-->
+            <!--            </li>-->
+            <li class="paper-credit" v-if="$user && $user.credits && $user.credits>0">
+<span style="border: 1px dashed #2F55D4;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    background: #eee;"><h3> {{ $user.credits.toLocaleString() }} төгрөг</h3></span>
             </li>
 
             <li class="avatar-item">
@@ -10,8 +17,9 @@
                     <a href="javascript:void(0)" class="avatar">
                         <img src="/assets/lambda/images/avatar.png" alt="avatar">
                         <div class="avatar-name">
-                            <span>{{lang.welcome}}</span>
-                            <b>{{ $user.first_name ? $user.first_name : $user.login }} {{ $user.org_id ? '/' : '' }} {{ $user.org_id ? $user.org_id : '' }}</b>
+                            <span>{{ lang.welcome }}</span>
+                            <b>{{ $user.first_name ? $user.first_name : $user.login }} {{ $user.org_id ? '/' : '' }}
+                                {{ $user.org_id ? $user.org_id : '' }}</b>
                         </div>
                     </a>
                     <div class="header-profile" slot="content">
@@ -20,29 +28,28 @@
                             <small>{{ $user.org_id ? $user.org_id : lang.loggedIn }}</small>
                         </div>
                         <ul>
-<!--                            FOR KB PURPOSE-->
-<!--                            <li>-->
-<!--                                <router-link to="/module/profile">-->
-<!--                                    <Icon type="ios-contact-outline"/>-->
-<!--                                    <span>{{lang.personalInfo}}</span>-->
-<!--                                </router-link>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <router-link to="/module/password">-->
-<!--                                    <Icon type="ios-key-outline"/>-->
-<!--                                    <span>{{lang.changePass}}</span>-->
-<!--                                </router-link>-->
-<!--                            </li>-->
-<!--                            <li v-if="$user.role==1 || $user.role==29">-->
-<!--                                <a href="/lambda/puzzle" target="_blank">-->
-<!--                                    <Icon type="ios-settings-outline"/>-->
-<!--                                    <span>{{lang.superAdminManagement}}</span>-->
-<!--                                </a>-->
-<!--                            </li>-->
+                            <li>
+                                <router-link to="/module/profile">
+                                    <Icon type="ios-contact-outline"/>
+                                    <span>{{ lang.personalInfo }}</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/module/password">
+                                    <Icon type="ios-key-outline"/>
+                                    <span>{{ lang.changePass }}</span>
+                                </router-link>
+                            </li>
+                            <!--                            <li v-if="$user.role==2">-->
+                            <!--                                <a href="/lambda/puzzle" target="_blank">-->
+                            <!--                                    <Icon type="ios-settings-outline"/>-->
+                            <!--                                    <span>{{lang.superAdminManagement}}</span>-->
+                            <!--                                </a>-->
+                            <!--                            </li>-->
                             <li>
                                 <a @click="logoutModal = true">
                                     <Icon type="ios-log-out"/>
-                                    <span >{{lang.logout}}</span>
+                                    <span>{{ lang.logout }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -60,11 +67,11 @@
             <div style="text-align:center">
                 <a @click="logout()">
                     <Icon type="md-log-out"/>
-                    <span>{{common._logout}}</span>
+                    <span>{{ common._logout }}</span>
                 </a>
                 <a @click="cancel()">
                     <Icon type="md-refresh"/>
-                    <span>{{common._cancel}}</span>
+                    <span>{{ common._cancel }}</span>
                 </a>
             </div>
             <div slot="footer" style="display:none;">
