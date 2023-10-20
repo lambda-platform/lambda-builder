@@ -40,7 +40,7 @@
             </Poptip>
         </span>
 
-        <span v-for="item in params.customActions" :key="item.index">
+        <span v-for="item in params.customActions" :key="item.index" :style="item.show ? '' : 'display:none !important'">
             <Tooltip v-if="item.tooltip
             && (!('condition' in item)
             || params.data[item.condition.field]!=item.condition.value)"

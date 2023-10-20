@@ -510,7 +510,8 @@ export default {
         "dataNotFound": "Өгөгдөл сонгогдоогүй байна",
         "pleaseCompleteFirstLine": "Эхний мөрийг гүйцэд бөглөнө үү",
         "search": "Хайх",
-        "values": "Утга"
+        "values": "Утга",
+        "all": "Бүгд"
     },
     "dataGrid": {
         "infoCourt": "Мэдээлэл шүүх",

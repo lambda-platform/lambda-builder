@@ -1000,6 +1000,10 @@ export default {
                 if (typeof deletedField !== "undefined" || item.formType == "SubForm" || item.virtualColumn) {
                     return item;
                 }
+
+                if (item.formType == "CheckboxMulti") {
+                    this.relation.multiple = true;
+                }
             });
 
             //Sync added DB field

@@ -492,6 +492,15 @@ export default {
                 case 'TreeSelect':
                     Vue.set(this.$data.model, name, value)
                     break
+                case 'CheckboxMulti':
+                    if (value == '' || value === null) {
+                        Vue.set(this.$data.model, name, null)
+                    } else if (!isNaN(value)) {
+                        Vue.set(this.$data.model, name, value * 1)
+                    } else {
+                        Vue.set(this.$data.model, name, value)
+                    }
+                    break
                 default:
                     Vue.set(this.$data.model, name, value)
             }
@@ -800,6 +809,8 @@ export default {
         },
 
         editModel(id, editData) {
+            console.log('edit data:', editData);
+
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
@@ -978,7 +989,7 @@ export default {
             let selects = {}
 
             schema.map(item => {
-                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect') {
+                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType =='CheckboxMulti') {
                     if (item.relation.table) {
                         if (typeof selects[item.relation.table] === 'undefined') {
                             if (microserviceID !== undefined) {
