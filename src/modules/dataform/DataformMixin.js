@@ -809,8 +809,6 @@ export default {
         },
 
         editModel(id, editData) {
-            console.log('edit data:', editData);
-
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
@@ -941,8 +939,8 @@ export default {
             } else {
                 this.getOptionsByRelations('', this.relations)
             }
-
         },
+
         getSelectItem(item, selects) {
             if (item.relation.filterWithUser) {
                 if (!!item.relation.filterWithUser && item.relation.filterWithUser.constructor === Array) {
