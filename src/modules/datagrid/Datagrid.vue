@@ -287,13 +287,11 @@ export default {
         },
 
         async initFromServerData(baseUrl, customSchemaId) {
-
             if (customSchemaId) {
                 this.customShemaId = customSchemaId;
             } else {
                 this.customShemaId = null;
             }
-
 
             try {
                 let response = await axios.get(this.page_id ? `${baseUrl}/lambda/puzzle/schema/grid/${this.customShemaId ? this.customShemaId : this.$props.schemaID}?page_id=${this.page_id}` : `${baseUrl}/lambda/puzzle/schema/grid/${this.customShemaId ? this.customShemaId : this.$props.schemaID}`)
@@ -561,6 +559,17 @@ export default {
                 if (gridSchema.hasCheckbox) {
                     this.tableWidth += 32;
                 }
+            }
+
+            if(this.isNumbered === true){
+                this.$data.columns.push({
+                    headerName: '№',
+                    filter: false,
+                    floatingFilter: false,
+                    suppressMenu: true,
+                    width: 60,
+                    valueGetter: 'node.rowIndex + 1'
+                });
             }
 
             this.schema.forEach((item) => {
