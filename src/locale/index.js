@@ -2,10 +2,12 @@ import Vue from "vue";
 import VueI18n from 'vue-i18n'
 import mn_MN from "./mn_MN";
 import en_US from "./en_US";
+import ko_KR from "./ko_KR";
 
 const messages = {
     mn_MN,
     en_US,
+    ko_KR,
 }
 Vue.use(VueI18n)
 
@@ -15,7 +17,7 @@ export const i18n = new VueI18n({
     messages
 })
 
-const loadedLanguages = ['mn_MN', 'en_US'];
+const loadedLanguages = ['mn_MN', 'en_US', 'ko_KR'];
 
 export const setI18nLanguage = (lang) => {
     i18n.locale = lang
