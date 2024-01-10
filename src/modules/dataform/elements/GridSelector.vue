@@ -129,9 +129,12 @@ export default {
     },
 
     mounted() {
-        if(this.meta.GSOption.sourceGridUserCondition !== undefined && this.meta.GSOption.sourceGridUserCondition !== null && this.meta.GSOption.sourceGridUserCondition != ""){
-            this.user_condition = JSON.parse(this.meta.GSOption.sourceGridUserCondition)
+        if(this.meta.GSOption){
+            if(this.meta.GSOption.sourceGridUserCondition !== undefined && this.meta.GSOption.sourceGridUserCondition !== null && this.meta.GSOption.sourceGridUserCondition != ""){
+                this.user_condition = JSON.parse(this.meta.GSOption.sourceGridUserCondition)
+            }
         }
+
     },
 
     methods: {

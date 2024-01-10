@@ -774,19 +774,33 @@
                         </Col>
                     </Row>
 
+                    <Row >
+                        <Col>
+                            <label>Мэдээлэл харуулах загвар (Энд мэдээлэл оруулвал хүснэгт харагдахгүй!!!)  Жишээ:  Таны ID: {id}</label>
+                        </Col>
+                    </Row>
+
+                    <Row >
+                        <Col>
+
+                            <div class="grid-selector-info-template">
+                                <Input v-model="item.GSOption.infoTemplate" type="textarea" />
+                            </div>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                             <label>Хайлтын дээр харуулах тайлбар</label>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row >
                         <Col>
                             <ckeditor ref="ckeditor" :editor="editor" v-model="item.GSOption.sourceGridDescription"
                                       :config="editorConfig"></ckeditor>
                         </Col>
                     </Row>
-                    <br>
 
+                    <br>
                     <div>
                         <Row>
                             <Col>
@@ -851,8 +865,9 @@ export default {
                         'blockQuote', '|',
                         'insertTable', '|',
                         "indent", "outdent", '|',
-                        'mediaEmbed'], shouldNotGroupWhenFull: true
-                }
+                        'mediaEmbed', '|'], shouldNotGroupWhenFull: true
+                },
+                allowedContent:true,
             },
             dropPlaceholderOptions: {
                 className: 'drop-preview',
@@ -1025,6 +1040,7 @@ export default {
                     sourceGridTargetColumns: [],
                     sourceGridTitle: "",
                     sourceGridDescription: "",
+                    infoTemplate: null,
                     sourceGridUserCondition: "",
                     sourceGridParentBasedCondition: "",
                     sourceGridValueField: null
@@ -1328,6 +1344,7 @@ export default {
         removeQgisOption(index) {
             this.item.qgisOptions.attrList.splice(index, 1);
         },
+
     },
 
 };
