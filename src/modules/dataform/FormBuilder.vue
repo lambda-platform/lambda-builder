@@ -122,12 +122,12 @@
                     <div class='crud-config'>
                         <div class='crud-table'>
                             <Row class='crud-table-header'>
-                                <Col span='3'> {{ lang.model }}</Col>
+                                <Col span='2'> {{ lang.model }}</Col>
                                 <Col span='5'> {{ lang.displayName }}</Col>
-                                <Col span='5'> {{ lang.Form_type }}</Col>
-                                <Col span='2' class='center'> {{ lang.hide }}</Col>
-                                <Col span='4' class='center'> {{ lang.inactive }}</Col>
-                                <Col span='3' class='center'> {{ lang.translation }}</Col>
+                                <Col span='5'> Орчуулгын түлхүүр</Col>
+                                <Col span='4'> {{ lang.Form_type }}</Col>
+                                <Col span='3' class='center'> {{ lang.hide }}</Col>
+                                <Col span='3' class='center'> {{ lang.inactive }}</Col>
                                 <Col span='2' class='center'><span>...</span></Col>
                             </Row>
                             <div class='crud-table-body'>
@@ -391,7 +391,6 @@
                         </div>
                         <div class='body'>
                             <editor
-                                api-key="6tb1o5o4z4v2dhvr0ctybwoltlyqx4xx0emp7wp3datunsx8"
                                 v-model='dataform.email.body'
                                 :init="initEditorConfig"
                             />
@@ -495,21 +494,28 @@ export default {
         return {
             email_templates: window.init.email_templates,
             initEditorConfig: {
+                init_instance_callback: function (editor) {
+                    let freeTiny = document.querySelector('.tox-promotion');
+                    freeTiny.style.display = 'none';
+                },
                 max_height: 1200,
                 min_height: 600,
                 images_upload_url: '/lambda/krud/upload-tinymce',
                 plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount responsivefilemanager'
+                    "advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor",
+                    "searchreplace", "visualblocks", "code", "fullscreen", "responsivefilemanager",
+                    "insertdatetime", "media", "table", "help", "wordcount",
                 ],
                 toolbar:
-                    'undo redo | formatselect | bold italic backcolor | \
+                    "undo redo  | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | responsivefilemanager | removeformat | help | newsbutton | productbutton | otherbutton',
+                    bullist numlist outdent indent | responsivefilemanager | help | newsbutton | productbutton | otherbutton",
                 external_filemanager_path: "/vendor/filemanager/",
                 filemanager_title: "Responsive Filemanager",
-                external_plugins: {"filemanager": "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+                external_plugins: {
+                    filemanager:
+                        "/vendor/filemanager/plugin.min.js",
+                },
                 setup: (editor) => {
                     if (this.email_templates)
                         editor.ui.registry.addMenuButton('newsbutton', {
@@ -541,21 +547,28 @@ export default {
                 }
             },
             initEditorConfigWarn: {
+                init_instance_callback: function (editor) {
+                    let freeTiny = document.querySelector('.tox-promotion');
+                    freeTiny.style.display = 'none';
+                },
                 max_height: 1200,
                 min_height: 300,
                 images_upload_url: '/lambda/krud/upload-tinymce',
                 plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount responsivefilemanager'
+                    "advlist", "autolink", "lists", "link", "image", "charmap", "preview", "anchor",
+                    "searchreplace", "visualblocks", "code", "fullscreen", "responsivefilemanager",
+                    "insertdatetime", "media", "table", "help", "wordcount",
                 ],
                 toolbar:
-                    'undo redo | formatselect | bold italic backcolor | \
+                    "undo redo  | bold italic backcolor | \
                     alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | responsivefilemanager | removeformat | help | newsbutton | productbutton | otherbutton',
+                    bullist numlist outdent indent | responsivefilemanager | help | newsbutton | productbutton | otherbutton",
                 external_filemanager_path: "/vendor/filemanager/",
                 filemanager_title: "Responsive Filemanager",
-                external_plugins: {"filemanager": "/vendor/filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"},
+                external_plugins: {
+                    filemanager:
+                        "/vendor/filemanager/plugin.min.js",
+                },
                 setup: (editor) => {
                     if (this.email_templates)
                         editor.ui.registry.addMenuButton('newsbutton', {
@@ -643,8 +656,8 @@ export default {
                     body: null,
                     has_attach: 0,
                     has_custom_trigger: 0,
-                    custom_trigger:null,
-                    custom_trigger_function:null,
+                    custom_trigger: null,
+                    custom_trigger_function: null,
                 },
                 isWarnText: false,
                 warnText: ''
@@ -1165,7 +1178,7 @@ export default {
         },
 
         updateSyncItem(item) {
-            if (item)
+            if (item) {
                 if (item.formType == 'Image' || item.formType == 'File') {
                     let fileProps = {
                         isMultiple: false,
@@ -1177,6 +1190,7 @@ export default {
                         Vue.set(item, 'file', fileProps)
                     }
                 }
+            }
         },
 
         setBuilder(table) {
@@ -1202,7 +1216,6 @@ export default {
             })
 
             this.loading = false
-
         },
 
         setSchemaItem(item) {
@@ -1232,7 +1245,7 @@ export default {
                 prefix: '',
                 ifshowhide: '',
                 rules: [],
-                hasTranslation: false,
+                trKey: null,
                 hasUserId: false,
                 fillByUserField: null,
                 hasEquation: false,

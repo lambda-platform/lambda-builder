@@ -159,9 +159,11 @@ export default {
                 } else {
                     return true
                 }
-            } else if (col.type == 'col') {
-                return col;
-            } else {
+            }
+            // else if (col.type == 'col') {
+            //     return col;
+            // }
+            else {
                 return false
             }
         },
@@ -376,7 +378,6 @@ export default {
         },
 
         setUiSchemaFormItem(items) {
-
             items.forEach(item => {
                 if (item.type == 'form') {
                     this.setModel(item.model, item.default, item.formType)
@@ -491,6 +492,15 @@ export default {
                 case 'TreeSelect':
                     Vue.set(this.$data.model, name, value)
                     break
+                case 'CheckboxMulti':
+                    if (value == '' || value === null) {
+                        Vue.set(this.$data.model, name, null)
+                    } else if (!isNaN(value)) {
+                        Vue.set(this.$data.model, name, value * 1)
+                    } else {
+                        Vue.set(this.$data.model, name, value)
+                    }
+                    break
                 default:
                     Vue.set(this.$data.model, name, value)
             }
@@ -504,6 +514,12 @@ export default {
             })
         },
 
+        setPlaceholderLabel(item) {
+            if (window.lambda && window.lambda.has_language && item.trKeyPlaceholder != null && item.trKeyPlaceholder !== '') {
+                item.placeHolder = this.$t(item.trKeyPlaceholder);
+            }
+        },
+
         setMeta(item, subForm) {
             let s_index = this.schema.findIndex(schema => schema.model == item.model)
             let i = s_index >= 0 ? this.schema[s_index] : item
@@ -512,6 +528,7 @@ export default {
                 delete i['extra']
                 i.schemaID = this.$props.schemaID
             }
+            this.setPlaceholderLabel(i);
             return i
         },
 
@@ -733,6 +750,7 @@ export default {
             setIdentity(this.identity, null)
             this.schema.forEach(item => {
                 if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.model}`] != 'undefined') {
+                    console.log(this.$refs[`sf${item.model}`]);
                     this.$refs[`sf${item.model}`][0].reset()
                 }
                 //if (item.default != null && !this.editMode) {
@@ -921,8 +939,8 @@ export default {
             } else {
                 this.getOptionsByRelations('', this.relations)
             }
-
         },
+
         getSelectItem(item, selects) {
             if (item.relation.filterWithUser) {
                 if (!!item.relation.filterWithUser && item.relation.filterWithUser.constructor === Array) {
@@ -969,7 +987,7 @@ export default {
             let selects = {}
 
             schema.map(item => {
-                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect') {
+                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType =='CheckboxMulti') {
                     if (item.relation.table) {
                         if (typeof selects[item.relation.table] === 'undefined') {
                             if (microserviceID !== undefined) {

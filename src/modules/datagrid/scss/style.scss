@@ -10,7 +10,7 @@
 @import "excel_import_form";
 @import "print";
 @import "image";
-@import "_custom_element.css";
+@import "custom_element";
 @import "row_updater";
 @import "./theme/mini";
 
@@ -39,7 +39,7 @@
             .ag-theme-balham {
                 flex: 1;
             }
-            height: calc(100% - 40px) !important;
+            height: calc(100vh - 160px) !important;
             .number-cell{
                 text-align: right;
                 display: block;
@@ -47,12 +47,13 @@
         }
 
         .dg-footer {
-            height: 40px;
+            height: 48px;
             display: flex;
             align-items: center;
             padding: 0 10px;
             border-left: solid 1px #dedede;
             border-right: solid 1px #dedede;
+
             .dg-info {
                 color: black;
             }

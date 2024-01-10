@@ -24,6 +24,10 @@ export const elements = [
         component: () => import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox.vue'),
     },
     {
+        element: "CheckboxMulti",
+        component: () => import(/* webpackChunkName: "form-field-Checkbox-multiple" */'./CheckboxMulti.vue'),
+    },
+    {
         element: "CheckboxSmall",
         component: () => import(/* webpackChunkName: "form-field-Checkbox" */'./Checkbox-small.vue'),
     },

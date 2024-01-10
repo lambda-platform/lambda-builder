@@ -11,6 +11,7 @@
 <script>
 export default {
     props: ["model", "rule", "label", "meta"],
-
+    created() {
+    }
 };
 </script>

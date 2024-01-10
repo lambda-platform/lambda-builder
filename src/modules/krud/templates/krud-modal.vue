@@ -32,7 +32,7 @@
                     <Button v-if="permissions ? permissions.c : true" type="success"
                             @click="showModal" shape="circle" size="small"
                             icon="md-add">
-                        {{ lang._add }}}
+                        {{ lang._add }}
                     </Button>
                 </div>
 

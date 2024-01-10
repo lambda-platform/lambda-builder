@@ -168,7 +168,6 @@
 
 <script>
 import MenuItem from './MenuItem/MenuItem.vue'
-import {loadLanguageAsync} from "../../../locale/index";
 
 export default {
     components: {
@@ -280,17 +279,6 @@ export default {
     },
 
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
-
         getRoleTypes() {
             axios.get(`/lambda/puzzle/roles/type`).then(({data}) => {
                 this.types = data;

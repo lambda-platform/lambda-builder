@@ -70,6 +70,10 @@
         }
     }
 
+    .ag-cell-range-right{
+        border-right: 0 !important;
+    }
+
     //Full texted version
     &.full-text {
         .ag-cell {
@@ -107,7 +111,7 @@
                     border-right: 1px solid rgba(189, 195, 199, 0.39) !important;
                 }
 
-                .ag-cell-range-right, .ag-cell-focus {
+                .ag-cell-range-right.ag-cell-range-selected, .ag-cell-focus {
                     border-right: solid 1px #0091ea !important;
 
                     &:focus {
@@ -174,7 +178,7 @@
                     border-right: 1px solid rgba(189, 195, 199, 0.39);
                 }
 
-                .ag-cell-range-right, .ag-cell-focus {
+                .ag-cell-range-right.ag-cell-range-selected, .ag-cell-focus {
                     border-right: solid 1px #0091ea !important;
 
                     &:focus {

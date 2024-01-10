@@ -28,9 +28,14 @@
                             </li>
 
                             <li>
-                                <label>{{ lang.Placeholder }}</label>
+                                <label>Placeholder</label>
                                 <Input v-model="item.placeHolder"
                                        :placeholder="item.placeHolder == '' ? item.label : item.placeHolder"/>
+                            </li>
+
+                            <li>
+                                <label>Placeholder - Орчуулгын түлхүүр</label>
+                                <Input v-model="item.trKeyPlaceholder" placeholder="Орчуулгын түлхүүр"/>
                             </li>
 
                             <li>
@@ -168,7 +173,7 @@
             </TabPane>
 
             <TabPane :label="lang.configureTheData"
-                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio'  || item.formType == 'RadioWithThumb' || item.formType == 'AdminMenu' || item.formType == 'FooterButton'">
+                     v-if="item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'Radio'  || item.formType == 'RadioWithThumb' || item.formType == 'AdminMenu' || item.formType == 'FooterButton' || item.formType == 'CheckboxMulti'">
                 <Row type="flex">
                     <Col span="24">
                         <div class="title">
@@ -178,7 +183,7 @@
                             </h3>
                             <h3>
                                 {{ lang.Choose_multiple_values }} /multiple/:
-                                <i-switch v-model="item.relation.multiple" size="small"></i-switch>
+                                <i-switch v-model="item.relation.multiple" :disabled="item.formType == 'CheckboxMulti' ? true : false" size="small"></i-switch>
                             </h3>
                         </div>
 
@@ -1112,7 +1117,7 @@ export default {
                 'Trigger_load_time', 'Example_data_returned_server', 'Successful', 'URL_call_information_link', 'Value_table', 'Value_return_field',
                 'Geographic_settings', 'attribute', 'properties', 'Geometric_type', 'point', 'line', 'polygon', 'length_center', 'latitude_center', 'Map_magnification',
                 'Background_map', 'Google_Street', 'Google_Space', 'Open_Street_Map', 'Check_overlap_area', 'Feature_Class_link', 'Search_field', 'Search_value_field',
-                'Success_message', 'Error_message', 'please_enter_value', 'values', '_delete',];
+                'Success_message', 'Error_message', 'please_enter_value', 'values', '_delete', 'all',];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;

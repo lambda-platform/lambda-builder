@@ -14,8 +14,7 @@
                         @addChild="addChild"
                         @showIconSelector="showIconSelector"
                         @deleteChild="deleteChild"
-                        :cruds="cruds">
-                    </MenuItem>
+                        :cruds="cruds"/>
                 </ul>
             </div>
         </div>
@@ -118,7 +117,6 @@ export default {
                 if (val.length > 0) {
                     this.ignoreChange = true;
                     this.changeValue();
-
                     let height = jQuery("#sortable-list").height();
                     jQuery("#sort-container").height(height + 20);
                 } else {
@@ -132,7 +130,6 @@ export default {
             if (!value) {
                 this.ignoreChange = false;
                 this.items = [];
-
                 Vue.set(this.model.form, this.model.component, undefined);
             }
         },
@@ -141,13 +138,15 @@ export default {
     methods: {
         setIcon(icon, isSVG, isClass) {
             if (isClass) {
-                Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
+                console.log(isClass, icon, this.iconMenuIndex);
+
                 if (this.iconMenuIndex.length >= 2) {
                     let itemIndex = this.iconMenuIndex[0];
                     this.iconMenuIndex.splice(0, 1);
                     this.items[itemIndex] = this.setIconFind(this.items[itemIndex], this.iconMenuIndex, icon, isSVG, isClass);
+                } else {
+                    Vue.set(this.items[this.iconMenuIndex[0]], "icon", icon);
                 }
-
                 return false;
             }
 
@@ -173,6 +172,8 @@ export default {
 
         setIconFind(item, childIndexs, icon, isSVG, isClass) {
             if (isClass) {
+                console.log(childIndexs);
+
                 Vue.set(item.children[childIndexs[0]], "icon", icon);
                 return item;
             }
@@ -206,6 +207,7 @@ export default {
                 link_to: null,
                 url: null,
                 title: null,
+                key: null,
                 icon: null,
                 svg: null,
                 children: [],
@@ -307,10 +309,17 @@ export default {
                         'font-size': '1.1em'
                     }
                 },
+
                 onChange: (cEl) => {
                     let pre_data = jQuery('#sortable-list').sortableListsToHierarchy();
+                    console.log('I am changed')
+                    console.log("pre data:", pre_data);
+
                     Vue.set(this.$data, "destroy", true);
                     Vue.set(this.$data, "items", pre_data);
+
+                    console.log('items: ', this.items);
+
                     this.clearList()
                     setTimeout(() => {
                         Vue.set(this.$data, "destroy", false);
@@ -331,8 +340,10 @@ export default {
         },
 
         initTree() {
-            if (this.model.form[this.model.component])
+            if (this.model.form[this.model.component]) {
                 Vue.set(this.$data, "items", JSON.parse(this.model.form[this.model.component]));
+            }
+
             setTimeout(() => {
                 let height = jQuery("#sortable-list").height();
                 jQuery("#sort-container").height(height - 20);

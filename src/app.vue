@@ -138,6 +138,15 @@
                     </router-link>
                 </li>
                 <li class="divider"></li>
+                <li class="sub-title">
+                    <span>ХЭЛНИЙ ТОХИРГОО</span>
+                </li>
+                <li v-if="accessAdminModule">
+                    <router-link to="/locale">
+                        <i class="ti-text"></i>
+                        <span>Хэлний тохиргоо</span>
+                    </router-link>
+                </li>
             </ul>
             <div slot="aside-bottom">
                 <ul>
@@ -187,7 +196,6 @@ export default {
         }),
         lang() {
             const labels = [
-
                 'data_recording_environment',
                 '_form',
                 'table',
@@ -243,7 +251,6 @@ export default {
                 return false
             }
             return true;
-
         }
     },
     data() {
@@ -257,32 +264,33 @@ export default {
             app_text: app_text,
             languages: window.lambda.languages,
             has_language: window.lambda.has_language,
-            selectedLang: localStorage.getItem("lang") == null ? window.lambda.default_language : localStorage.getItem("lang"),
+            selectedLang: (localStorage.getItem("lang") == null || localStorage.getItem("lang") == undefined) ? window.lambda.default_language : localStorage.getItem("lang"),
         };
     },
     components: {},
 
     beforeMount() {
         if (this.selectedLang !== "mn_MN") {
-            if(this.selectedLang === "mn_MN" || this.selectedLang === "en_US"){
+            if (this.selectedLang === "mn_MN" || this.selectedLang === "en_US") {
                 loadLanguageAsync(this.selectedLang);
             } else {
                 loadLanguageAsync("mn_MN");
             }
-
         }
     },
-    methods: {
 
+    methods: {
         switchLanguage(val) {
             this.selectedLang = val;
             loadLanguageAsync(val);
         },
+
         logout() {
             axios.post("/auth/logout", {}).then(() => {
                 window.location = "/auth/login";
             });
         },
+
         cancel() {
             this.$data.logoutModal = false;
         }

@@ -63,14 +63,16 @@
             </div>
 
             <div class="dg-footer">
-                <div class="dg-info">
+                <slot name="dg-footer-start"></slot>
+                <div class="dg-info" v-if="!hideInfo">
                     {{ lang.total }} : {{ info.total }}
                     <span v-if="aggregations.forumlaResult != ''">| {{ aggregations.forumlaResult }}</span>
                 </div>
-
+                <slot name="dg-footer-mid"></slot>
                 <Page v-if="!this.isClient" size="small" :current="query.currentPage"
                       :page-size="query.paginate"
-                      :total="info.total" @on-change="changePage"></Page>
+                      :total="info.total" @on-change="changePage"/>
+                <slot name="dg-footer-end"></slot>
             </div>
         </div>
 
@@ -135,7 +137,6 @@
         <GridRowUpdate v-if="template == 0 || template==2"
                        :permissions="permissions" :model="filterModel" :schema="schema" :url="url" :inFilter="false"
                        :schemaID="schemaID"/>
-
     </div>
 </template>
 
@@ -202,7 +203,8 @@ export default {
         "page_id",
         "actionvisibility",
         "gridSelector",
-        "url"
+        "url",
+        "hideInfo",
     ],
     computed: {
         // ...mapGetters({
@@ -217,6 +219,13 @@ export default {
                 return obj;
             }, {});
         },
+
+        hasLang() {
+            if (window.lambda && window.lambda.has_language) {
+                return window.lambda.has_language;
+            }
+            return false;
+        }
     },
 
     components: {
@@ -278,13 +287,11 @@ export default {
         },
 
         async initFromServerData(baseUrl, customSchemaId) {
-
             if (customSchemaId) {
                 this.customShemaId = customSchemaId;
             } else {
                 this.customShemaId = null;
             }
-
 
             try {
                 let response = await axios.get(this.page_id ? `${baseUrl}/lambda/puzzle/schema/grid/${this.customShemaId ? this.customShemaId : this.$props.schemaID}?page_id=${this.page_id}` : `${baseUrl}/lambda/puzzle/schema/grid/${this.customShemaId ? this.customShemaId : this.$props.schemaID}`)
@@ -316,7 +323,6 @@ export default {
             } else {
                 gridSchema = await this.initFromServerData(baseUrl, customSchemaId);
             }
-
 
             this.model = gridSchema.model;
             this.template = gridSchema.template;
@@ -547,11 +553,23 @@ export default {
                         }
                     });
                 });
+
                 this.$data.init = true;
 
                 if (gridSchema.hasCheckbox) {
                     this.tableWidth += 32;
                 }
+            }
+
+            if(this.isNumbered === true){
+                this.$data.columns.push({
+                    headerName: '№',
+                    filter: false,
+                    floatingFilter: false,
+                    suppressMenu: true,
+                    width: 60,
+                    valueGetter: 'node.rowIndex + 1'
+                });
             }
 
             this.schema.forEach((item) => {
@@ -647,6 +665,14 @@ export default {
             this.fetchData();
         },
 
+        getLabel(item) {
+            if (this.hasLang && item.trKey != null && item.trKey !== '') {
+                return this.$t(item.trKey);
+            }
+
+            return item.label ? item.label : `[${item.model}]`
+        },
+
         setColumn(item) {
             //set post models -- hidden could be posted
             if (isValid(item.editable) && (isValid(item.editable) && item.editable.shouldPost)) {
@@ -656,7 +682,7 @@ export default {
             //if not hidden the set properties
             if (!item.hide) {
                 let colItem = {
-                    headerName: item.label === "" ? item.model : item.label,
+                    headerName: this.getLabel(item),
                     field: item.model,
                     suppressNavigable: true,
                     cellClass: 'no-border',

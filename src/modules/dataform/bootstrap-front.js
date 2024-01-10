@@ -1,4 +1,4 @@
-// import Vue from "vue"
+import Vue from "vue"
 import Multiselect from 'vue-multiselect'
 import axios from 'axios';
 import lodash from 'lodash';

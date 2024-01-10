@@ -142,7 +142,17 @@ export default {
         "instructionsUse": "Ашиглах заавар",
         "hayg": "Монгол улс, Улаанбаатар хот, Сүхбаатар дүүрэг 9-р хороо, их тойруу 54, Компьютер Молл, 8 давхар, 8002 тоот",
         "plseResUrPassUsingUrRegisteredEmail": "Та өөрийн бүртгэлтэй И-мэйл хаягаа ашиглан нууц үгээ сэргээнэ үү?",
-        "downloadAppHere": "Эндээс Апп татаарай"
+        "downloadAppHere": "Эндээс Апп татаарай",
+
+        "learningManagementSystem": "Сургалтын удирдлагын систем",
+        "amjilt": "Амжилт",
+        "system_features": "Системийн боломжууд",
+        "ebs": "ЕБС",
+        "web_site_data_monitoring": "Вэб сайтын мэдээлэл хяналт",
+        "training_data_statistics": "Сургалтын мэдээллийн статистик",
+        "schedule_report": "Цагийн хуваарийн тайлан",
+        "track_by_keyword": "Түлхүүр үгээр хянах",
+        "to_calculate_the_program_choice_of_teachers_and_students": "Багш сурагчдын хөтөлбөр сонголтыг тооцоолох",
     },
     "agent_wizard": {
         "confirm_registration_information": "Бүртгэлийн мэдээлэл баталгаажуулах",
@@ -500,7 +510,8 @@ export default {
         "dataNotFound": "Өгөгдөл сонгогдоогүй байна",
         "pleaseCompleteFirstLine": "Эхний мөрийг гүйцэд бөглөнө үү",
         "search": "Хайх",
-        "values": "Утга"
+        "values": "Утга",
+        "all": "Бүгд"
     },
     "dataGrid": {
         "infoCourt": "Мэдээлэл шүүх",
@@ -953,5 +964,16 @@ export default {
         "download_file": "Excel файлаар татах",
         "excelUpload": "Excel файлаас өгөгдөл оруулах"
     },
+    // "custom": {
+    //     "learningManagementSystem": "Сургалтын удирдлагын систем",
+    //     "amjilt": "Амжилт",
+    //     "system_features": "Системийн боломжууд",
+    //     "ebs": "ЕБС",
+    //     "web_site_data_monitoring": "Вэб сайтын мэдээлэл хяналт",
+    //     "training_data_statistics": "Сургалтын мэдээллийн статистик",
+    //     "schedule_report": "Цагийн хуваарийн тайлан",
+    //     "track_by_keyword": "Түлхүүр үгээр хянах",
+    //     "to_calculate_the_program_choice_of_teachers_and_students": "Багш сурагчдын хөтөлбөр сонголтыг тооцоолох",
+    // },
     i: {...iviewLocale.i}
 }

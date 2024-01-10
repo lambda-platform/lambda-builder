@@ -70,8 +70,6 @@
 </template>
 
 <script>
-import {loadLanguageAsync} from "../locale/index";
-
 export default {
     name: "UserControl",
     data() {
@@ -91,16 +89,8 @@ export default {
             }
         };
     },
+
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
         logout() {
             axios.post("/auth/logout", {}).then(o => {
                 window.location = "/auth/login";
@@ -110,6 +100,7 @@ export default {
             this.$data.logoutModal = false;
         }
     },
+
     computed: {
         lang() {
             const labels = ['systemAdministrator', 'personalInformation', 'changePassword', 'settings', 'logOut', 'projectList'];
@@ -118,6 +109,7 @@ export default {
                 return obj;
             }, {});
         },
+
         common() {
             const labels = ['logout', 'cancel'];
             return labels.reduce((obj, key, i) => {
@@ -126,6 +118,7 @@ export default {
                 return obj;
             }, {});
         },
+
         userName() {
             return window.init.user.last_name + ' ' + window.init.user.first_name;
         }

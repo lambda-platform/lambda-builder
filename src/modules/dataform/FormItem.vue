@@ -1,12 +1,15 @@
 <template>
     <Row :class="`crud-table-row ${ expanded ? 'active' : ''}`" v-on:dblclick="expanded = !expanded">
-        <Col span="5">
+        <Col span="2">
             <strong>{{ item.model }}
                 <small class="key">{{ item.key != "" ? `[${item.key}]` : '' }}</small>
             </strong>
         </Col>
         <Col span="5">
             <Input v-model="item.label" :placeholder="item.model" :disabled="disabled"/>
+        </Col>
+        <Col span="5">
+            <Input v-model="item.trKey" placeholder="түлхүүр" :disabled="disabled"/>
         </Col>
         <Col span="4">
             <Select v-model="item.formType" :placeholder="lang._type" clearable filterable :disabled="disabled"
@@ -16,16 +19,13 @@
                 </Option>
             </Select>
         </Col>
-        <Col span="2" class="center">
+        <Col span="3" class="center">
             <i-switch v-model="item.hidden" size="small" :disabled="disabled" @on-change="setHiddenProp"></i-switch>
         </Col>
-        <Col span="2" class="center">
+        <Col span="3" class="center">
             <i-switch v-model="item.disabled" size="small" :disabled="disabled"></i-switch>
         </Col>
         <Col span="2" class="center">
-            <i-switch v-model="item.hasTranslation" size="small" :disabled="disabled"></i-switch>
-        </Col>
-        <Col span="3" class="center">
             <a href="javascript:void(0)"
                :class="`expand-toggle ${ expanded ? 'active' : ''} ${ disabled ? 'disabled' : '' }`"
                @click="expanded = !expanded" :disabled="disabled">

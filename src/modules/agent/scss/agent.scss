@@ -112,7 +112,7 @@
 }
 
 .user-grid-wrapper{
-    height: calc(100% - 80px);
+    height: calc(100vh - 150px)!important;
     overflow-y: auto;
 }
 

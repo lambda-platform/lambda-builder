@@ -4,22 +4,13 @@
 
 <script>
 import listView from "../../../components/listview.vue";
-import {loadLanguageAsync} from "../../../locale/index";
 
 export default {
     components: {
         "list-view": listView
     },
     methods: {
-        beforeMount() {
-            if (this.selectedLang != "mn") {
-                loadLanguageAsync(this.selectedLang);
-            }
-        },
-        switchLanguage(val) {
-            this.selectedLang = val;
-            loadLanguageAsync(val);
-        },
+
     },
     computed: {
         lang() {

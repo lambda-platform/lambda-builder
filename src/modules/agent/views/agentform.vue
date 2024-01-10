@@ -23,10 +23,12 @@
             <div slot="tool">
             </div>
         </paper-header>
-        <section class="page-agent-form">
-            <dataform v-if="type == 'profile'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_profile" :editMode="editMode" :do_render="editMode" :onReady="editUser" :onSuccess="onSuccess"/>
-            <dataform v-if="type == 'password'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_password" :editMode="editMode" :do_render="editMode" a :onReady="editUser" :onSuccess="onSuccess"/>
-        </section>
+        <div class="crud-page-body">
+            <section class="page-agent-form">
+                <dataform v-if="type == 'profile'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_profile" :editMode="editMode" :do_render="editMode" :onReady="editUser" :onSuccess="onSuccess"/>
+                <dataform v-if="type == 'password'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_password" :editMode="editMode" :do_render="editMode" a :onReady="editUser" :onSuccess="onSuccess"/>
+            </section>
+        </div>
     </section>
 </template>
 

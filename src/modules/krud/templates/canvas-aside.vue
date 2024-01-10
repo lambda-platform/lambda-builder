@@ -20,9 +20,11 @@
 
                         <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
                             <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
+
                             <span v-if="permissions ? permissions.c : true" class="divider"></span>
                             <Button v-if="permissions ? permissions.c : true"
-                                    @click="openSlidePanel = true; editMode = false;" type="success" shape="circle" size="small"
+                                    @click="openSlidePanel = true; editMode = false;" type="success" shape="circle"
+                                    size="small"
                                     icon="md-add">
                                 {{ lang._add }}
                             </Button>
@@ -110,7 +112,7 @@ export default {
         return {
             form_width: '800px',
             openSlidePanel: false,
-            exportLoading: false
+            exportLoading: false,
         };
     },
     created() {
@@ -124,7 +126,8 @@ export default {
         lang() {
             const labels = [
                 '_add',
-                'Information_viewing_history', 'excelUpload'
+                'Information_viewing_history',
+                'excelUpload'
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('crud.' + labels[i]);

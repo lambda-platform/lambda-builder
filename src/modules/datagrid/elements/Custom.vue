@@ -14,7 +14,7 @@ export default Vue.extend({
                     let txt = render.label != null ? render.label : '';
                     let icon = render.icon != null ? `<i class="${render.icon}"></i>` : '';
                     let img = render.image != null ? `<img src="${render.image}" />` : '';
-                    return `<span style="${render.color != '' ? 'color: ' + render.color : ''}">${txt} ${icon} ${img}</span>`
+                    return `<div class="ag-grid-lambda-custom-el" style="${render.color != '' ? 'color: ' + render.color : ''}">${icon} ${txt}  ${img}</div>`
                 } else {
                     return this.params.value;
                 }

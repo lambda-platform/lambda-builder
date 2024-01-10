@@ -1,11 +1,11 @@
 /**
  * Created by n0m4dz on 2/6/17.
  */
-import "./bootstrap"
+import "./bootstrap-front"
 import Dataform from './Dataform.vue'
 
 const components = {
-    "dataform-front": Dataform,
+    "dataform": Dataform,
 }
 
 const install = function (Vue, options) {
