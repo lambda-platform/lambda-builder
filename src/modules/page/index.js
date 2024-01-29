@@ -26,7 +26,9 @@ const install = (Vue, options) => {
         mounted() {
             this.$nextTick(() => {
                 if (!this.$parent) {
-                    this.$router.app.$router.addRoutes(routes);
+                    if(this.$router && this.$router.app && this.$router.app.$router){
+                        this.$router.app.$router.addRoutes(routes);
+                    }
                    //  this.routes.forEach(route=>{
                    //      this.$router.app.$router.addRoute(route);
                    //  });

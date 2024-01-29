@@ -76,6 +76,7 @@ export default {
                 this.instance = null;
             }
             var dom = this.$el;
+
             var wrapper = dom.parentElement;
             dom.style.height = wrapper.offsetHeight + 'px';
 

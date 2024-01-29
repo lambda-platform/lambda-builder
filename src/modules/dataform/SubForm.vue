@@ -159,7 +159,7 @@
                         <Input type='text' v-model='f.sourceGridUserCondition'
                                placeholder='Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл' />
                         <br>
-                        <label>Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}]</label>
+                        <label>Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}] эсвэл [{"parent_sub":"","sub_filed":"", "grid_field":"", "message":""}]</label>
                         <Input type='text' v-model='f.sourceGridParentBasedCondition'
                                placeholder='Формоос авах шүүлтүүр' />
                     </Col>
