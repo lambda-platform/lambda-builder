@@ -93,7 +93,6 @@ export default {
                 return obj
             }, {})
         }
-
     },
 
     created() {
@@ -160,8 +159,8 @@ export default {
                     return true
                 }
             }
-            // else if (col.type == 'col') {
-            //     return col;
+                // else if (col.type == 'col') {
+                //     return col;
             // }
             else {
                 return false
@@ -762,8 +761,8 @@ export default {
             })
             this.setHiddenItemModel(this.schema)
             this.setCustomData()
-
         },
+
         setIdentityManual() {
             setIdentity(this.identity, this.model[this.identity])
         },
@@ -809,6 +808,8 @@ export default {
         },
 
         editModel(id, editData) {
+            console.log('I am called');
+
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
@@ -987,7 +988,7 @@ export default {
             let selects = {}
 
             schema.map(item => {
-                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType =='CheckboxMulti') {
+                if (item.formType == 'Radio' || item.formType == 'Select' || item.formType == 'ISelect' || item.formType == 'TreeSelect' || item.formType == 'CheckboxMulti') {
                     if (item.relation.table) {
                         if (typeof selects[item.relation.table] === 'undefined') {
                             if (microserviceID !== undefined) {

@@ -4,7 +4,7 @@
             <div class="crud-page-header">
 
                 <div class="crud-page-header-left">
-                    <h3>{{title}}</h3>
+                    <h3>{{ title }}</h3>
                     <slot name="nav"></slot>
                 </div>
 
@@ -35,7 +35,7 @@ export default {
     mixins: [mixins],
     mounted() {
         setTimeout(() => {
-            this.$refs.form.editModel(this.$props.id?this.$props.id:1);
+            this.$refs.form.editModel(this.$props.id ? this.$props.id : 1);
         }, 500);
     },
 

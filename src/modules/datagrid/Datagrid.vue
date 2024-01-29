@@ -561,7 +561,7 @@ export default {
                 }
             }
 
-            if(this.isNumbered === true){
+            if (this.isNumbered === true) {
                 this.$data.columns.push({
                     headerName: '№',
                     filter: false,
@@ -989,7 +989,7 @@ export default {
                     }
                 }
 
-                // Image column
+                // Base64 Image column
                 if (isValid(item.gridType) && (item.gridType == "ImageBase64")) {
                     colItem.cellRendererFramework = ImageBase64
                     colItem.cellRendererParams = {}
@@ -1005,6 +1005,8 @@ export default {
                         return val;
                     };
                 }
+
+                //Datetime column
                 if (isValid(item.gridType) && item.gridType == "Datetime") {
                     colItem.valueFormatter = (data) => {
                         let val = moment(data.value).format('YYYY-MM-DD  HH:mm:ss');
@@ -1019,6 +1021,7 @@ export default {
                 if (isValid(item.gridType) && item.gridType == "Number") {
                     colItem.cellRendererFramework = Number
                     colItem.cellClass = "number-cell"
+                    colItem.comparator = (valueA, valueB) => valueA - valueB;
                 }
 
                 //Radio column
