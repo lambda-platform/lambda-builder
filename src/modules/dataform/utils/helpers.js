@@ -25,6 +25,7 @@ export const generateItems = (count, creator) => {
 
 export const getTableMeta = (table)=>{
     if(table) {
+        table = table.split(".").pop();
         if (window.init.dbSchema.tableMeta[table]) {
             return window.init.dbSchema.tableMeta[table]
         }
