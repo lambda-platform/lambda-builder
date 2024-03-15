@@ -1493,8 +1493,6 @@ export default {
 
         saveForm() {
             this.syncSchema()
-            console.log(this.dataform);
-
             let data = {
                 name: this.formName,
                 schema: JSON.stringify(this.dataform)

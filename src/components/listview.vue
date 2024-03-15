@@ -242,15 +242,9 @@ export default {
         filterList($event) {
             let vm = this;
             let q = $event.target.value;
-            if (q != "") {
-                let filtered = vm.listData.filter(
-                    (f) => {
-                        f.name
-                            .toString()
-                            .toLowerCase()
-                            .indexOf(q.toLowerCase()) >= 0
-                    }
-                );
+
+            if (q !== "") {
+                let filtered = vm.listData.filter(f => f.name.toString().toLowerCase().includes(q.toLowerCase()));
                 vm.filteredList = filtered.map(o => ({...o}));
             } else {
                 vm.filteredList = vm.listData.map(o => ({...o}));

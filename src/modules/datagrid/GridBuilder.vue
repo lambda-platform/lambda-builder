@@ -215,7 +215,7 @@
 
 
                 <div class="gb-control-item">
-                    <label>{{ lang.theme }}</label>
+                    <label>{{ lang.theme }} {{datagrid.gridTheme}}</label>
                     <Select v-model="datagrid.gridTheme" :placeholder="lang.theme"
                             filterable>
                         <Option v-for="theme in gridThemes" :value="theme" :key="theme.index">{{ theme }}</Option>
