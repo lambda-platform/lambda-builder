@@ -227,12 +227,12 @@
 
             <div class='crud-table'>
                 <Row class='crud-table-header'>
-                    <Col span='3'> {{ lang.model }}</Col>
-                    <Col span='4'> {{ lang.displayName }}</Col>
-                    <Col span='5'> {{ lang.Form_type }}</Col>
-                    <Col span='2' class='center'> {{ lang.hide }}</Col>
-                    <Col span='4' class='center'> {{ lang.inactive }}</Col>
-                    <Col span='3' class='center'> {{ lang.translation }}</Col>
+                    <Col span='2'> {{ lang.model }}</Col>
+                    <Col span='5'> {{ lang.displayName }}</Col>
+                    <Col span='5'> {{ lang.translation }}</Col>
+                    <Col span='4'> {{ lang.Form_type }}</Col>
+                    <Col span='3' class='center'> {{ lang.hide }}</Col>
+                    <Col span='3' class='center'> {{ lang.inactive }}</Col>
                     <Col span='2' class='center'>
                         <span>...</span>
                     </Col>

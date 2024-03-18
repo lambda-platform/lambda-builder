@@ -229,12 +229,12 @@
                         {{ extraButton.title }}
                     </Button>
                     <Button type='info' :loading='asyncMode' @click="handleSubmit(meta.model +'-'+ schemaID)">
-                    <span v-if='!asyncMode'>
-                        {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
-                    </span>
+                        <span v-if='!asyncMode'>
+                            {{ save_btn_text !== 'Хадгалах' && save_btn_text != '' ? save_btn_text : lang.save }}
+                        </span>
                         <span v-else>
-                        {{ lang.pleaseWait }}
-                    </span>
+                            {{ lang.pleaseWait }}
+                        </span>
                     </Button>
 
                     <Button @click="handleReset(meta.model +'-'+ schemaID)" v-if='!editMode && !disableReset'
