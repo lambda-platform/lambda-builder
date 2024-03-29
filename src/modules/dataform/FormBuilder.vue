@@ -967,26 +967,27 @@ export default {
 
         //Formula functions
         addFormula() {
+            console.log("hihihi")
             this.$refs['formula'].validate(valid => {
                 if (valid) {
                     //for old old version. it will use when edit
-                    if (this.dataform.formula === undefined) {
-                        this.dataform = {
-                            ...this.dataform,
-                            formula: []
-                        }
+                    if (this.dataform.formula === undefined || this.dataform.formula === null) {
+                        this.dataform["formula"] = [];
                     }
 
                     this.dataform.formula.push({
                         targets: this.formulaForm.targets,
                         template: this.formulaForm.template,
                         form: this.formulaForm.form
-                    })
+                    });
+
                     this.formulaForm = {
                         targets: [],
                         template: '',
                         form: 'main'
                     }
+
+                    console.log("hihihi 55")
                 }
             })
         },
