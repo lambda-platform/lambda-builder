@@ -967,7 +967,7 @@ export default {
 
         //Formula functions
         addFormula() {
-            console.log("hihihi")
+
             this.$refs['formula'].validate(valid => {
                 if (valid) {
                     //for old old version. it will use when edit
