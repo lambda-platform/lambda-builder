@@ -986,8 +986,6 @@ export default {
                         template: '',
                         form: 'main'
                     }
-
-                    console.log("hihihi 55")
                 }
             })
         },
