@@ -1431,7 +1431,11 @@ export default {
                         this.$Notice.success({
                             title: this.lang.infoDeleted
                         });
-                        this.data.splice(index, 1);
+
+                        //check later ----- Tseegii
+                        // this.data.splice(index, 1);
+                        // this.gridOptions.rowData.splice(index, 1);
+
                         this.info.total--;
                         setTimeout(() => {
                             this.delLoading = false;

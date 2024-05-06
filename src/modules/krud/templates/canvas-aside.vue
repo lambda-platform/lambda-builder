@@ -64,6 +64,7 @@
                               :fnEdit="edit"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
+                              :hideInfo="$props.hideInfo ? $props.hideInfo : false"
                               :actions="$props.actions"
                               :dblClick="$props.dbClickAction"
                               :onRowSelect="onRowSelectedEvent"
@@ -72,6 +73,21 @@
                               :page_id="page_id"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
                               :user_condition="user_condition ? user_condition.gridCondition : null">
+                        <template slot="tooloptions">
+                            <slot name="dg-footer-start"></slot>
+                        </template>
+
+                        <template slot="dg-footer-start">
+                            <slot name="dg-footer-start"></slot>
+                        </template>
+
+                        <template slot="dg-footer-mid">
+                            <slot name="dg-footer-mid"></slot>
+                        </template>
+
+                        <template slot="dg-footer-end">
+                            <slot name="dg-footer-end"></slot>
+                        </template>
                     </datagrid>
                 </div>
             </div>

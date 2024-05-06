@@ -29,12 +29,24 @@
         <div slot="dg-slot-body">
             <slot name="dg-slot-body"></slot>
         </div>
+
+        <template slot="dg-footer-start">
+            <slot name="dg-footer-start"></slot>
+        </template>
+
+        <template slot="dg-footer-mid">
+            <slot name="dg-footer-mid"></slot>
+        </template>
+
+        <template slot="dg-footer-end">
+            <slot name="dg-footer-end"></slot>
+        </template>
     </component>
 </template>
 
 <script>
 const templates = {
-    canvas: () => import(/* webpackChunkName: "krud-canvas" */'./templates/canvas.vue'),
+    canvas: () => import('./templates/canvas.vue'),
     "canvas-aside": () => import(/* webpackChunkName: "krud-canvas-aside" */'./templates/canvas-aside.vue'),
     drawer: () => import(/* webpackChunkName: "krud-drawer" */'./templates/drawer.vue'),
     create: () => import(/* webpackChunkName: "krud-create" */'./templates/create.vue'),
