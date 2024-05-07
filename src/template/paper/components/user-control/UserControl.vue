@@ -10,7 +10,7 @@
                     <a href="javascript:void(0)" class="avatar">
                         <img src="/assets/lambda/images/avatar.png" alt="avatar">
                         <div class="avatar-name">
-                            <span>{{lang.welcome}}</span>
+                            <span>{{lang.welcome}} </span>
                             <b>{{ $user.first_name ? $user.first_name : $user.login }} {{ $user.org_id ? '/' : '' }} {{ $user.org_id ? $user.org_id : '' }}</b>
                         </div>
                     </a>
@@ -32,6 +32,9 @@
                                     <span>{{lang.changePass}}</span>
                                 </router-link>
                             </li>
+
+                            <slot name="actions"></slot>
+
                             <li v-if="$user.role==1 || $user.role==29">
                                 <a href="/lambda/puzzle" target="_blank">
                                     <Icon type="ios-settings-outline"/>
@@ -48,10 +51,7 @@
                     </div>
                 </Poptip>
             </li>
-
-            <slot name="right">
-            </slot>
-
+            <slot name="right"></slot>
         </ul>
 
         <Modal v-model="logoutModal" :closable="false" width="252" class="logout-modal">
