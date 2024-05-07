@@ -104,7 +104,7 @@
             </div>
             <div class='sub-form-source-grid'>
                 <Row gutter='10'>
-                    <Col span='12'>
+                    <Col span='8'>
                         <Label>Триггер (өгөгдөл дуудах URL)</Label>
                         <Input type='text' v-model='f.trigger' placeholder='Триггер (өгөгдөл дуудах URL)' /> <br>
 
@@ -112,7 +112,10 @@
                     <Col span='8'>
                         <Label>Триггер дуудах хугацаа </Label>
                         <Input type='text' v-model='f.triggerTimeout' placeholder='Триггер дуудах хугацаа ' /> <br>
-
+                    </Col>
+                    <Col span='8'>
+                        <Label>Дата дуудагдахын өмнө</Label>
+                        <Input type='text' v-model='f.triggerUrl' placeholder='Дата дуудагдахын өмнө ' /> <br>
                     </Col>
                 </Row>
                 <Row>

@@ -808,7 +808,6 @@ export default {
         },
 
         editModel(id, editData) {
-            console.log('I am called');
 
             if (editData) {
                 this.model = {...this.model, ...editData}
