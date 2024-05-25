@@ -619,7 +619,7 @@ export default {
                         this.$Notice.error({
                             title: this.lang.informationIsIncomplete,
                             desc: this.formValidationCustomText != '' ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
-                            , duration: 0
+                            , duration: 5
                         })
 
                     }

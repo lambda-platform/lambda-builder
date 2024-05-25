@@ -323,7 +323,7 @@ export default {
             } else {
                 gridSchema = await this.initFromServerData(baseUrl, customSchemaId);
             }
-            
+
             this.model = gridSchema.model;
             this.template = gridSchema.template;
             this.schema = gridSchema.schema;
