@@ -65,7 +65,7 @@ export const elements = [
     },
     {
         element: "DateTime",
-        component: () => import(/* webpackChunkName: "form-field-DateTime" */'./DateTime.vue'),
+        component: () => import(/* webpackChunkName: "form-field-DateTimePicker" */'./DateTime.vue'),
     },
     {
         element: "Divider",

@@ -808,8 +808,6 @@ export default {
         },
 
         editModel(id, editData) {
-            console.log('I am called');
-
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
@@ -864,19 +862,19 @@ export default {
                             this.subFormFillData(item.model)
                             break
                         case 'Switch':
-                            if (this.model[item.model] == 1 || this.model[item.model] == 'true') {
+                            if (this.model[item.model] === 1 || this.model[item.model] === 'true' || this.model[item.model] === '1' || this.model[item.model] === true) {
                                 this.model[item.model] = true
                             } else {
                                 this.model[item.model] = false
                             }
                             break
-                        // case "Checkbox":
-                        //     if (this.model[item.model] == 1 || this.model[item.model] == "true") {
-                        //         this.model[item.model] = true;
-                        //     } else {
-                        //         this.model[item.model] = false;
-                        //     }
-                        //     break;
+                        case "Checkbox":
+                            if (this.model[item.model] === 1 || this.model[item.model] === 'true' || this.model[item.model] === '1' || this.model[item.model] === true) {
+                                this.model[item.model] = true;
+                            } else {
+                                this.model[item.model] = false;
+                            }
+                            break;
                         case 'Password':
                             this.model[item.model] = ''
                             delete this.$data.rule[item.model]

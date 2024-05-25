@@ -323,7 +323,7 @@ export default {
             } else {
                 gridSchema = await this.initFromServerData(baseUrl, customSchemaId);
             }
-
+            
             this.model = gridSchema.model;
             this.template = gridSchema.template;
             this.schema = gridSchema.schema;
@@ -1594,7 +1594,9 @@ export default {
                 return null;
             }
 
-            let rowId = params.node.data.id;
+            let rowId = params.node.data[this.identity];
+            console.log("EDIT ID:", rowId, this.identity, params.node.data);
+
             let actions = [];
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
@@ -1623,11 +1625,11 @@ export default {
             }
 
             this.gridActions.forEach(item => {
-                if (item == 'qe') {
+                if (item === 'qe') {
                     console.log("qe");
                 }
 
-                if (item == 'cl') {
+                if (item === 'cl') {
                     let menuItem = {
                         name: "Хувилах",
                         icon: "<span class='ivu-icon ivu-icon-ios-copy-outline'></span>",
@@ -1638,13 +1640,11 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'v') {
+                if (item === 'v') {
                     console.log("v action");
                 }
 
-                if (item == 'e' && this.permissions && this.permissions.u) {
-                    console.log('action e');
-
+                if (item === 'e' && this.permissions && this.permissions.u) {
                     let menuItem = {
                         name: "Засах",
                         icon:
@@ -1657,7 +1657,7 @@ export default {
                 }
 
                 // if (item == 'd' && this.permissions && this.permissions.d) {
-                if (item == 'd') {
+                if (item === 'd') {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
