@@ -22,6 +22,11 @@
                                 </Select>
                             </li>
 
+                            <li v-if="item.formType == 'MultiPolygonWithMap'">
+                                <label>Газрын зурагийн ID</label>
+                                <Input v-model="item.mapID" placeholder="Газрын зурагийн ID"/>
+                            </li>
+
                             <li>
                                 <label>Санамж текст</label>
                                 <Input v-model="item.warn" :placeholder="item.warn"/>
