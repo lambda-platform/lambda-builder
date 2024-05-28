@@ -7,7 +7,7 @@ export default {
         "hideHeader", "hasSelection", "actions",
         "dbClickAction", "onRowSelect", "rowCurrentChange",
         "permissions", "user_condition", "custom_condition",
-        "view_url", "mode", "onPropertySuccess",
+        "hideInfo", "view_url", "mode", "onPropertySuccess",
         "onPropertyError", "page_id", "withoutHeader",
         "withCrudLog", "projects_id", "exportSelectedRows",
         "exportPath", "exportLabel"

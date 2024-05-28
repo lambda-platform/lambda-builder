@@ -17,9 +17,7 @@ export function toMoment(date) {
 }
 
 export function toTime(time) {
-
     return Moment(time, 'HH:mm:ss')
-
 }
 
 export function toDateTime(datetime) {

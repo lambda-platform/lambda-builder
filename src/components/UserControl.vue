@@ -1,7 +1,6 @@
 <template>
     <div class="user-control">
         <ul>
-
             <li class="avatar-item">
                 <Poptip placement="bottom-end" popper-class="no-animation">
                     <a href="javascript:void(0)" class="avatar">

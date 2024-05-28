@@ -19,7 +19,7 @@ function loadApp() {
 
     if (window.lambda.local_agent && typeof window.lambda.local_agent !== undefined && window.lambda.local_agent !== null && window.lambda.local_agent !== '' && window.lambda.local_agent !== undefined) {
         try {
-            return require("./views/theme/aside/index").default;
+            return require("agent/index.vue").default;
         } catch (err) {
             console.log('not local');
         }

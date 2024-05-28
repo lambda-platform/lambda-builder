@@ -44,6 +44,7 @@
                               :fnEdit="edit"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
+                              :hideInfo="$props.hideInfo ? $props.hideInfo : false"
                               :hasSelection="typeof $props.hasSelection === undefined ? false : $props.hasSelection"
                               :onRowSelect="$props.onRowSelect"
                               :actions="$props.actions"
@@ -51,8 +52,19 @@
                               :user_condition="$props.user_condition? $props.user_condition :null"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
                               :dblClick="$props.dbClickAction"
-                              :liveData="$props.liveData"
-                    />
+                              :liveData="$props.liveData">
+                        <template slot="dg-footer-start">
+                            <slot name="dg-footer-start"></slot>
+                        </template>
+
+                        <template slot="dg-footer-mid">
+                            <slot name="dg-footer-mid"></slot>
+                        </template>
+
+                        <template slot="dg-footer-end">
+                            <slot name="dg-footer-end"></slot>
+                        </template>
+                    </datagrid>
                 </div>
             </div>
         </div>

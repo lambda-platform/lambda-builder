@@ -9,15 +9,15 @@
 </template>
 
 <script>
-import { getDate } from "../utils/date";
+import {getDate} from "../utils/date";
+
 export default {
     props: ["model", "rule", "label", "meta"],
     methods: {
         getDateValue(value) {
-            if(value=='') {
+            if (value === '') {
                 this.clearValue(value);
-            }
-            else {
+            } else {
                 if (!(typeof value === "string" || value instanceof String)) {
                     this.model.form[this.model.component] = getDate(
                         this.model.form[this.model.component]
@@ -27,8 +27,8 @@ export default {
                 }
             }
         },
-        clearValue(value){
-            if(value=='') {
+        clearValue(value) {
+            if (value === '') {
                 this.model.form[this.model.component] = null;
             }
         }
