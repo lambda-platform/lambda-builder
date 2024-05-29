@@ -1,5 +1,6 @@
 node_modules
 yarn.lock
+bun.lockb
 .DS_STORE
 *.DS_STORE
 .idea
@@ -7,4 +8,3 @@ yarn-error.log
 .DS_Store
 *.DS_Store
 .env
-
