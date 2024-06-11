@@ -27,14 +27,22 @@ export default {
             //     form: 'notification_target_form',
             //     actions: ''
             // },
-            showConfigError: false
+            showConfigError: true
         };
     },
     methods: {},
     beforeMount() {
-        if (window.lambda.notify.firebaseConfig.apiKey && window.lambda.notify.firebaseConfig.appId) {
-            this.showConfigError = true;
+        if (window.lambda) {
+            if (window.lambda.notify) {
+                if (window.lambda.notify.firebaseConfig) {
+                    if (window.lambda.notify.firebaseConfig.apiKey && window.lambda.notify.firebaseConfig.appId) {
+                        this.showConfigError = false;
+                    }
+                }
+            }
+
         }
+
     },
     computed: {
         lang() {

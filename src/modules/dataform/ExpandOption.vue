@@ -22,6 +22,22 @@
                                 </Select>
                             </li>
 
+                            <li v-if="item.formType == 'MapWithGeometry'">
+                                <label>Газрын зургийн ID</label>
+                                <Input v-model="item.mapID" placeholder="Газрын зургийн ID"/>
+                            </li>
+
+                            <li v-if="item.formType == 'MapWithGeometry'">
+                                <label>Байршил тэмдэглэх хэлбэр</label>
+                                <Select v-model="item.selectedType" filterable clearable>
+                                    <Option :value="'Point'" key="1">Point</Option>
+                                    <Option :value="'LineString'" key="2">LineString</Option>
+                                    <Option :value="'MultiLine'" key="3">MultiLine</Option>
+                                    <Option :value="'Polygon'" key="4">Polygon</Option>
+                                    <Option :value="'MultiPolygon'" key="5">MultiPolygon</Option>
+                                </Select>
+                            </li>
+
                             <li>
                                 <label>Санамж текст</label>
                                 <Input v-model="item.warn" :placeholder="item.warn"/>
