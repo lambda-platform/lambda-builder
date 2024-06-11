@@ -15,6 +15,8 @@ export default {
     props: ["model", "rule", "label", "meta"],
     methods: {
         getDateValue(value) {
+            console.log('DATE VALUE:', value);
+
             if (value === '') {
                 this.clearValue(value);
             } else {

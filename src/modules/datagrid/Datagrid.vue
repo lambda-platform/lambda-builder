@@ -254,7 +254,7 @@ export default {
     },
 
     created() {
-        // console.log('condition', this.$props.custom_condition);
+        console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
@@ -266,6 +266,16 @@ export default {
                 }
             }
         },
+
+        // custom_condition: {
+        //     // the callback will be called immediately after the start of the observation
+        //     immediate: true,
+        //     handler(val, oldVal) {
+        //         if (Object.toJSON(val) !== Object.toJSON(oldVal)) {
+        //             this.changePage(1);
+        //         }
+        //     }
+        // },
 
         highlights() {
             this.preselect();
