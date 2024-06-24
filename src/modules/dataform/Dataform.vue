@@ -83,8 +83,8 @@
                                             </Divider>
                                             <div v-for='item in scol.children' :key='item.index'>
                                                 <component
-                                                    :key='item.model'
-                                                    :ref="'sf'+item.model"
+                                                    :key='item.id'
+                                                    :ref="'sf'+item.id"
                                                     :url='url'
                                                     v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                                     :is='element(`subform/${item.subtype}`)'
@@ -95,7 +95,7 @@
                                                     :asyncMode='asyncMode'
                                                     :editMode='editMode'
                                                 />
-
+                                                
                                                 <component
                                                     :key='item.model'
                                                     v-if="isShow(item.model) && item.formType != 'SubForm'"
@@ -178,7 +178,7 @@
                                 </Divider>
                                 <div v-for='item in col.children' :key='item.index'>
                                     <component
-                                        :key='item.model'
+                                        :key='item.id'
                                         :ref="'sf'+item.model"
                                         v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                         :is='element(`subform/${item.subtype}`)'

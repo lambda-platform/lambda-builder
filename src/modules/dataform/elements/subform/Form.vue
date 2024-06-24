@@ -46,9 +46,7 @@
                 <tfoot v-if="hasEq">
                 <tr>
                     <td v-for="(item, index) in equationData" :key="index">
-                        <span v-if="item.preStaticWord!=null && item.preStaticWord!=''"> {{
-                                item.preStaticWord
-                            }} </span>
+                        <span v-if="item.preStaticWord!=null && item.preStaticWord!=''">{{ item.preStaticWord }} </span>
                         <span v-if="item.hasEquation">{{ item.data.toLocaleString() }}</span>
                         <span v-if="item.prefix!=null && item.prefix!=''"> {{ item.prefix }}</span>
                     </td>
@@ -97,7 +95,7 @@
                               :onSuccess="onSuccess"
                               :url="url"
                               :onReady="formReady"
-                              :onError="onError"></dataform>
+                              :onError="onError"/>
                 </div>
             </section>
         </Modal>

@@ -250,6 +250,7 @@ export default {
             try {
                 let response = await axios.get(configUrl)
                 let data = JSON.parse(response.data.data.schema)
+                console.log("form schema: ", data);
 
                 data['form_id'] = response.data.data.id
                 data['form_name'] = response.data.data.name
@@ -520,7 +521,7 @@ export default {
         },
 
         setMeta(item, subForm) {
-            let s_index = this.schema.findIndex(schema => schema.model == item.model)
+            let s_index = this.schema.findIndex(schema => schema.id == item.id)
             let i = s_index >= 0 ? this.schema[s_index] : item
             if (!subForm) {
                 delete i['table']
