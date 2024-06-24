@@ -687,8 +687,10 @@ export default {
                                 this.$modal.hide('krud-modal');
                             }
                         } else {
+                            console.log(data);
+
                             this.$Notice.error({
-                                title: this.lang.errorSaving
+                                title: data.msg ? data.msg : this.lang.errorSaving
                             })
                             if (this.$props.onError) {
                                 this.$props.onError()
