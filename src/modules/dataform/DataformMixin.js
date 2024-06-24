@@ -841,18 +841,18 @@ export default {
             })
         },
 
-        subFormFillData(subModel) {
-            if (this.$refs[`sf${subModel}`]) {
-                if (this.$refs[`sf${subModel}`].length >= 1) {
-                    this.$refs[`sf${subModel}`][0].fillData()
+        subFormFillData(subFormId) {
+            if (this.$refs[`sf${subFormId}`]) {
+                if (this.$refs[`sf${subFormId}`].length >= 1) {
+                    this.$refs[`sf${subFormId}`][0].fillData()
                 } else {
                     setTimeout(() => {
-                        this.subFormFillData(subModel)
+                        this.subFormFillData(subFormId)
                     }, 100)
                 }
             } else {
                 setTimeout(() => {
-                    this.subFormFillData(subModel)
+                    this.subFormFillData(subFormId)
                 }, 100)
             }
         },
@@ -862,7 +862,7 @@ export default {
                 if (item.type == 'form' || item.type == 'Form' || item.formType == 'SubForm') {
                     switch (item.formType) {
                         case 'SubForm':
-                            this.subFormFillData(item.model)
+                            this.subFormFillData(item.id)
                             break
                         case 'Switch':
                             if (this.model[item.model] === 1 || this.model[item.model] === 'true' || this.model[item.model] === '1' || this.model[item.model] === true) {

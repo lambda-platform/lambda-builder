@@ -321,11 +321,13 @@ export default {
             setTimeout(() => {
                 this.listData = [];
                 this.model.form[this.model.component].forEach(item => {
+
                     let listItem = {
                         form: _.cloneDeep(this.form),
                         model: item
                     };
                     this.listData.push(listItem);
+
                 });
             }, 100);
         },

@@ -448,11 +448,10 @@ export default {
             this.editIndex = -1;
             this.showAddModal()
         },
+
         fillData() {
             this.listData = [];
-
             setTimeout(() => {
-
                 this.model.form[this.model.component].forEach(item => {
                     let listItem = {
                         form: _.cloneDeep(this.form),
@@ -461,10 +460,10 @@ export default {
                     this.listData.push(listItem);
                 });
 
-                // console.log(this.model.form[this.model.component]);
-
+                console.log("sun form fill", this.model.form[this.model.component]);
             }, 100);
         },
+
         equationRenderer() {
             this.equationData = [];
             this.form.schema.map(item => {

@@ -56,7 +56,6 @@
 
             </div>
             <div class='fb-control fb-control-sub'>
-
                 <div class='fb-control-sub-item'>
                     <Checkbox v-model='f.timestamp' v-if="f.subtype != 'Form'">
                         <span>{{ lang.Date_generated_automatically }}</span>
@@ -131,19 +130,15 @@
                     <Col span='12'><Input type='text' v-model='f.sourceGridModalTitle'
                                           placeholder='Modal дээр харуулах нэр'/></Col>
                     <Col span='12'>
-
-
-                        <Select v-model='f.sourceMicroserviceID' placeholder='Microservice' clearable
-                                filterable
-                        >
+                        <Select v-model='f.sourceMicroserviceID' placeholder='Microservice' clearable filterable>
                             <Option v-for='microservice in microservices' :value='microservice.microservice_id'
                                     :key='microservice.index'>
                                 {{ microservice.microservice }}
                             </Option>
                         </Select>
 
-
-                        <Select v-model='f.sourceGridID' placeholder='Өгөгдөл дуудаж хүснэгт' clearable @on-change='setGridSource' filterable>
+                        <Select v-model='f.sourceGridID' placeholder='Өгөгдөл дуудаж хүснэгт' clearable
+                                @on-change='setGridSource' filterable>
                             <Option v-for='item in otherGrids' :value='item.id' :key='item.id'>{{ item.name }}</Option>
                         </Select>
                     </Col>
@@ -191,7 +186,8 @@
                     </Col>
                     <Col span='10'>
 
-                        <Select v-model='sourceColumnOption.sourceColumn' placeholder='Grid талбар' clearable filterable>
+                        <Select v-model='sourceColumnOption.sourceColumn' placeholder='Grid талбар' clearable
+                                filterable>
                             <Option v-for='(item, iIndex) in sourceGridColumns' :key='iIndex' :value='item.model'>
                                 {{ item.model }}
                             </Option>
