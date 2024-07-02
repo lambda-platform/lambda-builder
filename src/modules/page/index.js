@@ -1,24 +1,24 @@
 let routes = [
     {
         path: '/p/:menu_id',
-        component: ()=>import(/* webpackChunkName: "page-index" */ './views/index'),
+        component: () => import(/* webpackChunkName: "page-index" */ './views/index'),
         children: [{
             path: ':sub_menu_id',
-            component: ()=>import(/* webpackChunkName: "page-sub" */ './views/sub'),
+            component: () => import(/* webpackChunkName: "page-sub" */ './views/sub'),
             children: [{
                 path: ':sub_child_menu_id',
-                component: ()=>import(/* webpackChunkName: "page-subChild" */ './views/subChild'),
+                component: () => import(/* webpackChunkName: "page-subChild" */ './views/subChild'),
             }]
         }]
     },
     {
         path: '/module/:module',
-        component: ()=>import(/* webpackChunkName: "page-module" */ './views/module'),
+        component: () => import(/* webpackChunkName: "page-module" */ './views/module'),
     },
     {
         name: 'Error',
         path: '/*',
-        component: ()=>import(/* webpackChunkName: "page-404" */ './views/404')
+        component: () => import(/* webpackChunkName: "page-404" */ './views/404')
     }
 ];
 const install = (Vue, options) => {
@@ -26,12 +26,12 @@ const install = (Vue, options) => {
         mounted() {
             this.$nextTick(() => {
                 if (!this.$parent) {
-                    if(this.$router && this.$router.app && this.$router.app.$router){
+                    if (this.$router && this.$router.app && this.$router.app.$router) {
                         this.$router.app.$router.addRoutes(routes);
                     }
-                   //  this.routes.forEach(route=>{
-                   //      this.$router.app.$router.addRoute(route);
-                   //  });
+                    //  this.routes.forEach(route=>{
+                    //      this.$router.app.$router.addRoute(route);
+                    //  });
                 }
             });
         }

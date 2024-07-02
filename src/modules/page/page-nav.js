@@ -1,7 +1,9 @@
 import Nav from './Nav.vue'
+import CompactNav from './CompactNav.vue'
 
 const components = {
     "page-nav": Nav,
+    "page-nav-compact": CompactNav,
 }
 
 const install = function (Vue, options) {

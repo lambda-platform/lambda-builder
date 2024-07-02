@@ -83,8 +83,8 @@
                                             </Divider>
                                             <div v-for='item in scol.children' :key='item.index'>
                                                 <component
-                                                    :key='item.model'
-                                                    :ref="'sf'+item.model"
+                                                    :key='item.id'
+                                                    :ref="'sf'+item.id"
                                                     :url='url'
                                                     v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                                     :is='element(`subform/${item.subtype}`)'
@@ -128,13 +128,12 @@
                                     <Row v-for='srow in col.children' :key='srow.index'>
                                         <Col v-for='scol in srow.children' :id='scol.id' :key='scol.index' :xs='24'
                                              :sm='24' :md='scol.span.md' :lg='scol.span.lg'>
-                                            <Divider v-if='scol.name' orientation='left' class='form-divider'>{{
-                                                    scol.name
-                                                }}
+                                            <Divider v-if='scol.name' orientation='left' class='form-divider'>
+                                                {{ scol.name }}
                                             </Divider>
                                             <span v-for='item in scol.children' :key='item.index'>
                                         <component
-                                            :ref="'sf'+item.model"
+                                            :ref="'sf'+item.id"
                                             v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                             :is='element(`subform/${item.subtype}`)'
                                             :model='{form: model, component: item.model}'
@@ -179,7 +178,7 @@
                                 <div v-for='item in col.children' :key='item.index'>
                                     <component
                                         :key='item.model'
-                                        :ref="'sf'+item.model"
+                                        :ref="'sf'+item.id"
                                         v-if="isShow(item.model) && item.formType == 'SubForm' && item.subtype"
                                         :is='element(`subform/${item.subtype}`)'
                                         :label='getLabel(item)'

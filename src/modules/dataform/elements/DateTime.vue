@@ -1,7 +1,8 @@
 <template>
     <FormItem :label=label :prop=rule>
         <DatePicker
-            type="datetime" v-model="dateData"
+            type="datetime"
+            v-model="dateData"
             @on-change="getDateValue"
             :key="model.form[model.component]"
             placement="bottom-end"

@@ -156,7 +156,8 @@ export default {
             exportLoading: false
         };
     },
-    created() {},
+    created() {
+    },
     components: {
         "slide-panel": slidePanel,
         "crud-log": crudLog,
