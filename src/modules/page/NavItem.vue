@@ -11,13 +11,13 @@
         </router-link>
 
         <!-- SPA URL -->
-        <router-link :to="item.url" v-if="item.link_to == 'router-link'">
+        <router-link :to="item.url" v-if="item.link_to == 'router-link'" class="nav-link menu-link">
             <i v-if="item.icon" :class="item.icon"></i>
             <span v-html="getTitle(item)"></span>
         </router-link>
 
         <!-- Anchor link -->
-        <a href="item.url" v-if="item.link_to == 'link'" class="nav-link" target="_blank">
+        <a href="item.url" v-if="item.link_to == 'link'" class="nav-link menu-link" target="_blank">
             <i v-if="item.icon" :class="item.icon"></i>
             <span v-html="getTitle(item)"></span>
         </a>
