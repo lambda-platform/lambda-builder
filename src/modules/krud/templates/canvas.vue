@@ -79,7 +79,7 @@
 
 <script>
 import slidePanel from "../components/slidePanel";
-import krudHeader from "../components/krud-header-compact.vue";
+import krudHeader from "../components/krud-header.vue";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
