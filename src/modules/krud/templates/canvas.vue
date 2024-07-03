@@ -80,6 +80,7 @@
 <script>
 import slidePanel from "../components/slidePanel";
 import krudHeader from "../components/krud-header.vue";
+import krudHeaderCompact from "../components/krud-header-compact.vue";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -97,7 +98,8 @@ export default {
     components: {
         "slide-panel": slidePanel,
         "crud-log": crudLog,
-        "krud-header": krudHeader
+        "krud-header": krudHeader,
+        "krud-header-compact": krudHeaderCompact
     },
     computed: {
         lang() {

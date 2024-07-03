@@ -4,6 +4,7 @@ import Vue from 'vue'
 Vue.use(Router)
 
 function load(component) {
+    console.log(window.lambda.local_agent);
     if (window.lambda.local_agent && typeof window.lambda.local_agent !== undefined && window.lambda.local_agent !== null && window.lambda.local_agent !== '' && window.lambda.local_agent !== undefined) {
         try {
             return require(`agent/${component}`).default
