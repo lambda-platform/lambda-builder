@@ -23,7 +23,7 @@
         </a>
 
         <!-- No action -->
-        <BLink v-if="item.link_to == 'noAction'" class="nav-link menu-link" :href="`#${item.id}`" data-bs-toggle="collapse" role="button"
+        <BLink v-if="item.link_to == 'noAction'" class="nav-link menu-link collapse" :href="`#${item.id}`" data-bs-toggle="collapse" role="button"
                aria-expanded="false" aria-controls="sidebarDashboards">
             <i v-if="item.icon" :class="item.icon"></i>
             <span data-key="t-dashboards"> {{ item.key }} </span>

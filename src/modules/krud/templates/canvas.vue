@@ -1,8 +1,9 @@
 <template>
     <section class="offcanvas-template">
         <div class="crud-page">
-            <krud-header :open-form="openPanel"
+            <krud-header-compact :open-form="openPanel"
                          :title="title"
+                         :permissions="permissions"
                          :search="search"
                          :refresh="refresh"
                          :exportExcel="exportExcel"
