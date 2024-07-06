@@ -33,7 +33,7 @@
                         <span>{{ lang._add }}</span>
                     </b-button>
 
-                    <div class="ms-1 header-item d-none d-sm-flex"  v-if="isRefresh">
+                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
                         <Tooltip :content="lang.re_call">
                             <BButton type="button" @click="$props.refresh" variant="ghost-secondary"
                                      class="btn-icon btn-topbar rounded-circle">
@@ -115,72 +115,72 @@
                         </BDropdownItem>
                     </BDropdown>
 
-<!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
-<!--                               :offset="{ alignmentAxis: 57, crossAxis: 0, mainAxis: -42 }"-->
-<!--                               toggle-class="btn-icon btn-topbar rounded-circle mode-layout ms-1 arrow-none"-->
-<!--                               menu-class="p-0 dropdown-menu-end">-->
-<!--                        <template #button-content>-->
-<!--                            <i class="bx bx-category-alt fs-22"></i>-->
-<!--                        </template>-->
-<!--                        <div-->
-<!--                            class="p-3 border-top-0 dropdown-head border-start-0 border-end-0 border-dashed border dropdown-menu-lg">-->
-<!--                            <BRow class="align-items-center">-->
-<!--                                <BCol>-->
-<!--                                    <h6 class="m-0 fw-semibold fs-15">Web Apps</h6>-->
-<!--                                </BCol>-->
-<!--                                <BCol cols="auto">-->
-<!--                                    <BLink href="#!" class="btn btn-sm btn-soft-info">-->
-<!--                                        View All Apps-->
-<!--                                        <i class="ri-arrow-right-s-line align-middle"></i>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                            </BRow>-->
-<!--                        </div>-->
+                    <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
+                    <!--                               :offset="{ alignmentAxis: 57, crossAxis: 0, mainAxis: -42 }"-->
+                    <!--                               toggle-class="btn-icon btn-topbar rounded-circle mode-layout ms-1 arrow-none"-->
+                    <!--                               menu-class="p-0 dropdown-menu-end">-->
+                    <!--                        <template #button-content>-->
+                    <!--                            <i class="bx bx-category-alt fs-22"></i>-->
+                    <!--                        </template>-->
+                    <!--                        <div-->
+                    <!--                            class="p-3 border-top-0 dropdown-head border-start-0 border-end-0 border-dashed border dropdown-menu-lg">-->
+                    <!--                            <BRow class="align-items-center">-->
+                    <!--                                <BCol>-->
+                    <!--                                    <h6 class="m-0 fw-semibold fs-15">Web Apps</h6>-->
+                    <!--                                </BCol>-->
+                    <!--                                <BCol cols="auto">-->
+                    <!--                                    <BLink href="#!" class="btn btn-sm btn-soft-info">-->
+                    <!--                                        View All Apps-->
+                    <!--                                        <i class="ri-arrow-right-s-line align-middle"></i>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                            </BRow>-->
+                    <!--                        </div>-->
 
-<!--                        <div class="p-2">-->
-<!--                            <BRow class="g-0">-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/github.png" alt="Github"/>-->
-<!--                                        <span>GitHub</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/bitbucket.png" alt="bitbucket"/>-->
-<!--                                        <span>Bitbucket</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/dribbble.png" alt="dribbble"/>-->
-<!--                                        <span>Dribbble</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                            </BRow>-->
+                    <!--                        <div class="p-2">-->
+                    <!--                            <BRow class="g-0">-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/github.png" alt="Github"/>-->
+                    <!--                                        <span>GitHub</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/bitbucket.png" alt="bitbucket"/>-->
+                    <!--                                        <span>Bitbucket</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/dribbble.png" alt="dribbble"/>-->
+                    <!--                                        <span>Dribbble</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                            </BRow>-->
 
-<!--                            <BRow class="g-0">-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/dropbox.png" alt="dropbox"/>-->
-<!--                                        <span>Dropbox</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/mail_chimp.png" alt="mail_chimp"/>-->
-<!--                                        <span>Mail Chimp</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                                <BCol>-->
-<!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-<!--                                        <img src="/assets/app/images/brands/slack.png" alt="slack"/>-->
-<!--                                        <span>Slack</span>-->
-<!--                                    </BLink>-->
-<!--                                </BCol>-->
-<!--                            </BRow>-->
-<!--                        </div>-->
-<!--                    </BDropdown>-->
+                    <!--                            <BRow class="g-0">-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/dropbox.png" alt="dropbox"/>-->
+                    <!--                                        <span>Dropbox</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/mail_chimp.png" alt="mail_chimp"/>-->
+                    <!--                                        <span>Mail Chimp</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                                <BCol>-->
+                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
+                    <!--                                        <img src="/assets/app/images/brands/slack.png" alt="slack"/>-->
+                    <!--                                        <span>Slack</span>-->
+                    <!--                                    </BLink>-->
+                    <!--                                </BCol>-->
+                    <!--                            </BRow>-->
+                    <!--                        </div>-->
+                    <!--                    </BDropdown>-->
 
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <BButton type="button" variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
@@ -614,46 +614,46 @@ export default {
             searchModel: null,
 
             languages: [
-                {
-                    flag: require("/assets/app/images/flags/us.svg"),
-                    language: "en",
-                    title: "English",
-                },
-                {
-                    flag: require("/assets/app/images/flags/spain.svg"),
-                    language: "sp",
-                    title: "Española",
-                },
-                {
-                    flag: require("/assets/app/images/flags/germany.svg"),
-                    language: "gr",
-                    title: "Deutsche",
-                },
-                {
-                    flag: require("/assets/app/images/flags/italy.svg"),
-                    language: "it",
-                    title: "italiana",
-                },
-                {
-                    flag: require("/assets/app/images/flags/russia.svg"),
-                    language: "ru",
-                    title: "русский",
-                },
-                {
-                    flag: require("/assets/app/images/flags/china.svg"),
-                    language: "ch",
-                    title: "中國人",
-                },
-                {
-                    flag: require("/assets/app/images/flags/french.svg"),
-                    language: "fr",
-                    title: "Français",
-                },
-                {
-                    flag: require("/assets/app/images/flags/ae.svg"),
-                    language: "ar",
-                    title: "Arabic",
-                },
+                // {
+                //     flag: require("/assets/app/images/flags/us.svg"),
+                //     language: "en",
+                //     title: "English",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/spain.svg"),
+                //     language: "sp",
+                //     title: "Española",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/germany.svg"),
+                //     language: "gr",
+                //     title: "Deutsche",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/italy.svg"),
+                //     language: "it",
+                //     title: "italiana",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/russia.svg"),
+                //     language: "ru",
+                //     title: "русский",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/china.svg"),
+                //     language: "ch",
+                //     title: "中國人",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/french.svg"),
+                //     language: "fr",
+                //     title: "Français",
+                // },
+                // {
+                //     flag: require("/assets/app/images/flags/ae.svg"),
+                //     language: "ar",
+                //     title: "Arabic",
+                // },
             ],
             // lan: i18n.locale,
             text: null,

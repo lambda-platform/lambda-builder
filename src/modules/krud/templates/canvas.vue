@@ -1,19 +1,20 @@
 <template>
     <section class="offcanvas-template">
         <div class="crud-page">
-            <krud-header-compact v-if="$theme == 'bs'" :open-form="openPanel"
-                                 :title="title"
-                                 :permissions="permissions"
-                                 :search="search"
-                                 :refresh="refresh"
-                                 :exportExcel="exportExcel"
-                                 :print="print"
-                                 :save="save"
-                                 :isPrint="isPrint"
-                                 :isExcel="isExcel"
-                                 :isRefresh="isRefresh"
-                                 :isSave="isSave"
-                                 :isSearch="isSearch"/>
+            <krud-header-bs v-if="$theme == 'bs'"
+                            :open-form="openPanel"
+                            :title="title"
+                            :permissions="permissions"
+                            :search="search"
+                            :refresh="refresh"
+                            :exportExcel="exportExcel"
+                            :print="print"
+                            :save="save"
+                            :isPrint="isPrint"
+                            :isExcel="isExcel"
+                            :isRefresh="isRefresh"
+                            :isSave="isSave"
+                            :isSearch="isSearch"/>
 
             <krud-header v-else :open-form="openPanel"
                          :title="title"
@@ -95,7 +96,7 @@
 <script>
 import slidePanel from "../components/slidePanel";
 import krudHeader from "../components/krud-header.vue";
-import krudHeaderCompact from "../components/krud-header-compact.vue";
+import krudHeaderBs from "../components/krud-header-bs.vue";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -114,7 +115,7 @@ export default {
         "slide-panel": slidePanel,
         "crud-log": crudLog,
         "krud-header": krudHeader,
-        "krud-header-compact": krudHeaderCompact
+        "krud-header-bs": krudHeaderBs
     },
     computed: {
         lang() {
