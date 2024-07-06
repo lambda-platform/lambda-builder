@@ -1,7 +1,21 @@
 <template>
     <section class="offcanvas-template">
         <div class="crud-page">
-            <krud-header-compact :open-form="openPanel"
+            <krud-header-compact v-if="$theme == 'bs'" :open-form="openPanel"
+                                 :title="title"
+                                 :permissions="permissions"
+                                 :search="search"
+                                 :refresh="refresh"
+                                 :exportExcel="exportExcel"
+                                 :print="print"
+                                 :save="save"
+                                 :isPrint="isPrint"
+                                 :isExcel="isExcel"
+                                 :isRefresh="isRefresh"
+                                 :isSave="isSave"
+                                 :isSearch="isSearch"/>
+
+            <krud-header v-else :open-form="openPanel"
                          :title="title"
                          :permissions="permissions"
                          :search="search"

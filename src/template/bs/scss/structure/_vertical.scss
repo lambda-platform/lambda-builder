@@ -54,12 +54,6 @@
                 color: var(--#{$prefix}vertical-menu-item-hover-color);
             }
 
-            &.collapse{
-                span, i {
-                    font-weight: 400 !important;
-                }
-            }
-
             i {
                 display: inline-block;
                 min-width: $vertical-menu-item-icon-width;
@@ -148,7 +142,7 @@
                     background-color: var(--#{$prefix}vertical-menu-sub-item-color);
                     position: absolute;
                     left: 2px;
-                    top: 16.5px;
+                    top: 22.5px;
                     transition: all .4s ease-in-out;
                     opacity: 0.5;
                 }

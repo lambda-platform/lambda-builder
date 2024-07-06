@@ -144,7 +144,7 @@
 // user chat
 
 .user-chat {
-    background: url("~@/assets/images/chat-bg-pattern.png");
+    background: url("@assets/images/chat-bg-pattern.png");
     transition: all 0.4s;
     position: relative;
     background-color: var(--#{$prefix}body-bg);
@@ -203,7 +203,7 @@
         box-shadow: none;
         padding: 0;
         font-size: 20px;
-        color: $gray-800;
+        color: white;
     }
     @media (max-width:575.98px) {
         display: flex;
