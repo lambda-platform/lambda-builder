@@ -72,18 +72,12 @@ export default {
     },
     methods: {
         getTitle(item) {
-            console.log("GET TITLE:", item);
             if (item.link_to == 'crud') {
-                console.log("ON CRUD");
-                console.log(this.cruds);
-
                 let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
                 if (crudIndex >= 0) {
-                    console.log('found crud:', this.cruds[crudIndex]);
                     if (this.lambda.has_language) {
                         return item.key ? this.$t(item.key) : this.cruds[crudIndex].title;
                     }
-                    console.log(this.cruds[crudIndex].title);
                     return this.cruds[crudIndex].title;
                 } else {
                     return ''
