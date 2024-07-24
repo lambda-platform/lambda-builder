@@ -55,16 +55,30 @@
 
 <script>
 export default {
-    props: ["refresh", "exportExcel", "print",
-        "search", "save", "options", "isExcel",
-        "isExcelUpload", "excelUploadCustomUrl", "excelUploadMethod",
-        "isPrint", "isRefresh",
-        "isSave", "isSearch", "exportLoading"],
+    props: [
+        "refresh",
+        "exportExcel",
+        "print",
+        "search",
+        "save",
+        "options",
+        "isExcel",
+        "isExcelUpload",
+        "excelUploadCustomUrl",
+        "excelUploadMethod",
+        "isPrint",
+        "isRefresh",
+        "isSave",
+        "isSearch",
+        "exportLoading"
+    ],
+
     data() {
         return {
             searchModel: null
         }
     },
+
     computed: {
         lang() {
             const labels = [
@@ -80,6 +94,7 @@ export default {
             }, {});
         },
     },
+
     methods: {
         searchGrid(e) {
             e.preventDefault();

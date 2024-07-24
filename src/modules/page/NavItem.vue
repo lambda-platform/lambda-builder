@@ -11,19 +11,20 @@
         </router-link>
 
         <!-- SPA URL -->
-        <router-link :to="item.url" v-if="item.link_to == 'router-link'">
+        <router-link :to="item.url" v-if="item.link_to == 'router-link'" class="nav-link menu-link">
             <i v-if="item.icon" :class="item.icon"></i>
             <span v-html="getTitle(item)"></span>
         </router-link>
 
         <!-- Anchor link -->
-        <a href="item.url" v-if="item.link_to == 'link'" class="nav-link" target="_blank">
+        <a href="item.url" v-if="item.link_to == 'link'" class="nav-link menu-link" target="_blank">
             <i v-if="item.icon" :class="item.icon"></i>
             <span v-html="getTitle(item)"></span>
         </a>
 
         <!-- No action -->
-        <BLink v-if="item.link_to == 'noAction'" class="nav-link menu-link" :href="`#${item.id}`" data-bs-toggle="collapse" role="button"
+        <BLink v-if="item.link_to == 'noAction'" class="nav-link menu-link collapse" :href="`#${item.id}`"
+               data-bs-toggle="collapse" role="button"
                aria-expanded="false" aria-controls="sidebarDashboards">
             <i v-if="item.icon" :class="item.icon"></i>
             <span data-key="t-dashboards"> {{ item.key }} </span>
@@ -67,12 +68,12 @@ export default {
         };
     },
     created() {
-        console.log('NAV ITEM:', this.item);
+        // console.log('NAV ITEM:', this.item);
     },
     methods: {
         getTitle(item) {
-            if (item.link_to === 'crud') {
-                let crudIndex = this.cruds.findIndex(crud => crud.id === item.url);
+            if (item.link_to == 'crud') {
+                let crudIndex = this.cruds.findIndex(crud => crud.id == item.url);
                 if (crudIndex >= 0) {
                     if (this.lambda.has_language) {
                         return item.key ? this.$t(item.key) : this.cruds[crudIndex].title;

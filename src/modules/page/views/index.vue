@@ -1,6 +1,6 @@
 <template>
-    <section :class="`page ${$mode === 'compact' ? 'page-compact' : ''}`">
-        <router-view v-if="showSub || $mode == 'compact'" :key="$route.path">
+    <section :class="`page ${$theme === 'bs' ? 'page-bs' : ''}`">
+        <router-view v-if="showSub || $theme == 'bs'" :key="$route.path">
             <nav slot="v-nav" v-if="showSub && menuMode != 'nested'">
                 <div class="card sub-nav-list">
                     <h3 class="card-header">{{ pageTitle }}</h3>
@@ -77,7 +77,6 @@
         </div>
     </section>
 </template>
-
 
 <script>
 export default {
@@ -158,7 +157,7 @@ export default {
                         // this.subMenuId = this.menu[menuIndex].id;
                         this.showSub = true;
 
-                        if(typeof this.$mode !== "undefined" && this.$mode == 'compact'){
+                        if (typeof this.$theme !== "undefined" && this.$theme == 'bs') {
                             this.showSub = false;
                         }
                     }
@@ -273,7 +272,6 @@ export default {
     },
     mounted() {
         this.checkSub();
-        console.log('mode', this.$props.mode);
     }
 };
 </script>

@@ -1,91 +1,42 @@
 <template>
     <section class="offcanvas-template">
         <div class="crud-page">
-            <portal to="header-left" v-if="withoutHeader">
-                <h3>{{ title }}</h3>
+            <krud-header-bs v-if="$theme == 'bs'"
+                            :open-form="openPanel"
+                            :title="title"
+                            :permissions="permissions"
+                            :search="search"
+                            :refresh="refresh"
+                            :exportExcel="exportExcel"
+                            :print="print"
+                            :save="save"
+                            :isPrint="isPrint"
+                            :isExcel="isExcel"
+                            :isRefresh="isRefresh"
+                            :isSave="isSave"
+                            :isSearch="isSearch"/>
 
-                <span v-if="permissions ? permissions.c : true" class="divider"></span>
-
-                <Button v-if="permissions ? permissions.c : true" type="success"
-                        @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                        icon="md-add">
-                    {{ lang._add }}
-                </Button>
-            </portal>
-
-            <portal to="header-right" v-if="withoutHeader">
-                <krudtools :search="search"
-                           :refresh="refresh"
-                           :exportExcel="exportExcel"
-                           :importExcel="importExcel"
-                           :exportLoading="exportLoading"
-                           :print="print"
-                           :save="save"
-                           :isPrint="isPrint"
-                           :isExcel="isExcel"
-                           :isExcelUpload="isExcelUpload"
-                           :excelUploadCustomUrl="excelUploadCustomUrl"
-                           :excelUploadMethod="excelUploadMethod"
-                           :isRefresh="isRefresh"
-                           :isSave="isSave"
-                />
-            </portal>
-
-            <div class="crud-page-header" v-if="!withoutHeader">
-                <div v-if="hasNavSlot" class="crud-page-header-left">
-                    <slot name="nav"></slot>
-                    <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true" type="success"
-                            @click="openSlidePanel = true; editMode = false;" shape="circle" size="small"
-                            icon="md-add">
-                        {{ lang._add }}
-                    </Button>
-                </div>
-
-                <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
-                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
-                    <span v-if="permissions ? permissions.c : true" class="divider"></span>
-                    <Button v-if="permissions ? permissions.c : true"
-                            @click="openSlidePanel = true; editMode = false;" type="success" shape="circle" size="small"
-                            icon="md-add">
-                        {{ lang._add }}
-                    </Button>
-                </div>
-
-                <div class="crud-page-header-right">
-                    <div class="tooloptions">
-                        <slot name="tooloptions"></slot>
-                    </div>
-                    <krudtools :search="search"
-                               :refresh="refresh"
-                               :exportExcel="exportExcel"
-                               :exportLoading="exportLoading"
-                               :print="print"
-                               :save="save"
-                               :isPrint="isPrint"
-                               :isExcel="isExcel"
-                               :isExcelUpload="isExcelUpload"
-                               :excelUploadMethod="excelUploadMethod"
-                               :excelUploadCustomUrl="excelUploadCustomUrl"
-                               :isRefresh="isRefresh"
-                               :isSave="isSave"
-                               :isSearch="isSearch"
-                    />
-                    <Button v-if="exportSelectedRows" @click="exportByPath" :disabled="selectedData.length < 1"
-                            type="success" shape="circle" size="small">{{ exportLabel }}
-                    </Button>
-                    <slot name="right"></slot>
-
-                </div>
-            </div>
+            <krud-header v-else :open-form="openPanel"
+                         :title="title"
+                         :permissions="permissions"
+                         :search="search"
+                         :refresh="refresh"
+                         :exportExcel="exportExcel"
+                         :print="print"
+                         :save="save"
+                         :isPrint="isPrint"
+                         :isExcel="isExcel"
+                         :isRefresh="isRefresh"
+                         :isSave="isSave"
+                         :isSearch="isSearch"/>
 
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
                 </div>
+
                 <div class="dg-flex">
                     <datagrid v-if="permissions ? permissions.r : true" ref="grid"
-                              :url="url"
                               :schemaID="grid"
                               :paginate="50"
                               :fnClone="clone"
@@ -118,7 +69,7 @@
             </div>
 
             <slide-panel v-model="openSlidePanel" :widths="[form_width ? form_width :'1024px']"
-                         @close="coleSidePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
+                         @close="closePanel" :closeByBtn="true" :withCrudLog="withCrudLog">
                 <div :class="withCrudLog && editMode ? 'with-crud-log' : ''" style="height: 100%">
                     <dataform ref="form"
                               :schemaID="form"
@@ -133,7 +84,7 @@
                               :page_id="page_id"
                               :user_condition="user_condition ? user_condition.formCondition : null"
                               :onError="onError"
-                              :close="coleSidePanel"
+                              :close="closePanel"
                     />
                     <crud-log v-if="withCrudLog && editMode" :form="form" :rowId="rowId" :grid="grid"/>
                 </div>
@@ -144,6 +95,8 @@
 
 <script>
 import slidePanel from "../components/slidePanel";
+import krudHeader from "../components/krud-header.vue";
+import krudHeaderBs from "../components/krud-header-bs.vue";
 import crudLog from "../components/crudLog";
 import mixins from "./mixins";
 
@@ -161,6 +114,8 @@ export default {
     components: {
         "slide-panel": slidePanel,
         "crud-log": crudLog,
+        "krud-header": krudHeader,
+        "krud-header-bs": krudHeaderBs
     },
     computed: {
         lang() {
@@ -179,12 +134,15 @@ export default {
         templateEdit() {
             this.openSlidePanel = true;
         },
+
         templateOnSuccess() {
             this.openSlidePanel = false;
         },
+
         templateOnError() {
             // this.openSlidePanel = false;
         },
+
         onReady(formOption) {
             if (formOption.width.includes("%")) {
                 this.form_width = formOption.width;
@@ -194,7 +152,13 @@ export default {
                 }
             }
         },
-        coleSidePanel() {
+
+        openPanel() {
+            this.openSlidePanel = true;
+            this.editMode = false;
+        },
+
+        closePanel() {
             this.openSlidePanel = false;
             this.rowId = null;
         }

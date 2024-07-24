@@ -203,7 +203,7 @@ export default {
         "page_id",
         "actionvisibility",
         "gridSelector",
-        "url",
+        // "url",
         "hideInfo",
     ],
     computed: {
