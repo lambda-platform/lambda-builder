@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 function loadApp() {
     if (window.lambda.local_agent && typeof window.lambda.local_agent !== undefined && window.lambda.local_agent !== null && window.lambda.local_agent !== '' && window.lambda.local_agent !== undefined) {
         try {
-            return require("agent/index.vue").default;
+            require(`./views/theme/default/index`).default;
         } catch (err) {
             console.log('not local');
         }
