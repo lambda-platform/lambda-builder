@@ -251,28 +251,8 @@
                                 </Select>
 
                             </li>
-                            <li v-if="microservices.length >= 1">
-                                <label>{{ lang.table }}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        :disabled="!item.isFkey" @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
-                            </li>
-                            <li v-else>
+
+                            <li >
                                 <label>{{ lang.table }}</label>
                                 <multiselect
                                     v-model='item.relation.table'
