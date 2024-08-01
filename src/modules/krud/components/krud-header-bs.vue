@@ -605,6 +605,7 @@ export default {
         "isRefresh",
         "isSave",
         "isSearch",
+        "isCreate",
         "exportLoading"
     ],
     components: {},
