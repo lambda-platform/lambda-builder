@@ -27,7 +27,7 @@
                data-bs-toggle="collapse" role="button"
                aria-expanded="false" aria-controls="sidebarDashboards">
             <i v-if="item.icon" :class="item.icon"></i>
-            <span data-key="t-dashboards"> {{ item.key }} </span>
+            <span data-key="t-dashboards"> {{ getTitle(item) }} </span>
         </BLink>
 
         <!-- Children -->

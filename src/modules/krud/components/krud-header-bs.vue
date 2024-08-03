@@ -241,20 +241,20 @@
                         </simplebar>
                     </BDropdown>
 
-<!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
-<!--                               toggle-class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle arrow-none"-->
-<!--                               menu-class="dropdown-menu-end">-->
-<!--                        <template #button-content><img id="header-lang-img" src="/assets/app/images/flags/us.svg"-->
-<!--                                                       alt="Header Language"-->
-<!--                                                       height="20" class="rounded">-->
-<!--                        </template>-->
-<!--                        <BLink href="javascript:void(0);" class="dropdown-item notify-item language py-2"-->
-<!--                               v-for="(entry, key) in languages" :data-lang="entry.language" :title="entry.title"-->
-<!--                               @click="setLanguage(entry.language, entry.title, entry.flag)" :key="key">-->
-<!--                            <img :src="entry.flag" alt="user-image" class="me-2 rounded" height="18">-->
-<!--                            <span class="align-middle">{{ entry.title }}</span>-->
-<!--                        </BLink>-->
-<!--                    </BDropdown>-->
+                    <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
+                    <!--                               toggle-class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle arrow-none"-->
+                    <!--                               menu-class="dropdown-menu-end">-->
+                    <!--                        <template #button-content><img id="header-lang-img" src="/assets/app/images/flags/us.svg"-->
+                    <!--                                                       alt="Header Language"-->
+                    <!--                                                       height="20" class="rounded">-->
+                    <!--                        </template>-->
+                    <!--                        <BLink href="javascript:void(0);" class="dropdown-item notify-item language py-2"-->
+                    <!--                               v-for="(entry, key) in languages" :data-lang="entry.language" :title="entry.title"-->
+                    <!--                               @click="setLanguage(entry.language, entry.title, entry.flag)" :key="key">-->
+                    <!--                            <img :src="entry.flag" alt="user-image" class="me-2 rounded" height="18">-->
+                    <!--                            <span class="align-middle">{{ entry.title }}</span>-->
+                    <!--                        </BLink>-->
+                    <!--                    </BDropdown>-->
 
                     <BDropdown variant="link"
                                class="ms-sm-3 header-item topbar-user"
@@ -262,7 +262,7 @@
                                menu-class="dropdown-menu-end">
                         <template #button-content>
                           <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="/assets/app/images/users/avatar-1.jpg"
+                            <img class="rounded-circle header-profile-user" src="/assets/app/images/users/avatar-teacher.png"
                                  alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                               <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
@@ -292,10 +292,10 @@
                             <span class="align-middle"> Тусламж</span>
                         </router-link>
                         <div class="dropdown-divider"></div>
-                        <router-link class="dropdown-item" to="/logout"><i
+                        <a href="javascript:void(0)" class="dropdown-item" @click="logoutModal = true"><i
                             class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout"> Системээс гарах</span>
-                        </router-link>
+                        </a>
                     </BDropdown>
                 </div>
 
@@ -327,6 +327,23 @@
                 <!--                    <user-control />-->
                 <!--                </div>-->
             </div>
+
+            <Modal v-model="logoutModal" :closable="false" width="252" class="logout-modal">
+                <p slot="header" style="display:none;"></p>
+                <div style="text-align:center">
+                    <a @click="logout()">
+                        <Icon type="md-log-out"/>
+                        <span>{{common._logout}}</span>
+                    </a>
+                    <a @click="cancel()">
+                        <Icon type="md-refresh"/>
+                        <span>{{common._cancel}}</span>
+                    </a>
+                </div>
+                <div slot="footer" style="display:none;">
+                    <form action="/auth/logout"></form>
+                </div>
+            </Modal>
         </div>
     </header>
 </template>
@@ -361,6 +378,7 @@ export default {
         return {
             isMenuCondensed: false,
             searchModel: null,
+            logoutModal: false,
 
             languages: [
                 // {
@@ -413,12 +431,20 @@ export default {
     },
     computed: {
         lang() {
-            const labels = ['_add', 'Information_viewing_history', 'excelUpload', 're_call', '_save', '_print', 'download_file'];
+            const labels = ['_add', 'Information_viewing_history', 'excelUpload', 're_call', '_save', '_print', 'download_file', 'logout'];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('crud.' + labels[i]);
                 return obj;
             }, {});
         },
+
+        common() {
+            const labels = ['_logout', '_cancel'];
+            return labels.reduce((obj, key, i) => {
+                obj[key] = this.$t('user.' + labels[i]);
+                return obj;
+            }, {});
+        }
     },
 
     mounted() {
@@ -450,6 +476,15 @@ export default {
         searchGrid(e) {
             e.preventDefault();
             this.$props.search(this.searchModel);
+        },
+
+        logout() {
+            axios.post("/auth/logout", {}).then(o => {
+                window.location = "/auth/login";
+            });
+        },
+        cancel() {
+            this.$data.logoutModal = false;
         },
 
         isCustomDropdown() {
