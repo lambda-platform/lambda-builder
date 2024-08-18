@@ -14,151 +14,10 @@
                         </span>
                     </BButton>
 
-                    <!--                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>-->
-                    <form v-if="isSearch" @submit="searchGrid" class="app-search d-none d-md-block">
-                        <div class="position-relative">
-                            <input type="text" class="form-control"
-                                   v-model="searchModel"
-                                   :placeholder="$static_words ? $static_words.search : 'Хайх...'"
-                                   autocomplete="off"/>
-                            <span class="mdi mdi-magnify search-widget-icon"></span>
-                        </div>
-                    </form>
+                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <b-button v-if="permissions ? permissions.c : true" variant="success"
-                              class="btn-label waves-effect waves-light rounded-pill" @click="openForm">
-                        <i class="ri-add-line label-icon align-middle fs-16 me-2 rounded-pill"></i>
-                        <span>{{ lang._add }}</span>
-                    </b-button>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
-                        <Tooltip :content="lang.re_call">
-                            <BButton type="button" @click="$props.refresh" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-refresh fs-24"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">
-                        <Tooltip :content="lang._save">
-                            <BButton type="button" @click="$props.save" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-save fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isPrint">
-                        <Tooltip :content="lang._print">
-                            <BButton type="button" @click="$props.print" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-printer fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isExcel">
-                        <Tooltip :content="lang.download_file">
-                            <BButton variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
-                                     v-if="$props.exportLoading">
-                                <Spin>
-                                    <Icon type="ios-loading" size=18 class="spin-icon-load"></Icon>
-                                </Spin>
-                            </BButton>
-                            <BButton @click="$props.exportExcel" v-else variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-download fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isExcelUpload">
-                        <Tooltip :content="lang.excelUpload">
-                            <BButton v-if="$props.excelUploadCustomUrl" :href="$props.excelUploadCustomUrl"
-                                     variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-upload fs-22"></i>
-                            </BButton>
-                            <BButton v-else @click="$props.excelUploadMethod" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-upload fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="tooloptions">
-                        <slot name="tooloptions"></slot>
-                    </div>
-
-                    <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
-                    <!--                               :offset="{ alignmentAxis: 57, crossAxis: 0, mainAxis: -42 }"-->
-                    <!--                               toggle-class="btn-icon btn-topbar rounded-circle mode-layout ms-1 arrow-none"-->
-                    <!--                               menu-class="p-0 dropdown-menu-end">-->
-                    <!--                        <template #button-content>-->
-                    <!--                            <i class="bx bx-category-alt fs-22"></i>-->
-                    <!--                        </template>-->
-                    <!--                        <div-->
-                    <!--                            class="p-3 border-top-0 dropdown-head border-start-0 border-end-0 border-dashed border dropdown-menu-lg">-->
-                    <!--                            <BRow class="align-items-center">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <h6 class="m-0 fw-semibold fs-15">Web Apps</h6>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol cols="auto">-->
-                    <!--                                    <BLink href="#!" class="btn btn-sm btn-soft-info">-->
-                    <!--                                        View All Apps-->
-                    <!--                                        <i class="ri-arrow-right-s-line align-middle"></i>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-                    <!--                        </div>-->
-
-                    <!--                        <div class="p-2">-->
-                    <!--                            <BRow class="g-0">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/github.png" alt="Github"/>-->
-                    <!--                                        <span>GitHub</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/bitbucket.png" alt="bitbucket"/>-->
-                    <!--                                        <span>Bitbucket</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/dribbble.png" alt="dribbble"/>-->
-                    <!--                                        <span>Dribbble</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-
-                    <!--                            <BRow class="g-0">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/dropbox.png" alt="dropbox"/>-->
-                    <!--                                        <span>Dropbox</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/mail_chimp.png" alt="mail_chimp"/>-->
-                    <!--                                        <span>Mail Chimp</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/slack.png" alt="slack"/>-->
-                    <!--                                        <span>Slack</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-                    <!--                        </div>-->
-                    <!--                    </BDropdown>-->
-
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <BButton type="button" variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
                                  data-toggle="fullscreen" @click="initFullScreen">
@@ -356,23 +215,7 @@ export default {
     props: [
         'openForm',
         "title",
-        "permissions",
-        "refresh",
-        "exportExcel",
-        "print",
-        "search",
-        "save",
         "options",
-        "isExcel",
-        "isExcelUpload",
-        "excelUploadCustomUrl",
-        "excelUploadMethod",
-        "isPrint",
-        "isRefresh",
-        "isSave",
-        "isSearch",
-        "isCreate",
-        "exportLoading"
     ],
     components: {},
     data() {
@@ -628,12 +471,7 @@ export default {
             this.changeMode({
                 mode: mode,
             });
-        },
-
-        removeItem(cartItem) {
-            this.cartItems = this.cartItems.filter(item => item.id !== cartItem.id)
-            this.$emit("cart-item-price", this.cartItems.length);
-        },
+        }
     }
 }
 </script>
