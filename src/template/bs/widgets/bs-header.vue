@@ -41,7 +41,7 @@
                             <i class='bx bx-bell fs-22'></i>
                             <span
                                 class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
-                                class="notification-badge">3</span><span class="visually-hidden">
+                                class="notification-badge">0</span><span class="visually-hidden">
                                 unread messages
                             </span>
                           </span>
@@ -63,33 +63,33 @@
                             </div>
                         </div>
                         <simplebar data-simplebar style="max-height: 300px" class="pe-2">
-                            <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                <div class="d-flex">
-                                    <img src="/assets/app/images/users/avatar-8.jpg"
-                                         class="me-3 rounded-circle avatar-xs flex-shrink-0"
-                                         alt="user-pic"/>
-                                    <div class="flex-grow-1">
-                                        <BLink href="#!" class="stretched-link">
-                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">
-                                                Maureen Gibson
-                                            </h6>
-                                        </BLink>
-                                        <div class="fs-13 text-muted">
-                                            <p class="mb-1">
-                                                We talked about a project on linkedin.
-                                            </p>
-                                        </div>
-                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                              <span>
-                                                  <i class="mdi mdi-clock-outline"></i> 4 hrs ago
-                                              </span>
-                                        </p>
-                                    </div>
-                                    <div class="px-2 fs-15">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="text-reset notification-item d-block dropdown-item position-relative">-->
+<!--                                <div class="d-flex">-->
+<!--                                    <img src="/assets/app/images/users/avatar-8.jpg"-->
+<!--                                         class="me-3 rounded-circle avatar-xs flex-shrink-0"-->
+<!--                                         alt="user-pic"/>-->
+<!--                                    <div class="flex-grow-1">-->
+<!--                                        <BLink href="#!" class="stretched-link">-->
+<!--                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">-->
+<!--                                                Maureen Gibson-->
+<!--                                            </h6>-->
+<!--                                        </BLink>-->
+<!--                                        <div class="fs-13 text-muted">-->
+<!--                                            <p class="mb-1">-->
+<!--                                                We talked about a project on linkedin.-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">-->
+<!--                                              <span>-->
+<!--                                                  <i class="mdi mdi-clock-outline"></i> 4 hrs ago-->
+<!--                                              </span>-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+<!--                                    <div class="px-2 fs-15">-->
+<!--                                        <input class="form-check-input" type="checkbox"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div class="my-3 text-center">
                                 <BButton type="button" variant="soft-success">

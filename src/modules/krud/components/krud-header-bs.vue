@@ -33,20 +33,24 @@
                         <span>{{ lang._add }}</span>
                     </b-button>
 
+
+                    <b-button v-if="isSave" @click="$props.save" variant="success"
+                             class="btn-label waves-effect waves-light rounded-pill">
+                        <i class="ri-save-2-fill label-icon align-middle fs-16 me-2 rounded-pill"></i>
+                        <span>Хадгалах</span>
+                    </b-button>
+
+<!--                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">-->
+<!--                        <Tooltip :content="lang._save">-->
+<!--                           -->
+<!--                        </Tooltip>-->
+<!--                    </div>-->
+
                     <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
                         <Tooltip :content="lang.re_call">
                             <BButton type="button" @click="$props.refresh" variant="ghost-secondary"
                                      class="btn-icon btn-topbar rounded-circle">
                                 <i class="bx bx-refresh fs-24"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">
-                        <Tooltip :content="lang._save">
-                            <BButton type="button" @click="$props.save" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-save fs-22"></i>
                             </BButton>
                         </Tooltip>
                     </div>
