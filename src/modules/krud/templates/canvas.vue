@@ -14,7 +14,19 @@
                             :isExcel="isExcel"
                             :isRefresh="isRefresh"
                             :isSave="isSave"
-                            :isSearch="isSearch"/>
+                            :isSearch="isSearch">
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+
+                <template slot="header-left">
+                    <slot name="left"></slot>
+                </template>
+
+                <template slot="right">
+                    <slot name="right"></slot>
+                </template>
+            </krud-header-bs>
 
             <krud-header v-else :open-form="openPanel"
                          :title="title"
@@ -28,7 +40,15 @@
                          :isExcel="isExcel"
                          :isRefresh="isRefresh"
                          :isSave="isSave"
-                         :isSearch="isSearch"/>
+                         :isSearch="isSearch">
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+                <template slot="right">
+                    <slot name="right"></slot>
+                </template>
+            </krud-header>
+
 
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">

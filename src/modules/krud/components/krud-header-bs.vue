@@ -24,9 +24,15 @@
                             <span class="mdi mdi-magnify search-widget-icon"></span>
                         </div>
                     </form>
+
+                    <slot name="header-left"></slot>
                 </div>
 
                 <div class="d-flex align-items-center">
+                    <div class="tooloptions">
+                        <slot name="tooloptions"></slot>
+                    </div>
+
                     <b-button v-if="permissions ? permissions.c : true" variant="success"
                               class="btn-label waves-effect waves-light rounded-pill" @click="openForm">
                         <i class="ri-add-line label-icon align-middle fs-16 me-2 rounded-pill"></i>
@@ -35,16 +41,16 @@
 
 
                     <b-button v-if="isSave" @click="$props.save" variant="success"
-                             class="btn-label waves-effect waves-light rounded-pill">
+                              class="btn-label waves-effect waves-light rounded-pill">
                         <i class="ri-save-2-fill label-icon align-middle fs-16 me-2 rounded-pill"></i>
                         <span>Хадгалах</span>
                     </b-button>
 
-<!--                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">-->
-<!--                        <Tooltip :content="lang._save">-->
-<!--                           -->
-<!--                        </Tooltip>-->
-<!--                    </div>-->
+                    <!--                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">-->
+                    <!--                        <Tooltip :content="lang._save">-->
+                    <!--                           -->
+                    <!--                        </Tooltip>-->
+                    <!--                    </div>-->
 
                     <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
                         <Tooltip :content="lang.re_call">
@@ -90,10 +96,6 @@
                                 <i class="bx bx-upload fs-22"></i>
                             </BButton>
                         </Tooltip>
-                    </div>
-
-                    <div class="tooloptions">
-                        <slot name="tooloptions"></slot>
                     </div>
 
                     <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
