@@ -53,9 +53,7 @@
                 <template slot="header-left">
                     <slot name="left"></slot>
                 </template>
-                <template v-slot="right">
-                    <slot name="right"></slot>
-                </template>
+                <slot name="right"></slot>
             </krud-header-bs>
 
             <krud-header v-else
@@ -74,10 +72,7 @@
                 <template slot="tooloptions">
                     <slot name="tooloptions"></slot>
                 </template>
-                <template slot="right">
-                    <slot name="right"></slot>
-                </template>
-<!--                <slot name="right"></slot>-->
+                <slot name="right"></slot>
             </krud-header>
 
             <div class="crud-page-body">
