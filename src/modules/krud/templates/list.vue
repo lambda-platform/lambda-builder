@@ -46,6 +46,13 @@
                             :isRefresh="isRefresh"
                             :isSave="isSave"
                             :isSearch="isSearch">
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+
+                <template slot="header-left">
+                    <slot name="left"></slot>
+                </template>
                 <template v-slot="right">
                     <slot name="right"></slot>
                 </template>
@@ -64,7 +71,13 @@
                          :isRefresh="isRefresh"
                          :isSave="isSave"
                          :isSearch="isSearch">
-                <slot name="right"></slot>
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+                <template slot="right">
+                    <slot name="right"></slot>
+                </template>
+<!--                <slot name="right"></slot>-->
             </krud-header>
 
             <div class="crud-page-body">
