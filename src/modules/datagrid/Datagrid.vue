@@ -1436,15 +1436,15 @@ export default {
             this.delLoading = true;
             let baseUrl = this.$props.url ? this.$props.url : '';
             axios.delete(this.page_id ? `${baseUrl}/lambda/krud/delete/${this.$props.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.$props.schemaID}/${id}`)
-                .then(o => {
-                    if (o.status) {
+                .then(({data}) => {
+                    if (data.status) {
                         this.$Notice.success({
                             title: this.lang.infoDeleted
                         });
 
                         //check later ----- Tseegii
-                        // this.data.splice(index, 1);
-                        // this.gridOptions.rowData.splice(index, 1);
+                        this.data.splice(index, 1);
+                        this.gridOptions.rowData.splice(index, 1);
 
                         this.info.total--;
                         setTimeout(() => {
@@ -1453,8 +1453,9 @@ export default {
                         }, 600)
                     } else {
                         this.$Notice.error({
-                            title: this.lang.errorOccWhileDeleting + "!"
+                            title: data.msg ? data.msg : this.lang.errorOccWhileDeleting + "!"
                         });
+
                         setTimeout(() => {
                             this.delLoading = false;
                             this.deleteModal = false
