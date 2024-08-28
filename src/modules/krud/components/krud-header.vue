@@ -95,6 +95,7 @@ export default {
     props: [
         'openForm',
         "title",
+        "permissions",
         "refresh",
         "exportExcel",
         "print",

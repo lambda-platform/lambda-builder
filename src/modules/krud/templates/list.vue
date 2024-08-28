@@ -46,9 +46,14 @@
                             :isRefresh="isRefresh"
                             :isSave="isSave"
                             :isSearch="isSearch">
-                <template v-slot="right">
-                    <slot name="right"></slot>
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
                 </template>
+
+                <template slot="header-left">
+                    <slot name="left"></slot>
+                </template>
+                <slot name="right"></slot>
             </krud-header-bs>
 
             <krud-header v-else
@@ -64,6 +69,9 @@
                          :isRefresh="isRefresh"
                          :isSave="isSave"
                          :isSearch="isSearch">
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
                 <slot name="right"></slot>
             </krud-header>
 
