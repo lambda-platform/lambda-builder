@@ -2,11 +2,11 @@
     <section class="list-template">
         <div :class="`crud-page ${hideHeader ? 'no-header' : '' }`">
             <!--            <div class="crud-page-header">-->
-            <!--                <div v-if="hasNavSlot" class="krud-left">-->
-            <!--                    <div class="crud-page-header-left">-->
-            <!--                        <slot name="nav"></slot>-->
-            <!--                    </div>-->
-            <!--                </div>-->
+            <!--                            <div v-if="hasNavSlot" class="krud-left">-->
+            <!--                                <div class="crud-page-header-left">-->
+            <!--                                    <slot name="nav"></slot>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
 
             <!--                <div v-else class="crud-page-header-left">-->
             <!--                    <i v-if="$props.icon" :class="icon"></i>-->
@@ -69,6 +69,11 @@
                          :isRefresh="isRefresh"
                          :isSave="isSave"
                          :isSearch="isSearch">
+                <div v-if="hasNavSlot" class="krud-left">
+                    <div class="crud-page-header-left">
+                        <slot name="nav"></slot>
+                    </div>
+                </div>
                 <template slot="tooloptions">
                     <slot name="tooloptions"></slot>
                 </template>
