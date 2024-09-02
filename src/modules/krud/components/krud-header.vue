@@ -83,7 +83,7 @@
             <!--                {{ exportLabel }}-->
             <!--            </Button>-->
             <slot name="right"></slot>
-            <user-control />
+<!--            <user-control />-->
         </div>
     </div>
 </template>
