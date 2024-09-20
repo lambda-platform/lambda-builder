@@ -1,5 +1,6 @@
 <template>
-    <list-view src="/lambda/puzzle/schema/report" :title="lang._report" type="report" :data="listData" ></list-view>
+    <h1>report list</h1>
+<!--    <list-view src="/lambda/puzzle/schema/report" :title="lang._report" type="report" :data="listData" ></list-view>-->
 </template>
 
 <script>

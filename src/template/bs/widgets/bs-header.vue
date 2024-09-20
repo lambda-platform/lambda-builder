@@ -14,157 +14,10 @@
                         </span>
                     </BButton>
 
-                    <!--                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>-->
-                    <form v-if="isSearch" @submit="searchGrid" class="app-search d-none d-md-block">
-                        <div class="position-relative">
-                            <input type="text" class="form-control"
-                                   v-model="searchModel"
-                                   :placeholder="$static_words ? $static_words.search : 'Хайх...'"
-                                   autocomplete="off"/>
-                            <span class="mdi mdi-magnify search-widget-icon"></span>
-                        </div>
-                    </form>
-
-                    <slot name="header-left"></slot>
+                    <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <div class="tooloptions">
-                        <slot name="tooloptions"></slot>
-                    </div>
-
-                    <b-button v-if="permissions ? permissions.c : true" variant="success"
-                              class="btn-label waves-effect waves-light rounded-pill" @click="openForm">
-                        <i class="ri-add-line label-icon align-middle fs-16 me-2 rounded-pill"></i>
-                        <span>{{ lang._add }}</span>
-                    </b-button>
-
-
-                    <b-button v-if="isSave" @click="$props.save" variant="success"
-                              class="btn-label waves-effect waves-light rounded-pill">
-                        <i class="ri-save-2-fill label-icon align-middle fs-16 me-2 rounded-pill"></i>
-                        <span>Хадгалах</span>
-                    </b-button>
-
-                    <!--                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isSave">-->
-                    <!--                        <Tooltip :content="lang._save">-->
-                    <!--                           -->
-                    <!--                        </Tooltip>-->
-                    <!--                    </div>-->
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
-                        <Tooltip :content="lang.re_call">
-                            <BButton type="button" @click="$props.refresh" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-refresh fs-24"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isPrint">
-                        <Tooltip :content="lang._print">
-                            <BButton type="button" @click="$props.print" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-printer fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isExcel">
-                        <Tooltip :content="lang.download_file">
-                            <BButton variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
-                                     v-if="$props.exportLoading">
-                                <Spin>
-                                    <Icon type="ios-loading" size=18 class="spin-icon-load"></Icon>
-                                </Spin>
-                            </BButton>
-                            <BButton @click="$props.exportExcel" v-else variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-download fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <div class="ms-1 header-item d-none d-sm-flex" v-if="isExcelUpload">
-                        <Tooltip :content="lang.excelUpload">
-                            <BButton v-if="$props.excelUploadCustomUrl" :href="$props.excelUploadCustomUrl"
-                                     variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-upload fs-22"></i>
-                            </BButton>
-                            <BButton v-else @click="$props.excelUploadMethod" variant="ghost-secondary"
-                                     class="btn-icon btn-topbar rounded-circle">
-                                <i class="bx bx-upload fs-22"></i>
-                            </BButton>
-                        </Tooltip>
-                    </div>
-
-                    <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
-                    <!--                               :offset="{ alignmentAxis: 57, crossAxis: 0, mainAxis: -42 }"-->
-                    <!--                               toggle-class="btn-icon btn-topbar rounded-circle mode-layout ms-1 arrow-none"-->
-                    <!--                               menu-class="p-0 dropdown-menu-end">-->
-                    <!--                        <template #button-content>-->
-                    <!--                            <i class="bx bx-category-alt fs-22"></i>-->
-                    <!--                        </template>-->
-                    <!--                        <div-->
-                    <!--                            class="p-3 border-top-0 dropdown-head border-start-0 border-end-0 border-dashed border dropdown-menu-lg">-->
-                    <!--                            <BRow class="align-items-center">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <h6 class="m-0 fw-semibold fs-15">Web Apps</h6>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol cols="auto">-->
-                    <!--                                    <BLink href="#!" class="btn btn-sm btn-soft-info">-->
-                    <!--                                        View All Apps-->
-                    <!--                                        <i class="ri-arrow-right-s-line align-middle"></i>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-                    <!--                        </div>-->
-
-                    <!--                        <div class="p-2">-->
-                    <!--                            <BRow class="g-0">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/github.png" alt="Github"/>-->
-                    <!--                                        <span>GitHub</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/bitbucket.png" alt="bitbucket"/>-->
-                    <!--                                        <span>Bitbucket</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/dribbble.png" alt="dribbble"/>-->
-                    <!--                                        <span>Dribbble</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-
-                    <!--                            <BRow class="g-0">-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/dropbox.png" alt="dropbox"/>-->
-                    <!--                                        <span>Dropbox</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/mail_chimp.png" alt="mail_chimp"/>-->
-                    <!--                                        <span>Mail Chimp</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                                <BCol>-->
-                    <!--                                    <BLink class="dropdown-icon-item" href="#!">-->
-                    <!--                                        <img src="/assets/app/images/brands/slack.png" alt="slack"/>-->
-                    <!--                                        <span>Slack</span>-->
-                    <!--                                    </BLink>-->
-                    <!--                                </BCol>-->
-                    <!--                            </BRow>-->
-                    <!--                        </div>-->
-                    <!--                    </BDropdown>-->
-
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <BButton type="button" variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
                                  data-toggle="fullscreen" @click="initFullScreen">
@@ -188,7 +41,7 @@
                             <i class='bx bx-bell fs-22'></i>
                             <span
                                 class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
-                                class="notification-badge">3</span><span class="visually-hidden">
+                                class="notification-badge">0</span><span class="visually-hidden">
                                 unread messages
                             </span>
                           </span>
@@ -210,33 +63,33 @@
                             </div>
                         </div>
                         <simplebar data-simplebar style="max-height: 300px" class="pe-2">
-                            <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                <div class="d-flex">
-                                    <img src="/assets/app/images/users/avatar-8.jpg"
-                                         class="me-3 rounded-circle avatar-xs flex-shrink-0"
-                                         alt="user-pic"/>
-                                    <div class="flex-grow-1">
-                                        <BLink href="#!" class="stretched-link">
-                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">
-                                                Maureen Gibson
-                                            </h6>
-                                        </BLink>
-                                        <div class="fs-13 text-muted">
-                                            <p class="mb-1">
-                                                We talked about a project on linkedin.
-                                            </p>
-                                        </div>
-                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                              <span>
-                                                  <i class="mdi mdi-clock-outline"></i> 4 hrs ago
-                                              </span>
-                                        </p>
-                                    </div>
-                                    <div class="px-2 fs-15">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="text-reset notification-item d-block dropdown-item position-relative">-->
+<!--                                <div class="d-flex">-->
+<!--                                    <img src="/assets/app/images/users/avatar-8.jpg"-->
+<!--                                         class="me-3 rounded-circle avatar-xs flex-shrink-0"-->
+<!--                                         alt="user-pic"/>-->
+<!--                                    <div class="flex-grow-1">-->
+<!--                                        <BLink href="#!" class="stretched-link">-->
+<!--                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">-->
+<!--                                                Maureen Gibson-->
+<!--                                            </h6>-->
+<!--                                        </BLink>-->
+<!--                                        <div class="fs-13 text-muted">-->
+<!--                                            <p class="mb-1">-->
+<!--                                                We talked about a project on linkedin.-->
+<!--                                            </p>-->
+<!--                                        </div>-->
+<!--                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">-->
+<!--                                              <span>-->
+<!--                                                  <i class="mdi mdi-clock-outline"></i> 4 hrs ago-->
+<!--                                              </span>-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+<!--                                    <div class="px-2 fs-15">-->
+<!--                                        <input class="form-check-input" type="checkbox"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div class="my-3 text-center">
                                 <BButton type="button" variant="soft-success">
@@ -362,23 +215,7 @@ export default {
     props: [
         'openForm',
         "title",
-        "permissions",
-        "refresh",
-        "exportExcel",
-        "print",
-        "search",
-        "save",
         "options",
-        "isExcel",
-        "isExcelUpload",
-        "excelUploadCustomUrl",
-        "excelUploadMethod",
-        "isPrint",
-        "isRefresh",
-        "isSave",
-        "isSearch",
-        "isCreate",
-        "exportLoading"
     ],
     components: {},
     data() {
@@ -634,12 +471,7 @@ export default {
             this.changeMode({
                 mode: mode,
             });
-        },
-
-        removeItem(cartItem) {
-            this.cartItems = this.cartItems.filter(item => item.id !== cartItem.id)
-            this.$emit("cart-item-price", this.cartItems.length);
-        },
+        }
     }
 }
 </script>

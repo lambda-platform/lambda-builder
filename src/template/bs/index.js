@@ -9,6 +9,7 @@ import iView from 'iview';
 import vmodal from 'vue-js-modal'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import {i18n} from '../../locale';
+
 axios.interceptors.request.use(function (config) {
     config.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     return config;

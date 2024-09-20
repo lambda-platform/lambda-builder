@@ -81,11 +81,10 @@
             :draggable="true"
             :footer-hide="true"
             :title="form.name"
+            :mask="true"
             class="dataform-model-form"
             width="80vw"
-            v-model="modal_show"
-
-        >
+            v-model="modal_show">
             <section class="form-modal">
                 <div class="form-body">
                     <dataform ref="form" v-if="modal_show" :schemaID="form.formId"
@@ -117,7 +116,6 @@
         >
             <section class="form-modal source-grid">
                 <div class="form-tool ">
-
                     <h4>{{ form.sourceGridModalTitle }}</h4>
                     <div class="form-tool-actions">
                         <a href="javascript:void(0)" @click="closeSourceModal">
@@ -127,14 +125,9 @@
                 </div>
 
                 <div class="form-body" v-if="modal_grid_show">
-
                     <div v-if="form.sourceGridTitle && form.sourceGridDescription" class="source-grid-description">
-                        <h3>
-                            {{ form.sourceGridTitle }}
-                        </h3>
-                        <p v-html="form.sourceGridDescription">
-
-                        </p>
+                        <h3>{{ form.sourceGridTitle }}</h3>
+                        <p v-html="form.sourceGridDescription"></p>
                     </div>
                     <datagrid
                         :schemaID="form.sourceGridID"

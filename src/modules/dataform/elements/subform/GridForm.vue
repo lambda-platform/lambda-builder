@@ -34,7 +34,6 @@ import {getRelationData} from "../../utils/helpers";
 export default {
     props: ["f", "model", "editMode", "relations", "formula", "schema"],
     created() {
-
         this.f.data = {};
         this.f.schema.forEach(item => {
 

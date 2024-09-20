@@ -134,6 +134,28 @@ let routes = [{
     },
 
     {
+        path: '/report',
+        component: () => import('./pages/report/views/index.vue'),
+        children: [{
+            name: 'report.list',
+            path: '',
+            component: () => import(/* webpackChunkName: "report-list" */ './pages/report/views/list.vue'),
+        },
+            {
+                name: 'report.builder',
+                path: 'builder/:id?',
+                component: () => import(/* webpackChunkName: "report-builder" */ './pages/report/views/builder.vue'),
+            },
+            {
+                name: 'report.preview',
+                path: 'preview/:id',
+                component: () => import(/* webpackChunkName: "report-preview" */ './pages/report/views/preview.vue'),
+            },
+        ]
+    },
+
+
+    {
         path: '/process',
         component: () => import(/* webpackChunkName: "grid-index" */ './pages/process/views/index.vue'),
         children: [{
@@ -198,27 +220,6 @@ let routes = [{
         path: '/module/:module',
         component: () => import(/* webpackChunkName: "render-index" */ './pages/render/views/module.vue')
     },
-    {
-        path: '/report',
-        component: () => import(/* webpackChunkName: "report-index" */ './pages/report/views/index.vue').default,
-        children: [{
-            name: 'report.list',
-            path: '',
-            component: () => import(/* webpackChunkName: "report-list" */ './pages/report/views/list.vue').default,
-        },
-            {
-                name: 'report.builder',
-                path: 'builder/:id?',
-                component: () => import(/* webpackChunkName: "report-builder" */ './pages/report/views/builder.vue').default,
-            },
-            {
-                name: 'report.preview',
-                path: 'preview/:id',
-                component: () => import(/* webpackChunkName: "report-preview" */ './pages/report/views/preview.vue').default,
-            },
-        ]
-    },
-
     {
         path: '/locale',
         component: () => import('./pages/locale/index.vue'),

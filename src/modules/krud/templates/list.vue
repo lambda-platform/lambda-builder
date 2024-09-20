@@ -1,37 +1,84 @@
 <template>
     <section class="list-template">
         <div :class="`crud-page ${hideHeader ? 'no-header' : '' }`">
-            <div class="crud-page-header">
+            <!--            <div class="crud-page-header">-->
+            <!--                            <div v-if="hasNavSlot" class="krud-left">-->
+            <!--                                <div class="crud-page-header-left">-->
+            <!--                                    <slot name="nav"></slot>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+
+            <!--                <div v-else class="crud-page-header-left">-->
+            <!--                    <i v-if="$props.icon" :class="icon"></i>-->
+            <!--                    <h3 v-if="$props.title">{{ $props.title.replace(/-/g, ' ') }}</h3>-->
+            <!--                    <slot name="nav"></slot>-->
+            <!--                </div>-->
+
+            <!--                <div class="crud-page-header-right">-->
+            <!--                    <div class="tool-options">-->
+            <!--                        <slot name="tooloptions"></slot>-->
+            <!--                    </div>-->
+            <!--                    <krudtools :search="search"-->
+            <!--                               :refresh="refresh"-->
+            <!--                               :exportExcel="exportExcel"-->
+            <!--                               :print="print"-->
+            <!--                               :save="save"-->
+            <!--                               :isPrint="isPrint"-->
+            <!--                               :isExcel="isExcel"-->
+            <!--                               :isRefresh="isRefresh"-->
+            <!--                               :isSave="isSave"-->
+            <!--                               :isSearch="isSearch"-->
+            <!--                    />-->
+            <!--                    <slot name="right"></slot>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <krud-header-bs v-if="$theme == 'bs'"
+                            :title="title"
+                            :permissions="permissions"
+                            :search="search"
+                            :refresh="refresh"
+                            :exportExcel="exportExcel"
+                            :print="print"
+                            :save="save"
+                            :isPrint="isPrint"
+                            :isExcel="isExcel"
+                            :isRefresh="isRefresh"
+                            :isSave="isSave"
+                            :isSearch="isSearch">
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+
+                <template slot="header-left">
+                    <slot name="left"></slot>
+                </template>
+                <slot name="right"></slot>
+            </krud-header-bs>
+
+            <krud-header v-else
+                         :title="title"
+                         :permissions="permissions"
+                         :search="search"
+                         :refresh="refresh"
+                         :exportExcel="exportExcel"
+                         :print="print"
+                         :save="save"
+                         :isPrint="isPrint"
+                         :isExcel="isExcel"
+                         :isRefresh="isRefresh"
+                         :isSave="isSave"
+                         :isSearch="isSearch">
                 <div v-if="hasNavSlot" class="krud-left">
                     <div class="crud-page-header-left">
                         <slot name="nav"></slot>
                     </div>
                 </div>
-
-                <div v-else class="crud-page-header-left">
-                    <i v-if="$props.icon" :class="icon"></i>
-                    <h3 v-if="$props.title">{{ $props.title.replace(/-/g, ' ') }}</h3>
-                    <slot name="nav"></slot>
-                </div>
-
-                <div class="crud-page-header-right">
-                    <div class="tool-options">
-                        <slot name="tooloptions"></slot>
-                    </div>
-                    <krudtools :search="search"
-                               :refresh="refresh"
-                               :exportExcel="exportExcel"
-                               :print="print"
-                               :save="save"
-                               :isPrint="isPrint"
-                               :isExcel="isExcel"
-                               :isRefresh="isRefresh"
-                               :isSave="isSave"
-                               :isSearch="isSearch"
-                    />
-                    <slot name="right"></slot>
-                </div>
-            </div>
+                <template slot="tooloptions">
+                    <slot name="tooloptions"></slot>
+                </template>
+                <slot name="right"></slot>
+            </krud-header>
 
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
@@ -73,8 +120,14 @@
 
 <script>
 import mixins from "./mixins";
+import krudHeader from "../components/krud-header.vue";
+import krudHeaderBs from "../components/krud-header-bs.vue";
 
 export default {
+    components: {
+        "krud-header": krudHeader,
+        "krud-header-bs": krudHeaderBs
+    },
     mixins: [mixins],
 };
 </script>

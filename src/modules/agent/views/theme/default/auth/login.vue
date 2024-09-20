@@ -6,9 +6,7 @@
                 class="mx-auto"
                 :model="credentials"
                 layout="vertical"
-                autocomplete="off"
-
-            >
+                autocomplete="off">
                 <div class="space-y-6">
                     <div class="loginInput">
                         <a-form-item name="login" :rules="[{ required: true, message: 'Нэвтрэх нэрээ оруулна уу!' }]">

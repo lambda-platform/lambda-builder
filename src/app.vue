@@ -83,7 +83,7 @@
                         <span>{{ lang.original_preparation }}</span>
                     </router-link>
                 </li>
-                <li v-if="!isMicroservice">
+                <li>
                     <router-link to="/report">
                         <i class="ti-layout-accordion-list"></i>
                         <span>{{ lang._report }}</span>

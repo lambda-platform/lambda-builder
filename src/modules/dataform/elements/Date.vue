@@ -10,13 +10,13 @@
 
 <script>
 import {getDate} from "../utils/date";
+import {now} from "lodash";
 
 export default {
     props: ["model", "rule", "label", "meta"],
     methods: {
         getDateValue(value) {
             console.log('DATE VALUE:', value);
-
             if (value === '') {
                 this.clearValue(value);
             } else {
@@ -33,6 +33,12 @@ export default {
             if (value === '') {
                 this.model.form[this.model.component] = null;
             }
+        }
+    },
+    created() {
+        console.log('working: ', model.form[this.model.component]);
+        if(typeof this.meta.autoFillCurrentDate != undefined && this.meta.autoFillCurrentDate){
+            this.model.form[this.model.component] = new Date();
         }
     },
     mounted() {

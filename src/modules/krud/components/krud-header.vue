@@ -83,7 +83,7 @@
             <!--                {{ exportLabel }}-->
             <!--            </Button>-->
             <slot name="right"></slot>
-            <user-control />
+<!--            <user-control />-->
         </div>
     </div>
 </template>
@@ -95,6 +95,7 @@ export default {
     props: [
         'openForm',
         "title",
+        "permissions",
         "refresh",
         "exportExcel",
         "print",

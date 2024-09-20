@@ -364,7 +364,6 @@ export default {
         },
 
         validatePassCheck(model, rule, value, callback) {
-
             let value_ = value ? value : ''
             let password_value = this.model[model] ? this.model[model] : ''
 
@@ -395,6 +394,10 @@ export default {
                     if (item.rules) {
                         this.setRule(item.model, item.rules)
                     }
+
+                    // if (item.formType == 'Date') {
+                    //
+                    // }
 
                     if (item.formType == 'Password') {
                         if (item.passwordOption) {
@@ -751,10 +754,10 @@ export default {
             this.$refs[name].resetFields()
             setIdentity(this.identity, null)
             this.schema.forEach(item => {
-                if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.model}`] != 'undefined') {
-                    console.log(this.$refs[`sf${item.model}`]);
-                    this.$refs[`sf${item.model}`][0].reset()
+                if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.id}`] != 'undefined') {
+                    this.$refs[`sf${item.id}`][0].reset()
                 }
+
                 //if (item.default != null && !this.editMode) {
                 this.setModel(item.model, item.default, item.formType)
                 //}
@@ -774,7 +777,6 @@ export default {
             //SET DEFAULT VALUE Disabled item on edit mode
             if (this.user_condition) {
                 this.user_condition.forEach(user_condition => {
-
                     let schemaItem = this.getSchemaByModel(user_condition['form_field'])
                     if (schemaItem) {
                         if ((schemaItem.default != '' && schemaItem.default !== null && schemaItem.default != 0) || setFromUserData) {
@@ -790,13 +792,10 @@ export default {
                             }
                         }
                     }
-
-
                 })
             }
-
-
         },
+
         setCustomData() {
             if (this.formCustomData) {
                 Object.keys(this.formCustomData).forEach(model => {
