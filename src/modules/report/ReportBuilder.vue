@@ -26,6 +26,7 @@ export default {
                 const ret = new Promise(function (resolve) {
                     resolveFunc = resolve;
                     fillReportList();
+                    
                     $("#dlgOpen").modal("show");
                     $("#dlgOpen").on("hide.bs.modal", function () {
                         $(this).off("hide.bs.modal");

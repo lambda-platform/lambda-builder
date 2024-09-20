@@ -143,7 +143,7 @@
                             class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle"> Хувийн мэдээлэл</span>
                         </router-link>
-                        <router-link class="dropdown-item" to="/chat">
+                        <router-link class="dropdown-item" to="/module/password">
                             <i class=" mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle"> Нууц үг солих</span>
                         </router-link>

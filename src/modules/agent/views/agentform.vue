@@ -1,7 +1,7 @@
 <template>
-    <section class="page">
-        <paper-header class="mini" v-if="!withoutHeader">
-            <div slot="right" >
+    <section class="page module-page">
+        <paper-header class="mini" v-if="!withoutHeader && ($theme && $theme !== 'bs')">
+            <div slot="right">
                 <slot name="user-control"></slot>
             </div>
 
@@ -10,12 +10,12 @@
                     <li v-if="type == 'profile'">
                         <router-link to="">
                             <i class="tu-user"></i>
-                            <span>{{lang.personalInformation}}</span>
+                            <span>{{ lang.personalInformation }}</span>
                         </router-link>
                     </li>
                     <li v-if="type == 'password'">
                         <router-link to="">
-                            <span>{{lang.changePassword}}</span>
+                            <span>{{ lang.changePassword }}</span>
                         </router-link>
                     </li>
                 </ul>
@@ -23,10 +23,15 @@
             <div slot="tool">
             </div>
         </paper-header>
+
         <div class="crud-page-body">
             <section class="page-agent-form">
-                <dataform v-if="type == 'profile'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_profile" :editMode="editMode" :do_render="editMode" :onReady="editUser" :onSuccess="onSuccess"/>
-                <dataform v-if="type == 'password'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm" schemaID="user_password" :editMode="editMode" :do_render="editMode" a :onReady="editUser" :onSuccess="onSuccess"/>
+                <dataform v-if="type == 'profile'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm"
+                          schemaID="user_profile" :editMode="editMode" :do_render="editMode" :onReady="editUser"
+                          :onSuccess="onSuccess"/>
+                <dataform v-if="type == 'password'" :url="baseUrl ? baseUrl : ''" class="material-form" ref="agentForm"
+                          schemaID="user_password" :editMode="editMode" :do_render="editMode" a :onReady="editUser"
+                          :onSuccess="onSuccess"/>
             </section>
         </div>
     </section>
@@ -36,7 +41,7 @@
 import pagination from "./pagination";
 
 export default {
-    props:['type', 'withoutHeader', 'baseUrl'],
+    props: ['type', 'withoutHeader', 'baseUrl'],
     components: {
         'dv-pagination': pagination
     },
@@ -55,7 +60,6 @@ export default {
             editMode: true,
         }
     },
-
 
 
     methods: {
