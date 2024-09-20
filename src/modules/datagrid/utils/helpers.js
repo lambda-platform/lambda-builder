@@ -24,6 +24,7 @@ export const generateItems = (count, creator) => {
 }
 export const getTableMeta = (table)=>{
     if(table) {
+        table = table.split(".").pop();
         if (window.init.dbSchema.tableMeta[table]) {
             return window.init.dbSchema.tableMeta[table]
         }
@@ -34,6 +35,5 @@ export const getTableMeta = (table)=>{
     //     window.init.dbSchema.tableMeta = {}
     // }
     // window.init.dbSchema.tableMeta[table] = res.data
-    //
     // return res.data
 }

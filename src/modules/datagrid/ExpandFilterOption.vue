@@ -39,12 +39,10 @@
                             <h3>{{ lang.dataLink }} </h3>
                         </div>
                         <ul>
-
                             <li v-if="microservices.length >= 1">
                                 <label>Microservice</label>
 
-                                <Select v-model="item.filter.relation.microservice_id" placeholder="Microservice"
-                                        clearable
+                                <Select v-model="item.filter.relation.microservice_id" placeholder="Microservice" clearable
                                         filterable
                                 >
                                     <Option v-for="microservice in microservices" :value="microservice.microservice_id"
@@ -54,60 +52,18 @@
                                 </Select>
 
                             </li>
-                            <li v-if="microservices.length >= 1">
-                                <label>{{ lang.selectTable }}</label>
-                                <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.filter.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
-                            </li>
-                            <li v-else>
-                                <label>{{ lang.selectTable }}</label>
-                                <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        @on-change="relationSchema">
-                                    <OptionGroup label="Table list">
-                                        <Option v-for="item in tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup label="View list">
-                                        <Option v-for="item in viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
-                            </li>
 
-                            <!--                            <li>-->
-                            <!--                                <label>{{lang.table}}</label>-->
-                            <!--                                <Select v-model="item.filter.relation.table" :placeholder="lang.selectTable" clearable-->
-                            <!--                                        filterable-->
-                            <!--                                         @on-change="relationSchema">-->
-                            <!--                                    <OptionGroup :label="lang.tableList">-->
-                            <!--                                        <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}-->
-                            <!--                                        </Option>-->
-                            <!--                                    </OptionGroup>-->
-                            <!--                                    <OptionGroup label="View list">-->
-                            <!--                                        <Option v-for="item in viewList" :value="item" :key="item.index">{{ item }}-->
-                            <!--                                        </Option>-->
-                            <!--                                    </OptionGroup>-->
-                            <!--                                </Select>-->
-                            <!--                            </li>-->
+                            <li >
+                                <label>{{ lang.table }}</label>
+                                <multiselect
+                                    v-model='item.filter.relation.table'
+                                    :placeholder='lang.selectTable'
+                                    :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
+                                    @select="relationSchema"
+                                    group-values="list" group-label="type" :group-select="true"
+
+                                ></multiselect>
+                            </li>
                             <li>
                                 <label>{{ lang.Related_fields }}</label>
                                 <Select v-model="item.filter.relation.key" :placeholder="lang.Related_fields" clearable
@@ -241,7 +197,9 @@
 import {elementList} from "./elements";
 import {getTableMeta} from "./utils/helpers";
 
+
 export default {
+
     props: ["item", "schema", "edit"],
     computed: {
         // ...mapGetters({
@@ -250,7 +208,7 @@ export default {
         lang() {
             const labels = ['default_Value', 'Parameter_name', 'Get_value_parameter', 'parameterComparison', 'methodOfComparison', 'whetherLookSidebarSearch',
                 'dataLink', 'data_settings', 'basicSettings', 'selectTable', 'tableList', 'Select_fields', 'Select_field', 'Related_fields', 'Visible_fields',
-                'Sort_field', 'Link_terms', 'Father_column', 'inSearch', 'this_table', 'custom_column', 'judgment_column', '', '', '', '', '', '',
+                'Sort_field', 'Link_terms', 'Father_column', 'inSearch', 'this_table', 'custom_column', 'judgment_column', 'table', '', '', '', '', '',
             ];
             return labels.reduce((obj, key, i) => {
                 obj[key] = this.$t('dataGrid.' + labels[i]);
@@ -287,14 +245,15 @@ export default {
             user_fields: window.init.user_fields,
         };
     },
-    created() {
-        if (this.item.filter.relation.table !== null) {
+    mounted() {
+
+        if (this.item.filter.relation.table !== null && this.item.filter.relation.table !== "") {
             this.relationSchema(this.item.filter.relation.table);
         }
     },
     methods: {
         async relationSchema(val) {
-            this.relSchema = await getTableMeta(val)
+            this.relSchema = await getTableMeta(val);
         },
 
         //Filter event
