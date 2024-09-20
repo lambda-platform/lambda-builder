@@ -248,18 +248,12 @@ export default {
     mounted() {
 
         if (this.item.filter.relation.table !== null && this.item.filter.relation.table !== "") {
-
             this.relationSchema(this.item.filter.relation.table);
         }
     },
     methods: {
         async relationSchema(val) {
-            console.log(val)
-            console.log(val)
             this.relSchema = await getTableMeta(val);
-
-
-            console.log(this.relSchema);
         },
 
         //Filter event
