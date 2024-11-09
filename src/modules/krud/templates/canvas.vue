@@ -49,7 +49,6 @@
                 </template>
             </krud-header>
 
-
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
