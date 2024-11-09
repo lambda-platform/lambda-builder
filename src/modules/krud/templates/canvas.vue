@@ -69,6 +69,7 @@
                               :onRowSelect="onRowSelectedEvent"
                               :hasSelection="hasSelection"
                               :permissions="permissions"
+                              :on-filter-change="onFilterChange"
                               :page_id="page_id"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
                               :user_condition="user_condition ? user_condition.gridCondition : null">
@@ -130,6 +131,7 @@ export default {
         };
     },
     created() {
+        console.log("on FILTER", this.onFilter);
     },
     components: {
         "slide-panel": slidePanel,

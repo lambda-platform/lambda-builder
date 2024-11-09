@@ -692,10 +692,10 @@ export default {
                             }
                         } else {
                             console.log(data);
-
                             this.$Notice.error({
                                 title: data.msg ? data.msg : this.lang.errorSaving
-                            })
+                            });
+
                             if (this.$props.onError) {
                                 this.$props.onError()
                             }

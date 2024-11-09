@@ -205,6 +205,7 @@ export default {
         "gridSelector",
         // "url",
         "hideInfo",
+        "onFilterChange"
     ],
     computed: {
         // ...mapGetters({
@@ -1287,6 +1288,9 @@ export default {
 
         filterData(page) {
             this.changePage(page);
+            if(this.onFilterChange) {
+                this.onFilterChange(this.filterModel);
+            }
         },
 
         fetchAggregations(filters) {

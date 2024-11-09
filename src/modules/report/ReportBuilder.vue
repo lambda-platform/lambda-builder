@@ -1,7 +1,7 @@
 <template>
     <section class="report-builder">
         <div class="rb-workspace">
-            <div id="designer-builder"></div>
+            <div id="designer-host"></div>
         </div>
     </section>
 </template>
@@ -10,54 +10,54 @@
 export default {
     name: "Lambda report designer",
     mounted() {
-        let designer = new MESCIUS.ActiveReportsJS.ReportDesigner.Designer("#designer-builder");
-        // designer.setReport({id: "blank.rdlx-json", displayName: "my report"});
+        const designer = new GC.ActiveReports.ReportDesigner.Designer("#designer-host");
+        designer.setReport({id: "./report.rdlx", displayName: "my report"});
 
-        designer.setActionHandlers({
-            onCreate: function () {
-                const reportId = `NewReport${++this.counter}`;
-                return Promise.resolve({
-                    definition: CPLReport,
-                    id: reportId,
-                    displayName: reportId,
-                });
-            },
-            onOpen: function () {
-                const ret = new Promise(function (resolve) {
-                    resolveFunc = resolve;
-                    fillReportList();
-                    
-                    $("#dlgOpen").modal("show");
-                    $("#dlgOpen").on("hide.bs.modal", function () {
-                        $(this).off("hide.bs.modal");
-                        resolveFunc = null;
-                        resolve(null);
-                    });
-                });
-                return ret;
-            },
-            onSave: function (info) {
-                const reportId = info.id || `NewReport${++this.counter}`;
-                reportStorage.set(reportId, info.definition);
-                return Promise.resolve({ displayName: reportId });
-            },
-            onSaveAs: function (info) {
-                const reportId = `NewReport${++this.counter}`;
-                reportStorage.set(reportId, info.definition);
-                return Promise.resolve({ id: reportId, displayName: reportId });
-            },
-        });
-        function onSelectReport(reportId) {
-            if (resolveFunc) {
-                resolveFunc({
-                    definition: reportStorage.get(reportId),
-                    id: reportId,
-                    displayName: reportId,
-                });
-                $("#dlgOpen").modal("hide");
-                resolveFunc = null;
-            }
-        }
+        // designer.setActionHandlers({
+        //     onCreate: function () {
+        //         const reportId = `NewReport${++this.counter}`;
+        //         return Promise.resolve({
+        //             definition: CPLReport,
+        //             id: reportId,
+        //             displayName: reportId,
+        //         });
+        //     },
+        //     onOpen: function () {
+        //         const ret = new Promise(function (resolve) {
+        //             resolveFunc = resolve;
+        //             fillReportList();
+        //
+        //             $("#dlgOpen").modal("show");
+        //             $("#dlgOpen").on("hide.bs.modal", function () {
+        //                 $(this).off("hide.bs.modal");
+        //                 resolveFunc = null;
+        //                 resolve(null);
+        //             });
+        //         });
+        //         return ret;
+        //     },
+        //     onSave: function (info) {
+        //         const reportId = info.id || `NewReport${++this.counter}`;
+        //         reportStorage.set(reportId, info.definition);
+        //         return Promise.resolve({ displayName: reportId });
+        //     },
+        //     onSaveAs: function (info) {
+        //         const reportId = `NewReport${++this.counter}`;
+        //         reportStorage.set(reportId, info.definition);
+        //         return Promise.resolve({ id: reportId, displayName: reportId });
+        //     },
+        // });
+        // function onSelectReport(reportId) {
+        //     if (resolveFunc) {
+        //         resolveFunc({
+        //             definition: reportStorage.get(reportId),
+        //             id: reportId,
+        //             displayName: reportId,
+        //         });
+        //         $("#dlgOpen").modal("hide");
+        //         resolveFunc = null;
+        //     }
+        // }
     },
 
     data() {

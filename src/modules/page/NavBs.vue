@@ -21,7 +21,7 @@ export default {
         };
     },
     created() {
-        console.log(this.menu);
+        console.log("MENU", this.menu);
     },
     methods: {
         can(menu) {
