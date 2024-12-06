@@ -174,6 +174,7 @@ import Button from "./elements/Button";
 import editableText from "./elements/editableText"
 import editableDate from "./elements/editableDate"
 import editableNumber from "./elements/editableNumber"
+import editableMoney from "./elements/editableMoney"
 import editableSelect from "./elements/editableSelect"
 
 //Filter elements
@@ -246,6 +247,7 @@ export default {
             editableText,
             editableDate,
             editableNumber,
+            editableMoney,
             editableSelect,
             selectFloatingFilter,
             SetFilter,
@@ -1131,6 +1133,9 @@ export default {
                                 break;
                             case 'number':
                                 colItem.cellEditor = "editableNumber";
+                                break;
+                            case 'money':
+                                colItem.cellEditor = "editableMoney";
                                 break;
                             case 'select':
                                 colItem.cellEditor = "editableSelect";

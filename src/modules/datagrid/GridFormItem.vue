@@ -40,7 +40,7 @@
         },
         data() {
             return {
-                editElements: ['text', 'number', 'date'],
+                editElements: ['text', 'number', 'date', 'money'],
             };
         },
     };
