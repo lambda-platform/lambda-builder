@@ -1139,6 +1139,9 @@ export default {
                                 break;
                             case 'select':
                                 colItem.cellEditor = "editableSelect";
+                                colItem.cellEditorParams = {
+                                    id: this.$props.schemaID
+                                };
                                 break;
                             default:
                                 break;
@@ -1909,7 +1912,8 @@ export default {
             if (this.editableShouldSubmit) {
                 let item = {
                     rowIndex: row.rowIndex,
-                    data: row.data
+                    data: row.data,
+                    gridId: this.$props.schemaID,
                 };
                 this.changedRowsData.push(item);
                 return;
