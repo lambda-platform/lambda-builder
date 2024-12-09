@@ -1,5 +1,6 @@
 <template>
-    <Select v-model="value" :placeholder="lang.type" clearable filterable>
+    <Select v-model="value" :placeholder="lang.select" clearable filterable>
+<!--    <Select v-model="value" :placeholder="placeholder" clearable filterable>-->
         <Option v-for="item in options" :value="item.label" :key="item.label">{{ item.label }}
         </Option>
     </Select>
@@ -15,14 +16,15 @@ export default Vue.extend(
             return {
                 options: [],
                 value: '',
+                placeholder: ''
             }
         },
         computed: {
             lang() {
-                const labels = ['type',
+                const labels = ['select',
                 ];
                 return labels.reduce((obj, key, i) => {
-                    obj[key] = this.$t('dataGrid.' + labels[i]);
+                    obj[key] = this.$t('dataSource.' + labels[i]);
                     return obj;
                 }, {});
             },
@@ -34,6 +36,10 @@ export default Vue.extend(
             axios.post(dataUrl, getRelation(this.params.column.filter.relation)).then(({data}) => {
                 this.options = data;
             });
+            this.placeholder = this.params.column.label;
+            console.log(this.params);
+            console.log('re');
+            console.log(this.params.column.filter.relation);
         },
         methods: {
             getValue() {
