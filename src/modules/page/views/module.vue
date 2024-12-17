@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section :class="`page ${$theme === 'bs' ? 'page-bs' : ''}`">
         <agent v-if="$route.params.module == 'agent'">
             <user-control slot="user-control"></user-control>
         </agent>

@@ -1,4 +1,3 @@
-
 import "./bootstrap"
 import ReportBuilder from './ReportBuilder.vue'
 

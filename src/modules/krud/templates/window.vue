@@ -126,6 +126,7 @@ export default {
         "crud-log": crudLog
     },
     created() {
+        console.log('I am window theme');
         // this.$router.push({path: this.$route.path, query: {window: 'list'}});
     },
     computed: {

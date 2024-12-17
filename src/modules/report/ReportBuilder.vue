@@ -1,6 +1,5 @@
 <template>
-    <section class="report-builder 123test">
-        <Spin size="large" fix v-if="loading"></Spin>
+    <section class="report-builder">
         <div class="rb-workspace">
             <div id="designer-host"></div>
         </div>
@@ -8,24 +7,64 @@
 </template>
 
 <script>
-
-
 export default {
     name: "Lambda report designer",
-  mounted(){
-      var designer = new GC.ActiveReports.ReportDesigner.Designer("#designer-host");
-      designer.setReport({id: "report.rdlx", displayName: "my report"});
-  },
+    mounted() {
+        const designer = new GC.ActiveReports.ReportDesigner.Designer("#designer-host");
+        designer.setReport({id: "./report.rdlx", displayName: "my report"});
 
-    data() {
-        return {
-
-        }
+        // designer.setActionHandlers({
+        //     onCreate: function () {
+        //         const reportId = `NewReport${++this.counter}`;
+        //         return Promise.resolve({
+        //             definition: CPLReport,
+        //             id: reportId,
+        //             displayName: reportId,
+        //         });
+        //     },
+        //     onOpen: function () {
+        //         const ret = new Promise(function (resolve) {
+        //             resolveFunc = resolve;
+        //             fillReportList();
+        //
+        //             $("#dlgOpen").modal("show");
+        //             $("#dlgOpen").on("hide.bs.modal", function () {
+        //                 $(this).off("hide.bs.modal");
+        //                 resolveFunc = null;
+        //                 resolve(null);
+        //             });
+        //         });
+        //         return ret;
+        //     },
+        //     onSave: function (info) {
+        //         const reportId = info.id || `NewReport${++this.counter}`;
+        //         reportStorage.set(reportId, info.definition);
+        //         return Promise.resolve({ displayName: reportId });
+        //     },
+        //     onSaveAs: function (info) {
+        //         const reportId = `NewReport${++this.counter}`;
+        //         reportStorage.set(reportId, info.definition);
+        //         return Promise.resolve({ id: reportId, displayName: reportId });
+        //     },
+        // });
+        // function onSelectReport(reportId) {
+        //     if (resolveFunc) {
+        //         resolveFunc({
+        //             definition: reportStorage.get(reportId),
+        //             id: reportId,
+        //             displayName: reportId,
+        //         });
+        //         $("#dlgOpen").modal("hide");
+        //         resolveFunc = null;
+        //     }
+        // }
     },
 
-    methods: {
+    data() {
+        return {}
+    },
 
-    }
+    methods: {}
 };
 </script>
 

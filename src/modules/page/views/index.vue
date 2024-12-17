@@ -1,7 +1,7 @@
 <template>
-    <section class="page">
-        <router-view v-if="showSub" :key="$route.path">
-            <nav slot="v-nav" v-show="showSub && menuMode != 'nested'">
+    <section :class="`page ${$theme === 'bs' ? 'page-bs' : ''}`">
+        <router-view v-if="showSub || $theme == 'bs'" :key="$route.path">
+            <nav slot="v-nav" v-if="showSub && menuMode != 'nested'">
                 <div class="card sub-nav-list">
                     <h3 class="card-header">{{ pageTitle }}</h3>
                     <ul class="card-body">
@@ -73,15 +73,12 @@
             </portal>
 
             <div v-if="pageType == 'router-link'">
-                <h1>here</h1>
             </div>
         </div>
     </section>
 </template>
 
-
 <script>
-
 export default {
     computed: {
         menuMode() {
@@ -159,6 +156,10 @@ export default {
                         this.subMenu = this.menu[menuIndex].children;
                         // this.subMenuId = this.menu[menuIndex].id;
                         this.showSub = true;
+
+                        if (typeof this.$theme !== "undefined" && this.$theme == 'bs') {
+                            this.showSub = false;
+                        }
                     }
 
                 } else {

@@ -2,7 +2,7 @@
     <section class="edit">
         <div class="crud-page">
             <dataform ref="form" :schemaID="schema" :editMode="true" :onSuccess="onSuccess"
-                      :onError="onError"></dataform>
+                      :onError="onError" />
         </div>
     </section>
 </template>

@@ -18,7 +18,6 @@
                     <br/>
                 </Form>
             </div>
-
         </div>
 
         <GridRowUpdate :permissions="permissions" :model="model" :schema="schema" :url="url" :inFilter="true" :schemaID="schemaID"  />

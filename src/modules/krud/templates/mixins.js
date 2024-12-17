@@ -10,7 +10,7 @@ export default {
         "hideInfo", "view_url", "mode", "onPropertySuccess",
         "onPropertyError", "page_id", "withoutHeader",
         "withCrudLog", "projects_id", "exportSelectedRows",
-        "exportPath", "exportLabel"
+        "exportPath", "exportLabel", "onFilterChange"
     ],
     components: {
         krudtools
@@ -30,7 +30,7 @@ export default {
             isPrint: false,
             isExcel: false,
             isExcelUpload: false,
-            excelUploadSample:null,
+            excelUploadSample: null,
             excelUploadCustomUrl: null,
             isRefresh: true,
             isSave: false,
@@ -44,32 +44,12 @@ export default {
         hasVNavSlot() {
             return !!this.$slots['v-nav']
         },
+
         hasNavSlot() {
             return !!this.$slots['nav']
-        },
-        hasLeftSlot() {
-            return !!this.$slots['left']
-        },
-        url() {
-            if (this.projects_id !== null && this.projects_id != "" && this.projects_id != undefined) {
-                if (window.init.microserviceSettings) {
-                    if (window.init.microserviceSettings.length >= 1) {
-                        let si = window.init.microserviceSettings.findIndex(set => set.project_id == this.projects_id);
-                        if (si >= 0) {
-
-                            if (window.lambda.microservice_dev) {
-                                return window.init.microserviceSettings[si].dev_url;
-                            } else {
-                                return window.init.microserviceSettings[si].production_url;
-                            }
-
-                        }
-                    }
-                }
-            }
-            return "";
         }
     },
+
     methods: {
         view(id) {
             // window.open(this.view_url + id, '_blank');
@@ -109,7 +89,7 @@ export default {
             this.$modal.show('krud-modal');
         },
 
-        fillModalForm(){
+        fillModalForm() {
             if (this.permissions) {
                 if (this.permissions.gridEditConditionJS != "" && this.permissions.gridEditConditionJS != null && this.permissions.gridEditConditionJS != undefined) {
                     let isCantEdit = isCan(this.permissions.gridEditConditionJS, row);
@@ -153,16 +133,20 @@ export default {
                 this.$Message.error('Татах үед алдаа гарлаа!');
             }
         },
+
         exportExcel() {
             this.exportLoading = true;
             this.$refs.grid.exportExcel(this.stopLoading);
         },
+
         print() {
             this.$refs.grid.print();
         },
+
         excelUploadMethod() {
             this.$refs.grid.importExcel();
         },
+
         save() {
             this.$refs.grid.saveGridData();
         },
@@ -170,8 +154,7 @@ export default {
         onSuccess(val) {
             if (typeof this.mode !== 'undefined' && this.mode && this.mode == 'refresh') {
                 this.$refs.grid.refresh();
-            }
-            else {
+            } else {
                 if (this.editMode) {
                     this.$refs.grid.update(val);
                 } else {

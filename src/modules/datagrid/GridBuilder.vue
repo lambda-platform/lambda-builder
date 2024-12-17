@@ -862,8 +862,9 @@ export default {
         init() {
             if (this.$props.editMode == true) {
                 axios.get(this.$props.src).then(async (o) => {
+                    let convertedString = o.data.data.schema.replace(/\bTRUE\b/g, 'true').replace(/\bFALSE\b/g, 'false').replace(/\bNULL\b/g, 'null');
                     this.gridName = o.data.data.name;
-                    this.datagrid = JSON.parse(o.data.data.schema);
+                    this.datagrid = JSON.parse(convertedString);
 
                     await this.updateSyncGrid();
 

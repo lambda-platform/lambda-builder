@@ -22,6 +22,22 @@
                                 </Select>
                             </li>
 
+                            <li v-if="item.formType == 'MapWithGeometry'">
+                                <label>Газрын зургийн ID</label>
+                                <Input v-model="item.mapID" placeholder="Газрын зургийн ID"/>
+                            </li>
+
+                            <li v-if="item.formType == 'MapWithGeometry'">
+                                <label>Байршил тэмдэглэх хэлбэр</label>
+                                <Select v-model="item.selectedType" filterable clearable>
+                                    <Option :value="'Point'" key="1">Point</Option>
+                                    <Option :value="'LineString'" key="2">LineString</Option>
+                                    <Option :value="'MultiLine'" key="3">MultiLine</Option>
+                                    <Option :value="'Polygon'" key="4">Polygon</Option>
+                                    <Option :value="'MultiPolygon'" key="5">MultiPolygon</Option>
+                                </Select>
+                            </li>
+
                             <li>
                                 <label>Санамж текст</label>
                                 <Input v-model="item.warn" :placeholder="item.warn"/>
@@ -235,28 +251,8 @@
                                 </Select>
 
                             </li>
-                            <li v-if="microservices.length >= 1">
-                                <label>{{ lang.table }}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        :disabled="!item.isFkey" @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
-                            </li>
-                            <li v-else>
+
+                            <li >
                                 <label>{{ lang.table }}</label>
                                 <multiselect
                                     v-model='item.relation.table'

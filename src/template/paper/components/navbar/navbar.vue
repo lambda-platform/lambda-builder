@@ -1,5 +1,5 @@
 <template>
-    <header class="navbar-header">
+    <header class="navbar-header lambda-navbar">
         <slot name="brand"></slot>
         <nav>
             <slot></slot>

@@ -13,7 +13,11 @@ export const elements = [
     },
     {
         element: "Date",
-        component: () => import(/* webpackChunkName: "form-field-Date" */'./Date.vue'),
+        component: () => import('./Date.vue'),
+    },
+    {
+        element: "DateTime",
+        component: () => import('./DateTime.vue'),
     },
     {
         element: "Textarea",
@@ -62,10 +66,6 @@ export const elements = [
     {
         element: "ImageDrag",
         component: () => import(/* webpackChunkName: "form-field-ImageDrag" */'./ImageDrag.vue'),
-    },
-    {
-        element: "DateTime",
-        component: () => import(/* webpackChunkName: "form-field-DateTime" */'./DateTime.vue'),
     },
     {
         element: "Divider",

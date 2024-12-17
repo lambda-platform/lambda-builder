@@ -174,6 +174,7 @@ import Button from "./elements/Button";
 import editableText from "./elements/editableText"
 import editableDate from "./elements/editableDate"
 import editableNumber from "./elements/editableNumber"
+import editableMoney from "./elements/editableMoney"
 import editableSelect from "./elements/editableSelect"
 
 //Filter elements
@@ -203,8 +204,9 @@ export default {
         "page_id",
         "actionvisibility",
         "gridSelector",
-        "url",
+        // "url",
         "hideInfo",
+        "onFilterChange"
     ],
     computed: {
         // ...mapGetters({
@@ -245,6 +247,7 @@ export default {
             editableText,
             editableDate,
             editableNumber,
+            editableMoney,
             editableSelect,
             selectFloatingFilter,
             SetFilter,
@@ -254,7 +257,7 @@ export default {
     },
 
     created() {
-        // console.log('actions', this.$props.actions);
+        console.log('condition', this.$props.custom_condition);
     },
 
     watch: {
@@ -266,6 +269,16 @@ export default {
                 }
             }
         },
+
+        // custom_condition: {
+        //     // the callback will be called immediately after the start of the observation
+        //     immediate: true,
+        //     handler(val, oldVal) {
+        //         if (Object.toJSON(val) !== Object.toJSON(oldVal)) {
+        //             this.changePage(1);
+        //         }
+        //     }
+        // },
 
         highlights() {
             this.preselect();
@@ -1121,8 +1134,14 @@ export default {
                             case 'number':
                                 colItem.cellEditor = "editableNumber";
                                 break;
+                            case 'money':
+                                colItem.cellEditor = "editableMoney";
+                                break;
                             case 'select':
                                 colItem.cellEditor = "editableSelect";
+                                colItem.cellEditorParams = {
+                                    id: this.$props.schemaID
+                                };
                                 break;
                             default:
                                 break;
@@ -1277,6 +1296,9 @@ export default {
 
         filterData(page) {
             this.changePage(page);
+            if(this.onFilterChange) {
+                this.onFilterChange(this.filterModel);
+            }
         },
 
         fetchAggregations(filters) {
@@ -1426,15 +1448,15 @@ export default {
             this.delLoading = true;
             let baseUrl = this.$props.url ? this.$props.url : '';
             axios.delete(this.page_id ? `${baseUrl}/lambda/krud/delete/${this.$props.schemaID}/${id}?page_id=${this.page_id}` : `/lambda/krud/delete/${this.$props.schemaID}/${id}`)
-                .then(o => {
-                    if (o.status) {
+                .then(({data}) => {
+                    if (data.status) {
                         this.$Notice.success({
                             title: this.lang.infoDeleted
                         });
 
                         //check later ----- Tseegii
-                        // this.data.splice(index, 1);
-                        // this.gridOptions.rowData.splice(index, 1);
+                        this.data.splice(index, 1);
+                        this.gridOptions.rowData.splice(index, 1);
 
                         this.info.total--;
                         setTimeout(() => {
@@ -1443,8 +1465,9 @@ export default {
                         }, 600)
                     } else {
                         this.$Notice.error({
-                            title: this.lang.errorOccWhileDeleting + "!"
+                            title: data.msg ? data.msg : this.lang.errorOccWhileDeleting + "!"
                         });
+
                         setTimeout(() => {
                             this.delLoading = false;
                             this.deleteModal = false
@@ -1594,7 +1617,9 @@ export default {
                 return null;
             }
 
-            let rowId = params.node.data.id;
+            let rowId = params.node.data[this.identity];
+            console.log("EDIT ID:", rowId, this.identity, params.node.data);
+
             let actions = [];
             if (this.$props.actions) {
                 this.$props.actions.forEach(item => {
@@ -1623,11 +1648,11 @@ export default {
             }
 
             this.gridActions.forEach(item => {
-                if (item == 'qe') {
+                if (item === 'qe') {
                     console.log("qe");
                 }
 
-                if (item == 'cl') {
+                if (item === 'cl') {
                     let menuItem = {
                         name: "Хувилах",
                         icon: "<span class='ivu-icon ivu-icon-ios-copy-outline'></span>",
@@ -1638,13 +1663,11 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item == 'v') {
+                if (item === 'v') {
                     console.log("v action");
                 }
 
-                if (item == 'e' && this.permissions && this.permissions.u) {
-                    console.log('action e');
-
+                if (item === 'e' && this.permissions && this.permissions.u) {
                     let menuItem = {
                         name: "Засах",
                         icon:
@@ -1657,7 +1680,7 @@ export default {
                 }
 
                 // if (item == 'd' && this.permissions && this.permissions.d) {
-                if (item == 'd') {
+                if (item === 'd') {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",
@@ -1889,7 +1912,8 @@ export default {
             if (this.editableShouldSubmit) {
                 let item = {
                     rowIndex: row.rowIndex,
-                    data: row.data
+                    data: row.data,
+                    gridId: this.$props.schemaID,
                 };
                 this.changedRowsData.push(item);
                 return;

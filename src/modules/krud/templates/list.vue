@@ -33,6 +33,53 @@
                 </div>
             </div>
 
+<!--            <krud-header-bs v-if="$theme == 'bs'"-->
+<!--                            :title="title"-->
+<!--                            :permissions="permissions"-->
+<!--                            :search="search"-->
+<!--                            :refresh="refresh"-->
+<!--                            :exportExcel="exportExcel"-->
+<!--                            :print="print"-->
+<!--                            :save="save"-->
+<!--                            :isPrint="isPrint"-->
+<!--                            :isExcel="isExcel"-->
+<!--                            :isRefresh="isRefresh"-->
+<!--                            :isSave="isSave"-->
+<!--                            :isSearch="isSearch">-->
+<!--                <template slot="tooloptions">-->
+<!--                    <slot name="tooloptions"></slot>-->
+<!--                </template>-->
+
+<!--                <template slot="header-left">-->
+<!--                    <slot name="left"></slot>-->
+<!--                </template>-->
+<!--                <slot name="right"></slot>-->
+<!--            </krud-header-bs>-->
+
+<!--            <krud-header v-else-->
+<!--                         :title="title"-->
+<!--                         :permissions="permissions"-->
+<!--                         :search="search"-->
+<!--                         :refresh="refresh"-->
+<!--                         :exportExcel="exportExcel"-->
+<!--                         :print="print"-->
+<!--                         :save="save"-->
+<!--                         :isPrint="isPrint"-->
+<!--                         :isExcel="isExcel"-->
+<!--                         :isRefresh="isRefresh"-->
+<!--                         :isSave="isSave"-->
+<!--                         :isSearch="isSearch">-->
+<!--                <div v-if="hasNavSlot" class="krud-left">-->
+<!--                    <div class="crud-page-header-left">-->
+<!--                        <slot name="nav"></slot>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <template slot="tooloptions">-->
+<!--                    <slot name="tooloptions"></slot>-->
+<!--                </template>-->
+<!--                <slot name="right"></slot>-->
+<!--            </krud-header>-->
+
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
@@ -73,8 +120,19 @@
 
 <script>
 import mixins from "./mixins";
+import krudHeader from "../components/krud-header.vue";
+import krudHeaderBs from "../components/krud-header-bs.vue";
 
 export default {
+    components: {
+        "krud-header": krudHeader,
+        "krud-header-bs": krudHeaderBs
+    },
     mixins: [mixins],
+    created() {
+        console.log('here');
+        console.log($theme);
+        console.log(this);
+    }
 };
 </script>

@@ -151,9 +151,9 @@
                                     </Option>
                                 </Select>
                             </li>
+
                             <li v-if="microservices.length >= 1">
                                 <label>Microservice</label>
-
 
                                 <Select v-model="item.relation.microservice_id" placeholder="Microservice" clearable
                                         filterable
@@ -163,40 +163,20 @@
                                         {{ microservice.microservice }}
                                     </Option>
                                 </Select>
-                                <label>&nbsp;&nbsp;&nbsp;{{ lang.table }}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        @on-change="relationSchema">
-                                    <OptionGroup :label="`${microservice.microservice}: Table list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.tableList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup :label="`${microservice.microservice}: View list`"
-                                                 v-for="microservice in microservices.filter(ms=>ms.microservice_id === item.relation.microservice_id)"
-                                                 :key="microservice.index">
-                                        <Option v-for="item in microservice.viewList" :value="item" :key="item.index">
-                                            {{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
+
                             </li>
-                            <li v-else>
+
+                            <li >
                                 <label>{{ lang.table }}</label>
-                                <Select v-model="item.relation.table" :placeholder="lang.selectTable" clearable
-                                        filterable
-                                        @on-change="relationSchema">
-                                    <OptionGroup :label="lang.tableList">
-                                        <Option v-for="item in tableList" :value="item" :key="item.index">{{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                    <OptionGroup :label="lang.viewList">
-                                        <Option v-for="item in viewList" :value="item" :key="item.index">{{ item }}
-                                        </Option>
-                                    </OptionGroup>
-                                </Select>
+                                <multiselect
+                                    v-model='item.relation.table'
+                                    :placeholder='lang.selectTable'
+                                    :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
+                                    @select="relationSchema"
+                                    group-values="list" group-label="type" :group-select="true"
+
+                                ></multiselect>
+
                             </li>
                             <li>
                                 <label>{{ lang.Related_fields }}</label>
@@ -411,6 +391,7 @@ export default {
         };
     },
     created() {
+
         if (this.item.relation.table !== null) {
             this.relationSchema(this.item.relation.table);
         }

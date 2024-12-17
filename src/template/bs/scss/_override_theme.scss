@@ -1,0 +1,36 @@
+.dropdown-menu {
+    outline: none !important;
+
+    &.show {
+        inset: 0 0 auto auto !important;
+        transform: translate(0, 57px) !important;
+    }
+}
+
+.topbar-user {
+    .dropdown-menu {
+        &.show {
+            inset: 0 0 auto auto !important;
+            transform: translate(0, 70px) !important;
+        }
+    }
+}
+
+.blackout {
+    z-index: 3000 !important;
+}
+
+.offcanvas-template {
+    .dock {
+        position: fixed !important;
+        z-index: 3000 !important;
+    }
+}
+
+.ivu-modal-mask {
+    z-index: 3000 !important;
+}
+
+.ivu-modal-wrap {
+    z-index: 3001 !important;
+}

@@ -250,6 +250,7 @@ export default {
             try {
                 let response = await axios.get(configUrl)
                 let data = JSON.parse(response.data.data.schema)
+                console.log("form schema: ", data);
 
                 data['form_id'] = response.data.data.id
                 data['form_name'] = response.data.data.name
@@ -363,7 +364,6 @@ export default {
         },
 
         validatePassCheck(model, rule, value, callback) {
-
             let value_ = value ? value : ''
             let password_value = this.model[model] ? this.model[model] : ''
 
@@ -394,6 +394,10 @@ export default {
                     if (item.rules) {
                         this.setRule(item.model, item.rules)
                     }
+
+                    // if (item.formType == 'Date') {
+                    //
+                    // }
 
                     if (item.formType == 'Password') {
                         if (item.passwordOption) {
@@ -520,7 +524,7 @@ export default {
         },
 
         setMeta(item, subForm) {
-            let s_index = this.schema.findIndex(schema => schema.model == item.model)
+            let s_index = this.schema.findIndex(schema => schema.id == item.id)
             let i = s_index >= 0 ? this.schema[s_index] : item
             if (!subForm) {
                 delete i['table']
@@ -687,9 +691,11 @@ export default {
                                 this.$modal.hide('krud-modal');
                             }
                         } else {
+                            console.log(data);
                             this.$Notice.error({
-                                title: this.lang.errorSaving
-                            })
+                                title: data.msg ? data.msg : this.lang.errorSaving
+                            });
+
                             if (this.$props.onError) {
                                 this.$props.onError()
                             }
@@ -748,10 +754,10 @@ export default {
             this.$refs[name].resetFields()
             setIdentity(this.identity, null)
             this.schema.forEach(item => {
-                if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.model}`] != 'undefined') {
-                    console.log(this.$refs[`sf${item.model}`]);
-                    this.$refs[`sf${item.model}`][0].reset()
+                if (item.formType == 'SubForm' && typeof this.$refs[`sf${item.id}`] != 'undefined') {
+                    this.$refs[`sf${item.id}`][0].reset()
                 }
+
                 //if (item.default != null && !this.editMode) {
                 this.setModel(item.model, item.default, item.formType)
                 //}
@@ -771,7 +777,6 @@ export default {
             //SET DEFAULT VALUE Disabled item on edit mode
             if (this.user_condition) {
                 this.user_condition.forEach(user_condition => {
-
                     let schemaItem = this.getSchemaByModel(user_condition['form_field'])
                     if (schemaItem) {
                         if ((schemaItem.default != '' && schemaItem.default !== null && schemaItem.default != 0) || setFromUserData) {
@@ -787,13 +792,10 @@ export default {
                             }
                         }
                     }
-
-
                 })
             }
-
-
         },
+
         setCustomData() {
             if (this.formCustomData) {
                 Object.keys(this.formCustomData).forEach(model => {
@@ -808,7 +810,6 @@ export default {
         },
 
         editModel(id, editData) {
-
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
@@ -839,18 +840,18 @@ export default {
             })
         },
 
-        subFormFillData(subModel) {
-            if (this.$refs[`sf${subModel}`]) {
-                if (this.$refs[`sf${subModel}`].length >= 1) {
-                    this.$refs[`sf${subModel}`][0].fillData()
+        subFormFillData(subFormId) {
+            if (this.$refs[`sf${subFormId}`]) {
+                if (this.$refs[`sf${subFormId}`].length >= 1) {
+                    this.$refs[`sf${subFormId}`][0].fillData()
                 } else {
                     setTimeout(() => {
-                        this.subFormFillData(subModel)
+                        this.subFormFillData(subFormId)
                     }, 100)
                 }
             } else {
                 setTimeout(() => {
-                    this.subFormFillData(subModel)
+                    this.subFormFillData(subFormId)
                 }, 100)
             }
         },
@@ -860,22 +861,22 @@ export default {
                 if (item.type == 'form' || item.type == 'Form' || item.formType == 'SubForm') {
                     switch (item.formType) {
                         case 'SubForm':
-                            this.subFormFillData(item.model)
+                            this.subFormFillData(item.id)
                             break
                         case 'Switch':
-                            if (this.model[item.model] == 1 || this.model[item.model] == 'true') {
+                            if (this.model[item.model] === 1 || this.model[item.model] === 'true' || this.model[item.model] === '1' || this.model[item.model] === true) {
                                 this.model[item.model] = true
                             } else {
                                 this.model[item.model] = false
                             }
                             break
-                        // case "Checkbox":
-                        //     if (this.model[item.model] == 1 || this.model[item.model] == "true") {
-                        //         this.model[item.model] = true;
-                        //     } else {
-                        //         this.model[item.model] = false;
-                        //     }
-                        //     break;
+                        case "Checkbox":
+                            if (this.model[item.model] === 1 || this.model[item.model] === 'true' || this.model[item.model] === '1' || this.model[item.model] === true) {
+                                this.model[item.model] = true;
+                            } else {
+                                this.model[item.model] = false;
+                            }
+                            break;
                         case 'Password':
                             this.model[item.model] = ''
                             delete this.$data.rule[item.model]

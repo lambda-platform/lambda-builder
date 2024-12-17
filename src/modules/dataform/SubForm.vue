@@ -3,7 +3,7 @@
         <div class='fb-workspace'>
             <div class='fb-control fb-control-sub'>
                 <div class='fb-control-sub-item'>
-                    <Input v-model='f.name' :placeholder='lang.Form_name' />
+                    <Input v-model='f.name' :placeholder='lang.Form_name'/>
                 </div>
 
                 <div class='fb-control-sub-item'>
@@ -51,12 +51,11 @@
                 </div>
 
                 <div class='fb-control-sub-item' v-if="f.subtype != 'Form'">
-                    <Input v-model='f.min_height' :placeholder='lang.min_height' />
+                    <Input v-model='f.min_height' :placeholder='lang.min_height'/>
                 </div>
 
             </div>
             <div class='fb-control fb-control-sub'>
-
                 <div class='fb-control-sub-item'>
                     <Checkbox v-model='f.timestamp' v-if="f.subtype != 'Form'">
                         <span>{{ lang.Date_generated_automatically }}</span>
@@ -99,29 +98,29 @@
                         </Option>
                     </Select>
                     <br>
-                    <Input v-model='f.tableTypeValue' :placeholder='lang.Table_Type_value' size='small' />
+                    <Input v-model='f.tableTypeValue' :placeholder='lang.Table_Type_value' size='small'/>
                 </div>
             </div>
             <div class='sub-form-source-grid'>
                 <Row gutter='10'>
                     <Col span='8'>
                         <Label>Триггер (өгөгдөл дуудах URL)</Label>
-                        <Input type='text' v-model='f.trigger' placeholder='Триггер (өгөгдөл дуудах URL)' /> <br>
+                        <Input type='text' v-model='f.trigger' placeholder='Триггер (өгөгдөл дуудах URL)'/> <br>
 
                     </Col>
                     <Col span='8'>
                         <Label>Триггер дуудах хугацаа </Label>
-                        <Input type='text' v-model='f.triggerTimeout' placeholder='Триггер дуудах хугацаа ' /> <br>
+                        <Input type='text' v-model='f.triggerTimeout' placeholder='Триггер дуудах хугацаа '/> <br>
                     </Col>
                     <Col span='8'>
                         <Label>Дата дуудагдахын өмнө</Label>
-                        <Input type='text' v-model='f.triggerUrl' placeholder='Дата дуудагдахын өмнө ' /> <br>
+                        <Input type='text' v-model='f.triggerUrl' placeholder='Дата дуудагдахын өмнө '/> <br>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
                         <Input v-if='f.checkEmpty' type='text' v-model='f.EmptyErrorMsg'
-                               placeholder='Хоосон үед харуулах алдаа' /> <br>
+                               placeholder='Хоосон үед харуулах алдаа'/> <br>
                         <Checkbox v-model='f.addFromGrid'>
                             <span>Хүснэгтээс өгөгдөл дуудаж оруулах</span>
                         </Checkbox>
@@ -129,26 +128,17 @@
                 </Row>
                 <Row v-if='f.addFromGrid'>
                     <Col span='12'><Input type='text' v-model='f.sourceGridModalTitle'
-                                          placeholder='Modal дээр харуулах нэр' /></Col>
+                                          placeholder='Modal дээр харуулах нэр'/></Col>
                     <Col span='12'>
-
-
-                        <Select v-model='f.sourceMicroserviceID' placeholder='Microservice' clearable
-                                filterable
-                        >
+                        <Select v-model='f.sourceMicroserviceID' placeholder='Microservice' clearable filterable>
                             <Option v-for='microservice in microservices' :value='microservice.microservice_id'
                                     :key='microservice.index'>
                                 {{ microservice.microservice }}
                             </Option>
                         </Select>
 
-
                         <Select v-model='f.sourceGridID' placeholder='Өгөгдөл дуудаж хүснэгт' clearable
-
-                                @on-change='setGridSource'
-                                filterable
-
-                        >
+                                @on-change='setGridSource' filterable>
                             <Option v-for='item in otherGrids' :value='item.id' :key='item.id'>{{ item.name }}</Option>
                         </Select>
                     </Col>
@@ -156,15 +146,16 @@
                 <Row v-if='f.addFromGrid'>
                     <Col span='24'>
                         <label>Хайлтын дээр харуулах гарчиг</label>
-                        <Input type='text' v-model='f.sourceGridTitle' placeholder='Хайлтын дээр харуулах гарчиг' />
+                        <Input type='text' v-model='f.sourceGridTitle' placeholder='Хайлтын дээр харуулах гарчиг'/>
                         <br>
                         <label>Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл [{"grid_field":"","user_field":""}]</label>
                         <Input type='text' v-model='f.sourceGridUserCondition'
-                               placeholder='Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл' />
+                               placeholder='Хайлтын дээр ажиллах хэрэглэгчийн нөхцөл'/>
                         <br>
-                        <label>Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}] эсвэл [{"parent_sub":"","sub_filed":"", "grid_field":"", "message":""}]</label>
+                        <label>Формоос авах шүүлтүүр [{"parent_field":"", "grid_field":"", "message":""}] эсвэл
+                            [{"parent_sub":"","sub_filed":"", "grid_field":"", "message":""}]</label>
                         <Input type='text' v-model='f.sourceGridParentBasedCondition'
-                               placeholder='Формоос авах шүүлтүүр' />
+                               placeholder='Формоос авах шүүлтүүр'/>
                     </Col>
                     <Col span='24'>
 
@@ -177,42 +168,33 @@
                 <br>
                 <Row v-if='f.addFromGrid'>
                     <Col span='24'>
-                        <Select v-model='f.sourceUniqueField' placeholder='Давхцал шалгах багана' clearable
-                                filterable
-
-                        >
-                            <Option v-for='(item, iIndex) in f.schema' :key='iIndex' :value='item.model'>{{ item.model
-                                }}
+                        <Select v-model='f.sourceUniqueField' placeholder='Давхцал шалгах багана' clearable filterable>
+                            <Option v-for='(item, iIndex) in f.schema' :key='iIndex' :value='item.model'>
+                                {{ item.model }}
                             </Option>
                         </Select>
                     </Col>
                 </Row>
+
                 <Row v-if='f.addFromGrid'>
-
                     <Col span='10'>
-                        <Select v-model='sourceColumnOption.selfColumn' placeholder='Form талбар' clearable
-                                filterable
-
-                        >
-                            <Option v-for='(item, iIndex) in f.schema' :key='iIndex' :value='item.model'>{{ item.model
-                                }}
+                        <Select v-model='sourceColumnOption.selfColumn' placeholder='Form талбар' clearable filterable>
+                            <Option v-for='(item, iIndex) in f.schema' :key='iIndex' :value='item.model'>
+                                {{ item.model }}
                             </Option>
                         </Select>
                     </Col>
                     <Col span='10'>
 
                         <Select v-model='sourceColumnOption.sourceColumn' placeholder='Grid талбар' clearable
-                                filterable
-
-                        >
+                                filterable>
                             <Option v-for='(item, iIndex) in sourceGridColumns' :key='iIndex' :value='item.model'>
                                 {{ item.model }}
                             </Option>
                         </Select>
                     </Col>
                     <Col span='4'>
-                        <Button type='primary' shape='circle' icon='md-add'
-                                @click='addSourceGridTargetColumn'></Button>
+                        <Button type='primary' shape='circle' icon='md-add' @click='addSourceGridTargetColumn'></Button>
                     </Col>
                 </Row>
                 <div v-if='f.addFromGrid'>
@@ -264,11 +246,11 @@
 </template>
 
 <script>
-import { Container, Draggable } from 'vue-smooth-dnd'
-import { applyDrag } from './utils/helpers'
+import {Container, Draggable} from 'vue-smooth-dnd'
+import {applyDrag} from './utils/helpers'
 import formItem from './FormItem'
-import { idGenerator } from './utils/methods'
-import { getTableMeta } from './utils/helpers'
+import {idGenerator} from './utils/methods'
+import {getTableMeta} from './utils/helpers'
 import CKEditor from '@ckeditor/ckeditor5-vue2'
 import Editor from 'ckeditor5-custom-build/build/ckeditor'
 import Vue from 'vue'
@@ -456,8 +438,8 @@ export default {
 
         async setBuilder(val) {
             if (val) {
-                let index = this.schemaList.findIndex(l=>l === val);
-                if(index >= 0){
+                let index = this.schemaList.findIndex(l => l === val);
+                if (index >= 0) {
                     this.f.formId = null;
                     this.f.model = null;
                     this.$Notice.error({
@@ -466,15 +448,12 @@ export default {
                 } else {
 
                     if (this.f.subtype === 'Form') {
-
                         this.f.formId = val
-
                         let defualtURL = `/lambda/puzzle/schema/form/${val}/builder`
                         if (this.projectID) {
                             defualtURL = `/lambda/puzzle/project/${this.projectID}/form/${val}/builder`
                         }
                         let res = await axios.get(defualtURL)
-
                         if (res.data.data) {
                             let formSchema = JSON.parse(res.data.data.schema)
                             this.f.schema = getTableMeta(formSchema.model)
@@ -509,6 +488,7 @@ export default {
 
             }
         },
+
         async setGridSource(val) {
             if (val) {
                 let defualtURL = `/lambda/puzzle/schema/grid/${val}`
@@ -521,19 +501,16 @@ export default {
                     let gridSchema = JSON.parse(res.data.data.schema)
                     this.sourceGridColumns = []
                     gridSchema.schema.forEach(col => {
-
                         if (col.hide !== true || col.label != '') {
                             this.sourceGridColumns.push({
                                 model: col.model
                             })
                         }
                     })
-
-
                 }
             }
-
         },
+
         isDisabled(item) {
             if (
                 item.model == this.f.parent ||
