@@ -61,7 +61,7 @@
                         <router-link :to="`${prefix ? prefix : ''}/${type}/builder/${item.id}`" class="btn-edit">
                             <Icon type="md-create"></Icon>
                         </router-link>
-                        <Poptip confirm :title="lang.delete_data" confirm width="180" :ok-text="lang1.yes"
+                        <Poptip confirm :title="lang.delete_data" width="180" :ok-text="lang1.yes"
                                 :cancel-text="lang1.no" @on-ok="deleteListItem(item.id)" @on-cancel="cancel">
                             <a href="javascript:void(0)" class="btn-del">
                                 <Icon type="ios-trash"></Icon>
@@ -147,6 +147,7 @@ export default {
     },
     methods: {
         getData() {
+            // eslint-disable-next-line no-undef
             axios.get(this.$props.src).then(({data}) => {
                 this.loading = false;
                 this.listData = data.data.sort((s1, s2) => {
@@ -186,6 +187,7 @@ export default {
             if (this.type === "datasource") {
                 src = "/lambda/puzzle/schema/datasource"
             }
+            // eslint-disable-next-line no-undef
             axios.post(src, data).then(({data}) => {
                 if (data.status) {
                     this.$Notice.success({
@@ -218,6 +220,7 @@ export default {
                     src = `/lambda/puzzle/project/${this.$project.id}/grid/${id}`
                 }
             }
+            // eslint-disable-next-line no-undef
             axios.get(src)
                 .then(({data}) => {
                     this.duplicateData.name = data.data.hasOwnProperty('name') ? data.data.name : data.data.model;
@@ -229,6 +232,7 @@ export default {
             });
         },
         deleteListItem(id) {
+            // eslint-disable-next-line no-undef
             axios.delete(this.$project ? `/lambda/puzzle/delete/project/vb_schemas/${this.$project.id}/${this.type}/${id}` : `/lambda/puzzle/delete/vb_schemas/${this.type}/${id}`).then(o => {
                 this.filteredList = this.filteredList.filter(
                     item => item.id !== id
