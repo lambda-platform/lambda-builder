@@ -254,7 +254,7 @@ export default {
     },
 
     created() {
-        // console.log('condition', this.$props.custom_condition);
+        // console.log('actions', this.$props.actions);
     },
 
     watch: {
