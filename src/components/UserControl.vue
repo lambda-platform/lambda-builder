@@ -91,7 +91,8 @@ export default {
 
     methods: {
         logout() {
-            axios.post("/auth/logout", {}).then(o => {
+            // eslint-disable-next-line no-undef
+            axios.post("/auth/logout", {}).then(()=> {
                 window.location = "/auth/login";
             });
         },

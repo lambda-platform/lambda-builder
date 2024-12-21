@@ -15,6 +15,9 @@ export default {
     components: {
         krudtools
     },
+    mounted() {
+
+    },
     data() {
         return {
             closeByBtn: window.init.closeByBtn,

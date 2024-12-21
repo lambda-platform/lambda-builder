@@ -3024,7 +3024,7 @@ export default {
             let iconGroup = [];
             if (this.iconSearch !== null && this.iconSearch != "") {
                 this.iconData.forEach(group => {
-                    if (group.hasOwnProperty("icons")) {
+                    if (group && group.hasOwnProperty("icons")) {
                         let icons = group.icons.filter(icon => icon.toLowerCase().includes(this.iconSearch.toLowerCase()));
                         if (icons.length >= 1) {
                             iconGroup.push({
