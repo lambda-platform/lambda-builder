@@ -446,7 +446,6 @@ export default {
                         title: `${val} давхцаж байна !!!`
                     })
                 } else {
-
                     if (this.f.subtype === 'Form') {
                         this.f.formId = val
                         let defualtURL = `/lambda/puzzle/schema/form/${val}/builder`
@@ -459,7 +458,6 @@ export default {
                             this.f.schema = getTableMeta(formSchema.model)
                             this.f.model = formSchema.model
                         }
-
                     } else {
                         this.f.model = val
                         this.f.schema = getTableMeta(val)

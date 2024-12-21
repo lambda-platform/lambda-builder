@@ -291,6 +291,8 @@ export default {
                 this.step = formSchema.step;
             }
 
+            console.log(this.schema);
+
             this.ui = formSchema.ui
             if (formSchema.save_btn_text) {
                 this.save_btn_text = formSchema.save_btn_text
@@ -529,7 +531,7 @@ export default {
             if (!subForm) {
                 delete i['table']
                 delete i['extra']
-                i.schemaID = this.$props.schemaID
+                i.schemaID = this.$props.schemaID;
             }
             this.setPlaceholderLabel(i);
             return i

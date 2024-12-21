@@ -260,9 +260,7 @@
                                     :options="[{type:'table',list:tableList}, {type:'view',list:viewList}]"
                                     @select="relationSchema"
                                     group-values="list" group-label="type" :group-select="true"
-
-                                ></multiselect>
-
+                                />
                             </li>
                             <li>
                                 <label>{{ lang.Related_fields }}</label>
@@ -379,8 +377,6 @@
                                             }}
                                         </Option>
                                     </OptionGroup>
-
-
                                 </Select>
                             </li>
                         </ul>

@@ -5,7 +5,7 @@ export const elements = [
     },
     {
         element: "Select",
-        component: () => import(/* webpackChunkName: "form-field-Select" */'./Select.vue'),
+        component: () => import('./Select.vue'),
     },
     {
         element: "Number",

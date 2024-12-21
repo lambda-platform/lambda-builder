@@ -99,6 +99,10 @@ export default {
         },
     },
     mounted() {
+        console.log('I AM SELECT');
+        console.log(this.model.component);
+        console.log(this.meta);
+
         let dataUrl = `/lambda/krud/${this.meta.schemaID}/options`;
 
         if (this.meta.filter.relation.parentFieldOfForm != null && this.meta.filter.relation.parentFieldOfTable != null) {
@@ -119,7 +123,6 @@ export default {
             this.loading = false;
 
             if(this.model.form[this.model.component] != null && this.model.form[this.model.component] != undefined){
-
                 let valueIndex = this.options.findIndex(el=>el.value == this.model.form[this.model.component]);
                 if(valueIndex >= 0){
                     this.value = this.options[valueIndex];

@@ -1455,7 +1455,7 @@ export default {
                         });
 
                         //check later ----- Tseegii
-                        this.data.splice(index, 1);
+                        // this.data.splice(index, 1);
                         this.gridOptions.rowData.splice(index, 1);
 
                         this.info.total--;
