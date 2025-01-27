@@ -915,7 +915,8 @@ export default {
             // console.log("get options: ", relations);
 
             if (Object.keys(relations).length >= 1) {
-                axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, {relations: relations})
+                axios.post(`${baseUrl}/lambda/puzzle/${this.schemaID}/options${this.optionUrl}`, {relations: relations})
+                // axios.post(`${baseUrl}/lambda/puzzle/get_options${this.optionUrl}`, {relations: relations})
                     .then(({data}) => {
                         Object.keys(data).map(relation => {
                             let r = {...this.relations[relation], data: data[relation]}
