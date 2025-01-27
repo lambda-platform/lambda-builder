@@ -1,6 +1,6 @@
 {
     "name": "@lambda-platform/lambda-builder",
-    "version": "3.2.6",
+    "version": "3.2.7",
     "description": "lambda builder",
     "main": "src/index.js",
     "repository": "git@github.com:lambda-platform/lambda-builder.git",
