@@ -3,7 +3,7 @@
  */
 import Vue from "vue";
 import axios from 'axios';
-import {i18n} from './locale';
+import { i18n } from './locale';
 import router from './router'
 import App from './app.vue';
 import {

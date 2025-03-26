@@ -50,7 +50,6 @@
                     @grid-ready="onGridReady"
                     @sort-changed="onSortChanged"
                     @filter-changed="onFilterChanged"
-                    @filter-modified="onFilterModified"
                     @row-double-clicked="onRowDblClick"
                     @row-clicked="onRowClick"
                     @row-selected="onRowSelected"
@@ -182,6 +181,7 @@ import selectFloatingFilter from "./elements/selectFloatingFilter"
 import SetFilter from "./elements/SetFilter"
 import SetFilterDate from "./elements/SetFilterDate"
 import SetFilterAltered from "./elements/SetFilterAltered"
+import TextFilter from "./elements/TextFilter.vue"
 import "./elements/ExcelFilter.js"
 import GridRowUpdate from "./GridRowUpdate";
 
@@ -253,11 +253,13 @@ export default {
             SetFilter,
             SetFilterAltered,
             SetFilterDate,
+            TextFilter
         };
     },
 
     created() {
         console.log('condition', this.$props.custom_condition);
+        this.axiosController = new AbortController();
     },
 
     watch: {
@@ -919,6 +921,18 @@ export default {
                             colItem.filter = "agTextColumnFilter";
 
                             if (!this.isClient) {
+                                //Check next time and add custom filter here
+                                colItem.floatingFilterComponent = "TextFilter";
+                                colItem.floatingFilterComponentParams = {
+                                    schemaID: this.$props.schemaID,
+                                    column: this.schema.find(col => col.model == item.model),
+                                    width: item.width,
+                                    isClient: this.isClient,
+                                    filterModel: this.filterModel,
+                                    filterType: 'text',
+                                    filterData: this.isClient ? this.onClientFilter : this.updateFilterModel
+                                };
+
                                 colItem.filterParams = {
                                     // newRowsAction: "keep",
                                     suppressAndOrCondition: true,
@@ -1236,7 +1250,7 @@ export default {
                 filters.custom_condition = this.custom_condition;
             }
 
-            axios.post(url, filters).then(({data}) => {
+            axios.post(url, filters, {signal: this.axiosController.signal}).then(({data}) => {
                 if (this.isClient) {
                     if (Array.isArray(data)) {
                         this.$data.data = data;
@@ -1253,10 +1267,10 @@ export default {
                     this.$data.data = data.data;
                     this.gridOptions.api.setRowData(data.data)
 
+
                     if (this.aggregations.columnAggregations.length >= 1) {
                         this.fetchAggregations(filters);
                     }
-                    // }
                 }
 
                 if (this.$data.gridOptions.sizeColumnsToFit) {
@@ -1270,7 +1284,7 @@ export default {
                     this.gridApi.hideOverlay();
                 }
 
-                //select prev selected items
+                // select prev selected items
                 setTimeout(() => {
                     this.preselect();
 
@@ -1279,7 +1293,6 @@ export default {
                         // instance.selectNothing();
                     });
                 }, 100);
-
 
                 this.isLoading = false;
             }).catch(e => {
@@ -1296,7 +1309,7 @@ export default {
 
         filterData(page) {
             this.changePage(page);
-            if(this.onFilterChange) {
+            if (this.onFilterChange) {
                 this.onFilterChange(this.filterModel);
             }
         },
@@ -1456,7 +1469,8 @@ export default {
 
                         //check later ----- Tseegii
                         // this.data.splice(index, 1);
-                        this.gridOptions.rowData.splice(index, 1);
+                        // this.gridOptions.rowData.splice(index, 1);
+                        this.data = this.data.filter(item => item[this.identity] !== id);
 
                         this.info.total--;
                         setTimeout(() => {
@@ -1784,7 +1798,9 @@ export default {
         onFilterModified(event) {
             if (!this.isClient) {
                 //Todo server side configs
-                console.log(event);
+                // console.log(event);
+                // console.log('I am here', this.filterModel);
+                // console.log(this.gridOptions.api.getFilterModel());
             }
         },
 
@@ -1795,6 +1811,7 @@ export default {
 
             //when enable server side filter
             if (!this.isClient) {
+
                 for (let key in this.filterModel) {
                     if (typeof this.filterModel[key] === 'object') {
                         delete this.filterModel[key];
@@ -1809,23 +1826,23 @@ export default {
             } else {
                 let filters = event.api.getFilterModel();
                 console.log(filters);
+                //
+                // for (let key in filters) {
+                //     if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                // console.log(filters[key]);
+                // if (filters[key].filterType == "set" && this.selectInputModels.includes(key)) {
+                //     let instance = this.gridApi.getFilterInstance(key);
+                //     console.log("here", instance);
 
-                for (let key in filters) {
-                    if (Object.prototype.hasOwnProperty.call(filters, key)) {
-                        // console.log(filters[key]);
-                        if (filters[key].filterType == "set" && this.selectInputModels.includes(key)) {
-                            let instance = this.gridApi.getFilterInstance(key);
-                            console.log("here", instance);
-
-                            //             if (instance.isNothingSelected()) {
-                            //                 console.log("I am here nothing");
-                            //                 //     instance.selectEverything();
-                            //                 //     // this.gridApi.onFilterChanged();
-                            //             }
-                            // instance.resetFilterValues();
-                        }
-                    }
-                }
+                //             if (instance.isNothingSelected()) {
+                //                 console.log("I am here nothing");
+                //                 //     instance.selectEverything();
+                //                 //     // this.gridApi.onFilterChanged();
+                //             }
+                // instance.resetFilterValues();
+                // }
+                //     }
+                // }
                 this.info.total = this.gridApi.getModel().rootNode.childrenAfterFilter.length;
             }
         },
