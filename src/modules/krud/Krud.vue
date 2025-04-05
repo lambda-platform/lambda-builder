@@ -79,8 +79,6 @@ export default {
 
     methods: {
         renderTemplate(template) {
-            console.log("template number:", template);
-
             if (templates.hasOwnProperty(template)) {
                 return templates[template]
             } else {

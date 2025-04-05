@@ -250,7 +250,6 @@ export default {
             try {
                 let response = await axios.get(configUrl)
                 let data = JSON.parse(response.data.data.schema)
-                console.log("form schema: ", data);
 
                 data['form_id'] = response.data.data.id
                 data['form_name'] = response.data.data.name
@@ -290,8 +289,6 @@ export default {
             if (formSchema.step) {
                 this.step = formSchema.step;
             }
-
-            console.log(this.schema);
 
             this.ui = formSchema.ui
             if (formSchema.save_btn_text) {
@@ -339,7 +336,7 @@ export default {
 
         setHiddenItemModel(schema) {
             schema.forEach(item => {
-                    if (item.hidden || item.disabled) {
+                    if (item.hidden || item.disabled || item.param) {
                         if (this.isValid(item.default)) {
                             this.setModel(item.model, item.default, item.formType)
                         }
@@ -347,12 +344,14 @@ export default {
                         if (item.hasUserId) {
                             this.setModel(item.model, window.init.user.id * 1, item.formType)
                         }
+
                         if (item.fillByUserField !== null && item.fillByUserField !== '' && item.fillByUserField !== undefined) {
                             this.setModel(item.model, window.init.user[item.fillByUserField], item.formType)
                         }
+
                         if (this.isValid(item.param)) {
-                            if (item.param in this.$route.params) {
-                                let param = this.$route.params[item.param]
+                            if (this.$route.query[item.param]) {
+                                let param = this.$route.query[item.param]
                                 if (param != 'null') {
                                     Vue.set(this.$data.model, item.model, param)
                                 }
@@ -1018,8 +1017,6 @@ export default {
                     }
                 }
             })
-            console.log('selects: ', selects);
-
             return selects
         },
 

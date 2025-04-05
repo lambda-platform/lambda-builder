@@ -36,7 +36,6 @@ export default {
         }
     },
     created() {
-        console.log('working: ', model.form[this.model.component]);
         if(typeof this.meta.autoFillCurrentDate != undefined && this.meta.autoFillCurrentDate){
             this.model.form[this.model.component] = new Date();
         }

@@ -173,8 +173,6 @@ export default {
     },
 
     mounted() {
-        console.log('select created', this.meta);
-
         if (this.meta.relation.addAble && this.meta.relation.addFrom) {
             this.addAble = true;
         }
