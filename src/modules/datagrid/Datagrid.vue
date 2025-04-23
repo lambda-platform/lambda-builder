@@ -535,10 +535,7 @@ export default {
                     lockPosition: true,
                     filter: false
                 };
-                // this.$data.columns.push(selectionCol);
                 this.$data.columns.unshift(selectionCol);
-                console.log('this.$data.columns');
-                console.log(this.$data.columns);
             }
 
             if (gridSchema.hasCheckbox || this.$props.hasSelection) {
