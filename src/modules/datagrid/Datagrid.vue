@@ -379,7 +379,7 @@ export default {
              * Custom part remove later
              */
             this.gridOptions.getRowStyle = (params) => {
-                if ((this.$props.schemaID == 220) && isValid(params.data.ubtirsenognoo)) {
+                if (((this.$props.schemaID == 220) || (this.$props.schemaID == 382)) && isValid(params.data.ubtirsenognoo)) {
                     return {'background-color': '#87cefa'}
                 }
 
