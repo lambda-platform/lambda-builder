@@ -1679,8 +1679,17 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item === 'v') {
+                if (item === 'v' && this.permissions && this.permissions.r) {
                     console.log("v action");
+                    let menuItem = {
+                        name: "Харах",
+                        icon:
+                            "<span class='ivu-icon ivu-icon-ios-eye-outline'></span>",
+                        action: () => {
+                            this.fnView(rowId);
+                        }
+                    };
+                    actions.push(menuItem);
                 }
 
                 if (item === 'e' && this.permissions && this.permissions.u) {
