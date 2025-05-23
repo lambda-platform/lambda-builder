@@ -4,15 +4,15 @@ import Vue from 'vue'
 Vue.use(Router)
 
 function load(component) {
-    if (window.lambda.local_agent != undefined && window.lambda.local_agent == true) {
-        try {
-            return require(`agent/${component}`).default
-        } catch (err) {
-            console.log('not local');
-        }
-    } else {
-        require(`./views/theme/default/${component}`).default
-    }
+    // if (window.lambda.local_agent != undefined && window.lambda.local_agent == true) {
+    //     try {
+    //         return require(`agent/${component}`).default
+    //     } catch (err) {
+    //         console.log('not local');
+    //     }
+    // } else {
+    //     require(`./views/theme/default/${component}`).default
+    // }
     return require(`./views/theme/${window.lambda.theme}/${component}`).default
 }
 
