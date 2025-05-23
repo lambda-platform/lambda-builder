@@ -16,15 +16,15 @@ window.axios.defaults.headers.common = {
 Vue.config.productionTip = false;
 
 function loadApp() {
-    if (window.lambda.local_agent != undefined && window.lambda.local_agent == true) {
-        try {
-            return require(`agent/index`).default
-        } catch (err) {
-            console.log('not local');
-        }
-    } else {
-        return require(`./views/theme/default/index`).default;
-    }
+    // if (window.lambda.local_agent != undefined && window.lambda.local_agent == true) {
+    //     try {
+    //         return require(`agent/index`).default
+    //     } catch (err) {
+    //         console.log('not local');
+    //     }
+    // } else {
+    //     return require(`./views/theme/default/index`).default;
+    // }
 
     return require(`./views/theme/${window.lambda.theme}/index`).default;
 }
