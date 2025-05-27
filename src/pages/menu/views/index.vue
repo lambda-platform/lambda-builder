@@ -29,7 +29,6 @@
                         actions: []
                     }
                 }
-
                 return {
                     template: "canvas",
                     title: "Цэсний тохиргоо",

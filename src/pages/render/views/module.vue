@@ -33,8 +33,12 @@ export default {
     },
     created() {
 
-        let token = this.getCookie('token');
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+        // let token = this.getCookie('token');
+        //
+        // if(!token){
+        //     axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+        // }
+
 
     },
 

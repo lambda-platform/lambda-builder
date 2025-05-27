@@ -71,6 +71,7 @@ export default {
 
     methods: {
         getMenu() {
+            alert("hihihihi")
             axios.get(`/lambda/krud/menu_form/edit/${this.menuId}`).then(({data}) => {
                 this.menu = JSON.parse(data.data.schema);
                 console.log(this.menu);
