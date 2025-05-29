@@ -1635,6 +1635,8 @@ export default {
 
             let rowId = params.node.data[this.identity];
             console.log("EDIT ID:", rowId, this.identity, params.node.data);
+            console.log(this.gridActions);
+            console.log(this.permissions);
 
             let actions = [];
             if (this.$props.actions) {
@@ -1704,6 +1706,7 @@ export default {
                     actions.push(menuItem);
                 }
 
+                // console.log(item, this.permissions, this.permissions.d);
                 if (item === 'd' && this.permissions && this.permissions.d) {
                 // if (item === 'd') {
                     let menuItem = {
