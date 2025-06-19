@@ -282,6 +282,7 @@ export default {
         //     }
         // },
 
+
         highlights() {
             this.preselect();
         }
@@ -420,6 +421,52 @@ export default {
                 }
             };
 
+            this.gridOptions.excelStyles = [
+                {
+                    headerHeight: 60
+                },
+                {
+                    id: 'excel-header-style',
+                    interior: {
+                        color: '#dae3f3', // Толгойн өнгө
+                        pattern: 'Solid',
+                    },
+                    font: {
+                        size: 12,
+                        bold: true,
+                        color: '#333333'
+                    },
+                    alignment: {
+                        horizontal: 'Center',
+                        vertical: 'Center'
+                    },
+                    borders: {
+                        borderTop:    { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderBottom: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderLeft:   { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderRight:  { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+                    },
+                },
+                {
+                    id: 'excel-cell-style',
+                    font: {
+                        size: 11,
+                        color: '#000000'
+                    },
+                    borders: {
+                        borderTop:    { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderBottom: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderLeft:   { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderRight:  { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+                    },
+                    alignment: {
+                        horizontal: 'Center',
+                        vertical: 'Center',
+                        wrapText: true
+                    },
+                }
+            ];
+
             /*********/
             //client side sorting and filtering
             if (this.isClient) {
@@ -427,6 +474,11 @@ export default {
                 this.gridOptions.enableServerSideSorting = false;
                 this.gridOptions.enableFilter = true;
                 this.gridOptions.enableSorting = true;
+                //tseke
+                if (gridSchema.columnAggregations) {
+                    Vue.set(this.aggregations, "columnAggregations", gridSchema.columnAggregations);
+                }
+                //tseke
             } else {
                 if (gridSchema.columnAggregations) {
                     Vue.set(this.aggregations, "columnAggregations", gridSchema.columnAggregations);
@@ -527,7 +579,7 @@ export default {
                     width: 38,
                     minWidth: 38,
                     suppressNavigable: true,
-                    cellClass: 'no-border grid-checkbox',
+                    cellClass: 'grid-checkbox',
                     checkboxSelection: true,
                     headerCheckboxSelection: !this.$props.gridSelector,
                     headerCheckboxSelectionFilteredOnly: true,
@@ -585,7 +637,11 @@ export default {
                     floatingFilter: false,
                     suppressMenu: true,
                     width: 60,
-                    valueGetter: 'node.rowIndex + 1'
+                    valueGetter: params => {
+                        return params.node.rowPinned ? '' : params.node.rowIndex + 1;
+                    },
+                    cellClass: 'excel-cell-style',
+                    headerClass: 'excel-header-style',
                 });
             }
 
@@ -702,11 +758,12 @@ export default {
                     headerName: this.getLabel(item),
                     field: item.model,
                     suppressNavigable: true,
-                    cellClass: 'no-border',
+                    cellClass: 'excel-cell-style',
                     enableRowGroup: true,
                     enableValue: true,
                     enablePivot: true,
-                    suppressMenu: !this.colMenu
+                    suppressMenu: !this.colMenu,
+                    headerClass: 'excel-header-style',
                 };
 
                 //Sortable
@@ -1254,6 +1311,7 @@ export default {
 
             axios.post(url, filters, {signal: this.axiosController.signal}).then(({data}) => {
                 if (this.isClient) {
+
                     if (Array.isArray(data)) {
                         this.$data.data = data;
                         this.info.total = data.length;
@@ -1262,17 +1320,17 @@ export default {
                     if (typeof data === 'object' && ('data' in data)) {
                         this.$data.data = data.data;
                     }
+
                 } else {
                     this.info.total = data.total;
                     this.info.totalPage = data.last_page;
                     //getting data
                     this.$data.data = data.data;
                     this.gridOptions.api.setRowData(data.data)
+                }
 
-
-                    if (this.aggregations.columnAggregations.length >= 1) {
-                        this.fetchAggregations(filters);
-                    }
+                if (this.aggregations.columnAggregations.length >= 1) {
+                    this.fetchAggregations(filters);
                 }
 
                 if (this.$data.gridOptions.sizeColumnsToFit) {
