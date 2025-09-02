@@ -99,7 +99,7 @@ export default {
         "firstNameandLastName": "Овог нэр",
         "mobile": "Гар утас",
         "createdDate": "Үүсгэсэн огноо",
-        "registrationregistrationConfirmedConfirmed": "БҮРТГЭЛ БАТАЛГААЖСАН",
+        "registrationConfirmed": "БҮРТГЭЛ БАТАЛГААЖСАН",
         "registrationIsNotConfirmed": "БҮРТГЭЛ БАТАЛГААЖААГҮЙ",
         "success": "Амжилттай",
         "systemUpdate": "Систем шинэчлэх",

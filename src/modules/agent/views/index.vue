@@ -4,14 +4,18 @@
             <Row :gutter="16" class="tbl-header">
                 <Col span="12" class-name="tbl-header-left">
                     <div class="tbl-header-title">
-                        <span v-if="!isDeleted">{{lang.userList}}</span>
-                        <span v-else>{{lang.listOfDeletedUsers}}</span>
+                        <span v-if="!isDeleted">{{ lang.userList }}</span>
+                        <span v-else>{{ lang.listOfDeletedUsers }}</span>
                     </div>
                     <div class="tbl-header-count">
                         <a @click="isDeleted = false" :class="isDeleted ? '': 'active'"><i
-                            class="mdi mdi-account-group mdi-18px"></i> {{lang.totalEmployees}}: <span>{{ users.total }}</span></a>
+                            class="mdi mdi-account-group mdi-18px"></i> {{ lang.totalEmployees }}: <span>{{
+                                users.total
+                            }}</span></a>
                         <a @click="isDeleted = true" :class="isDeleted ? 'active': ''"><i
-                            class="mdi mdi-account-remove mdi-18px"></i> {{lang.deleted}}: <span>{{ deletedUsers.total }}</span></a>
+                            class="mdi mdi-account-remove mdi-18px"></i> {{ lang.deleted }}: <span>{{
+                                deletedUsers.total
+                            }}</span></a>
                     </div>
                 </Col>
 
@@ -24,7 +28,7 @@
                     </div>
 
                     <Button class="agent-add-btn" type="success" @click="showForm = true">
-                        <i class="ti-plus"></i> {{lang.addUser}}
+                        <i class="ti-plus"></i> {{ lang.addUser }}
                     </Button>
 
                     <slot name="user-control"></slot>
@@ -37,7 +41,7 @@
                 <template v-if="deletedUsers.total == 0">
                     <div class="no-user-data">
                         <i class="mdi mdi-account-off mdi-48px"></i>
-                        <p>{{lang.noMatchingData}}</p>
+                        <p>{{ lang.noMatchingData }}</p>
                     </div>
                 </template>
             </template>
@@ -46,16 +50,18 @@
                 <template v-if="users.total == 0">
                     <div class="no-user-data">
                         <i class="mdi mdi-account-off mdi-48px"></i>
-                        <p>{{lang.noMatchingData}}</p>
+                        <p>{{ lang.noMatchingData }}</p>
                     </div>
                 </template>
             </template>
 
             <dv-pagination :is-deleted="isDeleted" :deleted-model="deletedUsers"
-                           :model="users" :query="query" :roles="roles" :is-top="false" :layout="layout"></dv-pagination>
+                           :model="users" :query="query" :roles="roles" :is-top="false"
+                           :layout="layout"></dv-pagination>
 
             <Row :gutter="16" class="user-grid-wrapper">
-                <Col v-for="user in isDeleted ? deletedUsers.data : users.data" :key="user.id" :xs="24" :sm="12" :md="12"
+                <Col v-for="user in isDeleted ? deletedUsers.data : users.data" :key="user.id" :xs="24" :sm="12"
+                     :md="12"
                      :lg="8">
                     <div class="user-grid">
                         <div class="user-head">
@@ -112,12 +118,12 @@
                             <div class="user-status">
                                 <div v-if="user.status == 0" class="false">
                                     <i class="ti-na"></i>
-                                    <span>{{lang.registrationIsNotConfirmed}}</span>
+                                    <span>{{ lang.registrationIsNotConfirmed }}</span>
                                 </div>
 
                                 <div v-else class="user-status">
                                     <i class="ti-check"></i>
-                                    <span>{{lang.registrationConfirmed}}</span>
+                                    <span>{{ lang.registrationConfirmed }}</span>
                                 </div>
                             </div>
                         </div>
@@ -126,40 +132,45 @@
                             <ul class="user-content-list">
                                 <li>
                                     <div class="user-content-list-content">
-                                        <span class="user-content-list-heading">{{lang.firstNameandLastName}}</span>
+                                        <span class="user-content-list-heading">{{ lang.firstNameandLastName }}</span>
                                         <span class="user-content-list-data">
                                             <template
-                                                v-if="user.first_name != null && user.first_name !=''">{{ user.first_name}}</template>
+                                                v-if="user.first_name != null && user.first_name !=''">{{ user.first_name }}</template>
                                             <template
-                                                v-if="user.last_name != null && user.last_name !=''"> {{user.last_name}}</template>
-                                            <template v-else><span class="user-no-data">{{lang.noInfo}}</span></template>
+                                                v-if="user.last_name != null && user.last_name !=''"> {{ user.last_name }}</template>
+                                            <template v-else><span
+                                                class="user-no-data">{{ lang.noInfo }}</span></template>
                                         </span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="user-content-list-content">
-                                        <span class="user-content-list-heading">{{lang.email}}</span>
+                                        <span class="user-content-list-heading">{{ lang.email }}</span>
                                         <span class="user-content-list-data">
                                             <template
-                                                v-if="user.email != null && user.email != ''">{{ user.email}}</template>
-                                            <template v-else><span class="user-no-data">{{lang.noData}}</span></template>
+                                                v-if="user.email != null && user.email != ''">{{ user.email }}</template>
+                                            <template v-else><span
+                                                class="user-no-data">{{ lang.noData }}</span></template>
                                         </span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="user-content-list-content">
-                                        <span class="user-content-list-heading">{{lang.mobile}}</span>
+                                        <span class="user-content-list-heading">{{ lang.mobile }}</span>
                                         <span class="user-content-list-data">
                                             <template
-                                                v-if="user.phone != null && user.phone != ''">{{ user.phone}}</template>
-                                            <template v-else><span class="user-no-data">{{lang.noData}}</span></template>
+                                                v-if="user.phone != null && user.phone != ''">{{ user.phone }}</template>
+                                            <template v-else><span
+                                                class="user-no-data">{{ lang.noData }}</span></template>
                                         </span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="user-content-list-content">
-                                        <span class="user-content-list-heading">{{ !isDeleted ? lang.createdDate : lang.deleted}} </span>
-                                        <span class="user-content-list-data">{{ !isDeleted ? setMoment(user.created_at) : user.deleted_at}}</span>
+                                        <span
+                                            class="user-content-list-heading">{{ !isDeleted ? lang.createdDate : lang.deleted }} </span>
+                                        <span
+                                            class="user-content-list-data">{{ !isDeleted ? setMoment(user.created_at) : user.deleted_at }}</span>
                                     </div>
                                 </li>
                             </ul>
@@ -170,7 +181,8 @@
         </section>
 
         <Drawer width="700" class="agent-form" :closable="false" v-model="showForm">
-            <dataform ref="agentForm" schemaID="user_form" :url="baseUrl ? baseUrl : ''" :editMode="editMode" :onSuccess="onSuccess"/>
+            <dataform ref="agentForm" schemaID="user_form" :url="baseUrl ? baseUrl : ''" :editMode="editMode"
+                      :onSuccess="onSuccess"/>
         </Drawer>
     </section>
 </template>
@@ -180,12 +192,12 @@ import moment from 'moment';
 import pagination from "./pagination";
 
 export default {
-    props:['baseUrl'],
+    props: ['baseUrl'],
     computed: {
         lang() {
             const labels = ['db', 'usersAndUserGroups', 'users', 'userGroupsPermission', 'sendDBSchema',
                 'userList', 'totalEmployees', 'categorySearch', 'sort', 'searchForInformation', 'noMatchingData', 'addUser',
-                'registrationConfirmed','registrationIsNotConfirmed', 'createdDate', 'firstNameandLastName', 'noInfo', 'noData', 'email',
+                'registrationConfirmed', 'registrationIsNotConfirmed', 'createdDate', 'firstNameandLastName', 'noInfo', 'noData', 'email',
                 'ruconfinfo', 'ruconfinfoDelete', 'created', 'deleted', 'listOfDeletedUsers', 'byLoginName', 'yes', 'no', 'completeDestruction',
                 'recovery', 'edit', ''
             ];
@@ -207,7 +219,7 @@ export default {
                 return obj;
             }, {});
         },
-        url(){
+        url() {
             return this.baseUrl ? this.baseUrl : "";
         },
     },
@@ -280,10 +292,14 @@ export default {
         editUser(id) {
             this.editMode = true;
             this.showForm = true;
-            this.$refs.agentForm.editModel(id);
+            this.$nextTick(() => {
+                if (this.$refs.agentForm) {
+                    this.$refs.agentForm.editModel(id);
+                }
+            });
         },
         deleteUser(id) {
-            axios.get(this.url+'/agent/delete/' + id).then(o => {
+            axios.get(this.url + '/agent/delete/' + id).then(o => {
                 if (o.status) {
                     this.$Message.success(`${this._messageTranslate.userDeleted}`);
                     let deletedUser = this.users.data.find(item => item.id == id);
@@ -297,7 +313,7 @@ export default {
             })
         },
         deleteUserComplete(id) {
-            axios.get(this.url+'/agent/delete/complete/' + id).then(o => {
+            axios.get(this.url + '/agent/delete/complete/' + id).then(o => {
                 if (o.status) {
                     this.$Message.success(`${this._messageTranslate.userDeleted}`)
                     this.deletedUsers.data = this.deletedUsers.data.filter(item => item.id != id);
@@ -308,7 +324,7 @@ export default {
             })
         },
         restoreUser(id) {
-            axios.get(this.url+'/agent/restore/' + id)
+            axios.get(this.url + '/agent/restore/' + id)
                 .then(o => {
                     if (o.status) {
                         this.$Message.success(`${this._messageTranslate.UserInformationRestored}`);
@@ -326,7 +342,7 @@ export default {
                 });
         },
         showDefaultAvatar(e) {
-            e.target.src = this.url+"/assets/lambda/images/avatar.png";
+            e.target.src = this.url + "/assets/lambda/images/avatar.png";
         },
         searchUser() {
             if (this.q == null || this.q == '') {
@@ -336,7 +352,7 @@ export default {
             }
         },
         handleSearch(q) {
-            axios.get(this.url+'/agent/search/' + q).then(o => {
+            axios.get(this.url + '/agent/search/' + q).then(o => {
                 if (o.data.status) {
                     this.users = o.data.data;
                 } else {
@@ -345,11 +361,11 @@ export default {
             });
         },
         getRoles() {
-            axios.get(this.url+'/agent/roles').then(({data}) => {
+            axios.get(this.url + '/agent/roles').then(({data}) => {
                 this.roles = data;
             })
         },
-        wordSwap(words){
+        wordSwap(words) {
             console.log("words");
             console.log(words);
             //words = this.lang().words;

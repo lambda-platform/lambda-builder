@@ -855,7 +855,7 @@ export default {
             }
         },
 
-        editModel(id, editData) {
+        editModel(id, editData=null) {
             if (editData) {
                 this.model = {...this.model, ...editData}
                 if (this.ui && this.ui.hasOwnProperty('schema')) {
