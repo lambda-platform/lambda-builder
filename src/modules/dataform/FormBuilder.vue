@@ -7,6 +7,10 @@
                     <label>{{ lang.Form_name }}</label>
                     <Input v-model='formName' :placeholder='lang.Form_name'/>
                 </div>
+                <div class='fb-control-item'>
+                    <label>Slug /Давхцахгүй/</label>
+                    <Input v-model='slug' placeholder='Slug /Давхцахгүй/'/>
+                </div>
 
                 <div class='fb-control-item'>
                     <label>{{ lang.Sub_name }}</label>
@@ -616,6 +620,7 @@ export default {
             //Form part
             isModelSelected: false,
             formName: null,
+            slug: null,
             editor: Editor,
             dataform: {
                 formType: 'normal',
@@ -1053,6 +1058,7 @@ export default {
                 let res = await axios.get(this.$props.src + '/builder')
                 try {
                     this.formName = res.data.data.hasOwnProperty('name') ? res.data.data.name : res.data.data.model
+                    this.slug = res.data.data.hasOwnProperty('slug') ? res.data.data.slug : res.data.data.model
                     this.dataform = JSON.parse(res.data.data.schema)
                     await this.callOtherFormsGrids()
                     await this.updateSyncForm()
@@ -1507,6 +1513,7 @@ export default {
 
             let data = {
                 name: this.formName,
+                slug: this.slug,
                 schema: JSON.stringify(this.dataform)
             }
             let defualtURL = `/lambda/puzzle/schema/form`
