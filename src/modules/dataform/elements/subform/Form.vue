@@ -285,9 +285,18 @@ export default {
             // this.$modal.hide(`form-modal-${this.form.formId}`);
         },
         formReady(formData, subSchema) {
+            let parentFields = subSchema.filter(field => field.hasOwnProperty('parentElement'));
+
+            parentFields.forEach(field => {
+                this.$refs.form.model[field.model] = this.model.form[field.parentElement];
+            });
+            parentFields.forEach(field => {
+                if (this.model.form.hasOwnProperty(field.parentElement)) {
+                    this.$refs.form.model[field.model] = this.model.form[field.parentElement];
+                }
+            });
 
             let parentFieldIndex = subSchema.findIndex(field => field.model == this.form.parent);
-
             if (parentFieldIndex > 0) {
                 subSchema[parentFieldIndex].hidden = true;
             }
@@ -432,7 +441,6 @@ export default {
             if (this.form.addFromGrid && this.form.sourceGridID) {
                 this.showAddSourceModal();
             } else {
-
                 this.addByFrom();
             }
         },

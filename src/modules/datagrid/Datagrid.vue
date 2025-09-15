@@ -282,6 +282,7 @@ export default {
         //     }
         // },
 
+
         highlights() {
             this.preselect();
         }
@@ -379,7 +380,7 @@ export default {
              * Custom part remove later
              */
             this.gridOptions.getRowStyle = (params) => {
-                if ((this.$props.schemaID == 220) && isValid(params.data.ubtirsenognoo)) {
+                if (((this.$props.schemaID == 220) || (this.$props.schemaID == 382)) && isValid(params.data.ubtirsenognoo)) {
                     return {'background-color': '#87cefa'}
                 }
 
@@ -420,6 +421,52 @@ export default {
                 }
             };
 
+            this.gridOptions.excelStyles = [
+                {
+                    headerHeight: 60
+                },
+                {
+                    id: 'excel-header-style',
+                    interior: {
+                        color: '#dae3f3', // Толгойн өнгө
+                        pattern: 'Solid',
+                    },
+                    font: {
+                        size: 12,
+                        bold: true,
+                        color: '#333333'
+                    },
+                    alignment: {
+                        horizontal: 'Center',
+                        vertical: 'Center'
+                    },
+                    borders: {
+                        borderTop:    { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderBottom: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderLeft:   { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderRight:  { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+                    },
+                },
+                {
+                    id: 'excel-cell-style',
+                    font: {
+                        size: 11,
+                        color: '#000000'
+                    },
+                    borders: {
+                        borderTop:    { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderBottom: { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderLeft:   { color: '#000000', lineStyle: 'Continuous', weight: 1 },
+                        borderRight:  { color: '#000000', lineStyle: 'Continuous', weight: 1 }
+                    },
+                    alignment: {
+                        horizontal: 'Center',
+                        vertical: 'Center',
+                        wrapText: true
+                    },
+                }
+            ];
+
             /*********/
             //client side sorting and filtering
             if (this.isClient) {
@@ -427,6 +474,11 @@ export default {
                 this.gridOptions.enableServerSideSorting = false;
                 this.gridOptions.enableFilter = true;
                 this.gridOptions.enableSorting = true;
+                //tseke
+                if (gridSchema.columnAggregations) {
+                    Vue.set(this.aggregations, "columnAggregations", gridSchema.columnAggregations);
+                }
+                //tseke
             } else {
                 if (gridSchema.excelUploadCustomUrl) {
                     this.$parent.excelUploadCustomUrl = gridSchema.excelUploadCustomUrl;
@@ -526,15 +578,15 @@ export default {
                     width: 38,
                     minWidth: 38,
                     suppressNavigable: true,
-                    cellClass: 'no-border grid-checkbox',
+                    cellClass: 'grid-checkbox',
                     checkboxSelection: true,
                     headerCheckboxSelection: !this.$props.gridSelector,
                     headerCheckboxSelectionFilteredOnly: true,
-                    filter: false,
                     pinned: 'left',
-                    lockPosition: true
+                    lockPosition: true,
+                    filter: false
                 };
-                this.$data.columns.push(selectionCol);
+                this.$data.columns.unshift(selectionCol);
             }
 
             if (gridSchema.hasCheckbox || this.$props.hasSelection) {
@@ -584,7 +636,11 @@ export default {
                     floatingFilter: false,
                     suppressMenu: true,
                     width: 60,
-                    valueGetter: 'node.rowIndex + 1'
+                    valueGetter: params => {
+                        return params.node.rowPinned ? '' : params.node.rowIndex + 1;
+                    },
+                    cellClass: 'excel-cell-style',
+                    headerClass: 'excel-header-style',
                 });
             }
 
@@ -705,11 +761,12 @@ export default {
                     headerName: this.getLabel(item),
                     field: item.model,
                     suppressNavigable: true,
-                    cellClass: 'no-border',
+                    cellClass: 'excel-cell-style',
                     enableRowGroup: true,
                     enableValue: true,
                     enablePivot: true,
-                    suppressMenu: !this.colMenu
+                    suppressMenu: !this.colMenu,
+                    headerClass: 'excel-header-style',
                 };
 
                 if(item.model == 'status' && this.isClient){
@@ -1263,6 +1320,7 @@ export default {
 
             axios.post(url, filters, {signal: this.axiosController.signal}).then(({data}) => {
                 if (this.isClient) {
+
                     if (Array.isArray(data)) {
                         this.$data.data = data;
                         this.info.total = data.length;
@@ -1271,17 +1329,17 @@ export default {
                     if (typeof data === 'object' && ('data' in data)) {
                         this.$data.data = data.data;
                     }
+
                 } else {
                     this.info.total = data.total;
                     this.info.totalPage = data.last_page;
                     //getting data
                     this.$data.data = data.data;
                     this.gridOptions.api.setRowData(data.data)
+                }
 
-
-                    if (this.aggregations.columnAggregations.length >= 1) {
-                        this.fetchAggregations(filters);
-                    }
+                if (this.aggregations.columnAggregations.length >= 1) {
+                    this.fetchAggregations(filters);
                 }
 
                 if (this.$data.gridOptions.sizeColumnsToFit) {
@@ -1644,6 +1702,8 @@ export default {
 
             let rowId = params.node.data[this.identity];
             console.log("EDIT ID:", rowId, this.identity, params.node.data);
+            console.log(this.gridActions);
+            console.log(this.permissions);
 
             let actions = [];
             if (this.$props.actions) {
@@ -1688,8 +1748,17 @@ export default {
                     actions.push(menuItem);
                 }
 
-                if (item === 'v') {
+                if (item === 'v' && this.permissions && this.permissions.r) {
                     console.log("v action");
+                    let menuItem = {
+                        name: "Харах",
+                        icon:
+                            "<span class='ivu-icon ivu-icon-ios-eye-outline'></span>",
+                        action: () => {
+                            this.fnView(rowId);
+                        }
+                    };
+                    actions.push(menuItem);
                 }
 
                 if (item === 'e' && this.permissions && this.permissions.u) {
@@ -1704,8 +1773,9 @@ export default {
                     actions.push(menuItem);
                 }
 
-                // if (item == 'd' && this.permissions && this.permissions.d) {
-                if (item === 'd') {
+                // console.log(item, this.permissions, this.permissions.d);
+                if (item === 'd' && this.permissions && this.permissions.d) {
+                // if (item === 'd') {
                     let menuItem = {
                         name: "Устгах",
                         icon: "<span class='ivu-icon ivu-icon-ios-trash-outline'></span>",

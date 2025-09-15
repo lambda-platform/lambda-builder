@@ -1,6 +1,7 @@
 <template>
     <FormItem :label=label :prop=rule>
-        <i-switch v-model="model.form[model.component]"></i-switch>
+        <i-switch v-model="model.form[model.component]"
+                  :disabled="meta && meta.disabled ? meta.disabled : false"></i-switch>
     </FormItem>
 </template>
 

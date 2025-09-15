@@ -922,6 +922,7 @@ export default {
                 hidden: false,
                 disabled: false,
                 default: null,
+                parentElement: '',
                 prefix: '',
                 ifshowhide: '',
                 rules: [],

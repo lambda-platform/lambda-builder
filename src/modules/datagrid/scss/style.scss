@@ -42,7 +42,9 @@
             height: calc(100vh - 160px) !important;
             .number-cell{
                 text-align: right;
-                display: block;
+                //display: block;
+                display: flex;
+                justify-content: flex-end;
             }
         }
 

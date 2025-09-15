@@ -64,6 +64,14 @@
                                 <Input v-model="item.param" :placeholder="lang.Parameter_name"/>
                             </li>
 
+                            <!--                            tseke added etseg baganaas utga awah-->
+
+                            <li>
+                                <label>Эцэг формоос утга авах</label>
+                                <Input v-model="item.parentElement" placeholder="Эцэг формоос утга авах"/>
+                            </li>
+                            <!--                            end-->
+
                             <li>
                                 <label>{{ lang.Get_user_ID }}</label>
                                 <i-switch v-model="item.hasUserId" size="small"></i-switch>
