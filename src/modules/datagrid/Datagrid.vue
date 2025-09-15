@@ -428,10 +428,6 @@ export default {
                 this.gridOptions.enableFilter = true;
                 this.gridOptions.enableSorting = true;
             } else {
-                if (gridSchema.columnAggregations) {
-                    Vue.set(this.aggregations, "columnAggregations", gridSchema.columnAggregations);
-                }
-
                 if (gridSchema.excelUploadCustomUrl) {
                     this.$parent.excelUploadCustomUrl = gridSchema.excelUploadCustomUrl;
                 }
@@ -452,6 +448,9 @@ export default {
                 }
             }
 
+            if (gridSchema.columnAggregations) {
+                Vue.set(this.aggregations, "columnAggregations", gridSchema.columnAggregations);
+            }
 
             if (gridSchema.theme) {
                 this.theme = 'theme' in gridSchema ? gridSchema.theme : 'normal';
@@ -531,7 +530,9 @@ export default {
                     checkboxSelection: true,
                     headerCheckboxSelection: !this.$props.gridSelector,
                     headerCheckboxSelectionFilteredOnly: true,
-                    filter: false
+                    filter: false,
+                    pinned: 'left',
+                    lockPosition: true
                 };
                 this.$data.columns.push(selectionCol);
             }
@@ -688,6 +689,10 @@ export default {
             return item.label ? item.label : `[${item.model}]`
         },
 
+        setClientAggregations() {
+            console.log("aff", this.aggregations.columnAggregations);
+        },
+
         setColumn(item) {
             //set post models -- hidden could be posted
             if (isValid(item.editable) && (isValid(item.editable) && item.editable.shouldPost)) {
@@ -706,6 +711,11 @@ export default {
                     enablePivot: true,
                     suppressMenu: !this.colMenu
                 };
+
+                if(item.model == 'status' && this.isClient){
+                    colItem.aggFunc = 'sum';
+                    console.log(colItem);
+                }
 
                 //Sortable
                 if (!item.sortable) {
@@ -1162,6 +1172,7 @@ export default {
                         }
                     }
                 }
+
 
                 this.$data.columns.push(colItem);
             }

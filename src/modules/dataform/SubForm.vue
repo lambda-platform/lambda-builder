@@ -53,8 +53,8 @@
                 <div class='fb-control-sub-item' v-if="f.subtype != 'Form'">
                     <Input v-model='f.min_height' :placeholder='lang.min_height'/>
                 </div>
-
             </div>
+
             <div class='fb-control fb-control-sub'>
                 <div class='fb-control-sub-item'>
                     <Checkbox v-model='f.timestamp' v-if="f.subtype != 'Form'">
@@ -65,10 +65,10 @@
                         <span>{{ lang.hide }}</span>
                     </Checkbox>
                     <Checkbox v-model='f.checkEmpty'>
-                        <span>Өгөдөл заавал бөглүүлэх</span>
+                        <span>Өгөгдөл заавал бөглүүлэх</span>
                     </Checkbox>
-
                 </div>
+
                 <div class='fb-control-sub-item'>
                     <Checkbox v-model='f.disableDelete'>
                         <span>{{ lang.Close_deletion_action }}</span>
@@ -101,6 +101,20 @@
                     <Input v-model='f.tableTypeValue' :placeholder='lang.Table_Type_value' size='small'/>
                 </div>
             </div>
+            <div class='sub-form-source-grid'>
+                <Row gutter='10'>
+                    <Col span='8'>
+                        <Label>Controller namespace</Label>
+                        <Input type='text' v-model='f.callTriggerNamespace' placeholder='Триггер namespace'/> <br>
+
+                    </Col>
+                    <Col span='8'>
+                        <Label>Before trigger /өгөгдөл дуудахаас өмнө - edit mode only/</Label>
+                        <Input type='text' v-model='f.callTriggerFunction' placeholder='Function name'/> <br>
+                    </Col>
+                </Row>
+            </div>
+
             <div class='sub-form-source-grid'>
                 <Row gutter='10'>
                     <Col span='8'>
