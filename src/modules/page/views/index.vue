@@ -272,6 +272,8 @@ export default {
     },
     mounted() {
         this.checkSub();
+
+        console.log('checking access');
     }
 };
 </script>

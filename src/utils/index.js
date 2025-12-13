@@ -13,3 +13,25 @@ export const getTableView = (tableOrView) => {
     return list;
 }
 
+export const checkLinkAccess = (route, router, menu) => {
+    let hasAccess = false;
+    menu.forEach((item) => {
+        if (item.link_to == 'crud' && route.path == `/p/${item.id}`) {
+            hasAccess = true;
+        }
+
+        if (item.link_to == 'noAction' && item.children.length > 0) {
+            item.children.forEach((subItem) => {
+                if (subItem.link_to == 'crud' && route.path == `/p/${item.id}/${subItem.id}`) {
+                    hasAccess = true;
+                }
+            });
+        }
+    });
+
+    // setTimeout(() => {
+    //     if (hasAccess == false) {
+    //         return router.push('/');
+    //     }
+    // }, 1000)
+}

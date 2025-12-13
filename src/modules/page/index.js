@@ -21,6 +21,7 @@ let routes = [
         component: () => import(/* webpackChunkName: "page-404" */ './views/404')
     }
 ];
+
 const install = (Vue, options) => {
     Vue.mixin({
         mounted() {

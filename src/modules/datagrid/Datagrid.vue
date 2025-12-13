@@ -1794,7 +1794,7 @@ export default {
                 actions.push('separator')
             }
 
-            // actions.push('copy')
+            actions.push('copy')
             actions.push('copyWithHeaders')
             actions.push('chartRange')
             // actions.push('excelExport')

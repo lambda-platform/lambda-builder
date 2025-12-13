@@ -7,6 +7,7 @@
 
 <script>
 import NavItem from "./NavItem.vue"
+import {checkLinkAccess} from "../../utils/index.js";
 
 export default {
     props: ['hasTooltip'],
@@ -20,8 +21,8 @@ export default {
             extra: window.init.permissions.extra,
         };
     },
-    created() {
-
+    mounted() {
+        checkLinkAccess(this.$route, this.$router, this.menu);
     },
     methods: {
         can(menu) {
