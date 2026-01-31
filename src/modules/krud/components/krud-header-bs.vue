@@ -52,6 +52,8 @@
                     <!--                        </Tooltip>-->
                     <!--                    </div>-->
 
+                    <lang-control />
+
                     <div class="ms-1 header-item d-none d-sm-flex" v-if="isRefresh">
                         <Tooltip :content="lang.re_call">
                             <BButton type="button" @click="$props.refresh" variant="ghost-secondary"
@@ -357,6 +359,8 @@
 
 <script>
 
+import LangControl from "../../../components/LangControl.vue";
+
 export default {
     name: "krud-header",
     props: [
@@ -380,7 +384,7 @@ export default {
         "isCreate",
         "exportLoading"
     ],
-    components: {},
+    components: {LangControl},
     data() {
         return {
             isMenuCondensed: false,

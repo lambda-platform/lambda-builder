@@ -18,6 +18,9 @@
                 </div>
 
                 <div class="d-flex align-items-center">
+                    <slot name="right"></slot>
+                    <lang-control></lang-control>
+
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <BButton type="button" variant="ghost-secondary" class="btn-icon btn-topbar rounded-circle"
                                  data-toggle="fullscreen" @click="initFullScreen">
@@ -99,21 +102,6 @@
                             </div>
                         </simplebar>
                     </BDropdown>
-
-                    <!--                    <BDropdown class="dropdown" variant="ghost-secondary" dropstart-->
-                    <!--                               toggle-class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle arrow-none"-->
-                    <!--                               menu-class="dropdown-menu-end">-->
-                    <!--                        <template #button-content><img id="header-lang-img" src="/assets/app/images/flags/us.svg"-->
-                    <!--                                                       alt="Header Language"-->
-                    <!--                                                       height="20" class="rounded">-->
-                    <!--                        </template>-->
-                    <!--                        <BLink href="javascript:void(0);" class="dropdown-item notify-item language py-2"-->
-                    <!--                               v-for="(entry, key) in languages" :data-lang="entry.language" :title="entry.title"-->
-                    <!--                               @click="setLanguage(entry.language, entry.title, entry.flag)" :key="key">-->
-                    <!--                            <img :src="entry.flag" alt="user-image" class="me-2 rounded" height="18">-->
-                    <!--                            <span class="align-middle">{{ entry.title }}</span>-->
-                    <!--                        </BLink>-->
-                    <!--                    </BDropdown>-->
 
                     <BDropdown variant="link"
                                class="ms-sm-3 header-item topbar-user"
@@ -209,6 +197,7 @@
 </template>
 
 <script>
+import LangControl from "../../../components/LangControl.vue";
 
 export default {
     name: "krud-header",
@@ -217,62 +206,19 @@ export default {
         "title",
         "options",
     ],
-    components: {},
+    components: {LangControl},
     data() {
         return {
             isMenuCondensed: false,
             searchModel: null,
             logoutModal: false,
-
-            languages: [
-                // {
-                //     flag: require("/assets/app/images/flags/us.svg"),
-                //     language: "en",
-                //     title: "English",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/spain.svg"),
-                //     language: "sp",
-                //     title: "Española",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/germany.svg"),
-                //     language: "gr",
-                //     title: "Deutsche",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/italy.svg"),
-                //     language: "it",
-                //     title: "italiana",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/russia.svg"),
-                //     language: "ru",
-                //     title: "русский",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/china.svg"),
-                //     language: "ch",
-                //     title: "中國人",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/french.svg"),
-                //     language: "fr",
-                //     title: "Français",
-                // },
-                // {
-                //     flag: require("/assets/app/images/flags/ae.svg"),
-                //     language: "ar",
-                //     title: "Arabic",
-                // },
-            ],
-            // lan: i18n.locale,
             text: null,
             flag: null,
             value: null,
             myVar: 1,
         }
     },
+
     computed: {
         lang() {
             const labels = ['_add', 'Information_viewing_history', 'excelUpload', 're_call', '_save', '_print', 'download_file', 'logout'];
@@ -292,14 +238,14 @@ export default {
     },
 
     mounted() {
-        if (process.env.VUE_APP_I18N_LOCALE) {
-            this.flag = process.env.VUE_APP_I18N_LOCALE;
-            this.languages.forEach((item) => {
-                if (item.language == this.flag) {
-                    document.getElementById("header-lang-img").setAttribute("src", item.flag);
-                }
-            });
-        }
+        // if (process.env.VUE_APP_I18N_LOCALE) {
+        //     this.flag = process.env.VUE_APP_I18N_LOCALE;
+        //     this.languages.forEach((item) => {
+        //         if (item.language == this.flag) {
+        //             document.getElementById("header-lang-img").setAttribute("src", item.flag);
+        //         }
+        //     });
+        // }
 
         document.addEventListener("scroll", function () {
             var pageTopbar = document.getElementById("page-topbar");
@@ -330,6 +276,8 @@ export default {
         cancel() {
             this.$data.logoutModal = false;
         },
+
+
 
         isCustomDropdown() {
             //Search bar
