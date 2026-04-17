@@ -244,10 +244,10 @@ export default {
                 return false
             }
 
-            if(this.lambda_access_permission && this.user.role!=this.lambda_access_permission)
-            {
-                return false;
-            }
+            // if(this.lambda_access_permission && this.user.role!=this.lambda_access_permission)
+            // {
+            //     return false;
+            // }
 
             return true;
         }

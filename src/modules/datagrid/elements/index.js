@@ -12,6 +12,10 @@ export const elementList = [
         component: () => import(/* webpackChunkName: "grid-Number" */'./Number.vue'),
     },
     {
+        element: "Money",
+        component: () => import(/* webpackChunkName: "grid-Money" */'./Money.vue'),
+    },
+    {
         element: "Date",
         component: () => import(/* webpackChunkName: "grid-Date" */'./Date.vue'),
     },

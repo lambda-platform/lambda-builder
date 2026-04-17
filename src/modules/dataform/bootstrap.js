@@ -2,9 +2,7 @@
 import Multiselect from 'vue-multiselect'
 import axios from 'axios';
 import lodash from 'lodash';
-import iView from 'iview';
 
-import locale from 'iview/dist/locale/mn-MN';
 import CircularCountDownTimer from "vue-circular-count-down-timer";
 import VueMask from 'v-mask'
 
@@ -17,7 +15,6 @@ Vue.config.productionTip = false;
 window._ = lodash;
 window.axios = axios;
 Vue.config.silent = true;
-Vue.use(iView, {locale});
 Vue.use(CircularCountDownTimer);
 Vue.use(VueMask)
 

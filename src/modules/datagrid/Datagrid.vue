@@ -1052,6 +1052,7 @@ export default {
 
                 //Custom column item as plugin
                 if (isValid(item.gridType)) {
+                    console.log('item.gridType:',item.gridType);
                     if (window.init.hasOwnProperty('data_grid_custom_elements') && window.init.data_grid_custom_elements) {
                         let custom = window.init.data_grid_custom_elements.find(custom_element => custom_element.element == item.gridType);
                         if (custom) {

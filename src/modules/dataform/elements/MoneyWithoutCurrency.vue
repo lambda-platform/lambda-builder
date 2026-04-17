@@ -3,7 +3,7 @@
         <numeric
                 currency=""
                 currencySymbolPosition="suffix"
-                :precision="2"
+                :precision="0"
                 separator=","
                 v-model="model.form[model.component]"
                 :disabled="meta && meta.disabled ? meta.disabled : false"

@@ -4,7 +4,10 @@ import {dataFromTemplate} from './utils/formula.js'
 import {doFormula, doTrigger} from './utils/formula_and_trigger.js'
 import {evalstr, isValid} from './utils/methods.js'
 import {getRelationData} from './utils/helpers.js'
-
+import _ from "lodash";
+import { locale } from 'iview';
+import lang from 'iview/dist/locale/en-US';
+locale(lang);
 export default {
     name: 'dataform',
     props: [
@@ -739,7 +742,8 @@ export default {
                             }
                         } else {
                             this.$Notice.error({
-                                title: this.lang.errorSaving
+                                title: this.lang.errorSaving,
+                                desc: data.msg ? data.msg : ''
                             })
                             if (this.$props.onError) {
                                 this.$props.onError()
