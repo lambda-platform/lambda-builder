@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import _ from 'lodash'
+import _ from '../../utils/lodash'
 
 window._ = _;
 window.Vue = Vue;

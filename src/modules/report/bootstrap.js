@@ -1,6 +1,6 @@
 import Vue from "vue"
 import axios from 'axios';
-import lodash from 'lodash';
+import lodash from '../../utils/lodash';
 
 
 Vue.config.productionTip = false;

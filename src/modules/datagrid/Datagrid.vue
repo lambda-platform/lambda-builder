@@ -146,7 +146,7 @@ import Vue from "vue";
 import axios from "axios";
 import moment from "moment";
 import {AgGridVue} from "ag-grid-vue";
-import _ from "lodash";
+import _ from "../../utils/lodash";
 import {data, tableToExcel} from "./utils/data"
 import {dataFromTemplate, evil} from "./utils/formula.js";
 import {compareObj, isValid} from "./utils/methods";

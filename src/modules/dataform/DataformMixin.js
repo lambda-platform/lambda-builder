@@ -4,7 +4,7 @@ import {dataFromTemplate} from './utils/formula.js'
 import {doFormula, doTrigger} from './utils/formula_and_trigger.js'
 import {evalstr, isValid} from './utils/methods.js'
 import {getRelationData} from './utils/helpers.js'
-import _ from "lodash";
+import _ from "../../utils/lodash";
 import { locale } from 'iview';
 import lang from 'iview/dist/locale/en-US';
 locale(lang);

@@ -312,12 +312,8 @@ export default {
         },
 
         findInSchema(id) {
-            return _(this.schema)
-                .thru(function (coll) {
-                    return _.union(coll, _.map(coll, "children"));
-                })
-                .flatten()
-                .find({id: id});
+            const merged = _.union(this.schema, _.map(this.schema, "children"));
+            return _.find(merged.flat(), {id: id});
         },
 
         removeFromTree(parent, childNameToRemove) {

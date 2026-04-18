@@ -3,7 +3,7 @@
  */
 import Vue from 'vue';
 import axios from 'axios';
-import lodash from 'lodash';
+import lodash from '../../utils/lodash';
 import moment from 'moment';
 import iView from 'iview';
 // import locale from 'iview/dist/locale/mn-MN';

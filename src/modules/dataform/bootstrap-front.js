@@ -1,7 +1,7 @@
 import Vue from "vue"
 import Multiselect from 'vue-multiselect'
 import axios from 'axios';
-import lodash from 'lodash';
+import lodash from '../../utils/lodash';
 import iView from 'iview';
 
 import locale from 'iview/dist/locale/mn-MN';

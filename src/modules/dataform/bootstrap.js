@@ -1,7 +1,7 @@
 // import Vue from "vue"
 import Multiselect from 'vue-multiselect'
 import axios from 'axios';
-import lodash from 'lodash';
+import lodash from '../../utils/lodash';
 
 import CircularCountDownTimer from "vue-circular-count-down-timer";
 import VueMask from 'v-mask'
