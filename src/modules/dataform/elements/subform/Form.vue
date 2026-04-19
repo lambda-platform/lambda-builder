@@ -6,7 +6,7 @@
                     class="sub-form-add-btn"></Button>
         </div>
         <div class="sub-form-table-wrap">
-            <table class="sub-form-grid" border="1" v-if="form.min_height ? true: this.listData.length >= 1">
+            <table class="sub-form-grid" border="1">
                 <thead>
                 <tr>
                     <th class="row-number" v-if="form.showRowNumber">ДД</th>
@@ -42,6 +42,11 @@
                         <span>{{ index + 1 }}</span>
                     </template>
                 </grid-form>
+                <tr v-if="listData.length === 0" class="subform-empty-row">
+                    <td :colspan="emptyColspan" class="subform-empty-cell">
+                        Хоосон байна
+                    </td>
+                </tr>
                 </tbody>
                 <tfoot v-if="hasEq">
                 <tr>
@@ -213,6 +218,13 @@ export default {
                 obj[key] = this.$t('dataForm.' + labels[i]);
                 return obj;
             }, {});
+        },
+        emptyColspan() {
+            const visible = (this.form.schema || []).filter(item => item.label !== '' && !item.hidden);
+            let n = visible.length;
+            if (this.form.showRowNumber) n += 1;
+            n += 1; // action column
+            return n || 1;
         },
     },
     watch: {

@@ -9,7 +9,7 @@
             && item.model!=f.parent && item.model!='updated_at'
             && item.model!='created_at' && !item.hidden"
             :key="item.index">
-            <component :is="element(item.formType)"
+            <component :is="gridElement(item.formType)"
                        :model="{form: model, component: item.model}"
                        v-if="model"
                        size="small"
@@ -76,6 +76,15 @@
 
             },
             element: element,
+
+            gridElement(formType) {
+                const gridSwap = {
+                    Image: 'ImageSubform',
+                    ImageDrag: 'ImageSubform',
+                    File: 'FileSubform',
+                };
+                return element(gridSwap[formType] || formType);
+            },
             setModel(name, value, type) {
                 switch (type) {
                     case "Switch":

@@ -1,27 +1,32 @@
 <template>
     <div class="subform-grid" :style="subStyle">
-        <h3 style="display: none">{{ rowLength }}</h3>
         <div class="subform-header">
             {{ form.name }}
             <Button shape="circle" type="success" size="small" @click="add" icon="md-add"
                     class="sub-form-add-btn"></Button>
         </div>
         <div class="sub-form-table-wrap">
-            <table border="1">
+            <table class="sub-form-grid" border="1">
                 <thead>
                 <tr>
-                    <th class="row-number" v-if="form.showRowNumber">ДД</th>
-                    <th @click="sort(item)" v-for="item in form.schema" v-if="item.label != '' && !item.hidden"
-                        :key="item.index">
+                    <th class="row-number" scope="col" v-if="form.showRowNumber">ДД</th>
+                    <th
+                        v-for="item in visibleSchema"
+                        :key="item.model"
+                        scope="col"
+                        :aria-sort="ariaSortFor(item)"
+                        @click="sort(item)">
                         <div class="th-title">
-                            {{ item.label }}<i class="ti-exchange-vertical"/></div>
+                            <span>{{ item.label }}</span>
+                            <i class="ti-exchange-vertical" aria-hidden="true"/>
+                        </div>
                     </th>
-                    <th class="action" v-if="!form.disableDelete">...</th>
+                    <th class="action" scope="col" v-if="!form.disableDelete">...</th>
                 </tr>
                 </thead>
                 <tbody>
                 <grid-form v-for="(item, index) in listData"
-                           :key="index"
+                           :key="rowKey(item, index)"
                            :f="item.form"
                            :model="item.model"
                            :editMode="editMode"
@@ -29,25 +34,32 @@
                            :schema="form.schema"
                            :formula="formula">
                     <template slot="action" v-if="!form.disableDelete">
-                        <a href="javascript:void(0);" @click="remove(index)">
-                            <Icon type="ios-trash"/>
-                        </a>
+                        <button type="button"
+                                class="sub-row-action"
+                                :aria-label="lang.remove || 'Remove row'"
+                                @click="remove(index)">
+                            <Icon type="ios-trash" aria-hidden="true"/>
+                        </button>
                     </template>
                     <template slot="rowNumber" v-if="form.showRowNumber">
                         <span>{{ index + 1 }}</span>
                     </template>
                 </grid-form>
+                <tr v-if="listData.length === 0" class="subform-empty-row">
+                    <td :colspan="emptyColspan" class="subform-empty-cell">
+                        {{ emptyLabel }}
+                    </td>
+                </tr>
                 </tbody>
                 <tfoot v-if="hasEq">
                 <tr>
-                    <td v-for="(item, index) in equationData" :key="index">
-                        <span
-                            v-if="item.preStaticWord!=null && item.preStaticWord!=''"> {{ item.preStaticWord }} </span>
+                    <td v-if="form.showRowNumber"></td>
+                    <td v-for="item in equationData" :key="item.model">
+                        <span v-if="item.preStaticWord"> {{ item.preStaticWord }} </span>
                         <span v-if="item.hasEquation">{{ item.data.toLocaleString() }}</span>
-                        <span v-if="item.prefix!=null && item.prefix!=''"> {{ item.prefix }}</span>
+                        <span v-if="item.prefix"> {{ item.prefix }}</span>
                     </td>
-                    <td>
-                    </td>
+                    <td v-if="!form.disableDelete"></td>
                 </tr>
                 </tfoot>
             </table>
@@ -135,32 +147,32 @@ export default {
     },
     computed: {
         lang() {
-            const labels = ['pleaseCompleteFirstLine',
-            ];
-            return labels.reduce((obj, key, i) => {
-                obj[key] = this.$t('dataForm.' + labels[i]);
+            const labels = ['pleaseCompleteFirstLine', 'add', 'remove'];
+            return labels.reduce((obj, key) => {
+                obj[key] = this.$t('dataForm.' + key);
                 return obj;
             }, {});
+        },
+        emptyLabel() {
+            const key = 'dataForm.empty';
+            const translated = this.$t(key);
+            return translated === key ? 'Хоосон байна' : translated;
         },
         subStyle() {
-            if (this.form.min_height) {
-                return {
-                    minHeight: this.form.min_height + 'px',
-                    background: '#f3f4f5'
-                }
-            } else {
-                return {
-                    minHeight: '30px',
-                    background: '#f3f4f5'
-                }
-            }
+            return {
+                minHeight: (this.form.min_height || 30) + 'px',
+                background: '#f3f4f5',
+                marginTop:'20px'
+            };
         },
-        Lang() {
-            const labels = ['add',];
-            return labels.reduce((obj, key, i) => {
-                obj[key] = this.$t('dataForm.' + labels[i]);
-                return obj;
-            }, {});
+        visibleSchema() {
+            return (this.form.schema || []).filter(item => item.label !== '' && !item.hidden);
+        },
+        emptyColspan() {
+            let n = this.visibleSchema.length;
+            if (this.form.showRowNumber) n += 1;
+            if (!this.form.disableDelete) n += 1;
+            return n || 1;
         },
     },
     watch: {
@@ -224,6 +236,7 @@ export default {
         return {
             listData: [],
             equationData: [],
+            currentSort: null,
             currentSortDir: 'asc',
             hasEq: false,
             rowLength: 0,
@@ -359,16 +372,31 @@ export default {
         },
 
         sort(item) {
-            let sortStatus = 1;
-            this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
-            this.currentSort = this.currentSortDir === 'desc' ? -1 : 1;
-            this.currentSort = item.model;
+            if (this.currentSort === item.model) {
+                this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.currentSort = item.model;
+                this.currentSortDir = 'asc';
+            }
+            const dir = this.currentSortDir === 'desc' ? -1 : 1;
+            const key = this.currentSort;
             this.listData.sort((a, b) => {
-                if (this.currentSortDir === 'desc') sortStatus = -1;
-                if (a.model[this.currentSort] < b.model[this.currentSort]) return -1 * sortStatus;
-                if (a.model[this.currentSort] > b.model[this.currentSort]) return 1 * sortStatus;
+                const av = a.model[key];
+                const bv = b.model[key];
+                if (av < bv) return -1 * dir;
+                if (av > bv) return 1 * dir;
                 return 0;
             });
+        },
+
+        ariaSortFor(item) {
+            if (this.currentSort !== item.model) return 'none';
+            return this.currentSortDir === 'desc' ? 'descending' : 'ascending';
+        },
+
+        rowKey(item, index) {
+            const id = item && item.model && (item.model.id || item.model._uid);
+            return id != null ? id : index;
         },
     }
 };
