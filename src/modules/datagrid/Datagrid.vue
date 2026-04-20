@@ -581,16 +581,6 @@ export default {
                 (gridSchema.actions.length > 0 ||
                     (this.$props.actions && this.$props.actions.length > 0))
             ) {
-                let width = gridSchema.actions.length * 100;
-
-                if (this.$props.actions) {
-                    width += this.$props.actions.length * 100;
-                }
-
-                if (this.header != null) {
-                    this.tableWidth += parseInt(width);
-                }
-
                 let grid_actions = gridSchema.actions;
                 if (this.permissions) {
                     if (!this.permissions.u) {
@@ -599,6 +589,16 @@ export default {
                     if (!this.permissions.d) {
                         grid_actions = grid_actions.filter(g_ac => g_ac != 'd');
                     }
+                }
+
+                let buttonCount = grid_actions.length;
+                if (this.$props.actions) {
+                    buttonCount += this.$props.actions.length;
+                }
+                let width = buttonCount * 36 + 16;
+
+                if (this.header != null) {
+                    this.tableWidth += parseInt(width);
                 }
 
                 let actions = {

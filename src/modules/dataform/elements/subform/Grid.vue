@@ -2,10 +2,12 @@
     <div class="subform-grid" :style="subStyle">
         <div class="subform-header">
             {{ form.name }}
-            <Button shape="circle" type="success" size="small" @click="add" icon="md-add"
-                    class="sub-form-add-btn"></Button>
+            <Button type="success" size="small" @click="add" icon="md-add"
+                    class="sub-form-add-btn" v-if="!form.disableCreate">
+                {{ lang.rowAdd }}
+            </Button>
         </div>
-        <div class="sub-form-table-wrap">
+        <div class="sub-form-table-wrap" :class="{'is-empty': listData.length === 0}">
             <table class="sub-form-grid" border="1">
                 <thead>
                 <tr>
@@ -64,11 +66,6 @@
                 </tfoot>
             </table>
         </div>
-        <a class="sub-grid-add" href="javascript:void(0)" @click="add" v-if="form.min_height && !form.disableCreate">
-            <i class="ti-plus"></i>
-            {{ lang.add }}
-        </a>
-
         <paper-modal
             :name="`grid-modal-${form.sourceGridID}`"
             class="form-modal"
@@ -147,9 +144,16 @@ export default {
     },
     computed: {
         lang() {
-            const labels = ['pleaseCompleteFirstLine', 'add', 'remove'];
-            return labels.reduce((obj, key) => {
-                obj[key] = this.$t('dataForm.' + key);
+            const fallbacks = {
+                pleaseCompleteFirstLine: 'Эхний мөрийг гүйцэд бөглөнө үү',
+                add: 'Нэмэх',
+                remove: 'Устгах',
+                rowAdd: 'Мөр нэмэх',
+            };
+            return Object.keys(fallbacks).reduce((obj, key) => {
+                const fullKey = 'dataForm.' + key;
+                const translated = this.$t(fullKey);
+                obj[key] = (!translated || translated === fullKey) ? fallbacks[key] : translated;
                 return obj;
             }, {});
         },
@@ -161,7 +165,6 @@ export default {
         subStyle() {
             return {
                 minHeight: (this.form.min_height || 30) + 'px',
-                background: '#f3f4f5',
                 marginTop:'20px'
             };
         },

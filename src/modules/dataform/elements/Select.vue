@@ -8,7 +8,7 @@
                      track-by="value"
                      :searchable="true"
                      :allow-empty="true"
-                     :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"
+                     :placeholder="meta && meta.placeHolder ? meta.placeHolder : label ? label : ''"
                      :class="meta.info_url ? 'with-info-caller' : ''"
                      label="label">
             <template slot="singleLabel" slot-scope="{ option }">
@@ -43,7 +43,7 @@
                      track-by="value"
                      :searchable="true"
                      @search-change="searchChange"
-                     :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label ? label : ''"
+                     :placeholder="meta && meta.placeHolder ? meta.placeHolder : label ? label : ''"
                      label="label"
                      :options="options"
                      :class="meta.info_url ? 'with-info-caller' : ''">
@@ -281,3 +281,49 @@ export default {
     }
 };
 </script>
+
+<style lang="scss">
+.select-item {
+    .multiselect {
+        min-height: 32px;
+        font-size: 14px;
+    }
+
+    .multiselect__tags {
+        min-height: 32px;
+        padding: 4px 40px 0 8px;
+        font-size: 14px;
+    }
+
+    .multiselect__single,
+    .multiselect__input {
+        font-size: 14px;
+        min-height: 22px;
+        line-height: 22px;
+        padding: 0;
+        margin-bottom: 4px;
+        background: transparent;
+    }
+
+    .multiselect__placeholder {
+        font-size: 14px;
+        line-height: 22px;
+        padding-top: 1px;
+        margin-bottom: 4px;
+        display: inline-block;
+        color: #adadad;
+    }
+
+    .multiselect__select {
+        height: 30px;
+    }
+
+    .multiselect__content-wrapper {
+        z-index: 9999;
+    }
+
+    .multiselect--active {
+        z-index: 9999;
+    }
+}
+</style>

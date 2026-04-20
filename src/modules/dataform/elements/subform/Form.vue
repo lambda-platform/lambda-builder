@@ -5,7 +5,7 @@
             <Button shape="circle" type="success" size="small" @click="add" icon="md-add"
                     class="sub-form-add-btn"></Button>
         </div>
-        <div class="sub-form-table-wrap">
+        <div class="sub-form-table-wrap" :class="{'is-empty': listData.length === 0}">
             <table class="sub-form-grid" border="1">
                 <thead>
                 <tr>

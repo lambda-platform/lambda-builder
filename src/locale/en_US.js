@@ -498,7 +498,8 @@ export default {
         "dataNotFound": "Data not selected",
         "pleaseCompleteFirstLine": "Please complete the first line",
         "search": "search",
-        "values": "values"
+        "values": "values",
+        "rowAdd": "Add row"
     },
     "dataGrid": {
         "infoCourt": "Information court",
