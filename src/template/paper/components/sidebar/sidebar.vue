@@ -78,6 +78,7 @@
                 }
             },
             toggleCollapse() {
+                if (!this.collapsible) return;
                 this.collapsed = !this.collapsed;
                 try {
                     window.localStorage.setItem(this.storageKey, String(this.collapsed));
