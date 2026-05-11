@@ -455,4 +455,239 @@ $anchor-height: 52px;
             }
         }
     }
+
+    /* ──────────────────────────────────────────────────────────
+     * Modern variant — opt-in. 220px expanded, 64px collapsed.
+     * Activate by setting class="modern" on <sidebar>.
+     * ────────────────────────────────────────────────────────── */
+    &.modern {
+        $modern-bg: #0f172a;
+        $modern-border: rgba(255, 255, 255, 0.06);
+        $modern-text: #94a3b8;
+        $modern-text-hover: #e2e8f0;
+        $modern-text-muted: #64748b;
+        $modern-accent-from: #6366f1;
+        $modern-accent-to: #a855f7;
+
+        width: 220px;
+        background: $modern-bg;
+        color: $modern-text;
+        transition: width 0.25s ease;
+        display: flex;
+        flex-direction: column;
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            height: 56px;
+            padding: 0 12px;
+            border-bottom: 1px solid $modern-border;
+            flex-shrink: 0;
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                height: auto;
+                flex: 1;
+                overflow: hidden;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 8px;
+                    flex-shrink: 0;
+                }
+
+                .brand-text {
+                    color: #ffffff;
+                    font-size: 13px;
+                    font-weight: 600;
+                    letter-spacing: 0.2px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+
+            .collapse-toggle {
+                margin-left: auto;
+                width: 26px;
+                height: 26px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: $modern-text-muted;
+                cursor: pointer;
+                transition: background 0.15s, color 0.15s, transform 0.25s;
+                flex-shrink: 0;
+
+                i {
+                    font-size: 14px;
+                    line-height: 1;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.06);
+                    color: $modern-text-hover;
+                }
+            }
+        }
+
+        nav {
+            flex: 1;
+            padding: 12px 8px;
+            overflow-y: auto;
+            display: block;
+
+            ul {
+                display: block;
+                width: 100%;
+
+                li {
+                    display: block;
+                    padding: 0;
+                    margin-bottom: 2px;
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        padding: 9px 10px;
+                        border-radius: 7px;
+                        color: $modern-text;
+                        font-size: 13px;
+                        text-align: left;
+                        border-left: none;
+                        position: relative;
+                        transition: background 0.15s, color 0.15s;
+
+                        i {
+                            color: $modern-text;
+                            font-size: 16px;
+                            width: 18px;
+                            text-align: center;
+                            flex-shrink: 0;
+                            transition: color 0.15s;
+
+                            &:before {
+                                line-height: inherit;
+                            }
+                        }
+
+                        span:not(.ivu-badge):not(.modern-tooltip) {
+                            display: inline-block;
+                            margin-left: 12px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            color: $modern-text;
+                            font-size: 13px;
+                            font-weight: 400;
+                            line-height: 1;
+                            padding: 0;
+                            transition: color 0.15s;
+                        }
+
+                        .ivu-badge {
+                            position: absolute;
+                            top: 6px;
+                            right: 10px;
+                        }
+
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.04);
+                            color: $modern-text-hover;
+
+                            i,
+                            span:not(.ivu-badge) {
+                                color: $modern-text-hover;
+                            }
+                        }
+
+                        &.active {
+                            background: linear-gradient(
+                                90deg,
+                                rgba(99, 102, 241, 0.22) 0%,
+                                rgba(168, 85, 247, 0.04) 100%
+                            );
+                            color: #ffffff;
+
+                            i,
+                            span:not(.ivu-badge) {
+                                color: #ffffff;
+                            }
+                        }
+
+                        .modern-tooltip {
+                            display: none;
+                            position: absolute;
+                            left: 60px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            background: #1e293b;
+                            color: #ffffff;
+                            font-size: 11px;
+                            padding: 6px 10px;
+                            border-radius: 6px;
+                            white-space: nowrap;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                            z-index: 10;
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .aside-bottom {
+            margin-top: 0;
+            display: block;
+        }
+
+        .sidebar-profile {
+            padding: 10px;
+            border-top: 1px solid $modern-border;
+            flex-shrink: 0;
+        }
+    }
+
+    &.modern.is-collapsed {
+        width: 64px;
+
+        .sidebar-header {
+            justify-content: center;
+            padding: 0;
+
+            .logo {
+                display: none;
+            }
+
+            .collapse-toggle {
+                margin: 0 auto;
+
+                i {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        nav {
+            ul li a {
+                justify-content: center;
+                padding: 9px 0;
+
+                span:not(.ivu-badge):not(.modern-tooltip) {
+                    display: none;
+                }
+
+                &:hover .modern-tooltip {
+                    display: block;
+                }
+            }
+        }
+
+        .sidebar-profile {
+            padding: 10px 6px;
+        }
+    }
 }
