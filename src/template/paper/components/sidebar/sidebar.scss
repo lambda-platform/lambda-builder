@@ -607,8 +607,8 @@ $anchor-height: 52px;
                         &.active {
                             background: linear-gradient(
                                 90deg,
-                                rgba(99, 102, 241, 0.22) 0%,
-                                rgba(168, 85, 247, 0.04) 100%
+                                rgba($modern-accent-from, 0.22) 0%,
+                                rgba($modern-accent-to, 0.04) 100%
                             );
                             color: #ffffff;
 
