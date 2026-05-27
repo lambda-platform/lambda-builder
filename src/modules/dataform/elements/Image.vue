@@ -1,17 +1,38 @@
 <template>
-    <FormItem :label="label" :prop=rule>
-        <div class="multi-upload" v-if="meta.file && meta.file.isMultiple == true">
+    <FormItem :label="label" :prop="rule">
+        <div
+            class="multi-upload"
+            v-if="meta.file && meta.file.isMultiple == true"
+        >
             <div class="multi-upload-list">
-                <div class="upload-list" v-for="item in uploadList" :key="item.index">
+                <div
+                    class="upload-list"
+                    v-for="item in uploadList"
+                    :key="item.index"
+                >
                     <template v-if="item.status == 'finished'">
-                        <img v-if="item.response" :src="`${url ? url : ''}${item.response}`" @click="handleView(item.response)">
-                        <div class="upload-control" @click="handleRemove(item)"
-                             v-show="meta && meta.disabled ? false : true">{{ lang._delete }}
+                        <img
+                            v-if="item.response"
+                            :src="`${cdn && cdn.remote ? cdn.host : ''}${
+                                item.response
+                            }`"
+                            @click="handleView(item.response)"
+                        />
+                        <div
+                            class="upload-control"
+                            @click="handleRemove(item)"
+                            v-show="meta && meta.disabled ? false : true"
+                        >
+                            {{ lang._delete }}
                         </div>
                     </template>
 
                     <template v-else>
-                        <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+                        <Progress
+                            v-if="item.showProgress"
+                            :percent="item.percentage"
+                            hide-info
+                        ></Progress>
                     </template>
                 </div>
 
@@ -19,7 +40,13 @@
                     ref="upload"
                     multiple
                     :with-credentials="true"
-                    :action="`${url ? url : ''}/lambda/krud/upload`"
+                    :action="`${
+                        cdn && cdn.remote ? cdn.host : ''
+                    }/lambda/krud/upload${
+                        cdn && cdn.user_dir
+                            ? `?org=${cdn.org}&user=${cdn.user}`
+                            : ''
+                    }`"
                     :show-upload-list="false"
                     :default-file-list="defaultList"
                     :on-success="success"
@@ -33,81 +60,112 @@
             </div>
         </div>
 
-        <Upload
-            ref="upload"
-            v-else
-            :with-credentials="true"
-            v-model="model.form[model.component]"
-            :action="`${url ? url : ''}/lambda/krud/upload`"
-            :on-success="success"
-            :disabled="meta && meta.disabled ? meta.disabled : false">
-            <Button type="dashed">
-                <img class="preview-img" v-if="this.model.form[this.model.component] != null"
-                     :src="`${url ? url : ''}${model.form[model.component]}`"
-                     alt="image">
-                <div>
-                    <i class="ti ti-camera"></i>
-                    {{ label }}
-                </div>
-            </Button>
-        </Upload>
+        <div class="single-upload-wrap" v-else>
+            <Upload
+                ref="upload"
+                :with-credentials="true"
+                v-model="model.form[model.component]"
+                :action="`${cdn && cdn.remote ? cdn.host : ''}/lambda/krud/upload${
+                    cdn && cdn.user_dir ? `?org=${cdn.org}&user=${cdn.user}` : ''
+                }`"
+                :on-success="success"
+                :disabled="meta && meta.disabled ? meta.disabled : false"
+            >
+                <Button type="dashed">
+                    <img
+                        class="preview-img"
+                        v-if="this.model.form[this.model.component] != null"
+                        :src="`${cdn && cdn.remote ? cdn.host : ''}${
+                            model.form[model.component]
+                        }`"
+                        alt="image"
+                    />
+                    <div>
+                        <i class="ti ti-camera"></i>
+                        {{ label }}
+                    </div>
+                </Button>
+            </Upload>
+            <button
+                v-if="model.form[model.component] && !(meta && meta.disabled)"
+                type="button"
+                class="remove-image"
+                :title="lang._delete"
+                @click.stop.prevent="clearImage"
+            >
+                <i class="ti ti-close"></i>
+            </button>
+        </div>
 
         <Modal :title="lang.viewPhotos" v-model="showImage" width="1000px">
             <img
-
-                 :src="`${url ? url : ''}${showImageUrl}`"
-                 v-if="showImage" style="width: 100%">
+                :src="`${cdn && cdn.remote ? cdn.host : ''}${showImageUrl}`"
+                v-if="showImage"
+                style="width: 100%"
+            />
         </Modal>
     </FormItem>
 </template>
 
 <script>
-
 export default {
-    props: ["model", "label", "rule", "meta", "do_render", "url"],
+    props: ["model", "label", "rule", "meta", "do_render", "url", "cdn"],
     computed: {
         lang() {
-            const labels = ['viewPhotos', '_delete'
-            ];
+            const labels = ["viewPhotos", "_delete"];
             return labels.reduce((obj, key, i) => {
-                obj[key] = this.$t('dataForm.' + labels[i]);
+                obj[key] = this.$t("dataForm." + labels[i]);
                 return obj;
             }, {});
         },
     },
     mounted() {
-        this.uploadList = typeof this.$refs.upload.fileList != 'undefined' ? this.$refs.upload.fileList : [];
+        console.log("upload cdn", this.cdn);
+        this.uploadList =
+            typeof this.$refs.upload.fileList != "undefined"
+                ? this.$refs.upload.fileList
+                : [];
+    },
+    created() {
+        console.log("I am image");
     },
     data() {
         return {
             defaultList: [],
             uploadList: [],
             showImage: false,
-            showImageUrl: ''
-        }
+            showImageUrl: "",
+        };
     },
 
     watch: {
-        'model.form'(val) {
-
+        "model.form"(val) {
             let itemModel = val[this.model.component];
-            if (typeof this.meta.file.isMultiple !== 'undefined' && this.meta.file.isMultiple) {
-                if (typeof itemModel == 'string' && typeof itemModel != 'undefined' && itemModel != null) {
-
-                    let list = JSON.parse(this.model.form[this.model.component]);
+            if (
+                typeof this.meta.file.isMultiple !== "undefined" &&
+                this.meta.file.isMultiple
+            ) {
+                if (
+                    typeof itemModel == "string" &&
+                    typeof itemModel != "undefined" &&
+                    itemModel != null
+                ) {
+                    let list = JSON.parse(
+                        this.model.form[this.model.component]
+                    );
 
                     if (Array.isArray(list)) {
-                        this.defaultList = list.map(item => {
+                        this.defaultList = list.map((item) => {
                             return {
-                                status: 'finished',
+                                status: "finished",
                                 response: item.response,
-                                name: item.name
-                            }
+                                name: item.name,
+                            };
                         });
 
                         this.$nextTick(() => {
                             this.uploadList = this.$refs.upload.fileList;
-                        })
+                        });
                     }
                 } else {
                     this.$refs.upload.fileList = [];
@@ -118,30 +176,28 @@ export default {
         },
         do_render(value) {
             if (!value) {
-
                 this.$refs.upload.fileList = [];
             }
-        }
-
+        },
     },
 
     methods: {
-
         handleView(imageUrl) {
             this.showImage = true;
             this.showImageUrl = imageUrl;
         },
 
         success(val) {
-
             if (this.meta.file.isMultiple) {
                 this.uploadList = this.$refs.upload.fileList;
-                this.model.form[this.model.component] = JSON.stringify(this.uploadList.map(item => {
-                    return {
-                        name: item.name,
-                        response: item.response
-                    }
-                }));
+                this.model.form[this.model.component] = JSON.stringify(
+                    this.uploadList.map((item) => {
+                        return {
+                            name: item.name,
+                            response: item.response,
+                        };
+                    })
+                );
             } else {
                 this.model.form[this.model.component] = val;
             }
@@ -151,12 +207,21 @@ export default {
             const fileList = this.$refs.upload.fileList;
             this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
             this.uploadList = this.$refs.upload.fileList;
-            this.model.form[this.model.component] = this.uploadList.map(item => {
-                return {
-                    name: item.name,
-                    response: item.response
+            this.model.form[this.model.component] = this.uploadList.map(
+                (item) => {
+                    return {
+                        name: item.name,
+                        response: item.response,
+                    };
                 }
-            })
+            );
+        },
+
+        clearImage() {
+            this.model.form[this.model.component] = null;
+            if (this.$refs.upload) {
+                this.$refs.upload.fileList = [];
+            }
         },
 
         beforeUpload() {
@@ -167,7 +232,51 @@ export default {
             //     });
             // }
             // return check;
-        }
-    }
+        },
+    },
 };
 </script>
+
+<style lang="scss" scoped>
+.single-upload-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.remove-image {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 5;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.78);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.18s ease, transform 0.18s ease, background 0.18s ease;
+
+    i { font-size: 13px; }
+
+    &:hover {
+        background: #ef4444;
+        transform: scale(1);
+    }
+}
+
+.single-upload-wrap:hover .remove-image,
+.single-upload-wrap:focus-within .remove-image {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>

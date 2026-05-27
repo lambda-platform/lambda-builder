@@ -2,6 +2,7 @@
     <component ref="krud"
                :is="renderTemplate(property.template)"
                :schema="property.form"
+               :cdn="lambda.cdn ? lambda.cdn : null"
                :id="property.edit_id"
                v-bind="properties">
 
@@ -15,6 +16,10 @@
 
         <template slot="v-nav">
             <slot name="v-nav"></slot>
+        </template>
+
+        <template slot="tabs">
+            <slot name="tabs"></slot>
         </template>
 
         <template slot="tooloptions">
@@ -64,7 +69,6 @@ const templates = {
 
 export default {
     props: ["property"],
-
     data() {
         return {
             properties: this.property,

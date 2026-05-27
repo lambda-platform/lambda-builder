@@ -39,6 +39,7 @@ export const elements = [
         element: "Image",
         component: () => import(/* webpackChunkName: "form-field-Image" */'./Image.vue'),
     },
+
     {
         element: "ImageSubform",
         component: () => import(/* webpackChunkName: "form-field-ImageSubform" */'./ImageSubform.vue'),

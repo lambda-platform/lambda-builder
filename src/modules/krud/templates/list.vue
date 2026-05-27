@@ -80,6 +80,10 @@
 <!--                <slot name="right"></slot>-->
 <!--            </krud-header>-->
 
+            <div class="krud-tabs" v-if="$slots.tabs">
+                <slot name="tabs"></slot>
+            </div>
+
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
@@ -91,6 +95,7 @@
                               :fnEdit="edit"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
+                              :cdn="cdn"
                               :hideInfo="$props.hideInfo ? $props.hideInfo : false"
                               :hasSelection="typeof $props.hasSelection === undefined ? false : $props.hasSelection"
                               :onRowSelect="$props.onRowSelect"

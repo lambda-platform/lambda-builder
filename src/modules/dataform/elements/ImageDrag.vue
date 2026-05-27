@@ -1,8 +1,10 @@
 <template>
     <FormItem :prop=rule>
-        <Upload type="drag"             :action="`${url ? url : ''}/lambda/krud/upload`" :on-success="success">
+        <Upload type="drag"
+                :action="`${(cdn && cdn.remote) ? cdn.host : ''}/lambda/krud/upload${(cdn && cdn.user_dir) ? `?org=${cdn.org}&user=${cdn.user}` : ''}`"
+                :on-success="success">
             <div class="upload-wrapper">
-                <div class="preview" v-if="this.model.form[this.model.component] != null">
+                <div class="preview" v-if="`${(cdn && cdn.remote) ? cdn.host : ''}${this.model.form[this.model.component] != null}`">
                     <img :src="this.model.form[this.model.component]" alt="">
                     <div class="upload-handler">
                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -21,7 +23,7 @@
 <script>
 
 export default {
-    props: ["model", "label", "rule", "meta", "url"],
+    props: ["model", "label", "rule", "meta", "url", "cdn"],
     computed: {
         lang() {
             const labels = ['clickHereSelectPhoto', ''

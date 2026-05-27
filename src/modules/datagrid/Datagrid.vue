@@ -206,7 +206,8 @@ export default {
         "gridSelector",
         // "url",
         "hideInfo",
-        "onFilterChange"
+        "onFilterChange",
+        "cdn"
     ],
     computed: {
         // ...mapGetters({

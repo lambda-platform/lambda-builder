@@ -159,6 +159,7 @@
                                                         :meta='setMeta(item)'
                                                         :identity='identity'
                                                         :url='url'
+                                                        :cdn='cdn'
                                                         :getSchemaByModel='getSchemaByModel'
                                                         :getSchemaRelationByModel='getSchemaRelationByModel'
                                                         :setSchemaByModel='setSchemaByModel'

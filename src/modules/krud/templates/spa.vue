@@ -27,6 +27,10 @@
                 </div>
             </div>
 
+            <div class="krud-tabs" v-if="$slots.tabs">
+                <slot name="tabs"></slot>
+            </div>
+
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
@@ -39,6 +43,7 @@
                                   :fnEdit="edit"
                                   :fnQuickEdit="quickEdit"
                                   :fnView="view"
+                                  :cdn="cdn"
                                   :actions="$props.actions"
                                   :dblClick="$props.dbClickAction"
                                   :user_condition="$props.user_condition? $props.user_condition :null"
@@ -50,6 +55,7 @@
                     <div class="data-form" :style="`width: ${form_width ? form_width : 600}`">
                         <dataform :style="`width: ${form_width ? form_width : 600}`" ref="form" :schemaID="form"
                                   :editMode="editMode" :onSuccess="onSuccess"
+                                  :cdn="cdn"
                                   :onError="onError"></dataform>
                     </div>
                 </div>

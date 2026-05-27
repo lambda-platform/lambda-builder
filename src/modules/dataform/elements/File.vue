@@ -1,7 +1,8 @@
 <template>
     <FormItem :label="label" :prop=rule>
         <div class="file-uploader">
-            <Upload :action="`${url ? url : ''}/lambda/krud/upload`"
+            <Upload
+                :action="`${(cdn && cdn.remote) ? cdn.host : ''}/lambda/krud/upload${(cdn && cdn.user_dir) ? `?org=${cdn.org}&user=${cdn.user}` : ''}`"
                     v-model="model.form[model.component]"
                     :on-success="success"
                     :disabled="meta && meta.disabled ? meta.disabled : false"
@@ -12,9 +13,9 @@
             </Upload>
 
             <div v-if="model.form[model.component] != null && model.form[model.component] != ''" class="file-control">
-                <a :href="model.form[model.component]" target="_blank" download> <i
+                <a :href="`${(cdn && cdn.remote) ? cdn.host : ''}${model.form[model.component]}`" target="_blank" download> <i
                     class="ti-download"></i>{{ lang.download }}</a>
-                <a :href="model.form[model.component]" target="_blank"> <i class="ti-eye"></i>{{ lang.view }}</a>
+                <a :href="`${(cdn && cdn.remote) ? cdn.host : ''}${model.form[model.component]}`" target="_blank"> <i class="ti-eye"></i>{{ lang.view }}</a>
             </div>
         </div>
     </FormItem>
@@ -23,7 +24,7 @@
 <script>
 
 export default {
-    props: ["model", "label", "rule", "meta", "url"],
+    props: ["model", "label", "rule", "meta", "url", "cdn"],
 
     computed: {
         lang() {

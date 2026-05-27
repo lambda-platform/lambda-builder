@@ -49,6 +49,10 @@
                 </template>
             </krud-header>
 
+            <div class="krud-tabs" v-if="$slots.tabs">
+                <slot name="tabs"></slot>
+            </div>
+
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
@@ -62,6 +66,7 @@
                               :fnEdit="edit"
                               :fnQuickEdit="quickEdit"
                               :fnView="view"
+                              :cdn="cdn"
                               :hideInfo="$props.hideInfo ? $props.hideInfo : false"
                               :actions="$props.actions"
                               :dblClick="$props.dbClickAction"
@@ -95,6 +100,7 @@
                               :schemaID="form"
                               :title="title"
                               :url="url"
+                              :cdn="cdn"
                               :editMode="editMode"
                               mode="refresh"
                               :onSuccess="onSuccess"

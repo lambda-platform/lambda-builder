@@ -10,7 +10,7 @@ export default {
         "hideInfo", "view_url", "mode", "onPropertySuccess",
         "onPropertyError", "page_id", "withoutHeader",
         "withCrudLog", "projects_id", "exportSelectedRows",
-        "exportPath", "exportLabel", "onFilterChange"
+        "exportPath", "exportLabel", "onFilterChange", "url", "cdn"
     ],
     components: {
         krudtools

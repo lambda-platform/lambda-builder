@@ -27,7 +27,8 @@ export default {
         'title',
         'close',
         'template',
-        'step'
+        'step',
+        'cdn'
     ],
     data() {
         return {

@@ -1,6 +1,9 @@
 <template>
     <section class="canvas-aside">
         <div class="crud-page">
+            <div class="krud-tabs" v-if="$slots.tabs">
+                <slot name="tabs"></slot>
+            </div>
             <div class="crud-page-body">
                 <div class="v-nav" v-if="hasVNavSlot">
                     <slot name="v-nav"></slot>
