@@ -19,6 +19,10 @@ export const elements = [
         element: "DateTime",
         component: () => import('./DateTime.vue'),
     },
+    // {
+    //     element: "SimpleDateTime",
+    //     component: () => import('./SimpleDateTime.vue'),
+    // },
     {
         element: "Textarea",
         component: () => import(/* webpackChunkName: "form-field-Textarea" */'./Textarea.vue'),
@@ -222,6 +226,9 @@ export const elements = [
         component: () => import(/* webpackChunkName: "form-field-Label" */'./Textarea.vue'),
     },
     {
+        element: "CKByte",
+        component: () => import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
+    },{
         element: "CKByte",
         component: () => import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
     },

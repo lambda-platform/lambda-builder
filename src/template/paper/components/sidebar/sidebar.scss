@@ -1,6 +1,44 @@
 $primary: #007AE5;
 $text-color: lighten($primary, 40%);
 $anchor-height: 52px;
+@media (max-width: 768px) {
+    .arrow-nav {
+        display: none !important;
+    }
+    .hide {
+        width: auto !important;
+    }
+}
+.arrow-nav {
+    background: #ffffff;
+    padding: 10px;
+    border-right: 1px solid #053e8a;
+    border-top: 1px solid #053e8a;
+    border-bottom: 1px solid #053e8a;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    position: absolute;
+    margin-top: 60px;
+    z-index: 2000;
+    color: #053e8a;
+}
+
+@media (min-width: 769px) {
+    .hide {
+        width: 76px!important;
+        li {
+            a {
+                span {
+                    display: none!important;
+                }
+            }
+        }
+    }
+    .show {
+        width: auto!important;
+    }
+}
+
 .sidebar {
     width: 60px;
     background: $primary;
@@ -21,6 +59,7 @@ $anchor-height: 52px;
         height: calc(100vh - 144px);
         flex: 1;
     }
+
 
     nav {
         width: 100%;
@@ -117,7 +156,7 @@ $anchor-height: 52px;
         }
     }
     &.with-text {
-        width: 90px;
+        width: 78px;
         nav {
             ul {
                 li {

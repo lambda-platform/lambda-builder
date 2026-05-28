@@ -1,6 +1,6 @@
 <template>
     <FormItem :label=label :prop=rule>
-        <ColorPicker v-model="model.form[model.component]"  style="float: right" alpha />
+        <ColorPicker v-model="model.form[model.component]" recommend  style="float: right" alpha />
     </FormItem>
 </template>
 
@@ -28,3 +28,4 @@ export default {
     }
 };
 </script>
+
