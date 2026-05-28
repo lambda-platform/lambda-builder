@@ -207,7 +207,8 @@ export default {
         // "url",
         "hideInfo",
         "onFilterChange",
-        "cdn"
+        "cdn",
+        "add_button_disabled"
     ],
     computed: {
         // ...mapGetters({
@@ -259,7 +260,7 @@ export default {
     },
 
     created() {
-        console.log('condition', this.$props.custom_condition);
+        // console.log('condition', this.$props.custom_condition);
         this.axiosController = new AbortController();
     },
 

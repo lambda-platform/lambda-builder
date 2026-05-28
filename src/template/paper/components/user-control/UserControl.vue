@@ -51,7 +51,33 @@
                     </div>
                 </Poptip>
             </li>
-            <slot name="right"></slot>
+<!--            <li class="org-switcher">-->
+<!--                <Poptip placement="bottom-end" popper-class="no-animation">-->
+<!--                    <a href="javascript:void(0)" class="org-logo">-->
+<!--                        <img src="/assets/lms/images/lms.jpeg" alt="avatar">-->
+<!--                    </a>-->
+
+<!--                    <div slot="content">-->
+<!--                        <ul>-->
+<!--                            &lt;!&ndash;                                <li v-for="item in lmsOrgs" :key="item.org_id">&ndash;&gt;-->
+<!--                            <li>-->
+<!--                                &lt;!&ndash;                                    <a class="org-switch-item" :class="org.id === item.org_id ? 'active': ''" :href="item.default_url">&ndash;&gt;-->
+<!--                                <a class="org-switch-item">-->
+<!--                                    <img src="/assets/lms/images/lms.jpeg" alt="lms-icon">-->
+<!--                                    <div class="org-switch-item-info">-->
+<!--                                        &lt;!&ndash;                                            <span>{{ item.org_name }}</span>&ndash;&gt;-->
+<!--                                        <span>org_name</span>-->
+<!--                                        &lt;!&ndash;                                            <small>{{ item.role_name }}</small>&ndash;&gt;-->
+<!--                                        <small>name</small>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </Poptip>-->
+<!--            </li>-->
+            <slot name="right">
+            </slot>
         </ul>
 
         <Modal v-model="logoutModal" :closable="false" width="252" class="logout-modal">
@@ -81,7 +107,9 @@ export default {
     name: "UserControl",
     computed: {
         ...mapGetters({
-            user: "user",
+            // user: "user",
+            org: "org",
+            // lmsOrgs: "lmsOrgs",
         }),
         lang() {
             const labels = ['welcome', 'loggedIn', 'personalInfo', 'changePass', 'superAdminManagement', 'logout'];
@@ -121,6 +149,15 @@ export default {
             },
 
         };
+    },
+    created() {
+        console.log(this);
+        console.log('user');
+        console.log(this.$user);
+        console.log('org');
+        console.log(this.org);
+        console.log(this.$org);
+
     },
     methods: {
         logout() {

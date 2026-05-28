@@ -13,7 +13,7 @@
         <div v-else :class="`crud-page-header-left ${hasNavSlot ? '' : 'no-nav'}`">
             <h3 v-if="$props.title != null">{{ $props.title.replace('-', ' ') }}</h3>
             <span v-if="permissions ? permissions.c : true" class="divider"></span>
-            <Button v-if="permissions ? permissions.c : true"
+            <Button v-if="permissions ? permissions.c : true" :disabled="addButtonDisabled"
                     @click="openForm" type="success" shape="circle" size="small"
                     icon="md-add">
                 {{ lang._add }}
@@ -111,13 +111,16 @@ export default {
         "isRefresh",
         "isSave",
         "isSearch",
-        "exportLoading"
+        "exportLoading",
+        "addButtonDisabled"
     ],
     components: {},
     data() {
         return {
             searchModel: null
         }
+    },
+    created() {
     },
     computed: {
         lang() {

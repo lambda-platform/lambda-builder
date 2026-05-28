@@ -40,7 +40,8 @@
                          :isExcel="isExcel"
                          :isRefresh="isRefresh"
                          :isSave="isSave"
-                         :isSearch="isSearch">
+                         :isSearch="isSearch"
+                         :addButtonDisabled="addButtonDisabled">
                 <template slot="tooloptions">
                     <slot name="tooloptions"></slot>
                 </template>
@@ -76,7 +77,8 @@
                               :on-filter-change="onFilterChange"
                               :page_id="page_id"
                               :custom_condition="$props.custom_condition? $props.custom_condition :null"
-                              :user_condition="user_condition ? user_condition.gridCondition : null">
+                              :user_condition="user_condition ? user_condition.gridCondition : null"
+                              :add_button_disabled="add_button_disabled">
 
                         <template slot="dg-footer-start">
                             <slot name="dg-footer-start"></slot>
@@ -136,7 +138,7 @@ export default {
         };
     },
     created() {
-        console.log("on FILTER", this.onFilter);
+        // console.log("on FILTER", this.onFilter);
     },
     components: {
         "slide-panel": slidePanel,

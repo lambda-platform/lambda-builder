@@ -23,6 +23,40 @@
         height: 445px;
     }
 
+    //&::before {
+    //    content: "";
+    //    position: absolute;
+    //    left: 0;
+    //    right: 0;
+    //    top: 0;
+    //    bottom: 0;
+    //    opacity: 0.9;
+    //    background: $primary;
+    //    background: linear-gradient(to top, darken($primary, 25%), $primary);
+    //
+    //}
+
+    .profile-wid-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+.graduate-back{
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        opacity: 0.9;
+        background: $success;
+        background: linear-gradient(to top, darken($success, 25%), $success);
+
+    }
+}
+.student-back{
     &::before {
         content: "";
         position: absolute;
@@ -33,13 +67,6 @@
         opacity: 0.9;
         background: $primary;
         background: linear-gradient(to top, darken($primary, 25%), $primary);
-
-    }
-
-    .profile-wid-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
     }
 }
 

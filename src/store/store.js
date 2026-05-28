@@ -9,11 +9,15 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         user: window.init.user,
+        org: window.init.org,
+        // lmsOrgs: window.init.orgs,
         showLogout: false
     },
 
     getters: {
         user: state => state.user,
+        org: state => state.org,
+        // lmsOrgs: state => state.lmsOrgs,
         showLogout: state => state.showLogout,
     },
 

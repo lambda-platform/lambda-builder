@@ -70,7 +70,7 @@ export default {
         "isRefresh",
         "isSave",
         "isSearch",
-        "exportLoading"
+        "exportLoading",
     ],
 
     data() {

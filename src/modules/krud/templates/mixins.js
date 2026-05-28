@@ -10,7 +10,8 @@ export default {
         "hideInfo", "view_url", "mode", "onPropertySuccess",
         "onPropertyError", "page_id", "withoutHeader",
         "withCrudLog", "projects_id", "exportSelectedRows",
-        "exportPath", "exportLabel", "onFilterChange", "url", "cdn"
+        "url", "cdn",
+        "exportPath", "exportLabel", "onFilterChange", "add_button_disabled"
     ],
     components: {
         krudtools
@@ -37,7 +38,8 @@ export default {
             isSearch: false,
             rowId: null,
             row: null,
-            selectedData: []
+            selectedData: [],
+            addButtonDisabled: this.add_button_disabled
         };
     },
     computed: {
