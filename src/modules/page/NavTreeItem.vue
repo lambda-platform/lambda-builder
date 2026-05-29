@@ -124,16 +124,17 @@ export default {
         return {
             cruds: window.init.cruds,
             lambda: window.lambda,
+            permissions: window.init.permissions.permissions,
             isOpen: false,
         };
     },
     computed: {
         hasChildren() {
-            return !!(this.item && this.item.children && this.item.children.length > 0);
+            return !!(this.item && this.item.children && this.visibleChildren.length > 0);
         },
         visibleChildren() {
-            if (!this.hasChildren) return [];
-            return this.item.children.filter(c => c.link_to != 'divider');
+            if (!this.item || !this.item.children || this.item.children.length === 0) return [];
+            return this.item.children.filter(c => c.link_to != 'divider' && this.can(c));
         }
     },
     created() {
@@ -149,6 +150,13 @@ export default {
     methods: {
         toggle() {
             this.isOpen = !this.isOpen;
+        },
+
+        can(menu) {
+            if (this.permissions[menu.id]) {
+                return !!this.permissions[menu.id].show;
+            }
+            return false;
         },
 
         hasActiveChild(item) {
