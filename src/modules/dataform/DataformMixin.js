@@ -109,7 +109,7 @@ export default {
 
     watch: {
         src(val, oldValue) {
-            console.log('src changing')
+            // console.log('src changing')
             this.initForm()
         },
 
@@ -121,6 +121,7 @@ export default {
 
         do_render(val) {
             if (!val) {
+                this.$Notice.close('dataform-validation-error');
                 this.viewMode = false
                 this.handleReset(this.meta.model + '-' + this.schemaID)
             }
@@ -548,11 +549,11 @@ export default {
                 Vue.set(this.$data.model, model, value)
             } else if (prop == 'sub-value') {
                 Vue.set(this.$data.model, model, value)
-                console.log('prop');
-                console.log(prop);
+                // console.log('prop');
+                // console.log(prop);
                 this.subFormFillData(model)
             } else {
-                console.log('prop -else');
+                // console.log('prop -else');
                 let index = this.schema.findIndex(item => item.model == model)
 
                 if (index >= 0) {
@@ -581,6 +582,8 @@ export default {
         },
 
         closeForm() {
+            this.$Notice.close('dataform-validation-error');
+
             if (this.template === 'modal') {
                 this.$modal.hide('krud-modal');
             }
@@ -597,9 +600,9 @@ export default {
         },
         handleSubmitKb(parentData,lang_id) {
             this.setIdentityManual();
-            console.log(this.identity);
-            console.log("parentData:");
-            console.log(parentData);
+            // console.log(this.identity);
+            // console.log("parentData:");
+            // console.log(parentData);
              if(!this.$data.model['title']) {
                  this.$data.model['title'] = parentData['title'];
              }
@@ -626,14 +629,26 @@ export default {
                     } else {
                         //auh дээр хэрэглэгдэж байгаа шүү
                         this.$Notice.error({
+                            name: 'dataform-validation-error',
                             title: this.lang.informationIsIncomplete,
                             desc: this.formValidationCustomText != '' ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
                             , duration: 0
                         })
-
+                        this.scrollToFirstError(this.meta.model + '-' + this.schemaID)
                     }
                 })
             }
+        },
+        scrollToFirstError(formRefName) {
+            this.$nextTick(() => {
+                const formRef = formRefName ? this.$refs[formRefName] : null
+                const root = formRef && formRef.$el ? formRef.$el : this.$el
+                if (!root || typeof root.querySelector !== 'function') return
+                const errorEl = root.querySelector('.ivu-form-item-error')
+                if (errorEl && typeof errorEl.scrollIntoView === 'function') {
+                    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }
+            })
         },
         handleSubmit(name) {
             this.setIdentityManual()
@@ -654,11 +669,12 @@ export default {
                     } else {
                         //auh дээр хэрэглэгдэж байгаа шүү
                         this.$Notice.error({
+                            name: 'dataform-validation-error',
                             title: this.lang.informationIsIncomplete,
                             desc: this.formValidationCustomText != '' ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
-                            , duration: 0
+                            , duration: 10
                         })
-
+                        this.scrollToFirstError(name)
                     }
                 })
             }
@@ -673,6 +689,7 @@ export default {
                     if (isArray) {
                         if (this.model[sbValidation.model].length == 0) {
                             this.$Notice.error({
+                                name: 'dataform-validation-error',
                                 title: this.lang.informationIsIncomplete,
                                 desc: sbValidation.emptyErrorMsg, duration: 0
                             })
@@ -680,6 +697,7 @@ export default {
                         }
                     } else {
                         this.$Notice.error({
+                            name: 'dataform-validation-error',
                             title: this.lang.informationIsIncomplete,
                             desc: sbValidation.emptyErrorMsg, duration: 0
                         })
@@ -701,8 +719,8 @@ export default {
                 this.$props.onSuccess(this.$data.model)
             } else {
                 if (this.isKbForm) {
-                    console.log('this.isKbForm:');
-                    console.log(this.isKbForm);
+                    // console.log('this.isKbForm:');
+                    // console.log(this.isKbForm);
 
                     if (this.$refs[`sf-kb-public.product`]) {
                         if (this.$refs[`sf-kb-public.product`].length >= 1) {
@@ -716,8 +734,8 @@ export default {
                 if (!this.editMode) {
                    delete this.$data.model[this.identity];
                 }
-                console.log("this.submitUrl:");
-                console.log(this.submitUrl);
+                // console.log("this.submitUrl:");
+                // console.log(this.submitUrl);
                 axios.post(this.submitUrl, this.$data.model)
                     .then(({data}) => {
                         if (data.status) {
@@ -900,8 +918,8 @@ export default {
                     else{
                         return 0;
                     }
-                }).catch(error => {
-                   console.log(error.response.data.error);
+                }).catch(() => {
+                   // console.log(error.response.data.error);
                    return 0;
                })
         },
@@ -913,10 +931,10 @@ export default {
         },
 
         subFormFillDataKB(subModel) {
-            console.log('KB SUB FORM');
-            console.log(subModel);
-            console.log(this.model.slug);
-            console.log(this.model.id);
+            // console.log('KB SUB FORM');
+            // console.log(subModel);
+            // console.log(this.model.slug);
+            // console.log(this.model.id);
             if (this.$refs[`sf-kb-${subModel}`]) {
                 if (this.$refs[`sf-kb-${subModel}`].length >= 1) {
                     if (this.model.slug) {
@@ -1181,7 +1199,7 @@ export default {
                             desc: this.formValidationCustomText != '' ? this.formValidationCustomText : this.lang.trRMandatoryFieldsFillInformationLookFormAFillRequiredFieldsWithRedBorder
                             , duration: 0
                         })
-
+                        this.scrollToFirstError(name)
                     }
                 })
             }

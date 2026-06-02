@@ -1,63 +1,41 @@
 <template>
-    <FormItem :label=label :prop=rule :key="model.form[model.component]">
-<!--        <DatePicker v-if="model.form[model.component] === null" :value="now"-->
-<!--                    type="datetime" v-model="now"-->
-<!--                    @on-change="getDateValueNow"-->
-<!--                    placement="bottom-end"-->
-<!--                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"-->
-<!--                    :disabled="meta && meta.disabled ? meta.disabled : false"-->
-<!--                    format="yyyy-MM-dd HH:mm"-->
-<!--        ></DatePicker>-->
-<!--        <DatePicker v-else-->
+    <FormItem :prop="rule" :label="label">
         <DatePicker
-                    type="datetime" v-model="model.form[model.component]"
-                    @on-change="getDateValue"
-                    placement="bottom-end"
-                    :placeholder="meta && meta.placeHolder !== null ? meta.placeHolder : label"
-                    :disabled="meta && meta.disabled ? meta.disabled : false"
-                    format="yyyy-MM-dd HH:mm"></DatePicker>
+            type="datetime"
+            :value="dateTimeValue"
+            format="yyyy-MM-dd HH:mm"
+            :placeholder="
+                meta && meta.placeHolder !== null ? meta.placeHolder : label
+            "
+            :disabled="meta && meta.disabled ? meta.disabled : false"
+            style="width: 100%;"
+            @on-change="onChange"
+        />
     </FormItem>
 </template>
 
 <script>
-import { toDateTime, now } from "../utils/date";
 export default {
-    props: ["model", "rule", "label", "meta", "do_render"],
-    data(){
-        return {
-            now: now(),
-            dateData:this.model.form[this.model.component]
-        }
-    },
-    mounted() {
-        this.clearValue(this.model.form[this.model.component]);
-    },
-    watch:{
-        do_render(value, oldValue) {
-            if(!oldValue && value){
-                return this.now = now();
+    props: ["model", "rule", "label", "meta"],
+    computed: {
+        dateTimeValue() {
+            const value = this.model.form[this.model.component];
+            if (!value) return null;
+            let str = value;
+            if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+                str = str + "T01:01";
             }
+            const d = new Date(str.replace("T", " ").replace(/-/g, "/"));
+            return isNaN(d.getTime()) ? null : d;
         },
     },
     methods: {
-        getDateValue(value) {
-            console.log("Value:");
-            console.log(value);
-            this.clearValue(value);
-            if (!(typeof value === "string" || value instanceof String)) {
-                this.model.form[this.model.component] = toDateTime(
-                    this.model.form[this.model.component]
-                );
-            }else {
-                this.model.form[this.model.component] = value;
+        onChange(formatted) {
+            if (!formatted) {
+                this.model.form[this.model.component] = "";
+                return;
             }
-            this.dateData=this.model.form[this.model.component];
-        },
-        clearValue(value){
-            if(value=='') {
-                this.model.form[this.model.component] = null;
-                this.dateData=null;
-            }
+            this.model.form[this.model.component] = formatted.replace(" ", "T");
         },
     },
 };

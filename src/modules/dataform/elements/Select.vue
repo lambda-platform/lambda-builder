@@ -311,7 +311,7 @@ export default {
         padding-top: 1px;
         margin-bottom: 4px;
         display: inline-block;
-        color: #adadad;
+        color: #C5C8CE;
     }
 
     .multiselect__select {
