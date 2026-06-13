@@ -4,7 +4,10 @@
             <li class="avatar-item">
                 <Poptip placement="bottom-end" popper-class="no-animation">
                     <a href="javascript:void(0)" class="avatar">
-                        <img src="/assets/lambda/images/avatar.png" alt="avatar">
+                        <img
+                            src="/assets/lambda/images/avatar.png"
+                            alt="avatar"
+                        />
                         <span> {{ userName }}</span>
                     </a>
                     <div class="header-profile" slot="content">
@@ -15,25 +18,25 @@
                         <ul>
                             <li>
                                 <router-link to="/module/profile">
-                                    <Icon type="ios-contact-outline"/>
+                                    <Icon type="ios-contact-outline" />
                                     <span>{{ lang.personalInformation }}</span>
                                 </router-link>
                             </li>
                             <li>
                                 <router-link to="/module/password">
-                                    <Icon type="ios-lock-outline"/>
+                                    <Icon type="ios-lock-outline" />
                                     <span>{{ lang.changePassword }}</span>
                                 </router-link>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="javascript:void(0)">
                                     <Icon type="ios-settings-outline"/>
                                     <span>{{ lang.settings }}</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a @click="logoutModal = true">
-                                    <Icon type="ios-log-out"/>
+                                    <Icon type="ios-log-out" />
                                     <span>{{ lang.logOut }}</span>
                                 </a>
                             </li>
@@ -43,24 +46,33 @@
             </li>
         </ul>
 
-        <Modal v-model="logoutModal" :closable="false" width="252" class="logout-modal">
-            <p slot="header" style="display:none;"></p>
-            <div style="text-align:center">
+        <Modal
+            v-model="logoutModal"
+            :closable="false"
+            width="252"
+            class="logout-modal"
+        >
+            <p slot="header" style="display: none"></p>
+            <div style="text-align: center">
                 <a @click="logout()">
-                    <Icon type="md-log-out"/>
+                    <Icon type="md-log-out" />
                     {{ common.logout }}
                 </a>
                 <a @click="cancel()">
-                    <Icon type="md-refresh"/>
+                    <Icon type="md-refresh" />
                     {{ common.cancel }}
                 </a>
             </div>
-            <div slot="footer" style="display:none;">
+            <div slot="footer" style="display: none">
                 <form action="/auth/logout"></form>
             </div>
         </Modal>
 
-        <Drawer :title="lang.projectList" :closable="false" v-model="listDrawer">
+        <Drawer
+            :title="lang.projectList"
+            :closable="false"
+            v-model="listDrawer"
+        >
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
@@ -76,59 +88,68 @@ export default {
             listDrawer: false,
             logoutModal: false,
             poptipOption: {
-                animation: 'none',
+                animation: "none",
                 modifiers: {
                     computeStyle: {
                         gpuAcceleration: false,
                     },
                     preventOverflow: {
-                        boundariesElement: 'window'
-                    }
-                }
-            }
+                        boundariesElement: "window",
+                    },
+                },
+            },
         };
     },
 
     methods: {
         logout() {
             // eslint-disable-next-line no-undef
-            axios.post("/auth/logout", {}).then(()=> {
+            axios.post("/auth/logout", {}).then(() => {
                 window.location = "/auth/login";
             });
         },
         cancel() {
             this.$data.logoutModal = false;
-        }
+        },
     },
 
     computed: {
         lang() {
-            const labels = ['systemAdministrator', 'personalInformation', 'changePassword', 'settings', 'logOut', 'projectList'];
+            const labels = [
+                "systemAdministrator",
+                "personalInformation",
+                "changePassword",
+                "settings",
+                "logOut",
+                "projectList",
+            ];
             return labels.reduce((obj, key, i) => {
-                obj[key] = this.$t('components.' + labels[i]);
+                obj[key] = this.$t("components." + labels[i]);
                 return obj;
             }, {});
         },
 
         common() {
-            const labels = ['logout', 'cancel'];
+            const labels = ["logout", "cancel"];
             return labels.reduce((obj, key, i) => {
-                obj[key] = this.$t('user.' + labels[i]);
+                obj[key] = this.$t("user." + labels[i]);
 
                 return obj;
             }, {});
         },
 
         userName() {
-            return window.init.user.last_name + ' ' + window.init.user.first_name;
-        }
-    }
-}
+            return (
+                window.init.user.last_name + " " + window.init.user.first_name
+            );
+        },
+    },
+};
 </script>
 
 <style lang="scss">
-$primary: #007AE5;
-$text-color: #001E35;
+$primary: #007ae5;
+$text-color: #001e35;
 .no-animation {
     transition: all 0s !important;
 
@@ -148,11 +169,11 @@ $text-color: #001E35;
                 margin-right: 6px;
 
                 a {
-                    background-color: hsla(0, 0%, 100%, .7) !important;
+                    background-color: hsla(0, 0%, 100%, 0.7) !important;
                     max-height: 32px;
                     min-width: 32px;
                     border-radius: 3px;
-                    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+                    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
                     &:hover {
                         background: #ffffff;
@@ -189,11 +210,11 @@ $text-color: #001E35;
                     a {
                         display: block;
                         max-height: 32px;
-                        width: 32px;;
+                        width: 32px;
                         font-size: 11px;
                         cursor: pointer;
                         font-weight: 500;
-                        transition: all .2s ease-in-out;
+                        transition: all 0.2s ease-in-out;
                         text-align: center;
                         padding: 0;
 
@@ -234,7 +255,7 @@ $text-color: #001E35;
                 text-align: center;
 
                 &.transparent {
-                    background: rgba(#ffffff, .7);
+                    background: rgba(#ffffff, 0.7);
                     margin-right: 5px !important;
                 }
 
@@ -256,7 +277,7 @@ $text-color: #001E35;
 
                     img {
                         max-height: 32px;
-                        max-width: 32px;;
+                        max-width: 32px;
                         border-radius: 50%;
                         margin: 0 auto;
                     }
@@ -282,7 +303,7 @@ $text-color: #001E35;
                     font-size: 14px;
                     cursor: pointer;
                     font-weight: 500;
-                    transition: all .2s ease-in-out;
+                    transition: all 0.2s ease-in-out;
                     text-transform: uppercase;
 
                     i,
