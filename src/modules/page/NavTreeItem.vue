@@ -119,7 +119,7 @@
 
 <script>
 export default {
-    props: ["item", "index", "hasTooltip"],
+    props: ["item", "index", "hasTooltip", "searchQuery"],
     data() {
         return {
             cruds: window.init.cruds,
@@ -129,12 +129,31 @@ export default {
         };
     },
     computed: {
+        isSearching() {
+            return !!(this.searchQuery && this.searchQuery.length > 0);
+        },
+        // Энэ цэсний нэр өөрөө хайлттай таарч байгаа эсэх
+        selfMatches() {
+            if (!this.isSearching) return false;
+            return (this.getTitle(this.item) || "")
+                .toString()
+                .toLowerCase()
+                .indexOf(this.searchQuery) !== -1;
+        },
         hasChildren() {
             return !!(this.item && this.item.children && this.visibleChildren.length > 0);
         },
         visibleChildren() {
             if (!this.item || !this.item.children || this.item.children.length === 0) return [];
-            return this.item.children.filter(c => c.link_to != 'divider' && this.can(c));
+            let children = this.item.children.filter(c => c.link_to != 'divider' && this.can(c));
+            // Хайлт идэвхтэй бөгөөд эцэг цэсийн нэр таараагүй бол зөвхөн таарсан дэд цэсүүд
+            if (this.isSearching && !this.selfMatches) {
+                const q = this.searchQuery;
+                children = children.filter(
+                    c => (this.getTitle(c) || "").toString().toLowerCase().indexOf(q) !== -1
+                );
+            }
+            return children;
         }
     },
     created() {
@@ -144,6 +163,14 @@ export default {
         '$route'() {
             if (this.hasActiveChild(this.item)) {
                 this.isOpen = true;
+            }
+        },
+        searchQuery() {
+            if (this.isSearching) {
+                // Таарсан дэд цэстэй бол автоматаар нээнэ
+                if (this.visibleChildren.length > 0) this.isOpen = true;
+            } else {
+                this.isOpen = this.hasActiveChild(this.item);
             }
         }
     },

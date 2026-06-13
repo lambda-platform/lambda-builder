@@ -80,17 +80,21 @@
             </slot>
         </ul>
 
-        <Modal v-model="logoutModal" :closable="false" width="252" class="logout-modal">
+        <Modal v-model="logoutModal" :closable="false" width="380" class="logout-modal">
             <p slot="header" style="display:none;"></p>
-            <div style="text-align:center">
-                <a @click="logout()">
-                    <Icon type="md-log-out"/>
-                    <span>{{common._logout}}</span>
-                </a>
-                <a @click="cancel()">
-                    <Icon type="md-refresh"/>
-                    <span>{{common._cancel}}</span>
-                </a>
+            <div class="logout-modal-body">
+                <div class="logout-icon">
+                    <Icon type="md-power"/>
+                </div>
+                <h3 class="logout-title">{{ lang.logout }} уу?</h3>
+                <p class="logout-desc">Та одоо системээс гарах гэж байна.<br>Үргэлжлүүлэх үү?</p>
+                <div class="logout-actions">
+                    <button class="logout-btn cancel" @click="cancel()">{{ common._cancel }}</button>
+                    <button class="logout-btn confirm" @click="logout()">
+                        <Icon type="md-power"/>
+                        {{ common._logout }}
+                    </button>
+                </div>
             </div>
             <div slot="footer" style="display:none;">
                 <form action="/auth/logout"></form>
