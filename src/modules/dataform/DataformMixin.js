@@ -468,6 +468,7 @@ export default {
                     }
                     Vue.set(this.$data.model, name, val_)
                     break
+                case 'Editor':
                 case 'CK':
                     let ck_value = ''
                     if (value != '' && value !== null) {

@@ -1,0 +1,6 @@
+export { Fragment } from './fragment.js'
+export { Node, TextNode } from './node.js'
+export { Mark } from './mark.js'
+export { Schema, NodeType, MarkType } from './schema.js'
+export { locate, locateInline, blockContentStart, clampPos } from './position.js'
+export { resolve, sharedDepth, ResolvedPos } from './resolve.js'

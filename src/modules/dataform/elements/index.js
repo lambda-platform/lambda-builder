@@ -80,6 +80,10 @@ export const elements = [
         element: "CK",
         component: () => import(/* webpackChunkName: "form-field-CK" */'./CK.vue'),
     },
+    {
+        element: "Editor",
+        component: () => import(/* webpackChunkName: "form-field-Editor" */'./editor/Editor.vue'),
+    },
 
     {
         element: "CkOld",
