@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {TextSelection} from './core/index.js';
+import {TextSelection, imageAttrsFromDOM} from './core/index.js';
 
 // Click an image to get a selection box with corner handles; dragging a handle
 // resizes the image live (width only, height follows the aspect ratio) and
@@ -148,9 +148,7 @@ export default {
             if (!desc) return this.deselect();
             this.from = desc.from;
             const node = view.state.schema.nodes.image.create({
-                src: this.img.getAttribute('src') || '',
-                alt: this.img.getAttribute('alt') || '',
-                title: this.img.getAttribute('title'),
+                ...imageAttrsFromDOM(this.img),
                 width: Math.round(this.img.getBoundingClientRect().width) + 'px',
             });
             const tr = view.state.tr;

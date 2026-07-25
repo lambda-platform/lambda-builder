@@ -9,6 +9,12 @@
             </div>
             <button class="ld-menuitem" type="button" @click="customSize">Custom size…</button>
             <button class="ld-menuitem" type="button" @click="resize(null)">Original size</button>
+            <div class="ld-ctx__title">Position</div>
+            <button v-for="o in floatOptions" :key="o.label" class="ld-menuitem" type="button"
+                    :class="{'is-active': imageFloat === o.v}" @click="setFloat(o.v)">
+                <span class="ld-ctx__posicon" v-html="o.icon"></span>{{ o.label }}
+            </button>
+            <div class="ld-divider"></div>
             <button class="ld-menuitem" type="button" @click="editAlt">Alt text…</button>
             <button class="ld-menuitem ld-ctx__danger" type="button" @click="removeImage">Remove image</button>
         </template>
@@ -48,8 +54,17 @@ import {
     tableMergeRight,
     tableMergeDown,
     tableSplitCell,
+    imageAttrsFromDOM,
 } from './core/index.js';
 import {ldPrompt} from './dialog.js';
+import {svgIcon} from './icons.js';
+
+// Word-style layout icons: a small image square with text lines around it.
+const POS_ICONS = {
+    inline: '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="11.5" x2="7" y2="11.5"/><rect x="9" y="8.5" width="6" height="6"/><line x1="17" y1="11.5" x2="21" y2="11.5"/><line x1="3" y1="18" x2="21" y2="18"/>',
+    left: '<rect x="3" y="5" width="8" height="8"/><line x1="14" y1="7" x2="21" y2="7"/><line x1="14" y1="11" x2="21" y2="11"/><line x1="3" y1="18" x2="21" y2="18"/>',
+    right: '<rect x="13" y="5" width="8" height="8"/><line x1="3" y1="7" x2="10" y2="7"/><line x1="3" y1="11" x2="10" y2="11"/><line x1="3" y1="18" x2="21" y2="18"/>',
+};
 
 // Right-click menu for the editor: image sizing/alt/remove when the click hits
 // an image, table row/column operations when the caret lands inside a table.
@@ -64,11 +79,19 @@ export default {
             image: null, // {from, to, attrs} of the right-clicked image node
             table: false,
             can: {mergeRight: false, mergeDown: false, split: false},
+            floatOptions: [
+                {v: null, label: 'In line with text', icon: svgIcon(POS_ICONS.inline, 18)},
+                {v: 'left', label: 'Left, wrap text', icon: svgIcon(POS_ICONS.left, 18)},
+                {v: 'right', label: 'Right, wrap text', icon: svgIcon(POS_ICONS.right, 18)},
+            ],
         };
     },
     computed: {
         imageWidth() {
             return this.image ? this.image.attrs.width : null;
+        },
+        imageFloat() {
+            return this.image ? this.image.attrs.float : null;
         },
     },
     created() {
@@ -112,12 +135,7 @@ export default {
                     image = {
                         from: desc.from,
                         to: desc.to,
-                        attrs: {
-                            src: e.target.getAttribute('src') || '',
-                            alt: e.target.getAttribute('alt') || '',
-                            title: e.target.getAttribute('title'),
-                            width: (e.target.style && e.target.style.width) || null,
-                        },
+                        attrs: imageAttrsFromDOM(e.target),
                     };
                 }
             }
@@ -201,6 +219,11 @@ export default {
             const image = this.image;
             this.close();
             this.applyImage(image, {width});
+        },
+        setFloat(value) {
+            const image = this.image;
+            this.close();
+            this.applyImage(image, {float: value});
         },
         editorEl() {
             const view = this.getView();
@@ -293,6 +316,18 @@ export default {
 .ld-ctx .ld-menuitem:disabled {
     opacity: 0.45;
     cursor: default;
+}
+.ld-ctx .ld-menuitem.is-active {
+    background: #e0e7ff;
+    color: #3538cd;
+}
+.ld-ctx__posicon {
+    display: inline-flex;
+    margin-right: 8px;
+    color: #667085;
+}
+.ld-ctx .ld-menuitem.is-active .ld-ctx__posicon {
+    color: #3538cd;
 }
 .ld-ctx .ld-menuitem:disabled:hover {
     background: transparent;

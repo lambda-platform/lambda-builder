@@ -70,4 +70,4 @@ export {
 } from './plugins/index.js'
 
 // schema
-export { basicSchema } from './schema/index.js'
+export { basicSchema, imageAttrsFromDOM } from './schema/index.js'

@@ -241,5 +241,8 @@ function isBR(el) {
 }
 
 function collapseWS(text) {
-  return text.replace(/[\s\r\n]+/g, ' ')
+  // Collapse only ASCII whitespace runs (HTML rendering semantics), then turn
+  // &nbsp; into plain spaces — the model works with regular spaces and the
+  // serializer re-emits nbsp where a browser would otherwise collapse them.
+  return text.replace(/[ \t\r\n\f]+/g, ' ').replace(/\u00a0/g, ' ')
 }

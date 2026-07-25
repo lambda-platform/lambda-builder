@@ -47,16 +47,42 @@ export function renderText(node) {
 }
 
 export function serializeNode(node) {
-  if (node.isText) return renderText(node).dom
+  if (node.isText) {
+    const { dom, textNode } = renderText(node)
+    // Runs of spaces would collapse in normal HTML rendering — alternate them
+    // with nbsp so the serialized output shows what the editor showed.
+    textNode.nodeValue = textNode.nodeValue.replace(/ {2,}/g, (run) => {
+      let out = ''
+      for (let i = 0; i < run.length; i++) out += i % 2 === 0 ? '\u00a0' : ' '
+      return out
+    })
+    return dom
+  }
   const { dom, contentDOM } = renderSpec(node.type.spec.toDOM(node))
   if (contentDOM && !node.isLeaf) {
     if (node.isTextblock && node.content.size === 0) {
       contentDOM.appendChild(document.createElement('br'))
     } else {
       node.content.forEach((child) => contentDOM.appendChild(serializeNode(child)))
+      if (node.isTextblock) hardenEdgeSpaces(contentDOM)
     }
   }
   return dom
+}
+
+// A single leading/trailing space in a text block also collapses when the
+// saved HTML is rendered outside the editor — pin the edges with nbsp.
+function hardenEdgeSpaces(contentDOM) {
+  const first = edgeTextNode(contentDOM, false)
+  if (first) first.nodeValue = first.nodeValue.replace(/^ /, '\u00a0')
+  const last = edgeTextNode(contentDOM, true)
+  if (last) last.nodeValue = last.nodeValue.replace(/ $/, '\u00a0')
+}
+
+function edgeTextNode(el, fromEnd) {
+  let n = fromEnd ? el.lastChild : el.firstChild
+  while (n && n.nodeType === 1) n = fromEnd ? n.lastChild : n.firstChild
+  return n && n.nodeType === 3 ? n : null
 }
 
 export function serializeHTML(schema, doc) {

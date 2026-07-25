@@ -9,6 +9,7 @@ export const ICON = {
     alignRight: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="6" y1="18" x2="20" y2="18"/>',
     alignJustify: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>',
     code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    source: '<polyline points="15 17 20 12 15 7"/><polyline points="9 7 4 12 9 17"/><line x1="13.5" y1="4.5" x2="10.5" y2="19.5"/>',
     link: '<path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
     quote: '<path d="M9 7H5v5h3v1a3 3 0 0 1-3 3"/><path d="M19 7h-4v5h3v1a3 3 0 0 1-3 3"/>',

@@ -51,6 +51,62 @@ function imageWidth(el) {
   return /^\d+(\.\d+)?$/.test(attr) ? attr + 'px' : attr
 }
 
+// Word-style text wrapping: float the image left/right so following text
+// flows alongside it starting at the image top. Legacy align="left|right"
+// attributes map onto the same attr.
+function imageFloat(el) {
+  const style = (el.style && el.style.float) || el.getAttribute('align')
+  return style === 'left' || style === 'right' ? style : null
+}
+
+const FLOAT_MARGIN = { left: '4px 16px 8px 0', right: '4px 0 8px 16px' }
+
+// Everything in the style attribute except the declarations the editor
+// manages itself (width, float, and the margin it injects for floats).
+// Kept verbatim in the `style` attr so hand-written CSS from the source
+// view survives the parse → serialize round-trip.
+function imageExtraStyle(el, float) {
+  const raw = el.getAttribute('style')
+  if (!raw) return null
+  const kept = []
+  for (const decl of raw.split(';')) {
+    const idx = decl.indexOf(':')
+    if (idx === -1) continue
+    const prop = decl.slice(0, idx).trim().toLowerCase()
+    const value = decl.slice(idx + 1).trim()
+    if (!prop || !value || prop === 'width' || prop === 'float') continue
+    if (prop === 'margin' && float && value === FLOAT_MARGIN[float]) continue
+    kept.push(`${prop}:${value}`)
+  }
+  return kept.length ? kept.join(';') : null
+}
+
+// Shared by parseDOM and the UI components (context menu, resizer) so every
+// path that rebuilds an image node preserves the same set of attributes.
+export function imageAttrsFromDOM(el) {
+  const float = imageFloat(el)
+  return {
+    src: el.getAttribute('src') || '',
+    alt: el.getAttribute('alt') || '',
+    title: el.getAttribute('title'),
+    width: imageWidth(el),
+    float,
+    style: imageExtraStyle(el, float),
+  }
+}
+
+function imageStyle(attrs) {
+  const parts = []
+  if (attrs.width) parts.push(`width:${attrs.width}`)
+  if (attrs.float === 'left' || attrs.float === 'right') {
+    parts.push(`float:${attrs.float}`)
+    const hasMargin = attrs.style && /(^|;)\s*margin(-[a-z]+)?\s*:/i.test(attrs.style)
+    if (!hasMargin) parts.push(`margin:${FLOAT_MARGIN[attrs.float]}`)
+  }
+  if (attrs.style) parts.push(attrs.style)
+  return parts.length ? parts.join(';') : null
+}
+
 // Embed sizes accept bare numbers ("560" → px) or css lengths ("100%", "20em").
 function cssSize(value) {
   if (value == null || value === '') return null
@@ -173,25 +229,27 @@ export const basicSchema = new Schema({
     image: {
       inline: true,
       group: 'inline',
-      attrs: { src: { default: '' }, alt: { default: '' }, title: { default: null }, width: { default: null } },
+      attrs: {
+        src: { default: '' },
+        alt: { default: '' },
+        title: { default: null },
+        width: { default: null },
+        float: { default: null },
+        style: { default: null },
+      },
       toDOM: (node) => [
         'img',
         {
           src: node.attrs.src,
           alt: node.attrs.alt,
           title: node.attrs.title,
-          style: node.attrs.width ? `width:${node.attrs.width}` : null,
+          style: imageStyle(node.attrs),
         },
       ],
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: (el) => ({
-            src: el.getAttribute('src'),
-            alt: el.getAttribute('alt') || '',
-            title: el.getAttribute('title'),
-            width: imageWidth(el),
-          }),
+          getAttrs: imageAttrsFromDOM,
         },
       ],
     },

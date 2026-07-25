@@ -1,5 +1,5 @@
 <template>
-    <div class="lambda-editor__toolbar">
+    <div class="lambda-editor__toolbar" :class="{'is-source': sourceMode}">
         <div class="lambda-editor__group">
             <button type="button" title="Undo (Ctrl/Cmd+Z)" @mousedown.prevent @click="exec(commands.undo)"
                     v-html="icon('undo')"></button>
@@ -180,6 +180,12 @@
             <button type="button" title="Insert embed" @mousedown.prevent @click="embedOpen = true"
                     v-html="icon('embed')"></button>
         </div>
+        <span class="sep"></span>
+
+        <div class="lambda-editor__group lambda-editor__group--source">
+            <button type="button" title="Source code" :class="{'is-active': sourceMode}"
+                    @mousedown.prevent @click="$emit('toggle-source')" v-html="icon('source')"></button>
+        </div>
 
         <file-manager v-if="fmOpen" @close="fmOpen = false" @pick="pickAsset"/>
         <paste-word v-if="pwOpen" @close="pwOpen = false" @insert="pasteWordInsert"/>
@@ -247,7 +253,7 @@ const BLOCK_OPTIONS = [
 ];
 
 export default {
-    props: ["tick"],
+    props: ["tick", "sourceMode"],
     inject: ["getView"],
     components: {
         "file-manager": FileManager,

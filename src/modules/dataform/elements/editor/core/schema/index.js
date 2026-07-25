@@ -1,1 +1,1 @@
-export { basicSchema } from './basic-schema.js'
+export { basicSchema, imageAttrsFromDOM } from './basic-schema.js'

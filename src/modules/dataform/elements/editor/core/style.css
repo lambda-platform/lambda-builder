@@ -286,10 +286,20 @@
   outline: none;
   line-height: 1.6;
   font-size: 15px;
+  /* Show every typed space (runs, trailing) instead of collapsing them. */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 .lambda-editor__content:focus {
   outline: none;
+}
+
+/* Floated (text-wrapped) images must not spill past the last block. */
+.lambda-editor__content::after {
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .lambda-editor__content p {
