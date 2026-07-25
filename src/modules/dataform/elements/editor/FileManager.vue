@@ -23,6 +23,14 @@
                                     type="button" @click="choose">
                                 <span v-html="icons.check"></span> Choose
                             </button>
+                            <button v-if="selected.type === 'file'"
+                                    class="ld-fm-act" type="button" @click="openViewer">
+                                <span v-html="icons.eye"></span> View
+                            </button>
+                            <button v-if="selected.type === 'file' && isEditable(selected.file)"
+                                    class="ld-fm-act" type="button" @click="openEditor(selected.file)">
+                                <span v-html="icons.crop"></span> Edit
+                            </button>
                             <button v-if="selected.type === 'file'" class="ld-fm-act" type="button" @click="download">
                                 <span v-html="icons.download"></span> Download
                             </button>
@@ -69,7 +77,7 @@
                                  @click="select('file', file.path, file)" @dblclick="$emit('pick', file)">
                                 <span class="ld-fm-badge">{{ ext(file.name) }}</span>
                                 <div class="ld-fm-thumb" v-if="file.isImage"
-                                     :style="{backgroundImage: `url(${JSON.stringify(file.thumb || file.src)})`}"></div>
+                                     :style="{backgroundImage: `url(${JSON.stringify(bust(file).thumb)})`}"></div>
                                 <div class="ld-fm-thumb ld-fm-ext" v-else>{{ ext(file.name) }}</div>
                                 <div class="ld-fm-name">
                                     <span class="ld-fm-name-text">{{ file.name }}</span>
@@ -80,6 +88,11 @@
                     </div>
                 </div>
             </div>
+            <image-viewer v-if="viewerOpen" :images="viewerImages" :start="viewerStart"
+                          @close="viewerOpen = false" @edit="editFromViewer"/>
+            <image-editor v-if="editorOpen" :file="editorFile"
+                          @close="editorOpen = false" @saved="editorSaved"/>
+            <doc-viewer v-if="docOpen" :file="docFile" @close="docOpen = false"/>
         </div>
     </div>
 </template>
@@ -88,6 +101,9 @@
 import axios from 'axios';
 import {ICON, svgIcon} from './icons.js';
 import {ldPrompt, ldConfirm, ldAlert} from './dialog.js';
+import ImageViewer from './ImageViewer.vue';
+import ImageEditor from './ImageEditor.vue';
+import DocViewer from './DocViewer.vue';
 
 // Media library backed by lambda-laravel's Dataform/Editor file manager API.
 // Files live in the host project's storage/app/filemanager directory; the
@@ -97,6 +113,11 @@ import {ldPrompt, ldConfirm, ldAlert} from './dialog.js';
 const API = '/lambda/filemanager';
 
 export default {
+    components: {
+        'image-viewer': ImageViewer,
+        'image-editor': ImageEditor,
+        'doc-viewer': DocViewer,
+    },
     data() {
         return {
             query: '',
@@ -106,6 +127,12 @@ export default {
             files: [],
             loading: false,
             full: false,
+            viewerOpen: false,
+            viewerStart: 0,
+            editorOpen: false,
+            editorFile: null,
+            docOpen: false,
+            docFile: null,
             selected: null, // {type: 'file'|'folder', key, file?}
             tabs: [
                 {key: 'images', label: 'Images', icon: svgIcon(ICON.image, 17)},
@@ -117,6 +144,8 @@ export default {
                 folder: svgIcon(ICON.folder, 40),
                 folderPlus: svgIcon(ICON.folderPlus, 15),
                 check: svgIcon(ICON.check, 14),
+                eye: svgIcon(ICON.eye, 15),
+                crop: svgIcon(ICON.crop, 14),
                 download: svgIcon(ICON.download, 15),
                 pencil: svgIcon(ICON.pencil, 14),
                 trash: svgIcon(ICON.trash, 15),
@@ -142,6 +171,12 @@ export default {
         filteredFiles() {
             const q = this.query.trim().toLowerCase();
             return this.files.filter((f) => f.name.toLowerCase().includes(q));
+        },
+        imageFiles() {
+            return this.filteredFiles.filter((f) => f.isImage);
+        },
+        viewerImages() {
+            return this.imageFiles.map(this.bust);
         },
     },
     mounted() {
@@ -188,6 +223,40 @@ export default {
         },
         choose() {
             if (this.selected && this.selected.type === 'file') this.$emit('pick', this.selected.file);
+        },
+        openViewer() {
+            if (!this.selected || this.selected.type !== 'file') return;
+            if (this.selected.file.isImage) {
+                const at = this.imageFiles.indexOf(this.selected.file);
+                this.viewerStart = at === -1 ? 0 : at;
+                this.viewerOpen = true;
+            } else {
+                this.docFile = this.bust(this.selected.file);
+                this.docOpen = true;
+            }
+        },
+        // Version the URL by mtime so edited images bypass the 7-day file cache.
+        bust(file) {
+            const v = '?v=' + (file.modified || 0);
+            return {...file, src: file.src + v, thumb: (file.thumb || file.src) + v};
+        },
+        isEditable(file) {
+            return file.isImage && /\.(jpe?g|png|webp|bmp)$/i.test(file.name);
+        },
+        openEditor(file) {
+            if (!this.isEditable(file)) return;
+            this.editorFile = this.bust(file);
+            this.editorOpen = true;
+        },
+        editFromViewer(file) {
+            const match = this.imageFiles.find((f) => f.path === file.path);
+            if (!match || !this.isEditable(match)) return;
+            this.viewerOpen = false;
+            this.openEditor(match);
+        },
+        editorSaved() {
+            this.editorOpen = false;
+            this.load();
         },
         download() {
             if (!this.selected || this.selected.type !== 'file') return;

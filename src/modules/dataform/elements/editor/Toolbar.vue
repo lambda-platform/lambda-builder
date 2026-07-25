@@ -177,6 +177,10 @@
             </div>
             <button type="button" title="Paste from Word" @mousedown.prevent @click="pwOpen = true"
                     v-html="icon('word')"></button>
+            <button type="button" title="Download as Word" @mousedown.prevent @click="downloadWord"
+                    v-html="icon('wordDown')"></button>
+            <button type="button" title="Download as PDF" @mousedown.prevent @click="downloadPdf"
+                    v-html="icon('pdf')"></button>
             <button type="button" title="Insert embed" @mousedown.prevent @click="embedOpen = true"
                     v-html="icon('embed')"></button>
         </div>
@@ -235,6 +239,7 @@ import {
 import {pasteBlocks} from './core/transform/index.js';
 import {ICON, svgIcon, pickImageFile} from './icons.js';
 import {ldPrompt, ldAlert} from './dialog.js';
+import {exportWord, exportPDF} from './export.js';
 import FileManager from './FileManager.vue';
 import PasteWord from './PasteWord.vue';
 import EmbedDialog from './EmbedDialog.vue';
@@ -527,6 +532,14 @@ export default {
         openFileManager() {
             this.closeDd();
             this.fmOpen = true;
+        },
+        downloadWord() {
+            const view = this.getView();
+            if (view) exportWord(view.getHTML());
+        },
+        downloadPdf() {
+            const view = this.getView();
+            if (view) exportPDF(view.getHTML());
         },
         embedInsert(attrs) {
             this.embedOpen = false;
