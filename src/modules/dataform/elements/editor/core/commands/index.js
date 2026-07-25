@@ -29,6 +29,7 @@ export {
   toggleBlockquote,
   isInBlockquote,
   insertHorizontalRule,
+  insertEmbed,
   insertTable,
   tableNextCell,
   tablePrevCell,

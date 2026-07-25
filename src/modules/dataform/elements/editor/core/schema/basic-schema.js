@@ -51,6 +51,18 @@ function imageWidth(el) {
   return /^\d+(\.\d+)?$/.test(attr) ? attr + 'px' : attr
 }
 
+// Embed sizes accept bare numbers ("560" → px) or css lengths ("100%", "20em").
+function cssSize(value) {
+  if (value == null || value === '') return null
+  return /^\d+(\.\d+)?$/.test(value) ? value + 'px' : String(value)
+}
+
+function embedSize(el, prop) {
+  const style = el.style && el.style[prop]
+  if (style) return style
+  return el.getAttribute(prop) || null
+}
+
 export const basicSchema = new Schema({
   topNode: 'doc',
   defaultBlock: 'paragraph',
@@ -88,6 +100,34 @@ export const basicSchema = new Schema({
       group: 'block',
       toDOM: () => ['hr'],
       parseDOM: [{ tag: 'hr' }],
+    },
+
+    // Embedded media (YouTube, Vimeo, maps, ...): a leaf block rendered as an
+    // iframe. Size lives in attrs so the insert dialog can adjust it; values
+    // are bare numbers (px) or css lengths ("100%").
+    embed: {
+      group: 'block',
+      attrs: { src: { default: '' }, width: { default: '100%' }, height: { default: '400' } },
+      toDOM: (node) => [
+        'iframe',
+        {
+          src: node.attrs.src,
+          style: `width:${cssSize(node.attrs.width) || '100%'};height:${cssSize(node.attrs.height) || '400px'}`,
+          frameborder: '0',
+          allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+          allowfullscreen: 'true',
+        },
+      ],
+      parseDOM: [
+        {
+          tag: 'iframe[src]',
+          getAttrs: (el) => ({
+            src: el.getAttribute('src'),
+            width: embedSize(el, 'width') || '100%',
+            height: embedSize(el, 'height') || '400',
+          }),
+        },
+      ],
     },
 
     table: {

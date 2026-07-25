@@ -96,6 +96,14 @@ export function insertHorizontalRule(state, dispatch) {
   return applyResult(state, dispatch, insertBlockAt(state.doc, state.selection.from, hr.create()))
 }
 
+export function insertEmbed(attrs) {
+  return (state, dispatch) => {
+    const embed = state.schema.nodes.embed
+    if (!embed) return false
+    return applyResult(state, dispatch, insertBlockAt(state.doc, state.selection.from, embed.create(attrs)))
+  }
+}
+
 export function insertTable(rows = 3, cols = 3) {
   return (state, dispatch) => {
     const { table, table_row, table_cell, paragraph } = state.schema.nodes

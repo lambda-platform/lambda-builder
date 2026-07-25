@@ -119,7 +119,11 @@ function matchLeafBlock(schema, el) {
     const type = schema.nodes[name]
     if (!type.isBlock || !type.isLeaf) continue
     for (const rule of type.spec.parseDOM || []) {
-      if (tagMatches(rule.tag, el)) return type.create(rule.attrs || null)
+      if (tagMatches(rule.tag, el)) {
+        const attrs = rule.getAttrs ? rule.getAttrs(el) : rule.attrs || null
+        if (attrs === false) continue
+        return type.create(attrs)
+      }
     }
   }
   return null

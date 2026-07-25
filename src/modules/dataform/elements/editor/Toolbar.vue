@@ -177,10 +177,13 @@
             </div>
             <button type="button" title="Paste from Word" @mousedown.prevent @click="pwOpen = true"
                     v-html="icon('word')"></button>
+            <button type="button" title="Insert embed" @mousedown.prevent @click="embedOpen = true"
+                    v-html="icon('embed')"></button>
         </div>
 
         <file-manager v-if="fmOpen" @close="fmOpen = false" @pick="pickAsset"/>
         <paste-word v-if="pwOpen" @close="pwOpen = false" @insert="pasteWordInsert"/>
+        <embed-dialog v-if="embedOpen" @close="embedOpen = false" @insert="embedInsert"/>
     </div>
 </template>
 
@@ -207,6 +210,7 @@ import {
     toggleBlockquote,
     isInBlockquote,
     insertHorizontalRule,
+    insertEmbed,
     insertTable,
     isInTable,
     tableAddColumnBefore,
@@ -227,6 +231,7 @@ import {ICON, svgIcon, pickImageFile} from './icons.js';
 import {ldPrompt, ldAlert} from './dialog.js';
 import FileManager from './FileManager.vue';
 import PasteWord from './PasteWord.vue';
+import EmbedDialog from './EmbedDialog.vue';
 
 const M = basicSchema.marks;
 const N = basicSchema.nodes;
@@ -247,6 +252,7 @@ export default {
     components: {
         "file-manager": FileManager,
         "paste-word": PasteWord,
+        "embed-dialog": EmbedDialog,
     },
     data() {
         return {
@@ -255,6 +261,7 @@ export default {
             openDd: null,
             fmOpen: false,
             pwOpen: false,
+            embedOpen: false,
             caretIcon: '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
             gridR: -1,
             gridC: -1,
@@ -514,6 +521,10 @@ export default {
         openFileManager() {
             this.closeDd();
             this.fmOpen = true;
+        },
+        embedInsert(attrs) {
+            this.embedOpen = false;
+            this.exec(insertEmbed(attrs));
         },
         pickAsset(asset) {
             if (asset.isImage === false) {

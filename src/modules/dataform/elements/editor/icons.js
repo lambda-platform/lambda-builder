@@ -38,6 +38,7 @@ export const ICON = {
     trash: '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>',
     expand: '<path d="M15 3h6v6"/><path d="m21 3-8 8"/><path d="M9 21H3v-6"/><path d="m3 21 8-8"/>',
     word: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="7.2" y="18" font-size="8.5" font-weight="700" fill="currentColor" stroke="none">W</text>',
+    embed: '<rect x="2.5" y="4" width="19" height="16" rx="2"/><polyline points="10 9.5 7.5 12 10 14.5"/><polyline points="14 9.5 16.5 12 14 14.5"/>',
     shrink: '<path d="M20 10h-6V4"/><path d="m14 10 7-7"/><path d="M4 14h6v6"/><path d="m10 14-7 7"/>',
 };
 

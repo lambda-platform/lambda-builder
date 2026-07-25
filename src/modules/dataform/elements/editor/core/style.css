@@ -365,6 +365,18 @@
   border-radius: 4px;
 }
 
+/* Embeds are inert while editing (pointer-events) so the caret can be placed
+   next to them and the block deleted like any other leaf. */
+.lambda-editor__content iframe {
+  pointer-events: none;
+  display: block;
+  max-width: 100%;
+  margin: 0 0 0.6em;
+  border: 0;
+  border-radius: 4px;
+  background: #f2f4f7;
+}
+
 .lambda-editor__content a {
   color: #3538cd;
   text-decoration: underline;
