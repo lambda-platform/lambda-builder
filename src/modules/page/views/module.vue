@@ -15,6 +15,14 @@
 
         <logger v-if="$route.params.module == 'logger'"/>
 
+        <h5p v-if="$route.params.module == 'h5p'"/>
+
+        <h5p-editor v-if="$route.params.module == 'h5p-editor'"
+                    :content-id="$route.query.id"
+                    @view="id => $router.push(`/module/h5p-viewer?id=${id}`)"/>
+
+        <h5p-viewer v-if="$route.params.module == 'h5p-viewer'" :content-id="$route.query.id"/>
+
         <settings v-if="$route.params.module == 'settings'" :menu-id="$route.query.id"/>
     </section>
 </template>

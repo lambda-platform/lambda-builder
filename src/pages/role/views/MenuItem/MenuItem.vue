@@ -35,6 +35,13 @@
                     <Button type="text" size="small" @click="showUserData"
                             :icon="extend ? 'ios-arrow-down' : 'ios-arrow-forward'"></Button>
                 </span>
+                <!-- Байгууллагаар харуулах (config lambda.menu_org_visibility.enabled үед) -->
+                <span v-if="orgConfig && permissions[data.id] && permissions[data.id].show" class="org-visibility" title="Аль байгууллагад харагдах вэ (хоосон = бүгдэд)">
+                    <Select v-model="permissions[data.id].orgs" multiple size="small" placeholder="Бүх байгууллага"
+                            :max-tag-count="1" transfer style="width: 230px">
+                        <Option v-for="o in orgState.list" :value="o.value" :key="o.value">{{ o.label }}</Option>
+                    </Select>
+                </span>
                 <i-switch v-model="permissions[data.id].show"
                           @on-change="changePermissionPre('show', $event, permissions[data.id])" size="small"/>
             </div>
@@ -165,12 +172,15 @@
 
 <script>
 import {loadLanguageAsync} from "../../../../locale/index";
+import {orgVisibilityConfig, orgState, loadOrgOptions} from "./orgOptions";
 
 export default {
     props: ["data", "menuIndex", "cruds", "permissions"],
     components: {},
     data() {
         return {
+            orgConfig: orgVisibilityConfig(),
+            orgState,
             loading: true,
             extend: false,
             formUser: null,
@@ -184,6 +194,15 @@ export default {
             gridCondition: [],
             formCondition: [],
 
+        }
+    },
+    created() {
+        // Хуучин permission-д orgs талбар байхгүй тул reactive болгож нэмнэ
+        if (this.orgConfig && this.permissions && this.permissions[this.data.id]) {
+            if (!Array.isArray(this.permissions[this.data.id].orgs)) {
+                this.$set(this.permissions[this.data.id], 'orgs', []);
+            }
+            loadOrgOptions();
         }
     },
     methods: {
