@@ -100,11 +100,15 @@ export default {
         },
 
         setMeta(item) {
-            delete item["table"];
-            delete item["rules"];
-            delete item["label"];
-            delete item["span"];
-            delete item["default"];
+            // Schema item-ийг шууд mutate хийхгүй, copy дээр ажиллана.
+            // Эс тэгвээс re-render дээр item.label устсан байж
+            // label нь `[model]` fallback-аар гардаг.
+            let meta = {...item};
+            delete meta["table"];
+            delete meta["rules"];
+            delete meta["label"];
+            delete meta["span"];
+            delete meta["default"];
             // item.schemaId = this.$route.params.id;
             // if (this.$route.params.form) {
             //     console.log(this.$route.params.form)
@@ -114,7 +118,7 @@ export default {
             //     console.log(this.$route.params.id)
             //     item.schemaID = this.$route.params.id;
             // }
-            return item;
+            return meta;
         },
 
         getSchemaIndex(model) {
